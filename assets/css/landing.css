@@ -199,22 +199,6 @@ h2 {
   gap: 1rem 2rem;
 }
 
-.support-band {
-  background: var(--deep);
-  color: #fff;
-}
-
-.support-band .lead {
-  color: rgba(255, 255, 255, 0.74);
-}
-
-.support-card {
-  padding: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.06);
-}
-
 .footer {
   display: flex;
   flex-wrap: wrap;
