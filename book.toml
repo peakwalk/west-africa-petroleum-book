@@ -1,0 +1,15 @@
+[book]
+title = "Exploration and Exploitation of Petroleum Resources in West Africa"
+authors = ["Edison"]
+language = "en"
+# mdBook 0.5 rejects a multilingual field; this project is a single-language book.
+src = "src"
+
+[output.html]
+default-theme = "light"
+preferred-dark-theme = "navy"
+additional-css = ["theme/custom.css"]
+additional-js = ["theme/ga.js", "theme/custom.js"]
+git-repository-url = "https://github.com/peakwalk/west-africa-petroleum-book"
+edit-url-template = "https://github.com/peakwalk/west-africa-petroleum-book/edit/main/{path}"
+site-url = "/west-africa-petroleum-book/book/"
