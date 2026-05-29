@@ -1,0 +1,12 @@
+{
+  "name": "africa-book",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing page and mdBook edition for Exploration and Exploitation of Petroleum Resources in West Africa.",
+  "scripts": {
+    "build": "mdbook build",
+    "build:site": "rm -rf public && mkdir -p public && cp index.html public/index.html && cp -R assets public/assets && mdbook build --dest-dir public/book",
+    "preview": "./scripts/preview.sh",
+    "serve:book": "mdbook serve"
+  }
+}
