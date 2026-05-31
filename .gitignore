@@ -3,3 +3,4 @@ public/
 converted-book.md
 extracted-media/
 .DS_Store
+.worktrees/
