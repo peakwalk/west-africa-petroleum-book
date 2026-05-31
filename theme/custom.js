@@ -130,74 +130,13 @@
     }
   }
 
-  function normalizeWheelDelta(event) {
-    if (event.deltaMode === WheelEvent.DOM_DELTA_LINE) {
-      return event.deltaY * 16;
-    }
-
-    if (event.deltaMode === WheelEvent.DOM_DELTA_PAGE) {
-      return event.deltaY * window.innerHeight;
-    }
-
-    return event.deltaY;
-  }
-
-  function isVerticallyScrollable(element) {
-    if (!element || element === document.body || element === document.documentElement) {
-      return false;
-    }
-
-    const style = window.getComputedStyle(element);
-    const overflowY = style.overflowY;
-    return (overflowY === "auto" || overflowY === "scroll") && element.scrollHeight > element.clientHeight;
-  }
-
-  function getScrollableAncestor(target) {
-    let element = target instanceof Element ? target : null;
-
-    while (element) {
-      if (isVerticallyScrollable(element)) {
-        return element;
-      }
-      element = element.parentElement;
-    }
-
-    return null;
-  }
-
-  function applyWheelScroll(scroller, deltaY) {
-    const maxScrollTop = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
-    const nextScrollTop = scroller.scrollTop + deltaY;
-    const clampedScrollTop = Math.max(0, Math.min(maxScrollTop, nextScrollTop));
-
-    scroller.scrollTop = clampedScrollTop;
-  }
-
-  function scrollBookManually(event) {
-    if (event.defaultPrevented || event.ctrlKey) {
-      return;
-    }
-
-    const deltaY = normalizeWheelDelta(event);
-
-    if (deltaY === 0) {
-      return;
-    }
-
-    const scroller = getScrollableAncestor(event.target) || getBookScroller();
-
-    event.preventDefault();
-    applyWheelScroll(scroller, deltaY);
-  }
-
-  window.addEventListener("wheel", scrollBookManually, { passive: false, capture: true });
   installInternalScrollerBridge();
 })();
 
 (function () {
   function updateProgress() {
     const fill = document.getElementById("book-progress-fill");
-    const scroller = document.getElementById("mdbook-page-wrapper");
+    const scroller = document.getElementById("mdbook-page-wrapper") || document.documentElement;
 
     if (!fill || !scroller) {
       return;
@@ -237,6 +176,9 @@
     }
   });
 
-  document.addEventListener("scroll", updateProgress, { passive: true });
+  const scroller = document.getElementById("mdbook-page-wrapper");
+  if (scroller) {
+    scroller.addEventListener("scroll", updateProgress, { passive: true });
+  }
   window.addEventListener("resize", updateProgress, { passive: true });
 })();

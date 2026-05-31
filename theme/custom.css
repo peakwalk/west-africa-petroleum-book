@@ -325,7 +325,7 @@ body {
 }
 
 .book-home-label {
-  color: #1e293b;
+  color: currentColor;
   font-size: 0.95rem;
   font-weight: 500;
 }
@@ -387,7 +387,6 @@ body {
 }
 
 .book-sidebar-shell {
-  width: clamp(18rem, 22vw, 21rem);
   width: var(--sidebar-width);
   background: #f8fafc;
   border-inline-end: 1px solid rgba(30, 41, 59, 0.08);
@@ -526,9 +525,9 @@ body {
 }
 
 @media only screen and (min-width: 1080px) {
-  html.sidebar-visible .book-toolbar,
-  html.sidebar-visible .reader-layout,
-  html.sidebar-visible .book-progress {
+  #mdbook-sidebar-toggle-anchor:checked ~ #mdbook-page-wrapper .book-toolbar,
+  #mdbook-sidebar-toggle-anchor:checked ~ #mdbook-page-wrapper .reader-layout,
+  #mdbook-sidebar-toggle-anchor:checked ~ #mdbook-page-wrapper .book-progress {
     width: min(100%, calc(100vw - var(--sidebar-width)));
   }
 
