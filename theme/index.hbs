@@ -132,54 +132,65 @@
             <div class="page">
                 <div id="mdbook-menu-bar-hover-placeholder"></div>
                 <header id="mdbook-menu-bar" class="menu-bar sticky bordered">
-                    <div class="book-toolbar">
-                        <div class="toolbar-left">
-                            <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
-                                {{fa "solid" "bars"}}
-                            </label>
-                            <a class="book-home-link" href="{{ path_to_root }}../" aria-label="Back to landing page">
-                                <img class="book-home-icon" src="{{ path_to_root }}../assets/images/upstream-atlas-icon.png" alt="">
-                                <img class="book-home-wordmark" src="{{ path_to_root }}../assets/images/upstream-atlas-wordmark.png" alt="Upstream Atlas">
-                            </a>
-                        </div>
+                    <div class="book-toolbar-frame">
+                        <div class="book-toolbar">
+                            <div class="toolbar-left">
+                                <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                                    {{fa "solid" "bars"}}
+                                </label>
+                                <a class="book-home-link" href="{{ path_to_root }}../" aria-label="Back to landing page">
+                                    <span class="book-brand-lockup">
+                                        <span class="book-brand-mark">
+                                            <img class="book-home-icon" src="{{ path_to_root }}../assets/images/upstream-atlas-icon.png" alt="">
+                                        </span>
+                                        <span class="book-brand-copy">
+                                            <span class="book-brand-kicker">Upstream Atlas</span>
+                                            <img class="book-home-wordmark" src="{{ path_to_root }}../assets/images/upstream-atlas-wordmark.png" alt="Upstream Atlas">
+                                        </span>
+                                    </span>
+                                </a>
+                            </div>
 
-                        <div class="toolbar-center">
-                            <p class="toolbar-kicker">Reading Experience</p>
-                            <h1 class="menu-title">{{ book_title }}</h1>
-                        </div>
+                            <div class="toolbar-center">
+                                <p class="toolbar-kicker">Reading Experience</p>
+                                <h1 class="menu-title">{{ book_title }}</h1>
+                            </div>
 
-                        <div class="toolbar-right">
-                            {{#if search_enabled}}
-                            <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
-                                {{fa "solid" "magnifying-glass"}}
-                            </button>
-                            {{/if}}
-                            <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
-                                {{fa "solid" "paintbrush"}}
-                            </button>
-                            <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
-                            </ul>
-                            {{#if print_enable}}
-                            <a class="icon-button toolbar-link" href="{{ path_to_root }}print.html" title="Print this book" aria-label="Print this book">
-                                {{fa "solid" "print" "print-button"}}
-                            </a>
-                            {{/if}}
-                            {{#if git_repository_url}}
-                            <a class="icon-button toolbar-link" href="{{ git_repository_url }}" title="Git repository" aria-label="Git repository">
-                                {{fa git_repository_icon_class git_repository_icon}}
-                            </a>
-                            {{/if}}
-                            {{#if git_repository_edit_url}}
-                            <a class="icon-button toolbar-link" href="{{ git_repository_edit_url }}" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
-                                {{fa "solid" "pencil" "git-edit-button"}}
-                            </a>
-                            {{/if}}
+                            <div class="toolbar-right">
+                                <div class="book-toolbar-actions">
+                                    {{#if search_enabled}}
+                                    <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                                        {{fa "solid" "magnifying-glass"}}
+                                    </button>
+                                    {{/if}}
+                                    <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                                        {{fa "solid" "paintbrush"}}
+                                    </button>
+                                    <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                        <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                                        <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                                        <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                                        <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                                        <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                                        <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                                    </ul>
+                                    {{#if print_enable}}
+                                    <a class="icon-button toolbar-link" href="{{ path_to_root }}print.html" title="Print this book" aria-label="Print this book">
+                                        {{fa "solid" "print" "print-button"}}
+                                    </a>
+                                    {{/if}}
+                                    {{#if git_repository_url}}
+                                    <a class="icon-button toolbar-link" href="{{ git_repository_url }}" title="Git repository" aria-label="Git repository">
+                                        {{fa git_repository_icon_class git_repository_icon}}
+                                    </a>
+                                    {{/if}}
+                                    {{#if git_repository_edit_url}}
+                                    <a class="icon-button toolbar-link" href="{{ git_repository_edit_url }}" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
+                                        {{fa "solid" "pencil" "git-edit-button"}}
+                                    </a>
+                                    {{/if}}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </header>
@@ -214,36 +225,46 @@
                 </script>
 
                 <div id="mdbook-content" class="content book-shell">
-                    <main class="book-main">
-                        <article class="book-article">
-                            {{{ content }}}
-                        </article>
+                    <div class="book-shell-grid">
+                        <main class="book-main">
+                            <div class="book-main-column">
+                                <div class="book-page-surface">
+                                    <article class="book-article">
+                                        <div class="book-article-shell">
+                                            {{{ content }}}
+                                        </div>
+                                    </article>
+                                </div>
 
-                        <nav class="chapter-pagination" aria-label="Chapter navigation">
-                            {{#if previous}}
-                            <a rel="prev" href="{{ path_to_root }}{{ previous.link }}" class="chapter-nav-card chapter-nav-previous">
-                                <span class="chapter-nav-label">Previous chapter</span>
-                                <strong>{{ previous.name }}{{ previous.title }}</strong>
-                            </a>
-                            {{else}}
-                            <span class="chapter-nav-card chapter-nav-placeholder" aria-hidden="true"></span>
-                            {{/if}}
+                                <nav class="chapter-pagination" aria-label="Chapter navigation">
+                                    {{#if previous}}
+                                    <a rel="prev" href="{{ path_to_root }}{{ previous.link }}" class="chapter-nav-card chapter-nav-previous">
+                                        <span class="chapter-nav-label">Previous chapter</span>
+                                        <strong>{{ previous.name }}{{ previous.title }}</strong>
+                                    </a>
+                                    {{else}}
+                                    <span class="chapter-nav-card chapter-nav-placeholder" aria-hidden="true"></span>
+                                    {{/if}}
 
-                            {{#if next}}
-                            <a rel="next prefetch" href="{{ path_to_root }}{{ next.link }}" class="chapter-nav-card chapter-nav-next">
-                                <span class="chapter-nav-label">Next chapter</span>
-                                <strong>{{ next.name }}{{ next.title }}</strong>
-                            </a>
-                            {{/if}}
-                        </nav>
-                    </main>
+                                    {{#if next}}
+                                    <a rel="next prefetch" href="{{ path_to_root }}{{ next.link }}" class="chapter-nav-card chapter-nav-next">
+                                        <span class="chapter-nav-label">Next chapter</span>
+                                        <strong>{{ next.name }}{{ next.title }}</strong>
+                                    </a>
+                                    {{/if}}
+                                </nav>
+                            </div>
+                        </main>
 
-                    <aside class="book-outline">
-                        <div class="book-outline-inner">
-                            <p class="book-outline-label">On This Page</p>
-                            <div class="book-outline-body"></div>
-                        </div>
-                    </aside>
+                        <aside class="book-outline">
+                            <div class="book-outline-shell">
+                                <div class="book-outline-inner">
+                                    <p class="book-outline-label">On This Page</p>
+                                    <div class="book-outline-body"></div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
                 </div>
             </div>
         </div>

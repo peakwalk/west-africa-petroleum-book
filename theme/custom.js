@@ -217,6 +217,7 @@
     }
 
     outlineBody.replaceChildren(onThisPage);
+    document.body.classList.add("book-outline-ready");
   }
 
   document.addEventListener("DOMContentLoaded", function () {
