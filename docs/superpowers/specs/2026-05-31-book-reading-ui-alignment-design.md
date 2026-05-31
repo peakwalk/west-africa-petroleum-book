@@ -27,13 +27,15 @@ The current `/book/` experience already contains most of the required informatio
 
 The gap is not architectural. The gap is layout fidelity, spacing, density, component treatment, and the overall reading-shell polish relative to the approved prototype.
 
-This work should therefore avoid a rewrite. The correct strategy is to reshape the existing mdBook shell so it renders like the prototype without discarding mdBook behavior.
+The previous implementation attempt established the wrong layout model by effectively accounting for the left navigation twice: once as the real mdBook sidebar, and again inside the reading content shell. That compressed the reading column and created excessive empty space to the right.
+
+This work should therefore avoid a rewrite, but it must correct the layout model. The correct strategy is to keep the real mdBook sidebar as the only left navigation surface and reshape only the right-hand reading shell so it renders like the prototype without discarding mdBook behavior.
 
 ## Scope
 
 In scope:
 
-- the `/book/` reading interface shell
+- the `/book/` reading interface shell, with visible mdBook sidebar and visible chapter content on initial load
 - the sticky header layout and styling
 - the left chapter navigation presentation
 - the center reading column layout and typography treatment
@@ -59,6 +61,7 @@ The implementation must preserve the following:
 - mdBook remains the content engine
 - chapter content continues to come from `src/**/*.md`
 - left navigation remains generated from `SUMMARY.md`
+- the mdBook sidebar remains the only left navigation container
 - right-side section navigation remains generated from chapter headings
 - search, theme toggle, print, repository link, and edit link keep their existing behaviors
 - current build commands remain valid
@@ -90,7 +93,7 @@ The prototype establishes a clear reading-shell model:
 - thin progress line
 - lightweight chapter-to-chapter cards
 
-The mdBook page will adopt the same model, even if the underlying DOM differs.
+The mdBook page will adopt the same model, but only by styling the existing mdBook sidebar and by rebuilding the right-hand reading shell. We will not create an extra left column inside the content shell.
 
 ### 3. Keep content-driven navigation, not prototype stub data
 
@@ -104,6 +107,15 @@ Therefore, fidelity is defined as:
 - similar spacing and typography rhythm
 
 Fidelity is not defined as copying the prototype's placeholder data or route system.
+
+### 4. `/book` must open as a readable book view, not a decorative shell
+
+The `/book` route must immediately show two things on first load:
+
+- the mdBook sidebar on the left
+- chapter or book content on the right
+
+The goal is not to turn `/book` into a chapter-only route or a landing-like screen. The goal is to make the existing mdBook root reading experience look and behave like the prototype's reader shell.
 
 ## Proposed Implementation
 
@@ -124,9 +136,9 @@ Expected structure after update:
   - center: reading context label and book title
   - right: mdBook action buttons
 - progress bar directly below the header
-- three-column content shell
-  - left sidebar: mdBook-generated chapter navigation
-  - center main area: article card plus chapter pagination
+- outer page structure keeps the existing mdBook sidebar as the left navigation
+- right-hand reading shell contains only two columns
+  - main area: article surface plus chapter pagination
   - right sidebar: moved "On This Page" content
 
 The template will not change:
@@ -136,6 +148,8 @@ The template will not change:
 - theme switcher ids and controls
 - sidebar container ids
 - previous/next chapter data usage
+
+The template must not introduce a second left column inside `#mdbook-content`.
 
 ### `theme/custom.css`
 
@@ -150,10 +164,16 @@ Required styling outcomes:
 - active chapter uses the primary solid highlight
 - chapter groups use quieter, compact label styling
 - right rail looks like a supportive panel rather than a second primary column
-- article content becomes the visual center through a white card, soft border, larger padding, and subtle shadow
+- article content becomes the visual center and occupies most of the available width to the right of the mdBook sidebar
 - headings, body text, tables, blockquotes, and media use spacing that matches the prototype's reading cadence
 - progress bar becomes thinner and more understated
 - previous/next cards become lighter, denser, and closer to the prototype's composition
+
+The CSS must not allocate a fake left column inside the content area. Width allocation must assume:
+
+- real mdBook sidebar on the left
+- main reading column as the dominant area
+- outline rail as a narrow supporting column
 
 ### `theme/custom.js`
 
@@ -161,7 +181,7 @@ The JavaScript remains minimal and supports the shell rather than defining it.
 
 It should continue to handle:
 
-- internal scrolling bridge if still required by the custom layout
+- internal scrolling bridge only if still required by the final layout
 - moving the generated "On This Page" block into the right rail container
 - updating the reading progress bar against the actual scroll container
 - stable hash-link scrolling within the internal scroll container
@@ -174,17 +194,17 @@ Desktop fidelity is the priority, but responsiveness must remain solid.
 
 ### Large desktop
 
-At wide widths, the page should present the full three-column reading layout:
+At wide widths, the page should present:
 
-- left navigation rail visible
-- center reading card with stable max width
-- right "On This Page" rail visible
+- left mdBook sidebar visible
+- main reading column occupying most of the remaining width
+- right "On This Page" rail visible as a narrow support column
 
-This is the closest match to the prototype.
+This is the closest match to the prototype while still preserving mdBook's actual DOM model.
 
 ### Medium widths
 
-At medium widths, the right rail can collapse away first to preserve reading width. The left rail remains available because it is still the main navigation tool.
+At medium widths, the right rail can collapse away first to preserve reading width. The mdBook sidebar remains available because it is still the main navigation tool.
 
 ### Narrow widths and tablet
 
@@ -231,8 +251,9 @@ Mitigation:
 ## Acceptance Criteria
 
 - `/book/` visually aligns with the approved prototype reading page direction
+- `/book/` shows the mdBook sidebar on the left and readable content on the right immediately on load
 - the page retains mdBook interactions for sidebar toggle, search, theme switching, print, repository, and edit actions
-- the left navigation, center reading card, and right "On This Page" rail read as a cohesive three-column reading shell on desktop
+- the mdBook sidebar, dominant reading column, and right "On This Page" rail read as a cohesive reader shell on desktop
 - the reading progress bar updates correctly during scroll
 - previous/next chapter navigation remains functional
 - responsive behavior remains usable on tablet and mobile widths
@@ -245,9 +266,12 @@ Mitigation:
 3. Inspect at least one long-form chapter and one table-heavy chapter.
 4. Verify:
    - header layout
+   - mdBook sidebar remains the only left navigation column
+   - `/book/` loads with visible sidebar and visible reading content
    - sidebar toggle
    - search control visibility and behavior
    - theme toggle behavior
+   - reading column width dominates the right-hand area
    - right-rail section list placement
    - progress bar updates
    - previous/next chapter links
