@@ -21,8 +21,10 @@ cd "$ROOT_DIR"
 rm -rf "$PUBLIC_DIR"
 mkdir -p "$PUBLIC_DIR"
 
+npm run build:chapters >/dev/null
 cp "$ROOT_DIR/index.html" "$PUBLIC_DIR/index.html"
 cp -R "$ROOT_DIR/assets" "$PUBLIC_DIR/assets"
+cp -R "$ROOT_DIR/chapters" "$PUBLIC_DIR/chapters"
 
 mdbook build --dest-dir "$PUBLIC_DIR/book"
 

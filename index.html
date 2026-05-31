@@ -8,138 +8,224 @@
       content="A professional online edition of Exploration and Exploitation of Petroleum Resources in West Africa."
     >
     <title>Exploration and Exploitation of Petroleum Resources in West Africa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:wght@400;500;600;700&display=swap"
+    >
+    <link rel="icon" href="assets/images/upstream-atlas-favicon.png?v=2" type="image/png" sizes="32x32">
+    <link rel="shortcut icon" href="assets/images/upstream-atlas-favicon.png?v=2" type="image/png">
+    <link rel="apple-touch-icon" href="assets/images/upstream-atlas-favicon.png?v=2">
     <link rel="stylesheet" href="assets/css/landing.css">
     <script src="assets/js/ga.js" defer></script>
   </head>
-  <body>
+  <body class="landing-shell">
     <header class="site-header">
-      <div class="brand">West Africa Petroleum Resources</div>
-      <nav class="nav" aria-label="Primary navigation">
-        <a href="#about">About</a>
-        <a href="#audience">Audience</a>
-        <a href="#chapters">Chapters</a>
-      </nav>
+      <div class="site-header-inner">
+        <a class="brand-mark" href="/" aria-label="Upstream Atlas">
+          <img class="brand-icon" src="assets/images/upstream-atlas-icon.png" alt="" width="48" height="48">
+          <img class="brand-wordmark" src="assets/images/upstream-atlas-wordmark.png" alt="Upstream Atlas" width="220" height="54">
+        </a>
+        <nav class="primary-nav" aria-label="Primary navigation">
+          <a class="current-link" href="/">Home</a>
+          <a href="#about">About</a>
+          <a href="#audience">Audience</a>
+          <a href="chapters/">Chapters</a>
+          <a href="book/">Start Reading</a>
+          <a class="nav-search" href="book/" aria-label="Search the book">
+            <span class="nav-search-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" focusable="false">
+                <path d="M10.5 4a6.5 6.5 0 1 0 4.03 11.6l4.44 4.43 1.06-1.06-4.43-4.44A6.5 6.5 0 0 0 10.5 4Zm0 1.5a5 5 0 1 1 0 10 5 5 0 0 1 0-10Z" fill="currentColor"/>
+              </svg>
+            </span>
+            <span>Search</span>
+          </a>
+        </nav>
+      </div>
     </header>
 
     <main>
-      <section class="hero">
-        <div class="hero-inner">
-          <p class="eyebrow">Online Book</p>
+      <section class="hero-panel">
+        <div class="hero-media" aria-hidden="true"></div>
+        <div class="hero-overlay" aria-hidden="true"></div>
+        <div class="hero-content">
           <h1>Exploration and Exploitation of Petroleum Resources in West Africa</h1>
-          <p class="subtitle">
-            A structured guide to petroleum value chains, upstream operations, fiscal regimes,
-            governance, and country-level resource management across West Africa.
+          <p class="hero-copy">
+            A comprehensive analytical framework for understanding petroleum value chains,
+            upstream operations, fiscal regimes, governance structures, and country-level
+            resource management across West Africa.
           </p>
-          <div class="actions">
-            <a class="button" href="book/">Start Reading</a>
-            <a class="button secondary" href="#chapters">View Chapters</a>
+          <div class="hero-actions">
+            <a class="button button-primary" href="book/">Start Reading</a>
+            <a class="button button-secondary" href="chapters/">View Chapters</a>
           </div>
         </div>
       </section>
 
       <section id="about" class="section">
-        <div class="section-inner split">
-          <div>
-            <p class="eyebrow">About the Book</p>
-            <h2>Petroleum development, public responsibility, and fiscal strategy.</h2>
+        <div class="section-heading">
+          <p class="eyebrow">About the Book</p>
+          <h2>Petroleum development, public responsibility, and fiscal strategy.</h2>
+        </div>
+        <div class="editorial-panel">
+          <div class="editorial-copy">
+            <p>
+              This book examines how West African states can understand, regulate, and
+              benefit from petroleum exploration and exploitation. It connects technical
+              petroleum operations with legal, fiscal, institutional, and governance
+              questions that shape outcomes for governments, investors, and citizens.
+            </p>
           </div>
-          <p class="lead">
-            This book examines how West African states can understand, regulate, and benefit
-            from petroleum exploration and exploitation. It connects technical petroleum
-            operations with legal, fiscal, institutional, and governance questions that shape
-            outcomes for governments, investors, and citizens.
-          </p>
+          <aside class="editorial-aside">
+            <p class="aside-label">Core lens</p>
+            <p>
+              Technical operations are read alongside fiscal design, state capacity, and
+              long-run public accountability.
+            </p>
+          </aside>
         </div>
       </section>
 
-      <section id="audience" class="section alt">
-        <div class="section-inner split">
-          <div>
-            <p class="eyebrow">Who This Book Is For</p>
-            <h2>Designed for readers who work across energy, policy, and research.</h2>
-          </div>
-          <ul class="feature-list">
-            <li>
-              <strong>Students and researchers</strong>
-              Petroleum geoscience, energy economics, public finance, and governance.
-            </li>
-            <li>
-              <strong>Policy makers and regulators</strong>
-              State agencies, national oil companies, and institutions overseeing petroleum assets.
-            </li>
-            <li>
-              <strong>Energy-sector professionals</strong>
-              Operators, consultants, and analysts evaluating upstream activity and fiscal regimes.
-            </li>
-          </ul>
+      <section id="audience" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Who This Book Is For</p>
+          <h2>Designed for readers who work across energy, policy, and research.</h2>
+        </div>
+        <div class="audience-grid">
+          <article class="audience-card">
+            <div class="audience-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" focusable="false">
+                <path d="M5 4.75A1.75 1.75 0 0 1 6.75 3h8.5A1.75 1.75 0 0 1 17 4.75v14.5A1.75 1.75 0 0 1 15.25 21h-8.5A1.75 1.75 0 0 1 5 19.25Zm2 1.25v12h8V6Zm1.75 2h4.5v1.5h-4.5Zm0 3h4.5v1.5h-4.5Z" fill="currentColor"/>
+              </svg>
+            </div>
+            <h3>Students &amp; Researchers</h3>
+            <p>
+              Comprehensive academic resource covering petroleum value chains, fiscal
+              systems, and governance frameworks.
+            </p>
+          </article>
+          <article class="audience-card">
+            <div class="audience-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" focusable="false">
+                <path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5Zm3 1v9h10v-9Zm1.5 1.5h7v1.5h-7Zm0 3h5.5v1.5H8.5Z" fill="currentColor"/>
+              </svg>
+            </div>
+            <h3>Policy Makers &amp; Regulators</h3>
+            <p>
+              Comparative analysis of tax regimes, licensing frameworks, and institutional
+              capacity across West Africa.
+            </p>
+          </article>
+          <article class="audience-card">
+            <div class="audience-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" focusable="false">
+                <path d="M12 3c2.58 0 4.8 1.56 5.76 3.79l1.87.54-1.25 4.34a8 8 0 1 1-12.76 0L4.37 7.33l1.87-.54A6.27 6.27 0 0 1 12 3Zm0 2a4.25 4.25 0 0 0-3.8 2.34l-.2.41-1 .29.52 1.8A7.98 7.98 0 0 1 12 8.5a7.98 7.98 0 0 1 4.48 1.34l.52-1.8-1-.29-.2-.41A4.25 4.25 0 0 0 12 5Zm0 5.5a6 6 0 1 0 0 12 6 6 0 0 0 0-12Z" fill="currentColor"/>
+              </svg>
+            </div>
+            <h3>Energy Professionals</h3>
+            <p>
+              In-depth technical and commercial insights for upstream operations, from
+              exploration to production.
+            </p>
+          </article>
         </div>
       </section>
 
-      <section class="section">
-        <div class="section-inner split">
-          <div>
-            <p class="eyebrow">What You Will Learn</p>
-            <h2>A practical map of the region's petroleum questions.</h2>
-          </div>
-          <ul class="feature-list">
-            <li>
-              <strong>How the petroleum value chain works</strong>
-              Upstream, midstream, and downstream roles in a regional development strategy.
-            </li>
-            <li>
-              <strong>Where states create leverage</strong>
-              Licensing, exploration oversight, production planning, and abandonment obligations.
-            </li>
-            <li>
-              <strong>How fiscal regimes shape outcomes</strong>
-              Royalties, cost recovery, profit oil, taxation, and state participation.
-            </li>
-            <li>
-              <strong>Why governance determines performance</strong>
-              Political stability, transparency, corruption risk, and institutional capacity.
-            </li>
-          </ul>
+      <section class="section section-muted">
+        <div class="section-heading">
+          <p class="eyebrow">What You Will Learn</p>
+          <h2>A practical map of the region&rsquo;s petroleum questions.</h2>
+        </div>
+        <div class="learning-grid">
+          <article class="learning-card">
+            <h3>How the petroleum value chain works</h3>
+            <p>Upstream, midstream, and downstream roles in a regional development strategy.</p>
+          </article>
+          <article class="learning-card">
+            <h3>Where states create leverage</h3>
+            <p>Licensing, exploration oversight, production planning, and abandonment obligations.</p>
+          </article>
+          <article class="learning-card">
+            <h3>How fiscal regimes shape outcomes</h3>
+            <p>Royalties, cost recovery, profit oil, taxation, and state participation.</p>
+          </article>
+          <article class="learning-card">
+            <h3>Why governance determines performance</h3>
+            <p>Political stability, transparency, corruption risk, and institutional capacity.</p>
+          </article>
         </div>
       </section>
 
-      <section id="chapters" class="section alt">
-        <div class="section-inner">
+      <section id="book-structure" class="section section-muted">
+        <div class="section-heading">
           <p class="eyebrow">Chapter Preview</p>
           <h2>Read the mdBook edition by section.</h2>
-          <div class="chapter-grid">
-            <ol class="chapter-list">
-              <li><strong>Chapter 1</strong> Value Chain of the Hydrocarbon Sector</li>
-              <li><strong>Chapter 2</strong> Different Phases of Upstream Oil and the Roles of States</li>
-              <li><strong>Chapter 3</strong> Tax Regimes in the Petroleum Sector</li>
-            </ol>
-            <ol class="chapter-list" start="4">
-              <li><strong>Chapter 4</strong> Comparative Study of Tax Regimes in Selected West African Countries</li>
-              <li><strong>Chapter 5</strong> Key Socio-Political Determinants of Oil Sector Performance</li>
-              <li><strong>Chapter 6</strong> West Africa: In-Depth Country Analysis</li>
-            </ol>
-          </div>
         </div>
+        <div class="chapter-preview-grid">
+          <article class="chapter-preview-card">
+            <p class="chapter-part">Part I: Foundations</p>
+            <ul>
+              <li><span class="list-chevron" aria-hidden="true">›</span><span><strong>Chapter 1</strong> Value Chain of the Hydrocarbon Sector</span></li>
+              <li><span class="list-chevron" aria-hidden="true">›</span><span><strong>Chapter 2</strong> Different Phases of Upstream Oil and the Roles of States</span></li>
+            </ul>
+          </article>
+          <article class="chapter-preview-card">
+            <p class="chapter-part">Part II: Fiscal Systems</p>
+            <ul>
+              <li><span class="list-chevron" aria-hidden="true">›</span><span><strong>Chapter 3</strong> Tax Regimes in the Petroleum Sector</span></li>
+              <li><span class="list-chevron" aria-hidden="true">›</span><span><strong>Chapter 4</strong> Comparative Study of Tax Regimes in Selected West African Countries</span></li>
+            </ul>
+          </article>
+          <article class="chapter-preview-card">
+            <p class="chapter-part">Part III: Governance &amp; Analysis</p>
+            <ul>
+              <li><span class="list-chevron" aria-hidden="true">›</span><span><strong>Chapter 5</strong> Key Socio-Political Determinants of Oil Sector Performance</span></li>
+              <li><span class="list-chevron" aria-hidden="true">›</span><span><strong>Chapter 6</strong> West Africa: In-Depth Country Analysis</span></li>
+            </ul>
+          </article>
+        </div>
+        <a class="chapters-link" href="chapters/">View All Chapters <span aria-hidden="true">›</span></a>
       </section>
 
       <section class="section">
-        <div class="section-inner split">
-          <div>
-            <p class="eyebrow">About the Author</p>
-            <h2>Edited and published as a web-first study resource.</h2>
+        <div class="section-heading">
+          <p class="eyebrow">About the Author</p>
+          <h2>Edited and published as a web-first study resource.</h2>
+        </div>
+        <div class="editorial-panel">
+          <div class="editorial-copy">
+            <p>
+              This online edition is maintained by Edison as a professional reading version
+              of the edited manuscript. Replace this section with the author&rsquo;s full
+              biography, institutional affiliation, and publication notes before public
+              launch.
+            </p>
           </div>
-          <p class="lead">
-            This online edition is maintained by Edison as a professional reading version of
-            the edited manuscript. Replace this section with the author's full biography,
-            institutional affiliation, and publication notes before public launch.
-          </p>
+          <aside class="editorial-aside">
+            <p class="aside-label">Web-first edition</p>
+            <p>
+              Structured for readable navigation, faster chapter access, and searchable
+              long-form study.
+            </p>
+          </aside>
         </div>
       </section>
-
     </main>
 
-    <footer class="footer">
-      <span>© 2026 Edison. All rights reserved.</span>
-      <span><a href="book/">Read online</a></span>
+    <footer class="site-footer">
+      <div class="footer-copy">
+        <p>© 2026 Upstream Atlas - West Africa Petroleum Resources</p>
+      </div>
+      <div class="footer-links">
+        <a href="#about">About</a>
+        <a href="chapters/">Chapters</a>
+        <a href="book/">Read Online</a>
+      </div>
+      <a class="footer-brand" href="/" aria-label="Upstream Atlas">
+        <img class="footer-brand-icon" src="assets/images/upstream-atlas-icon.png" alt="" width="42" height="42">
+        <img class="footer-brand-wordmark" src="assets/images/upstream-atlas-wordmark.png" alt="Upstream Atlas" width="220" height="54">
+      </a>
     </footer>
   </body>
 </html>

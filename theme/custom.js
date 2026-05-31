@@ -193,3 +193,49 @@
   window.addEventListener("wheel", scrollBookManually, { passive: false, capture: true });
   installInternalScrollerBridge();
 })();
+
+(function () {
+  function updateProgress() {
+    const fill = document.getElementById("book-progress-fill");
+    const scroller = document.getElementById("mdbook-page-wrapper");
+
+    if (!fill || !scroller) {
+      return;
+    }
+
+    const maxScroll = Math.max(1, scroller.scrollHeight - scroller.clientHeight);
+    const progress = Math.max(0, Math.min(1, scroller.scrollTop / maxScroll));
+    fill.style.transform = "scaleX(" + progress + ")";
+  }
+
+  function moveOutline() {
+    const outlineBody = document.querySelector(".book-outline-body");
+    const onThisPage = document.querySelector(".on-this-page");
+
+    if (!outlineBody || !onThisPage || onThisPage.parentElement === outlineBody) {
+      return;
+    }
+
+    outlineBody.replaceChildren(onThisPage);
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    requestAnimationFrame(function () {
+      moveOutline();
+      updateProgress();
+    });
+
+    const sidebar = document.getElementById("mdbook-sidebar");
+
+    if (sidebar) {
+      const observer = new MutationObserver(function () {
+        moveOutline();
+      });
+
+      observer.observe(sidebar, { childList: true, subtree: true });
+    }
+  });
+
+  document.addEventListener("scroll", updateProgress, { passive: true });
+  window.addEventListener("resize", updateProgress, { passive: true });
+})();
