@@ -1,4 +1,23 @@
 (function () {
+  const defaultChapterPath = "chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html";
+
+  function isBookHomePath(pathname) {
+    return /\/book(?:\/index\.html)?\/?$/.test(pathname);
+  }
+
+  if (!isBookHomePath(window.location.pathname)) {
+    return;
+  }
+
+  const target = new URL(defaultChapterPath, window.location.href);
+  target.search = window.location.search;
+
+  if (window.location.href !== target.href) {
+    window.location.replace(target.href);
+  }
+})();
+
+(function () {
   const bookScroller = document.getElementById("mdbook-page-wrapper");
 
   function getBookScroller() {
