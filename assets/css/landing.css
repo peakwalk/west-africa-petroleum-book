@@ -68,6 +68,7 @@ img {
 .section-heading,
 .feature-grid,
 .editorial-panel,
+.reference-evidence-grid,
 .audience-grid,
 .learning-grid,
 .chapter-preview-grid,
@@ -320,9 +321,9 @@ img {
 
 .hero-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(18rem, 0.75fr);
-  gap: 2rem;
-  align-items: end;
+  grid-template-columns: minmax(0, 1.18fr) minmax(22rem, 0.82fr);
+  gap: clamp(2rem, 4.5vw, 4rem);
+  align-items: start;
 }
 
 .hero-copy-block {
@@ -370,7 +371,7 @@ img {
 
 .hero-copy-block h1 {
   max-width: 18ch;
-  font-size: clamp(2.6rem, 5vw, 4.35rem);
+  font-size: clamp(2.6rem, 4.6vw, 4rem);
   line-height: 1.03;
   letter-spacing: 0;
 }
@@ -412,14 +413,20 @@ img {
 
 .hero-signal-panel {
   display: grid;
-  gap: 1rem;
+  gap: 1.2rem;
   align-content: start;
-  padding: 1.5rem;
+  padding: clamp(1.5rem, 3vw, 2rem);
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 1rem;
   background: rgba(255, 255, 255, 0.07);
   box-shadow: var(--hero-shadow);
   backdrop-filter: blur(18px);
+}
+
+@media (min-width: 901px) {
+  .hero-signal-panel {
+    margin-top: clamp(17rem, 30vw, 20.5rem);
+  }
 }
 
 .hero-signal-label {
@@ -443,11 +450,18 @@ img {
 .hero-signal-list li {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 0.75rem;
+  gap: 0.95rem;
   align-items: start;
   color: rgba(255, 255, 255, 0.88);
   font-size: 0.96rem;
   line-height: 1.55;
+}
+
+.hero-signal-list strong {
+  display: block;
+  color: #fff;
+  font-family: "Manrope", "Inter", sans-serif;
+  font-weight: 800;
 }
 
 .signal-index,
@@ -467,7 +481,7 @@ img {
 }
 
 .signal-status {
-  min-width: 7.4rem;
+  min-width: 7.8rem;
   justify-content: flex-start;
   padding-inline: 0.7rem;
   background: rgba(255, 255, 255, 0.1);
@@ -600,6 +614,39 @@ img {
     rgba(255, 255, 255, 0.98);
 }
 
+.country-grid-note {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.4rem 0 0.2rem;
+}
+
+.country-grid-note p {
+  margin: 0;
+}
+
+.country-grid-note p:last-child {
+  max-width: 38rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.country-card-compact {
+  min-height: 0;
+}
+
+.country-card-compact .country-signal-grid {
+  display: none;
+}
+
+.country-card-compact .country-copy {
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
 .feature-card h3,
 .country-card h3,
 .audience-card h3,
@@ -681,6 +728,84 @@ img {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.85fr);
   gap: 1.25rem;
+}
+
+.reference-evidence-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.reference-evidence-card {
+  position: relative;
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+  min-height: 13rem;
+  padding: 1.25rem;
+  border: 1px solid rgba(11, 31, 51, 0.1);
+  border-radius: 1rem;
+  background:
+    linear-gradient(145deg, rgba(11, 31, 51, 0.04), rgba(255, 255, 255, 0.96) 44%),
+    #fff;
+  box-shadow: 0 16px 38px rgba(11, 31, 51, 0.07);
+}
+
+.reference-evidence-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  border-radius: 1rem 1rem 0 0;
+  background: linear-gradient(90deg, var(--accent), var(--secondary));
+}
+
+.reference-evidence-label {
+  margin: 0;
+  color: var(--accent);
+  font-family: "Manrope", "Inter", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.reference-evidence-card h3 {
+  margin: 0;
+  color: var(--text);
+  font-family: "Manrope", "Inter", sans-serif;
+  font-size: 1.2rem;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.reference-evidence-card p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.94rem;
+  line-height: 1.62;
+}
+
+.reference-evidence-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: auto;
+}
+
+.reference-evidence-row span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.35rem 0.55rem;
+  border: 1px solid rgba(31, 94, 122, 0.14);
+  border-radius: 0.55rem;
+  background: rgba(31, 94, 122, 0.06);
+  color: var(--text);
+  font-family: "Manrope", "Inter", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
 }
 
 .editorial-copy p + p {
@@ -925,6 +1050,7 @@ img {
 @media (max-width: 1100px) {
   .hero-layout,
   .editorial-panel,
+  .reference-evidence-grid,
   .feature-grid,
   .country-grid {
     grid-template-columns: 1fr 1fr;
@@ -953,6 +1079,7 @@ img {
 
   .hero-layout,
   .feature-grid,
+  .reference-evidence-grid,
   .audience-grid,
   .chapter-preview-grid,
   .country-grid,
@@ -998,6 +1125,7 @@ img {
   .section-heading,
   .feature-grid,
   .editorial-panel,
+  .reference-evidence-grid,
   .audience-grid,
   .learning-grid,
   .chapter-preview-grid,
@@ -1023,8 +1151,12 @@ img {
     flex-direction: column;
   }
 
+  .hero-content {
+    padding: 3rem 0;
+  }
+
   .hero-copy-block h1 {
-    font-size: clamp(2.4rem, 10vw, 3.35rem);
+    font-size: clamp(2.25rem, 9vw, 3.05rem);
   }
 
   .subsection-heading h3 {
