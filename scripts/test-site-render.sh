@@ -46,6 +46,24 @@ check_file_size_at_most() {
   fi
 }
 
+check_order() {
+  file_path="$1"
+  first_pattern="$2"
+  second_pattern="$3"
+  first_offset="$(LC_ALL=C grep -Fbo -- "$first_pattern" "$file_path" | head -n 1 | cut -d: -f1 || true)"
+  second_offset="$(LC_ALL=C grep -Fbo -- "$second_pattern" "$file_path" | head -n 1 | cut -d: -f1 || true)"
+
+  if [ -z "$first_offset" ] || [ -z "$second_offset" ]; then
+    echo "Missing expected ordered patterns '$first_pattern' or '$second_pattern' in $file_path" >&2
+    exit 1
+  fi
+
+  if [ "$first_offset" -ge "$second_offset" ]; then
+    echo "Expected '$first_pattern' to appear before '$second_pattern' in $file_path" >&2
+    exit 1
+  fi
+}
+
 check_exists scripts/generate-index-page.mjs
 check_exists scripts/generate-legal-pages.mjs
 check_exists scripts/shared/landing-shell.mjs
@@ -74,7 +92,9 @@ check_contains public/index.html 'upstream-atlas-favicon.png?v=2'
 check_contains public/index.html 'href="chapters/"'
 check_contains public/index.html 'class="current-link" href="/">Home</a>'
 check_contains public/index.html 'href="#countries">Countries</a>'
+check_contains public/index.html 'href="#about">About</a>'
 check_contains public/index.html 'href="#resources">Resources</a>'
+check_order public/index.html 'href="#about">About</a>' 'href="#resources">Resources</a>'
 check_contains public/index.html 'class="header-contact-link"'
 check_contains public/index.html 'mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas'
 check_contains public/index.html 'aria-label="Contact Us"'
@@ -159,8 +179,9 @@ check_contains public/chapters/index.html 'class="site-header-inner"'
 check_contains public/chapters/index.html 'class="button button-header" href="../book/">Start Reading</a>'
 check_contains public/chapters/index.html 'class="current-link" href="./">Chapters</a>'
 check_contains public/chapters/index.html 'href="../#countries">Countries</a>'
-check_contains public/chapters/index.html 'href="../#resources">Resources</a>'
 check_contains public/chapters/index.html 'href="../#about">About</a>'
+check_contains public/chapters/index.html 'href="../#resources">Resources</a>'
+check_order public/chapters/index.html 'href="../#about">About</a>' 'href="../#resources">Resources</a>'
 check_contains public/chapters/index.html 'class="header-contact-link"'
 check_contains public/chapters/index.html 'mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas'
 check_contains public/chapters/index.html 'class="footer-brand-lockup"'
@@ -204,6 +225,7 @@ check_contains public/privacy-policy.html 'href="cookie-policy.html"'
 check_contains public/cookie-policy.html 'href="terms-of-use.html"'
 check_contains public/terms-of-use.html 'href="index.html"'
 check_not_contains public/terms-of-use.html 'href="/"'
+check_order public/terms-of-use.html '<a href="index.html#about">About</a>' '<p class="site-footer-heading">Resources</p>'
 
 check_contains public/book/index.html 'id="mdbook-sidebar"'
 check_contains public/book/index.html 'class="light sidebar-visible"'

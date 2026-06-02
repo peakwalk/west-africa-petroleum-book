@@ -145,8 +145,8 @@ export function renderLandingHeader({ currentPage = "home", logoBasePath = "" } 
           <a${homeClass} href="${escapeHtml(links.homeHref)}">Home</a>
           <a href="${escapeHtml(links.countriesHref)}">Countries</a>
           <a${chaptersClass} href="${escapeHtml(links.chaptersHref)}">Chapters</a>
-          <a href="${escapeHtml(links.resourcesHref)}">Resources</a>
           <a href="${escapeHtml(links.aboutHref)}">About</a>
+          <a href="${escapeHtml(links.resourcesHref)}">Resources</a>
         </nav>
         <div class="header-actions">
 ${renderHeaderContactLink()}
@@ -157,8 +157,8 @@ ${renderHeaderContactLink()}
               <a${homeClass} href="${escapeHtml(links.homeHref)}">Home</a>
               <a href="${escapeHtml(links.countriesHref)}">Countries</a>
               <a${chaptersClass} href="${escapeHtml(links.chaptersHref)}">Chapters</a>
-              <a href="${escapeHtml(links.resourcesHref)}">Resources</a>
               <a href="${escapeHtml(links.aboutHref)}">About</a>
+              <a href="${escapeHtml(links.resourcesHref)}">Resources</a>
               <a class="mobile-nav-contact" href="${escapeHtml(CONTACT_HREF)}">Contact Us</a>
               <a class="button button-header mobile-nav-cta" href="${escapeHtml(links.ctaHref)}">Start Reading</a>
             </nav>
