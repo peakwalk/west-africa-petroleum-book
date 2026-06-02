@@ -134,6 +134,10 @@ check_contains assets/css/landing.css '.site-header-inner {'
 check_contains assets/css/landing.css 'grid-template-columns: auto auto;'
 check_not_contains assets/css/landing.css '@import url("https://fonts.googleapis.com'
 check_not_contains scripts/generate-chapters-page.mjs 'replaceAll('
+check_not_contains assets/css/chapters.css 'var(--primary)'
+check_not_contains assets/css/chapters.css '--primary:'
+check_contains assets/css/chapters.css 'var(--ink-primary)'
+check_contains assets/css/chapters.css 'var(--brand-blue)'
 
 check_exists public/chapters/index.html
 check_contains public/chapters/index.html 'Chapter Library'

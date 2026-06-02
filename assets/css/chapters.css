@@ -47,7 +47,7 @@
   font-size: 1.25rem;
   font-weight: 500;
   line-height: 1.35;
-  color: var(--primary);
+  color: var(--ink-primary);
 }
 
 .chapter-library-list {
@@ -87,7 +87,7 @@
 }
 
 .chapter-card-number {
-  color: var(--primary);
+  color: var(--brand-blue);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -181,7 +181,7 @@
 
 .chapter-card:hover h3,
 .chapter-card:focus-visible h3 {
-  color: var(--primary);
+  color: var(--brand-blue);
 }
 
 .chapter-card p {
