@@ -31,12 +31,7 @@ jobs:
           mdbook --version
 
       - name: Build site
-        run: |
-          rm -rf public
-          mkdir -p public
-          cp index.html public/index.html
-          cp -R assets public/assets
-          mdbook build --dest-dir public/book
+        run: npm run build:site
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

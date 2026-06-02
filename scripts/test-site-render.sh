@@ -51,6 +51,8 @@ check_exists scripts/shared/landing-shell.mjs
 check_exists assets/images/west-africa-intelligence-overlay.svg
 check_contains package.json '"build:index": "node scripts/generate-index-page.mjs"'
 check_contains package.json '"build:site": "rm -rf public && mkdir -p public && npm run build:index && npm run build:chapters'
+check_contains .github/workflows/pages.yml 'run: npm run build:site'
+check_not_contains .github/workflows/pages.yml 'cp index.html public/index.html'
 check_contains scripts/generate-index-page.mjs 'renderLandingHead'
 check_contains scripts/generate-index-page.mjs 'renderLandingHeader'
 check_contains scripts/generate-index-page.mjs 'renderLandingFooter'
