@@ -4,18 +4,19 @@
   --surface: #ffffff;
   --surface-muted: #eef2f4;
   --surface-tint: #e4ebef;
+  --ink-primary: #0b1f33;
   --brand-blue: #3163c2;
-  --primary: #264d97;
-  --footer-bg: #18315f;
+  --brand-blue-deep: #264d97;
+  --footer-bg: #0b1f33;
   --secondary: #d88a1d;
   --brand-gold: #d9b24a;
   --accent: #1f5e7a;
-  --text: #102033;
+  --text: var(--ink-primary);
   --text-muted: #526171;
-  --line: rgba(38, 77, 151, 0.12);
-  --line-strong: rgba(38, 77, 151, 0.2);
-  --card-shadow: 0 18px 44px rgba(16, 32, 51, 0.08);
-  --hero-shadow: 0 24px 64px rgba(24, 49, 95, 0.26);
+  --line: rgba(11, 31, 51, 0.1);
+  --line-strong: rgba(11, 31, 51, 0.18);
+  --card-shadow: 0 18px 44px rgba(11, 31, 51, 0.08);
+  --hero-shadow: 0 24px 64px rgba(11, 31, 51, 0.28);
 }
 
 * {
@@ -57,7 +58,7 @@ img {
   position: sticky;
   top: 0;
   z-index: 20;
-  border-bottom: 1px solid rgba(38, 77, 151, 0.08);
+  border-bottom: 1px solid rgba(11, 31, 51, 0.08);
   background: rgba(247, 248, 249, 0.86);
   backdrop-filter: blur(18px);
 }
@@ -138,7 +139,7 @@ img {
 .primary-nav a.current-link,
 .primary-nav a:hover,
 .primary-nav a:focus-visible {
-  color: var(--primary);
+  color: var(--brand-blue);
 }
 
 .primary-nav a.current-link::after,
@@ -170,9 +171,9 @@ img {
 .button-header {
   min-height: 2.9rem;
   padding-inline: 1.1rem;
-  background: rgba(49, 99, 194, 0.06);
-  border-color: rgba(49, 99, 194, 0.16);
-  color: var(--primary);
+  background: rgba(49, 99, 194, 0.07);
+  border-color: rgba(49, 99, 194, 0.2);
+  color: var(--brand-blue-deep);
 }
 
 .button-primary {
@@ -195,7 +196,7 @@ img {
 .hero-panel {
   position: relative;
   overflow: clip;
-  background: var(--primary);
+  background: var(--brand-blue-deep);
 }
 
 .hero-media,
@@ -212,28 +213,26 @@ img {
 }
 
 .hero-overlay {
-  background: linear-gradient(135deg, rgba(38, 77, 151, 0.84) 0%, rgba(24, 49, 95, 0.74) 100%);
+  background: linear-gradient(135deg, rgba(38, 77, 151, 0.82) 0%, rgba(11, 31, 51, 0.84) 100%);
 }
 
 .hero-grid {
-  opacity: 0.16;
-  background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px) 0 0 / 96px 96px,
-    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px) 0 0 / 96px 96px,
-    repeating-linear-gradient(115deg, rgba(216, 138, 29, 0.18) 0 2px, transparent 2px 22px);
+  opacity: 0.09;
+  background: url("../images/west-africa-intelligence-overlay.svg") center / cover no-repeat;
 }
 
 .hero-grid::after {
   content: "";
   position: absolute;
-  inset: 12% auto auto 58%;
-  width: 28rem;
-  height: 28rem;
+  inset: 10% auto auto 56%;
+  width: 32rem;
+  height: 32rem;
   border-radius: 50%;
   background:
-    radial-gradient(circle, rgba(255, 255, 255, 0.12) 1px, transparent 1px) 0 0 / 18px 18px,
-    radial-gradient(circle at center, rgba(31, 94, 122, 0.34), transparent 62%);
-  filter: blur(1px);
+    radial-gradient(circle, rgba(255, 255, 255, 0.14) 1px, transparent 1px) 0 0 / 18px 18px,
+    radial-gradient(circle at center, rgba(31, 94, 122, 0.28), transparent 64%);
+  opacity: 0.5;
+  filter: blur(2px);
 }
 
 .hero-content {
@@ -506,6 +505,14 @@ img {
     rgba(255, 255, 255, 0.98);
 }
 
+.country-card {
+  grid-template-rows: auto auto 1fr auto;
+  gap: 1rem;
+  background:
+    linear-gradient(180deg, rgba(49, 99, 194, 0.04), rgba(255, 255, 255, 0.98) 44%),
+    rgba(255, 255, 255, 0.98);
+}
+
 .feature-card h3,
 .country-card h3,
 .audience-card h3,
@@ -526,6 +533,36 @@ img {
   color: var(--text-muted);
   font-size: 0.98rem;
   line-height: 1.72;
+}
+
+.country-card-top,
+.country-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.country-card-heading {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.country-card-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid rgba(49, 99, 194, 0.18);
+  border-radius: 999px;
+  background: rgba(49, 99, 194, 0.08);
+  color: var(--brand-blue-deep);
+  font-family: "Manrope", "Inter", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .feature-badge {
@@ -571,28 +608,59 @@ img {
   height: 100%;
 }
 
-.country-metrics {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.country-signal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
 }
 
-.country-metrics li {
-  display: inline-flex;
-  align-items: center;
-  min-height: 2rem;
-  padding: 0.42rem 0.65rem;
-  border: 1px solid rgba(38, 77, 151, 0.08);
-  border-radius: 0.5rem;
-  background: var(--surface-muted);
-  color: var(--accent);
+.country-signal {
+  display: grid;
+  gap: 0.28rem;
+  padding: 0.8rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  background:
+    linear-gradient(180deg, rgba(247, 248, 249, 0.98), rgba(238, 242, 244, 0.94)),
+    var(--surface-muted);
+}
+
+.country-signal-label,
+.country-card-footnote {
+  margin: 0;
   font-family: "Manrope", "Inter", sans-serif;
-  font-size: 0.76rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.country-signal-label {
+  color: var(--accent);
+}
+
+.country-signal-value,
+.country-card-link {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.country-card-footer {
+  padding-top: 0.25rem;
+  border-top: 1px solid var(--line);
+}
+
+.country-card-footnote {
+  color: var(--text-muted);
+}
+
+.country-card-link {
+  color: var(--brand-blue);
+  font-size: 0.8rem;
+  font-weight: 700;
 }
 
 .chapter-part {
@@ -634,7 +702,7 @@ img {
   gap: 0.35rem;
   margin: 0;
   padding: 0.25rem 0;
-  color: var(--primary);
+  color: var(--brand-blue);
   font-family: "Manrope", "Inter", sans-serif;
   font-weight: 700;
 }
@@ -657,8 +725,8 @@ img {
 .editorial-copy:hover,
 .editorial-aside:hover {
   transform: translateY(-3px);
-  border-color: rgba(38, 77, 151, 0.18);
-  box-shadow: 0 24px 48px rgba(16, 32, 51, 0.1);
+  border-color: var(--line-strong);
+  box-shadow: 0 24px 48px rgba(11, 31, 51, 0.1);
 }
 
 .site-footer {
@@ -788,6 +856,10 @@ img {
   .hero-copy-block h1 {
     max-width: none;
   }
+
+  .country-signal-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 @media (max-width: 640px) {
@@ -828,6 +900,10 @@ img {
 
   .subsection-heading h3 {
     font-size: 1.35rem;
+  }
+
+  .country-signal-grid {
+    grid-template-columns: 1fr;
   }
 
   .site-footer {

@@ -35,6 +35,33 @@ check_exists() {
   fi
 }
 
+check_file_size_at_most() {
+  file_path="$1"
+  max_bytes="$2"
+  size_bytes="$(wc -c < "$file_path" | tr -d ' ')"
+
+  if [ "$size_bytes" -gt "$max_bytes" ]; then
+    echo "Expected $file_path to be <= $max_bytes bytes but was $size_bytes bytes" >&2
+    exit 1
+  fi
+}
+
+check_exists scripts/generate-index-page.mjs
+check_exists scripts/shared/landing-shell.mjs
+check_exists assets/images/west-africa-intelligence-overlay.svg
+check_contains package.json '"build:index": "node scripts/generate-index-page.mjs"'
+check_contains package.json '"build:site": "rm -rf public && mkdir -p public && npm run build:index && npm run build:chapters'
+check_contains scripts/generate-index-page.mjs 'renderLandingHead'
+check_contains scripts/generate-index-page.mjs 'renderLandingHeader'
+check_contains scripts/generate-index-page.mjs 'renderLandingFooter'
+check_contains scripts/generate-chapters-page.mjs 'from "./shared/landing-shell.mjs"'
+check_contains scripts/generate-chapters-page.mjs 'renderLandingHead'
+check_contains scripts/generate-chapters-page.mjs 'renderLandingHeader'
+check_contains scripts/generate-chapters-page.mjs 'renderLandingFooter'
+check_contains scripts/shared/landing-shell.mjs 'function renderLandingHead'
+check_contains scripts/shared/landing-shell.mjs 'function renderLandingHeader'
+check_contains scripts/shared/landing-shell.mjs 'function renderLandingFooter'
+
 check_contains public/index.html 'class="landing-shell"'
 check_contains public/index.html 'class="hero-panel"'
 check_contains public/index.html 'class="chapter-preview-card"'
@@ -51,21 +78,35 @@ check_contains public/index.html 'West African Petroleum Intelligence'
 check_contains public/index.html 'Platform Intelligence'
 check_contains public/index.html 'Coming Soon'
 check_contains public/index.html 'Country Intelligence'
+check_contains public/index.html 'class="country-card-top"'
+check_contains public/index.html 'class="country-card-badge"'
+check_contains public/index.html 'class="country-signal-grid"'
+check_contains public/index.html 'class="country-signal-value"'
+check_contains public/index.html 'Profile template ready'
 check_contains public/index.html 'class="chapters-link-row"'
 check_contains public/index.html 'class="footer-brand-lockup"'
 check_contains public/index.html 'class="footer-brand-upstream"'
 check_contains public/index.html 'class="footer-brand-atlas"'
 check_not_contains public/index.html 'class="footer-brand-wordmark"'
 check_contains public/index.html 'fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap'
+check_file_size_at_most public/assets/images/upstream-atlas-icon.png 50000
+check_file_size_at_most public/assets/images/upstream-atlas-wordmark.png 110000
+check_file_size_at_most public/assets/images/prototype-hero.jpg 120000
 check_contains assets/css/landing.css '--page-bg: #f7f8f9;'
 check_contains assets/css/landing.css '--surface-muted: #eef2f4;'
+check_contains assets/css/landing.css '--ink-primary: #0b1f33;'
 check_contains assets/css/landing.css '--brand-blue: #3163c2;'
-check_contains assets/css/landing.css '--primary: #264d97;'
-check_contains assets/css/landing.css '--footer-bg: #18315f;'
+check_contains assets/css/landing.css '--brand-blue-deep: #264d97;'
+check_contains assets/css/landing.css '--footer-bg: #0b1f33;'
 check_contains assets/css/landing.css '--secondary: #d88a1d;'
+check_contains assets/css/landing.css '--text: var(--ink-primary);'
 check_contains assets/css/landing.css 'opacity: 0.28;'
-check_contains assets/css/landing.css 'background: linear-gradient(135deg, rgba(38, 77, 151, 0.84) 0%, rgba(24, 49, 95, 0.74) 100%);'
+check_contains assets/css/landing.css 'background: linear-gradient(135deg, rgba(38, 77, 151, 0.82) 0%, rgba(11, 31, 51, 0.84) 100%);'
+check_contains assets/css/landing.css 'background: var(--brand-blue-deep);'
 check_contains assets/css/landing.css 'background: url("../images/prototype-hero.jpg") center right / cover;'
+check_contains assets/css/landing.css 'background: url("../images/west-africa-intelligence-overlay.svg") center / cover no-repeat;'
+check_contains assets/css/landing.css 'opacity: 0.09;'
+check_not_contains assets/css/landing.css '--primary: #264d97;'
 check_contains assets/css/landing.css '.chapters-link-row {'
 check_contains assets/css/landing.css 'width: min(76rem, calc(100% - 2rem));'
 check_contains assets/css/landing.css '.chapters-link {'
@@ -79,8 +120,18 @@ check_not_contains scripts/generate-chapters-page.mjs 'replaceAll('
 check_exists public/chapters/index.html
 check_contains public/chapters/index.html 'Chapter Library'
 check_contains public/chapters/index.html 'class="site-header-inner"'
+check_contains public/chapters/index.html 'class="button button-header" href="../book/">Start Reading</a>'
 check_contains public/chapters/index.html 'class="current-link" href="./">Chapters</a>'
+check_contains public/chapters/index.html 'href="../#countries">Countries</a>'
+check_contains public/chapters/index.html 'href="../#resources">Resources</a>'
+check_contains public/chapters/index.html 'href="../#about">About</a>'
+check_contains public/chapters/index.html 'class="footer-brand-lockup"'
+check_contains public/chapters/index.html 'class="footer-brand-upstream"'
+check_contains public/chapters/index.html 'class="footer-brand-atlas"'
+check_contains public/chapters/index.html 'fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap'
 check_not_contains public/chapters/index.html 'class="nav-search"'
+check_not_contains public/chapters/index.html 'href="../#audience"'
+check_not_contains public/chapters/index.html 'class="footer-brand-wordmark"'
 check_contains public/chapters/index.html '<h2>Part I: General Information on the Oil Industry</h2>'
 check_contains public/chapters/index.html 'class="chapter-card-header"'
 check_contains public/chapters/index.html 'class="chapter-card-status"'
@@ -93,7 +144,6 @@ check_not_contains public/chapters/index.html ' entries</p>'
 check_not_contains public/chapters/index.html 'title="Estimated reading time based on'
 check_contains public/chapters/index.html 'General Information on the Oil Industry'
 check_contains public/chapters/index.html '../book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html'
-check_contains public/chapters/index.html '../#about'
 
 check_contains public/book/index.html 'id="mdbook-sidebar"'
 check_contains public/book/index.html 'class="light sidebar-visible"'

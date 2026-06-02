@@ -2,6 +2,12 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import {
+  renderLandingFooter,
+  renderLandingHead,
+  renderLandingHeader,
+} from "./shared/landing-shell.mjs";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT = path.resolve(__dirname, "..");
@@ -439,42 +445,16 @@ function renderPage(sections) {
   return `<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta
-      name="description"
-      content="Browse the chapter library for Exploration and Exploitation of Petroleum Resources in West Africa."
-    >
-    <title>Chapter Library | Exploration and Exploitation of Petroleum Resources in West Africa</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:wght@400;500;600;700&display=swap"
-    >
-    <link rel="icon" href="../assets/images/upstream-atlas-favicon.png?v=2" type="image/png" sizes="32x32">
-    <link rel="shortcut icon" href="../assets/images/upstream-atlas-favicon.png?v=2" type="image/png">
-    <link rel="apple-touch-icon" href="../assets/images/upstream-atlas-favicon.png?v=2">
-    <link rel="stylesheet" href="../assets/css/landing.css">
-    <link rel="stylesheet" href="../assets/css/chapters.css">
-    <script src="../assets/js/ga.js" defer></script>
+${renderLandingHead({
+  basePath: "../",
+  description:
+    "Browse the chapter library for Exploration and Exploitation of Petroleum Resources in West Africa.",
+  extraStylesheets: ["assets/css/chapters.css"],
+  title: "Chapter Library | Exploration and Exploitation of Petroleum Resources in West Africa",
+})}
   </head>
   <body class="landing-shell chapters-shell">
-    <header class="site-header">
-      <div class="site-header-inner">
-        <a class="brand-mark" href="../" aria-label="Upstream Atlas">
-          <img class="brand-icon" src="../assets/images/upstream-atlas-icon.png" alt="" width="48" height="48">
-          <img class="brand-wordmark" src="../assets/images/upstream-atlas-wordmark.png" alt="Upstream Atlas" width="220" height="54">
-        </a>
-        <nav class="primary-nav" aria-label="Primary navigation">
-          <a href="../">Home</a>
-          <a href="../#about">About</a>
-          <a href="../#audience">Audience</a>
-          <a class="current-link" href="./">Chapters</a>
-          <a href="../book/">Start Reading</a>
-        </nav>
-      </div>
-    </header>
+${renderLandingHeader({ currentPage: "chapters", logoBasePath: "../" })}
 
     <main class="chapters-main">
       <section class="chapters-hero">
@@ -492,20 +472,7 @@ function renderPage(sections) {
       ${renderAdditionalResources()}
     </main>
 
-    <footer class="site-footer">
-      <div class="footer-copy">
-        <p>© 2026 Upstream Atlas - West Africa Petroleum Resources</p>
-      </div>
-      <div class="footer-links">
-        <a href="../#about">About</a>
-        <a href="./">Chapters</a>
-        <a href="../book/">Read Online</a>
-      </div>
-      <a class="footer-brand" href="../" aria-label="Upstream Atlas">
-        <img class="footer-brand-icon" src="../assets/images/upstream-atlas-icon.png" alt="" width="42" height="42">
-        <img class="footer-brand-wordmark" src="../assets/images/upstream-atlas-wordmark.png" alt="Upstream Atlas" width="220" height="54">
-      </a>
-    </footer>
+${renderLandingFooter({ currentPage: "chapters", logoBasePath: "../" })}
   </body>
 </html>
 `;
