@@ -1,0 +1,29 @@
+{
+  "title": "Privacy Policy",
+  "description": "Public website privacy policy for the Upstream Atlas website.",
+  "statusLine": "Status: Final approved text pending publication",
+  "updatedAt": "Last updated: 2026-06-02",
+  "noticeTitle": "Document pending final approved text",
+  "noticeBody": "This page reserves the canonical public Privacy Policy URL for the Upstream Atlas website. The final approved legal text has not yet been published here.",
+  "statusItems": [
+    "Canonical public URL reserved for the website Privacy Policy.",
+    "The final approved policy text will replace this notice without changing the page URL.",
+    "For the current approved wording, contact the Upstream Atlas team directly."
+  ],
+  "sections": [
+    {
+      "heading": "Why this page exists",
+      "paragraphs": [
+        "Upstream Atlas is preparing a formal public website Privacy Policy for this canonical URL.",
+        "Until the approved text is ready, this placeholder page keeps legal navigation stable and avoids routing public users to a missing resource."
+      ]
+    },
+    {
+      "heading": "What happens next",
+      "paragraphs": [
+        "Once the final wording is approved, this page will be updated in place with the official website Privacy Policy text.",
+        "The URL will stay stable so the public footer and any external references do not need to change."
+      ]
+    }
+  ]
+}

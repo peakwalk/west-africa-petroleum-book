@@ -4,10 +4,11 @@
   "private": true,
   "description": "Landing page and mdBook edition for Exploration and Exploitation of Petroleum Resources in West Africa.",
   "scripts": {
-    "build": "npm run build:index && mdbook build && npm run build:chapters",
+    "build": "npm run build:index && npm run build:legal && mdbook build && npm run build:chapters",
     "build:index": "node scripts/generate-index-page.mjs",
+    "build:legal": "node scripts/generate-legal-pages.mjs",
     "build:chapters": "node scripts/generate-chapters-page.mjs chapters",
-    "build:site": "rm -rf public && mkdir -p public && npm run build:index && npm run build:chapters && cp index.html public/index.html && cp -R assets public/assets && cp -R chapters public/chapters && mdbook build --dest-dir public/book",
+    "build:site": "rm -rf public && mkdir -p public && npm run build:index && npm run build:legal && npm run build:chapters && cp index.html public/index.html && cp terms-of-use.html public/terms-of-use.html && cp privacy-policy.html public/privacy-policy.html && cp cookie-policy.html public/cookie-policy.html && cp -R assets public/assets && cp -R chapters public/chapters && mdbook build --dest-dir public/book",
     "test:site": "sh scripts/test-site-render.sh",
     "preview": "./scripts/preview.sh",
     "serve:book": "mdbook serve"

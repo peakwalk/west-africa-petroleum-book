@@ -1,0 +1,29 @@
+{
+  "title": "Cookie Policy",
+  "description": "Public website cookie policy for the Upstream Atlas website.",
+  "statusLine": "Status: Final approved text pending publication",
+  "updatedAt": "Last updated: 2026-06-02",
+  "noticeTitle": "Document pending final approved text",
+  "noticeBody": "This page reserves the canonical public Cookie Policy URL for the Upstream Atlas website. The final approved legal text has not yet been published here.",
+  "statusItems": [
+    "Canonical public URL reserved for the website Cookie Policy.",
+    "The final approved policy text will replace this notice without changing the page URL.",
+    "For the current approved wording, contact the Upstream Atlas team directly."
+  ],
+  "sections": [
+    {
+      "heading": "Why this page exists",
+      "paragraphs": [
+        "Upstream Atlas is preparing a formal public website Cookie Policy for this canonical URL.",
+        "Until the approved text is ready, this placeholder page keeps footer navigation stable and avoids returning a not-found response for a legal link."
+      ]
+    },
+    {
+      "heading": "What happens next",
+      "paragraphs": [
+        "Once the final wording is approved, this page will be replaced in place with the official website Cookie Policy text.",
+        "The URL will remain unchanged so public legal navigation stays durable as the site evolves."
+      ]
+    }
+  ]
+}

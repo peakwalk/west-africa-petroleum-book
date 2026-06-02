@@ -11,9 +11,15 @@ function resolveAssetPath(basePath, relativePath) {
   return `${basePath}${relativePath}`;
 }
 
-const CONTACT_HREF = "mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas";
+export const CONTACT_HREF = "mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas";
+export const CONTACT_EMAIL = "matt@operatorassetexchange.com";
+export const WEBSITE_LEGAL_LINKS = {
+  cookie: "cookie-policy.html",
+  privacy: "privacy-policy.html",
+  terms: "terms-of-use.html",
+};
 
-function resolveShellLinks(currentPage) {
+export function resolveShellLinks(currentPage) {
   if (currentPage === "chapters") {
     return {
       aboutHref: "../#about",
@@ -22,7 +28,25 @@ function resolveShellLinks(currentPage) {
       countriesHref: "../#countries",
       ctaHref: "../book/",
       homeHref: "../",
+      cookieHref: `../${WEBSITE_LEGAL_LINKS.cookie}`,
+      privacyHref: `../${WEBSITE_LEGAL_LINKS.privacy}`,
       resourcesHref: "../#resources",
+      termsHref: `../${WEBSITE_LEGAL_LINKS.terms}`,
+    };
+  }
+
+  if (currentPage === "legal") {
+    return {
+      aboutHref: "index.html#about",
+      brandHref: "index.html",
+      chaptersHref: "chapters/",
+      countriesHref: "index.html#countries",
+      ctaHref: "book/",
+      homeHref: "index.html",
+      cookieHref: WEBSITE_LEGAL_LINKS.cookie,
+      privacyHref: WEBSITE_LEGAL_LINKS.privacy,
+      resourcesHref: "index.html#resources",
+      termsHref: WEBSITE_LEGAL_LINKS.terms,
     };
   }
 
@@ -33,7 +57,10 @@ function resolveShellLinks(currentPage) {
     countriesHref: "#countries",
     ctaHref: "book/",
     homeHref: "/",
+    cookieHref: WEBSITE_LEGAL_LINKS.cookie,
+    privacyHref: WEBSITE_LEGAL_LINKS.privacy,
     resourcesHref: "#resources",
+    termsHref: WEBSITE_LEGAL_LINKS.terms,
   };
 }
 
@@ -87,6 +114,20 @@ function renderHeaderContactLink() {
         </a>`;
 }
 
+function renderFooterBrand(iconSrc, brandHref) {
+  return `        <a class="footer-brand" href="${escapeHtml(brandHref)}" aria-label="Upstream Atlas">
+          <img class="footer-brand-icon" src="${escapeHtml(iconSrc)}" alt="" width="42" height="42">
+          <span class="footer-brand-lockup" aria-hidden="true">
+            <span class="footer-brand-upstream">UPSTREAM</span>
+            <span class="footer-brand-atlas-row">
+              <span class="footer-brand-line"></span>
+              <span class="footer-brand-atlas">ATLAS</span>
+              <span class="footer-brand-line"></span>
+            </span>
+          </span>
+        </a>`;
+}
+
 export function renderLandingHeader({ currentPage = "home", logoBasePath = "" } = {}) {
   const links = resolveShellLinks(currentPage);
   const iconSrc = resolveAssetPath(logoBasePath, "assets/images/upstream-atlas-icon.png");
@@ -131,26 +172,45 @@ export function renderLandingFooter({ currentPage = "home", logoBasePath = "" } 
   const links = resolveShellLinks(currentPage);
   const iconSrc = resolveAssetPath(logoBasePath, "assets/images/upstream-atlas-icon.png");
 
-  return `    <footer class="site-footer">
-      <div class="footer-copy">
-        <p>© 2026 Upstream Atlas. West African petroleum intelligence and reference.</p>
+  return `    <footer class="site-footer site-footer-detailed">
+      <div class="site-footer-inner">
+        <section class="site-footer-column site-footer-column-brand" aria-label="Upstream Atlas">
+${renderFooterBrand(iconSrc, links.brandHref)}
+          <p class="site-footer-intro">
+            Practical insights into the technical, commercial, fiscal, regulatory, and governance aspects of the West African oil and gas industry.
+          </p>
+        </section>
+        <section class="site-footer-column" aria-label="Explore">
+          <p class="site-footer-heading">Explore</p>
+          <div class="site-footer-column-links">
+            <a href="${escapeHtml(links.homeHref)}">Home</a>
+            <a href="${escapeHtml(links.aboutHref)}">About</a>
+            <a href="${escapeHtml(links.countriesHref)}">Countries</a>
+            <a href="${escapeHtml(links.chaptersHref)}">Book Contents</a>
+            <a href="${escapeHtml(CONTACT_HREF)}">Contact</a>
+          </div>
+        </section>
+        <section class="site-footer-column" aria-label="Resources">
+          <p class="site-footer-heading">Resources</p>
+          <div class="site-footer-column-links">
+            <span class="site-footer-future-item">Latest Updates <small>Coming soon</small></span>
+            <span class="site-footer-future-item">Industry News <small>Coming soon</small></span>
+            <a href="${escapeHtml(links.termsHref)}">Terms of Use</a>
+            <a href="${escapeHtml(links.privacyHref)}">Privacy Policy</a>
+            <a href="${escapeHtml(links.cookieHref)}">Cookie Policy</a>
+          </div>
+        </section>
+        <section class="site-footer-column" aria-label="Contact Us">
+          <p class="site-footer-heading">Contact Us</p>
+          <div class="site-footer-contact-list">
+            <span class="site-footer-contact-label">Email</span>
+            <a class="site-footer-email" href="${escapeHtml(CONTACT_HREF)}">${escapeHtml(CONTACT_EMAIL)}</a>
+          </div>
+        </section>
       </div>
-      <div class="footer-links">
-        <a href="${escapeHtml(links.countriesHref)}">Countries</a>
-        <a href="${escapeHtml(links.chaptersHref)}">Chapters</a>
-        <a href="${escapeHtml(links.resourcesHref)}">Resources</a>
-        <a href="${escapeHtml(links.ctaHref)}">Read Online</a>
+      <div class="site-footer-bottom">
+        <p>© 2026 Upstream Atlas. All Rights Reserved.</p>
+        <p>West Africa Oil &amp; Gas Intelligence</p>
       </div>
-      <a class="footer-brand" href="${escapeHtml(links.brandHref)}" aria-label="Upstream Atlas">
-        <img class="footer-brand-icon" src="${escapeHtml(iconSrc)}" alt="" width="42" height="42">
-        <span class="footer-brand-lockup" aria-hidden="true">
-          <span class="footer-brand-upstream">UPSTREAM</span>
-          <span class="footer-brand-atlas-row">
-            <span class="footer-brand-line"></span>
-            <span class="footer-brand-atlas">ATLAS</span>
-            <span class="footer-brand-line"></span>
-          </span>
-        </span>
-      </a>
     </footer>`;
 }

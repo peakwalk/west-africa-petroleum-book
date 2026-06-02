@@ -47,10 +47,12 @@ check_file_size_at_most() {
 }
 
 check_exists scripts/generate-index-page.mjs
+check_exists scripts/generate-legal-pages.mjs
 check_exists scripts/shared/landing-shell.mjs
 check_exists assets/images/west-africa-intelligence-overlay.svg
 check_contains package.json '"build:index": "node scripts/generate-index-page.mjs"'
-check_contains package.json '"build:site": "rm -rf public && mkdir -p public && npm run build:index && npm run build:chapters'
+check_contains package.json '"build:legal": "node scripts/generate-legal-pages.mjs"'
+check_contains package.json '"build:site": "rm -rf public && mkdir -p public && npm run build:index && npm run build:legal && npm run build:chapters'
 check_contains .github/workflows/pages.yml 'run: npm run build:site'
 check_not_contains .github/workflows/pages.yml 'cp index.html public/index.html'
 check_contains scripts/generate-index-page.mjs 'renderLandingHead'
@@ -103,6 +105,10 @@ check_contains public/index.html 'class="chapters-link-row"'
 check_contains public/index.html 'class="footer-brand-lockup"'
 check_contains public/index.html 'class="footer-brand-upstream"'
 check_contains public/index.html 'class="footer-brand-atlas"'
+check_contains public/index.html 'class="site-footer site-footer-detailed"'
+check_contains public/index.html 'Terms of Use'
+check_contains public/index.html 'Privacy Policy'
+check_contains public/index.html 'Cookie Policy'
 check_not_contains public/index.html 'class="footer-brand-wordmark"'
 check_contains public/index.html 'fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap'
 check_file_size_at_most public/assets/images/upstream-atlas-icon.png 50000
@@ -160,6 +166,10 @@ check_contains public/chapters/index.html 'mailto:matt@operatorassetexchange.com
 check_contains public/chapters/index.html 'class="footer-brand-lockup"'
 check_contains public/chapters/index.html 'class="footer-brand-upstream"'
 check_contains public/chapters/index.html 'class="footer-brand-atlas"'
+check_contains public/chapters/index.html 'class="site-footer site-footer-detailed"'
+check_contains public/chapters/index.html 'Terms of Use'
+check_contains public/chapters/index.html 'Privacy Policy'
+check_contains public/chapters/index.html 'Cookie Policy'
 check_contains public/chapters/index.html 'fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap'
 check_not_contains public/chapters/index.html 'class="nav-search"'
 check_not_contains public/chapters/index.html 'href="../#audience"'
@@ -176,6 +186,24 @@ check_not_contains public/chapters/index.html ' entries</p>'
 check_not_contains public/chapters/index.html 'title="Estimated reading time based on'
 check_contains public/chapters/index.html 'General Information on the Oil Industry'
 check_contains public/chapters/index.html '../book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html'
+
+check_exists public/terms-of-use.html
+check_exists public/privacy-policy.html
+check_exists public/cookie-policy.html
+check_contains public/terms-of-use.html 'class="legal-page"'
+check_contains public/privacy-policy.html 'class="legal-page"'
+check_contains public/cookie-policy.html 'class="legal-page"'
+check_contains public/terms-of-use.html 'Document pending final approved text'
+check_contains public/privacy-policy.html 'Document pending final approved text'
+check_contains public/cookie-policy.html 'Document pending final approved text'
+check_contains public/terms-of-use.html 'Status: Final approved text pending publication'
+check_contains public/privacy-policy.html 'Status: Final approved text pending publication'
+check_contains public/cookie-policy.html 'Status: Final approved text pending publication'
+check_contains public/terms-of-use.html 'href="privacy-policy.html"'
+check_contains public/privacy-policy.html 'href="cookie-policy.html"'
+check_contains public/cookie-policy.html 'href="terms-of-use.html"'
+check_contains public/terms-of-use.html 'href="index.html"'
+check_not_contains public/terms-of-use.html 'href="/"'
 
 check_contains public/book/index.html 'id="mdbook-sidebar"'
 check_contains public/book/index.html 'class="light sidebar-visible"'
@@ -209,6 +237,8 @@ check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-
 check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'reader-main'
 check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'reader-outline'
 check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'reader-article'
+check_not_contains public/book/index.html 'site-footer-detailed'
+check_not_contains public/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'site-footer-detailed'
 check_contains public/book/index.html 'upstream-atlas-favicon.png?v=2'
 check_contains public/book/index.html 'fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:wght@400;500;600;700&display=swap'
 check_not_contains public/book/index.html 'favicon-de23e50b.svg'

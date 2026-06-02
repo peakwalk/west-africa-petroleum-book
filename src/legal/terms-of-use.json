@@ -1,0 +1,29 @@
+{
+  "title": "Terms of Use",
+  "description": "Public website terms of use for the Upstream Atlas website.",
+  "statusLine": "Status: Final approved text pending publication",
+  "updatedAt": "Last updated: 2026-06-02",
+  "noticeTitle": "Document pending final approved text",
+  "noticeBody": "This page exists so the public website can route users to the correct canonical legal URL. It is not yet the final published Terms of Use text.",
+  "statusItems": [
+    "Canonical public URL reserved for the website Terms of Use.",
+    "Final approved text will replace this notice without changing the page URL.",
+    "For the current approved wording, contact the Upstream Atlas team directly."
+  ],
+  "sections": [
+    {
+      "heading": "Why this page exists",
+      "paragraphs": [
+        "Upstream Atlas is preparing a formal public website Terms of Use document for this canonical URL.",
+        "Until the approved text is ready, this placeholder page makes the legal navigation path stable and avoids sending users to an error page."
+      ]
+    },
+    {
+      "heading": "What happens next",
+      "paragraphs": [
+        "Once the final wording is approved, this page will be replaced in place with the official Terms of Use content.",
+        "The URL will remain unchanged so footer links, bookmarks, and search results continue to resolve correctly."
+      ]
+    }
+  ]
+}
