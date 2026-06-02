@@ -123,9 +123,6 @@
             <noscript>
                 <iframe class="sidebar-iframe-outer" src="{{ path_to_root }}toc.html"></iframe>
             </noscript>
-            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
-                <div class="sidebar-resize-indicator"></div>
-            </div>
         </nav>
 
         <div id="mdbook-page-wrapper" class="page-wrapper">
@@ -144,36 +141,19 @@
                             <span class="menu-title hidden">{{ book_title }}</span>
                         </div>
 
+                        {{#if search_enabled}}
+                        <div class="toolbar-search-slot hidden" aria-hidden="true"></div>
+                        {{/if}}
+
                         <div class="toolbar-right">
                             {{#if search_enabled}}
                             <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
                                 {{fa "solid" "magnifying-glass"}}
                             </button>
                             {{/if}}
-                            <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
-                                {{fa "solid" "paintbrush"}}
-                            </button>
-                            <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
-                            </ul>
-                            {{#if print_enable}}
-                            <a class="icon-button toolbar-link" href="{{ path_to_root }}print.html" title="Print this book" aria-label="Print this book">
-                                {{fa "solid" "print" "print-button"}}
-                            </a>
-                            {{/if}}
                             {{#if git_repository_url}}
                             <a class="icon-button toolbar-link" href="{{ git_repository_url }}" title="Git repository" aria-label="Git repository">
                                 {{fa git_repository_icon_class git_repository_icon}}
-                            </a>
-                            {{/if}}
-                            {{#if git_repository_edit_url}}
-                            <a class="icon-button toolbar-link" href="{{ git_repository_edit_url }}" title="Suggest an edit" aria-label="Suggest an edit" rel="edit">
-                                {{fa "solid" "pencil" "git-edit-button"}}
                             </a>
                             {{/if}}
                         </div>
@@ -201,6 +181,10 @@
                     <span id="book-progress-fill"></span>
                 </div>
 
+                {{#if search_enabled}}
+                <div id="mdbook-search-overlay-root" aria-hidden="true"></div>
+                {{/if}}
+
                 <script>
                     document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
@@ -210,31 +194,33 @@
                 </script>
 
                 <div id="mdbook-content" class="content reader-layout">
-                    <main class="reader-main">
-                        <article class="reader-article">
-                            {{{ content }}}
-                        </article>
+                    <main id="mdbook-reader-scroll" class="reader-main">
+                        <div class="reader-main-inner">
+                            <article class="reader-article">
+                                {{{ content }}}
+                            </article>
 
-                        <nav class="chapter-pagination" aria-label="Chapter navigation">
-                            {{#if previous}}
-                            <a rel="prev" href="{{ path_to_root }}{{ previous.link }}" class="chapter-nav-card chapter-nav-previous">
-                                <span class="chapter-nav-label">Previous chapter</span>
-                                <strong>{{ previous.name }}{{ previous.title }}</strong>
-                            </a>
-                            {{else}}
-                            <span class="chapter-nav-card chapter-nav-placeholder" aria-hidden="true"></span>
-                            {{/if}}
+                            <nav class="chapter-pagination" aria-label="Chapter navigation">
+                                {{#if previous}}
+                                <a rel="prev" href="{{ path_to_root }}{{ previous.link }}" class="chapter-nav-card chapter-nav-previous">
+                                    <span class="chapter-nav-label">Previous chapter</span>
+                                    <strong>{{ previous.name }}{{ previous.title }}</strong>
+                                </a>
+                                {{else}}
+                                <span class="chapter-nav-card chapter-nav-placeholder" aria-hidden="true"></span>
+                                {{/if}}
 
-                            {{#if next}}
-                            <a rel="next prefetch" href="{{ path_to_root }}{{ next.link }}" class="chapter-nav-card chapter-nav-next">
-                                <span class="chapter-nav-label">Next chapter</span>
-                                <strong>{{ next.name }}{{ next.title }}</strong>
-                            </a>
-                            {{/if}}
-                        </nav>
+                                {{#if next}}
+                                <a rel="next prefetch" href="{{ path_to_root }}{{ next.link }}" class="chapter-nav-card chapter-nav-next">
+                                    <span class="chapter-nav-label">Next chapter</span>
+                                    <strong>{{ next.name }}{{ next.title }}</strong>
+                                </a>
+                                {{/if}}
+                            </nav>
+                        </div>
                     </main>
 
-                    <aside class="reader-outline">
+                    <aside id="mdbook-outline-scroll" class="reader-outline">
                         <div class="book-outline-inner">
                             <p class="book-outline-label">On This Page</p>
                             <div class="book-outline-body"></div>
@@ -296,6 +282,27 @@
 
         <script src="{{ resource "clipboard.min.js" }}"></script>
         <script src="{{ resource "highlight.js" }}"></script>
+        <div hidden aria-hidden="true">
+            <button id="mdbook-theme-toggle" type="button" tabindex="-1"></button>
+            <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+            </ul>
+        </div>
+        <script>
+            if (!document.getElementById('mdbook-sidebar-resize-handle')) {
+                const shim = document.createElement('div');
+                shim.id = 'mdbook-sidebar-resize-handle';
+                shim.hidden = true;
+                shim.setAttribute('aria-hidden', 'true');
+                shim.style.display = 'none';
+                document.body.appendChild(shim);
+            }
+        </script>
         <script src="{{ resource "book.js" }}"></script>
 
         {{#each additional_js}}

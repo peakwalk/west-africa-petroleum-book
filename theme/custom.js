@@ -18,7 +18,9 @@
 })();
 
 (function () {
-  const bookScroller = document.getElementById("mdbook-page-wrapper");
+  const bookScroller =
+    document.getElementById("mdbook-reader-scroll") ||
+    document.getElementById("mdbook-page-wrapper");
 
   function getBookScroller() {
     return bookScroller || document.documentElement;
@@ -35,10 +37,8 @@
 
   function scrollTargetIntoView(target, behavior) {
     const scroller = getBookScroller();
-    const menu = document.getElementById("mdbook-menu-bar");
-    const menuHeight = menu ? menu.offsetHeight : 0;
     const scrollerTop = scroller.getBoundingClientRect().top;
-    const targetTop = target.getBoundingClientRect().top - scrollerTop + scroller.scrollTop - menuHeight - 8;
+    const targetTop = target.getBoundingClientRect().top - scrollerTop + scroller.scrollTop - 12;
 
     scroller.scrollTo({
       top: Math.max(0, targetTop),
@@ -153,9 +153,41 @@
 })();
 
 (function () {
+  function normalizeOutline(onThisPage) {
+    const outlineAnchors = Array.from(onThisPage.querySelectorAll("a.header-in-summary"));
+
+    if (!outlineAnchors.length) {
+      return;
+    }
+
+    const flatList = document.createElement("ol");
+
+    outlineAnchors.forEach(function (anchor) {
+      const listItem = document.createElement("li");
+      const linkWrapper = document.createElement("span");
+
+      listItem.className = "header-item";
+      linkWrapper.className = "chapter-link-wrapper";
+
+      anchor.textContent = anchor.textContent
+        .replace(/^\s*\d+(?:\.\d+)*(?:\s*[-–]\s*)?/, "")
+        .replace(/\s+/g, " ")
+        .trim();
+
+      linkWrapper.appendChild(anchor);
+      listItem.appendChild(linkWrapper);
+      flatList.appendChild(listItem);
+    });
+
+    onThisPage.replaceChildren(flatList);
+  }
+
   function updateProgress() {
     const fill = document.getElementById("book-progress-fill");
-    const scroller = document.getElementById("mdbook-page-wrapper") || document.documentElement;
+    const scroller =
+      document.getElementById("mdbook-reader-scroll") ||
+      document.getElementById("mdbook-page-wrapper") ||
+      document.documentElement;
 
     if (!fill || !scroller) {
       return;
@@ -174,12 +206,83 @@
       return;
     }
 
+    normalizeOutline(onThisPage);
     outlineBody.replaceChildren(onThisPage);
     document.body.classList.add("book-outline-ready");
   }
 
+  function installHeaderSearchSlot() {
+    const searchWrap = document.getElementById("mdbook-search-wrapper");
+    const searchToggle = document.getElementById("mdbook-search-toggle");
+    const searchbarOuter = document.getElementById("mdbook-searchbar-outer");
+    const searchbar = document.getElementById("mdbook-searchbar");
+    const searchresultsOuter = document.getElementById("mdbook-searchresults-outer");
+    const searchOverlayRoot = document.getElementById("mdbook-search-overlay-root");
+    const toolbarSearchSlot = document.querySelector(".toolbar-search-slot");
+
+    if (!searchWrap || !searchToggle || !searchbarOuter || !searchbar || !searchresultsOuter || !searchOverlayRoot || !toolbarSearchSlot) {
+      return;
+    }
+
+    if (searchbarOuter.parentElement !== toolbarSearchSlot) {
+      toolbarSearchSlot.appendChild(searchbarOuter);
+    }
+
+    if (searchresultsOuter.parentElement !== searchOverlayRoot) {
+      searchOverlayRoot.appendChild(searchresultsOuter);
+    }
+
+    let wasHidden = searchWrap.classList.contains("hidden");
+
+    function hideSearchResultsOverlay() {
+      searchresultsOuter.classList.add("hidden");
+      searchbar.classList.remove("active");
+    }
+
+    function syncToolbarSearchSlot() {
+      const hidden = searchWrap.classList.contains("hidden");
+      toolbarSearchSlot.classList.toggle("hidden", hidden);
+      toolbarSearchSlot.setAttribute("aria-hidden", hidden ? "true" : "false");
+
+      if (!hidden && wasHidden) {
+        requestAnimationFrame(function focusToolbarSearchbar() {
+          searchbar.focus();
+          searchbar.select();
+        });
+      }
+
+      wasHidden = hidden;
+    }
+
+    syncToolbarSearchSlot();
+
+    searchbar.addEventListener("input", function () {
+      if (searchbar.value.trim() === "") {
+        hideSearchResultsOverlay();
+      }
+    });
+
+    searchbar.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        event.stopPropagation();
+        hideSearchResultsOverlay();
+        searchWrap.classList.add("hidden");
+        searchToggle.setAttribute("aria-expanded", "false");
+        searchToggle.focus();
+      }
+    });
+
+    const observer = new MutationObserver(function () {
+      syncToolbarSearchSlot();
+    });
+
+    observer.observe(searchWrap, { attributes: true, attributeFilter: ["class"] });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     requestAnimationFrame(function () {
+      installHeaderSearchSlot();
       moveOutline();
       updateProgress();
     });
@@ -195,7 +298,9 @@
     }
   });
 
-  const scroller = document.getElementById("mdbook-page-wrapper");
+  const scroller =
+    document.getElementById("mdbook-reader-scroll") ||
+    document.getElementById("mdbook-page-wrapper");
   if (scroller) {
     scroller.addEventListener("scroll", updateProgress, { passive: true });
   }

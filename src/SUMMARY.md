@@ -1,7 +1,5 @@
 # Summary
 
-- [Home](index.md)
-
 # Front Matter
 
 - [Book Front Matter](chapters/front-matter.md)
