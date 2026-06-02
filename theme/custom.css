@@ -448,6 +448,10 @@ body {
   pointer-events: none;
 }
 
+.toolbar-contact-link {
+  text-decoration: none;
+}
+
 .icon-button:hover,
 .icon-button:focus-visible,
 .toolbar-link:hover,

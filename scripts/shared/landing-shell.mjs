@@ -11,6 +11,8 @@ function resolveAssetPath(basePath, relativePath) {
   return `${basePath}${relativePath}`;
 }
 
+const CONTACT_HREF = "mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas";
+
 function resolveShellLinks(currentPage) {
   if (currentPage === "chapters") {
     return {
@@ -71,6 +73,20 @@ ${stylesheetHrefs
     <script src="${escapeHtml(scriptHref)}" defer></script>`;
 }
 
+function renderHeaderContactLink() {
+  return `        <a
+          class="header-contact-link"
+          href="${escapeHtml(CONTACT_HREF)}"
+          aria-label="Contact Us"
+          data-tooltip="Contact Us"
+        >
+          <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+            <path d="M4 7.5h16v9H4z"></path>
+            <path d="m4.75 8 7.25 6 7.25-6"></path>
+          </svg>
+        </a>`;
+}
+
 export function renderLandingHeader({ currentPage = "home", logoBasePath = "" } = {}) {
   const links = resolveShellLinks(currentPage);
   const iconSrc = resolveAssetPath(logoBasePath, "assets/images/upstream-atlas-icon.png");
@@ -91,18 +107,22 @@ export function renderLandingHeader({ currentPage = "home", logoBasePath = "" } 
           <a href="${escapeHtml(links.resourcesHref)}">Resources</a>
           <a href="${escapeHtml(links.aboutHref)}">About</a>
         </nav>
-        <a class="button button-header" href="${escapeHtml(links.ctaHref)}">Start Reading</a>
-        <details class="mobile-nav-menu">
-          <summary class="mobile-nav-toggle">Menu</summary>
-          <nav class="mobile-nav-panel" aria-label="Mobile navigation">
-            <a${homeClass} href="${escapeHtml(links.homeHref)}">Home</a>
-            <a href="${escapeHtml(links.countriesHref)}">Countries</a>
-            <a${chaptersClass} href="${escapeHtml(links.chaptersHref)}">Chapters</a>
-            <a href="${escapeHtml(links.resourcesHref)}">Resources</a>
-            <a href="${escapeHtml(links.aboutHref)}">About</a>
-            <a class="button button-header mobile-nav-cta" href="${escapeHtml(links.ctaHref)}">Start Reading</a>
-          </nav>
-        </details>
+        <div class="header-actions">
+${renderHeaderContactLink()}
+          <a class="button button-header" href="${escapeHtml(links.ctaHref)}">Start Reading</a>
+          <details class="mobile-nav-menu">
+            <summary class="mobile-nav-toggle">Menu</summary>
+            <nav class="mobile-nav-panel" aria-label="Mobile navigation">
+              <a${homeClass} href="${escapeHtml(links.homeHref)}">Home</a>
+              <a href="${escapeHtml(links.countriesHref)}">Countries</a>
+              <a${chaptersClass} href="${escapeHtml(links.chaptersHref)}">Chapters</a>
+              <a href="${escapeHtml(links.resourcesHref)}">Resources</a>
+              <a href="${escapeHtml(links.aboutHref)}">About</a>
+              <a class="mobile-nav-contact" href="${escapeHtml(CONTACT_HREF)}">Contact Us</a>
+              <a class="button button-header mobile-nav-cta" href="${escapeHtml(links.ctaHref)}">Start Reading</a>
+            </nav>
+          </details>
+        </div>
       </div>
     </header>`;
 }
