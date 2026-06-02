@@ -57,7 +57,7 @@ check_exists public/chapters/index.html
 check_contains public/chapters/index.html 'Chapter Library'
 check_contains public/chapters/index.html 'class="site-header-inner"'
 check_contains public/chapters/index.html 'class="current-link" href="./">Chapters</a>'
-check_contains public/chapters/index.html 'class="nav-search"'
+check_not_contains public/chapters/index.html 'class="nav-search"'
 check_contains public/chapters/index.html '<h2>Part I: General Information on the Oil Industry</h2>'
 check_contains public/chapters/index.html 'class="chapter-card-header"'
 check_contains public/chapters/index.html 'class="chapter-card-status"'
