@@ -75,6 +75,8 @@ export function renderLandingHeader({ currentPage = "home", logoBasePath = "" } 
   const links = resolveShellLinks(currentPage);
   const iconSrc = resolveAssetPath(logoBasePath, "assets/images/upstream-atlas-icon.png");
   const wordmarkSrc = resolveAssetPath(logoBasePath, "assets/images/upstream-atlas-wordmark.png");
+  const homeClass = currentPage === "home" ? ' class="current-link"' : "";
+  const chaptersClass = currentPage === "chapters" ? ' class="current-link"' : "";
 
   return `    <header class="site-header">
       <div class="site-header-inner">
@@ -83,13 +85,24 @@ export function renderLandingHeader({ currentPage = "home", logoBasePath = "" } 
           <img class="brand-wordmark" src="${escapeHtml(wordmarkSrc)}" alt="Upstream Atlas" width="220" height="54">
         </a>
         <nav class="primary-nav" aria-label="Primary navigation">
-          <a${currentPage === "home" ? ' class="current-link"' : ""} href="${escapeHtml(links.homeHref)}">Home</a>
+          <a${homeClass} href="${escapeHtml(links.homeHref)}">Home</a>
           <a href="${escapeHtml(links.countriesHref)}">Countries</a>
-          <a${currentPage === "chapters" ? ' class="current-link"' : ""} href="${escapeHtml(links.chaptersHref)}">Chapters</a>
+          <a${chaptersClass} href="${escapeHtml(links.chaptersHref)}">Chapters</a>
           <a href="${escapeHtml(links.resourcesHref)}">Resources</a>
           <a href="${escapeHtml(links.aboutHref)}">About</a>
         </nav>
         <a class="button button-header" href="${escapeHtml(links.ctaHref)}">Start Reading</a>
+        <details class="mobile-nav-menu">
+          <summary class="mobile-nav-toggle">Menu</summary>
+          <nav class="mobile-nav-panel" aria-label="Mobile navigation">
+            <a${homeClass} href="${escapeHtml(links.homeHref)}">Home</a>
+            <a href="${escapeHtml(links.countriesHref)}">Countries</a>
+            <a${chaptersClass} href="${escapeHtml(links.chaptersHref)}">Chapters</a>
+            <a href="${escapeHtml(links.resourcesHref)}">Resources</a>
+            <a href="${escapeHtml(links.aboutHref)}">About</a>
+            <a class="button button-header mobile-nav-cta" href="${escapeHtml(links.ctaHref)}">Start Reading</a>
+          </nav>
+        </details>
       </div>
     </header>`;
 }

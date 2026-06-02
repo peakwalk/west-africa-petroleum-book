@@ -162,6 +162,7 @@ body {
   margin-inline: auto;
   padding: 0;
   border: 0;
+  color: var(--ink);
   background: transparent;
   box-shadow: none;
 }
@@ -207,10 +208,12 @@ body {
 .content p {
   max-width: var(--content-max-width);
   margin-bottom: 1.15rem;
+  color: var(--ink);
   line-height: 1.625;
 }
 
 .content li {
+  color: var(--ink);
   line-height: 1.625;
 }
 
@@ -236,7 +239,7 @@ body {
   margin-top: 0;
   padding-bottom: 0;
   border-bottom: 0;
-  color: var(--fg);
+  color: var(--ink);
   font-size: 30px;
   line-height: 1.08;
   text-wrap: balance;
@@ -245,7 +248,7 @@ body {
 .content h2 {
   margin-top: 3rem;
   margin-bottom: 0.9rem;
-  color: var(--fg);
+  color: var(--ink);
   font-size: 24px;
   line-height: 1.2;
 }
@@ -253,13 +256,32 @@ body {
 .content h3 {
   margin-top: 1.7rem;
   margin-bottom: 0.65rem;
-  color: var(--fg);
+  color: var(--ink);
   font-size: 20px;
+}
+
+.reader-article p,
+.reader-article li {
+  color: var(--ink);
+}
+
+.reader-article h1,
+.reader-article h2,
+.reader-article h3,
+.reader-article h4,
+.reader-article h5,
+.reader-article h6 {
+  color: var(--ink);
 }
 
 .content a,
 .content a:visited {
   color: var(--links);
+}
+
+.reader-article a,
+.reader-article a:visited {
+  color: var(--primary);
 }
 
 .content img {
@@ -289,6 +311,7 @@ body {
   font-size: 14px;
   border: 1px solid var(--table-border-color);
   border-radius: 0.75rem;
+  color: var(--ink);
   background: #ffffff;
 }
 
@@ -301,7 +324,7 @@ body {
 
 .content th {
   background: var(--table-header-bg);
-  color: var(--fg);
+  color: var(--ink);
 }
 
 #mdbook-menu-bar,
