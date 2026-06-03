@@ -178,6 +178,7 @@ img {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.55rem;
   min-height: 2.75rem;
   padding: 0.7rem 1rem;
   border: 1px solid rgba(49, 99, 194, 0.2);
@@ -196,18 +197,19 @@ img {
 }
 
 .mobile-nav-toggle::after {
-  content: "";
-  width: 0.46rem;
-  height: 0.46rem;
-  margin-inline-start: 0.55rem;
-  border-inline-end: 2px solid currentColor;
-  border-block-end: 2px solid currentColor;
-  transform: translateY(-0.1rem) rotate(45deg);
-  transition: transform 160ms ease;
+  display: none;
 }
 
-.mobile-nav-menu[open] .mobile-nav-toggle::after {
-  transform: translateY(0.12rem) rotate(225deg);
+.mobile-nav-icon-close {
+  display: none;
+}
+
+.mobile-nav-menu[open] .mobile-nav-icon-menu {
+  display: none;
+}
+
+.mobile-nav-menu[open] .mobile-nav-icon-close {
+  display: inline-block;
 }
 
 .mobile-nav-panel {
@@ -301,6 +303,7 @@ img {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.55rem;
   min-height: 3.2rem;
   padding: 0.85rem 1.35rem;
   border: 1px solid transparent;
@@ -323,6 +326,19 @@ img {
   background: rgba(49, 99, 194, 0.07);
   border-color: rgba(49, 99, 194, 0.2);
   color: var(--brand-blue-deep);
+}
+
+.ua-icon--sm {
+  width: 18px;
+  height: 18px;
+}
+
+.button-icon {
+  color: currentColor;
+}
+
+.button-label {
+  display: inline-block;
 }
 
 .button-primary {

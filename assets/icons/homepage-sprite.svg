@@ -25,4 +25,14 @@
     <circle cx="16.75" cy="18" r="1.25" fill="#D88A1D"/>
     <path d="M12.5 18h3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
   </symbol>
+  <symbol id="icon-start-reading" viewBox="0 0 24 24">
+    <path d="M4 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    <path d="m13 7 5 5-5 5" fill="none" stroke="#D88A1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="icon-menu" viewBox="0 0 24 24">
+    <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="icon-close" viewBox="0 0 24 24">
+    <path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  </symbol>
 </svg>

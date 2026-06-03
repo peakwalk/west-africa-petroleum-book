@@ -11,6 +11,10 @@ function resolveAssetPath(basePath, relativePath) {
   return `${basePath}${relativePath}`;
 }
 
+function resolveHomepageIconSpriteHref(basePath, iconId) {
+  return `${resolveAssetPath(basePath, "assets/icons/homepage-sprite.svg")}#${iconId}`;
+}
+
 export const CONTACT_HREF = "mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas";
 export const CONTACT_EMAIL = "matt@operatorassetexchange.com";
 export const WEBSITE_LEGAL_LINKS = {
@@ -114,6 +118,10 @@ function renderHeaderContactLink() {
         </a>`;
 }
 
+function renderSpriteIcon({ className, href }) {
+  return `<svg class="${escapeHtml(className)}" aria-hidden="true" focusable="false"><use href="${escapeHtml(href)}"></use></svg>`;
+}
+
 function renderFooterBrand(iconSrc, brandHref) {
   return `        <a class="footer-brand" href="${escapeHtml(brandHref)}" aria-label="Upstream Atlas">
           <img class="footer-brand-icon" src="${escapeHtml(iconSrc)}" alt="" width="42" height="42">
@@ -132,6 +140,9 @@ export function renderLandingHeader({ currentPage = "home", logoBasePath = "" } 
   const links = resolveShellLinks(currentPage);
   const iconSrc = resolveAssetPath(logoBasePath, "assets/images/upstream-atlas-icon.png");
   const wordmarkSrc = resolveAssetPath(logoBasePath, "assets/images/upstream-atlas-wordmark.png");
+  const startReadingIconHref = resolveHomepageIconSpriteHref(logoBasePath, "icon-start-reading");
+  const menuIconHref = resolveHomepageIconSpriteHref(logoBasePath, "icon-menu");
+  const closeIconHref = resolveHomepageIconSpriteHref(logoBasePath, "icon-close");
   const homeClass = currentPage === "home" ? ' class="current-link"' : "";
   const chaptersClass = currentPage === "chapters" ? ' class="current-link"' : "";
 
@@ -150,9 +161,16 @@ export function renderLandingHeader({ currentPage = "home", logoBasePath = "" } 
         </nav>
         <div class="header-actions">
 ${renderHeaderContactLink()}
-          <a class="button button-header" href="${escapeHtml(links.ctaHref)}">Start Reading</a>
+          <a class="button button-header" href="${escapeHtml(links.ctaHref)}">
+            ${renderSpriteIcon({ className: "button-icon ua-icon ua-icon--sm", href: startReadingIconHref })}
+            <span class="button-label">Start Reading</span>
+          </a>
           <details class="mobile-nav-menu">
-            <summary class="mobile-nav-toggle">Menu</summary>
+            <summary class="mobile-nav-toggle">
+              ${renderSpriteIcon({ className: "mobile-nav-icon mobile-nav-icon-menu ua-icon ua-icon--sm", href: menuIconHref })}
+              ${renderSpriteIcon({ className: "mobile-nav-icon mobile-nav-icon-close ua-icon ua-icon--sm", href: closeIconHref })}
+              <span class="button-label">Menu</span>
+            </summary>
             <nav class="mobile-nav-panel" aria-label="Mobile navigation">
               <a${homeClass} href="${escapeHtml(links.homeHref)}">Home</a>
               <a href="${escapeHtml(links.countriesHref)}">Countries</a>
@@ -160,7 +178,10 @@ ${renderHeaderContactLink()}
               <a href="${escapeHtml(links.aboutHref)}">About</a>
               <a href="${escapeHtml(links.resourcesHref)}">Resources</a>
               <a class="mobile-nav-contact" href="${escapeHtml(CONTACT_HREF)}">Contact Us</a>
-              <a class="button button-header mobile-nav-cta" href="${escapeHtml(links.ctaHref)}">Start Reading</a>
+              <a class="button button-header mobile-nav-cta" href="${escapeHtml(links.ctaHref)}">
+                ${renderSpriteIcon({ className: "button-icon ua-icon ua-icon--sm", href: startReadingIconHref })}
+                <span class="button-label">Start Reading</span>
+              </a>
             </nav>
           </details>
         </div>

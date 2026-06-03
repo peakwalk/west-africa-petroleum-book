@@ -71,6 +71,9 @@ check_exists assets/images/west-africa-intelligence-overlay.svg
 check_exists assets/icons/homepage/icon-research.svg
 check_exists assets/icons/homepage/icon-industry-monitoring.svg
 check_exists assets/icons/homepage/icon-intelligence.svg
+check_exists assets/icons/homepage/icon-start-reading.svg
+check_exists assets/icons/homepage/icon-menu.svg
+check_exists assets/icons/homepage/icon-close.svg
 check_exists assets/icons/homepage-sprite.svg
 check_contains package.json '"build:index": "node scripts/generate-index-page.mjs"'
 check_contains package.json '"build:legal": "node scripts/generate-legal-pages.mjs"'
@@ -117,6 +120,12 @@ check_contains public/index.html 'class="feature-card-icon ua-icon ua-icon--feat
 check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-research'
 check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-industry-monitoring'
 check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-intelligence'
+check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-start-reading'
+check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-menu'
+check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-close'
+check_contains public/index.html 'class="button-icon ua-icon ua-icon--sm"'
+check_contains public/index.html 'class="mobile-nav-icon mobile-nav-icon-menu ua-icon ua-icon--sm"'
+check_contains public/index.html 'class="mobile-nav-icon mobile-nav-icon-close ua-icon ua-icon--sm"'
 check_contains public/index.html 'class="reference-evidence-grid"'
 check_contains public/index.html 'Country reserves'
 check_contains public/index.html 'Country Intelligence'
@@ -142,6 +151,9 @@ check_contains public/index.html 'fonts.googleapis.com/css2?family=Inter:wght@40
 check_exists public/assets/icons/homepage/icon-research.svg
 check_exists public/assets/icons/homepage/icon-industry-monitoring.svg
 check_exists public/assets/icons/homepage/icon-intelligence.svg
+check_exists public/assets/icons/homepage/icon-start-reading.svg
+check_exists public/assets/icons/homepage/icon-menu.svg
+check_exists public/assets/icons/homepage/icon-close.svg
 check_exists public/assets/icons/homepage-sprite.svg
 check_file_size_at_most public/assets/images/upstream-atlas-icon.png 50000
 check_file_size_at_most public/assets/images/upstream-atlas-wordmark.png 110000
@@ -178,6 +190,8 @@ check_contains assets/css/landing.css '.mobile-nav-contact {'
 check_contains assets/css/landing.css '.ua-icon {'
 check_contains assets/css/landing.css '.ua-icon--feature {'
 check_contains assets/css/landing.css '.feature-card-icon {'
+check_contains assets/css/landing.css '.button-icon {'
+check_contains assets/css/landing.css '.mobile-nav-icon-close {'
 check_contains assets/css/landing.css '@media (max-width: 700px) {'
 check_contains assets/css/landing.css '.site-header-inner {'
 check_contains assets/css/landing.css 'grid-template-columns: auto auto;'
@@ -191,7 +205,9 @@ check_contains assets/css/chapters.css 'var(--brand-blue)'
 check_exists public/chapters/index.html
 check_contains public/chapters/index.html 'Chapter Library'
 check_contains public/chapters/index.html 'class="site-header-inner"'
-check_contains public/chapters/index.html 'class="button button-header" href="../book/">Start Reading</a>'
+check_contains public/chapters/index.html 'class="button button-header" href="../book/">'
+check_contains public/chapters/index.html '<span class="button-label">Start Reading</span>'
+check_contains public/chapters/index.html '../assets/icons/homepage-sprite.svg#icon-start-reading'
 check_contains public/chapters/index.html 'class="current-link" href="./">Chapters</a>'
 check_contains public/chapters/index.html 'href="../#countries">Countries</a>'
 check_contains public/chapters/index.html 'href="../#about">About</a>'
