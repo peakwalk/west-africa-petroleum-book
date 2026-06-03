@@ -22,6 +22,8 @@ export const WEBSITE_LEGAL_LINKS = {
   privacy: "privacy-policy.html",
   terms: "terms-of-use.html",
 };
+const ICON_LOGO_PATH = "assets/images/upstream-atlas-icon.png";
+const NAV_LOGO_PATH = "assets/images/upstream-atlas-nav-logo.png";
 
 export function resolveShellLinks(currentPage) {
   if (currentPage === "chapters") {
@@ -122,24 +124,56 @@ function renderSpriteIcon({ className, href }) {
   return `<svg class="${escapeHtml(className)}" aria-hidden="true" focusable="false"><use href="${escapeHtml(href)}"></use></svg>`;
 }
 
-function renderFooterBrand(iconSrc, brandHref) {
-  return `        <a class="footer-brand" href="${escapeHtml(brandHref)}" aria-label="Upstream Atlas">
-          <img class="footer-brand-icon" src="${escapeHtml(iconSrc)}" alt="" width="42" height="42">
-          <span class="footer-brand-lockup" aria-hidden="true">
-            <span class="footer-brand-upstream">UPSTREAM</span>
-            <span class="footer-brand-atlas-row">
-              <span class="footer-brand-line"></span>
-              <span class="footer-brand-atlas">ATLAS</span>
-              <span class="footer-brand-line"></span>
-            </span>
-          </span>
-        </a>`;
+export function renderBrandLink({
+  ariaLabel = "Upstream Atlas",
+  brandHref,
+  indent = "",
+  imageClass = "brand-mark-image",
+  linkClass = "brand-mark",
+  logoBasePath = "",
+  logoPath = NAV_LOGO_PATH,
+  width = 208,
+  height = 55,
+} = {}) {
+  const navLogoSrc = resolveAssetPath(logoBasePath, logoPath);
+  const markup = `<a class="${escapeHtml(linkClass)}" href="${escapeHtml(brandHref)}" aria-label="${escapeHtml(ariaLabel)}">
+  <img class="${escapeHtml(imageClass)}" src="${escapeHtml(navLogoSrc)}" alt="" width="${width}" height="${height}">
+</a>`;
+
+  return markup
+    .split("\n")
+    .map((line) => `${indent}${line}`)
+    .join("\n");
+}
+
+function renderResponsiveBrandLink({ brandHref, indent = "", logoBasePath = "" } = {}) {
+  const fullLogoSrc = resolveAssetPath(logoBasePath, NAV_LOGO_PATH);
+  const compactLogoSrc = resolveAssetPath(logoBasePath, ICON_LOGO_PATH);
+  const markup = `<a class="brand-mark" href="${escapeHtml(brandHref)}" aria-label="Upstream Atlas">
+  <img class="brand-mark-image brand-mark-image-full" src="${escapeHtml(fullLogoSrc)}" alt="" width="208" height="55">
+  <img class="brand-mark-image brand-mark-image-compact" src="${escapeHtml(compactLogoSrc)}" alt="" width="48" height="48">
+</a>`;
+
+  return markup
+    .split("\n")
+    .map((line) => `${indent}${line}`)
+    .join("\n");
+}
+
+function renderFooterBrand(logoBasePath, brandHref) {
+  return `${renderBrandLink({
+  brandHref,
+  indent: "        ",
+  imageClass: "footer-brand-image",
+  linkClass: "footer-brand",
+  logoBasePath,
+  width: 196,
+  height: 52,
+})}`;
 }
 
 export function renderLandingHeader({ currentPage = "home", logoBasePath = "" } = {}) {
   const links = resolveShellLinks(currentPage);
-  const iconSrc = resolveAssetPath(logoBasePath, "assets/images/upstream-atlas-icon.png");
-  const wordmarkSrc = resolveAssetPath(logoBasePath, "assets/images/upstream-atlas-wordmark.png");
   const startReadingIconHref = resolveHomepageIconSpriteHref(logoBasePath, "icon-start-reading");
   const menuIconHref = resolveHomepageIconSpriteHref(logoBasePath, "icon-menu");
   const closeIconHref = resolveHomepageIconSpriteHref(logoBasePath, "icon-close");
@@ -148,10 +182,7 @@ export function renderLandingHeader({ currentPage = "home", logoBasePath = "" } 
 
   return `    <header class="site-header">
       <div class="site-header-inner">
-        <a class="brand-mark" href="${escapeHtml(links.brandHref)}" aria-label="Upstream Atlas">
-          <img class="brand-icon" src="${escapeHtml(iconSrc)}" alt="" width="48" height="48">
-          <img class="brand-wordmark" src="${escapeHtml(wordmarkSrc)}" alt="Upstream Atlas" width="220" height="54">
-        </a>
+${renderResponsiveBrandLink({ brandHref: links.brandHref, indent: "        ", logoBasePath })}
         <nav class="primary-nav" aria-label="Primary navigation">
           <a${homeClass} href="${escapeHtml(links.homeHref)}">Home</a>
           <a href="${escapeHtml(links.countriesHref)}">Countries</a>
@@ -177,7 +208,6 @@ ${renderHeaderContactLink()}
               <a${chaptersClass} href="${escapeHtml(links.chaptersHref)}">Chapters</a>
               <a href="${escapeHtml(links.aboutHref)}">About</a>
               <a href="${escapeHtml(links.resourcesHref)}">Resources</a>
-              <a class="mobile-nav-contact" href="${escapeHtml(CONTACT_HREF)}">Contact Us</a>
               <a class="button button-header mobile-nav-cta" href="${escapeHtml(links.ctaHref)}">
                 ${renderSpriteIcon({ className: "button-icon ua-icon ua-icon--sm", href: startReadingIconHref })}
                 <span class="button-label">Start Reading</span>
@@ -191,12 +221,11 @@ ${renderHeaderContactLink()}
 
 export function renderLandingFooter({ currentPage = "home", logoBasePath = "" } = {}) {
   const links = resolveShellLinks(currentPage);
-  const iconSrc = resolveAssetPath(logoBasePath, "assets/images/upstream-atlas-icon.png");
 
   return `    <footer class="site-footer site-footer-detailed">
       <div class="site-footer-inner">
         <section class="site-footer-column site-footer-column-brand" aria-label="Upstream Atlas">
-${renderFooterBrand(iconSrc, links.brandHref)}
+${renderFooterBrand(logoBasePath, links.brandHref)}
           <p class="site-footer-intro">
             Practical insights into the technical, commercial, fiscal, regulatory, and governance aspects of the West African oil and gas industry.
           </p>

@@ -14,36 +14,14 @@
 .legal-page-brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
   margin-bottom: 2rem;
 }
 
-.legal-page-brand-icon {
-  width: 2.5rem;
-  height: 2.5rem;
-}
-
-.legal-page-brand-copy {
-  display: grid;
-  gap: 0.05rem;
-}
-
-.legal-page-brand-upstream,
-.legal-page-brand-atlas {
-  font-family: "Manrope", "Inter", sans-serif;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  line-height: 1;
-}
-
-.legal-page-brand-upstream {
-  color: #ff6427;
-  font-size: 0.95rem;
-}
-
-.legal-page-brand-atlas {
-  color: #0b1f33;
-  font-size: 0.82rem;
+.legal-page-brand-image {
+  display: block;
+  width: 12.5rem;
+  height: auto;
+  max-width: 100%;
 }
 
 .legal-page-header {
@@ -68,7 +46,6 @@
   line-height: 1.04;
 }
 
-.legal-page-effective-date {
 .legal-page-status-line,
 .legal-page-updated-at {
   margin: 0.75rem 0 0;
@@ -173,6 +150,10 @@
   .legal-page-main {
     width: min(52rem, calc(100% - 1.4rem));
     padding: 1.5rem 0 3rem;
+  }
+
+  .legal-page-brand-image {
+    width: 11rem;
   }
 
   .legal-page-article {

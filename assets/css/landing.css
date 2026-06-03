@@ -91,17 +91,26 @@ img {
 .footer-brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
 }
 
-.brand-icon {
-  width: 3rem;
-  height: 3rem;
-}
-
-.brand-wordmark {
-  width: 12rem;
+.brand-mark-image,
+.footer-brand-image {
+  display: block;
   height: auto;
+  max-width: 100%;
+}
+
+.brand-mark-image {
+  flex: 0 0 auto;
+}
+
+.brand-mark-image-full {
+  width: 13rem;
+}
+
+.brand-mark-image-compact {
+  display: none;
+  width: 3rem;
 }
 
 .header-actions {
@@ -200,7 +209,11 @@ img {
   display: none;
 }
 
-.mobile-nav-icon-close {
+.mobile-nav-toggle .button-label {
+  display: inline;
+}
+
+.mobile-nav-toggle .mobile-nav-icon-close {
   display: none;
 }
 
@@ -208,7 +221,7 @@ img {
   display: none;
 }
 
-.mobile-nav-menu[open] .mobile-nav-icon-close {
+.mobile-nav-menu[open] .mobile-nav-toggle .mobile-nav-icon-close {
   display: inline-block;
 }
 
@@ -1228,53 +1241,11 @@ img {
 .footer-brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.8rem;
   justify-content: flex-start;
 }
 
-.footer-brand-icon {
-  width: 2.25rem;
-  height: 2.25rem;
-  flex: 0 0 auto;
-}
-
-.footer-brand-lockup {
-  display: grid;
-  gap: 0.12rem;
-}
-
-.footer-brand-upstream,
-.footer-brand-atlas {
-  font-family: "Manrope", "Inter", sans-serif;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.footer-brand-upstream {
-  color: #ff6427;
-  font-size: 1.05rem;
-}
-
-.footer-brand-atlas-row {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-}
-
-.footer-brand-atlas {
-  color: rgba(255, 255, 255, 0.92);
-  font-size: 0.86rem;
-  letter-spacing: 0.24em;
-}
-
-.footer-brand-line {
-  display: inline-flex;
-  width: 2rem;
-  height: 2px;
-  border-radius: 999px;
-  background: var(--brand-gold);
+.footer-brand-image {
+  width: 12.25rem;
 }
 
 @media (max-width: 1100px) {
@@ -1343,13 +1314,8 @@ img {
     padding: 0.75rem 0;
   }
 
-  .brand-icon {
-    width: 2.6rem;
-    height: 2.6rem;
-  }
-
-  .brand-wordmark {
-    width: 10.5rem;
+  .brand-mark-image-full {
+    width: 11rem;
   }
 
   .mobile-nav-panel {
@@ -1423,5 +1389,44 @@ img {
 
   .site-footer-bottom {
     flex-direction: column;
+  }
+
+  .footer-brand-image {
+    width: 11.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-mark-image-full {
+    width: 9.85rem;
+  }
+
+  .footer-brand-image {
+    width: 10.6rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .site-header-inner {
+    gap: 0.55rem;
+  }
+
+  .brand-mark-image-full {
+    display: none;
+  }
+
+  .brand-mark-image-compact {
+    display: block;
+    width: 2.5rem;
+  }
+
+  .header-actions {
+    gap: 0.5rem;
+  }
+
+  .mobile-nav-toggle {
+    gap: 0.45rem;
+    min-width: 6.35rem;
+    padding: 0.7rem 0.95rem;
   }
 }

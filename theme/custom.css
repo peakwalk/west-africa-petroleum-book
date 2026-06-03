@@ -380,7 +380,6 @@ body {
 .book-home-link {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
   min-width: 0;
   text-decoration: none;
 }
@@ -388,12 +387,6 @@ body {
 .book-home-icon {
   width: 24px;
   height: 24px;
-}
-
-.book-home-label {
-  color: currentColor;
-  font-size: 14px;
-  font-weight: 500;
 }
 
 .book-home-link,

@@ -6,6 +6,7 @@ import {
   CONTACT_EMAIL,
   CONTACT_HREF,
   WEBSITE_LEGAL_LINKS,
+  renderBrandLink,
   resolveShellLinks,
   renderLandingFooter,
   renderLandingHead,
@@ -109,13 +110,15 @@ ${renderLandingHead({
   </head>
   <body class="legal-page">
     <main class="legal-page-main">
-      <a class="legal-page-brand" href="${escapeHtml(links.brandHref)}" aria-label="Upstream Atlas home">
-        <img class="legal-page-brand-icon" src="assets/images/upstream-atlas-icon.png" alt="" width="40" height="40">
-        <span class="legal-page-brand-copy">
-          <span class="legal-page-brand-upstream">UPSTREAM</span>
-          <span class="legal-page-brand-atlas">ATLAS</span>
-        </span>
-      </a>
+${renderBrandLink({
+  ariaLabel: "Upstream Atlas home",
+  brandHref: links.brandHref,
+  indent: "      ",
+  imageClass: "legal-page-brand-image",
+  linkClass: "legal-page-brand",
+  width: 200,
+  height: 53,
+})}
       <header class="legal-page-header">
         <p class="legal-page-kicker">Website legal document</p>
         <h1>${escapeHtml(content.title)}</h1>
