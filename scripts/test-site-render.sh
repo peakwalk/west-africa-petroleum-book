@@ -78,6 +78,16 @@ check_exists assets/icons/homepage/icon-production.svg
 check_exists assets/icons/homepage/icon-exploration.svg
 check_exists assets/icons/homepage/icon-fiscal.svg
 check_exists assets/icons/homepage/icon-regulation.svg
+check_exists assets/icons/homepage-cropped/icon-research.png
+check_exists assets/icons/homepage-cropped/icon-industry-monitoring.png
+check_exists assets/icons/homepage-cropped/icon-intelligence.png
+check_exists assets/icons/homepage-cropped/icon-production.png
+check_exists assets/icons/homepage-cropped/icon-exploration.png
+check_exists assets/icons/homepage-cropped/icon-fiscal.png
+check_exists assets/icons/homepage-cropped/icon-regulation.png
+check_exists assets/icons/homepage-cropped/icon-audience-research.png
+check_exists assets/icons/homepage-cropped/icon-audience-policy.png
+check_exists assets/icons/homepage-cropped/icon-audience-operators.png
 check_exists assets/icons/homepage/icon-audience-research.svg
 check_exists assets/icons/homepage/icon-audience-policy.svg
 check_exists assets/icons/homepage/icon-audience-operators.svg
@@ -123,20 +133,23 @@ check_contains public/index.html 'Available now'
 check_contains public/index.html 'In build'
 check_contains public/index.html 'Platform Intelligence'
 check_contains public/index.html 'Coming Soon'
-check_contains public/index.html 'class="feature-card-icon ua-icon ua-icon--feature"'
-check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-research'
-check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-industry-monitoring'
-check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-intelligence'
+check_contains public/index.html 'class="feature-card-icon ua-icon-image ua-icon-image--feature"'
+check_contains public/index.html 'assets/icons/homepage-cropped/icon-research.png'
+check_contains public/index.html 'assets/icons/homepage-cropped/icon-industry-monitoring.png'
+check_contains public/index.html 'assets/icons/homepage-cropped/icon-intelligence.png'
 check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-start-reading'
 check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-menu'
 check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-close'
-check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-production'
-check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-exploration'
-check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-fiscal'
-check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-regulation'
-check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-audience-research'
-check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-audience-policy'
-check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-audience-operators'
+check_contains public/index.html 'assets/icons/homepage-cropped/icon-production.png'
+check_contains public/index.html 'assets/icons/homepage-cropped/icon-exploration.png'
+check_contains public/index.html 'assets/icons/homepage-cropped/icon-fiscal.png'
+check_contains public/index.html 'assets/icons/homepage-cropped/icon-regulation.png'
+check_contains public/index.html 'assets/icons/homepage-cropped/icon-audience-research.png'
+check_contains public/index.html 'assets/icons/homepage-cropped/icon-audience-policy.png'
+check_contains public/index.html 'assets/icons/homepage-cropped/icon-audience-operators.png'
+check_not_contains public/index.html 'assets/icons/homepage-cropped/icon-start-reading.png'
+check_not_contains public/index.html 'assets/icons/homepage-cropped/icon-menu.png'
+check_not_contains public/index.html 'assets/icons/homepage-cropped/icon-close.png'
 check_contains public/index.html 'class="button-icon ua-icon ua-icon--sm"'
 check_contains public/index.html 'class="mobile-nav-icon mobile-nav-icon-menu ua-icon ua-icon--sm"'
 check_contains public/index.html 'class="mobile-nav-icon mobile-nav-icon-close ua-icon ua-icon--sm"'
@@ -148,7 +161,7 @@ check_contains public/index.html 'Additional markets'
 check_contains public/index.html 'class="country-card-top"'
 check_contains public/index.html 'class="country-card-badge"'
 check_contains public/index.html 'class="country-signal-grid"'
-check_contains public/index.html 'class="country-signal-icon ua-icon ua-icon--sm"'
+check_contains public/index.html 'class="country-signal-icon ua-icon-image ua-icon-image--signal"'
 check_contains public/index.html 'class="country-signal-copy"'
 check_contains public/index.html 'class="country-signal-value"'
 check_contains public/index.html 'Template ready'
@@ -174,6 +187,16 @@ check_exists public/assets/icons/homepage/icon-production.svg
 check_exists public/assets/icons/homepage/icon-exploration.svg
 check_exists public/assets/icons/homepage/icon-fiscal.svg
 check_exists public/assets/icons/homepage/icon-regulation.svg
+check_exists public/assets/icons/homepage-cropped/icon-research.png
+check_exists public/assets/icons/homepage-cropped/icon-industry-monitoring.png
+check_exists public/assets/icons/homepage-cropped/icon-intelligence.png
+check_exists public/assets/icons/homepage-cropped/icon-production.png
+check_exists public/assets/icons/homepage-cropped/icon-exploration.png
+check_exists public/assets/icons/homepage-cropped/icon-fiscal.png
+check_exists public/assets/icons/homepage-cropped/icon-regulation.png
+check_exists public/assets/icons/homepage-cropped/icon-audience-research.png
+check_exists public/assets/icons/homepage-cropped/icon-audience-policy.png
+check_exists public/assets/icons/homepage-cropped/icon-audience-operators.png
 check_exists public/assets/icons/homepage/icon-audience-research.svg
 check_exists public/assets/icons/homepage/icon-audience-policy.svg
 check_exists public/assets/icons/homepage/icon-audience-operators.svg
@@ -211,7 +234,10 @@ check_contains assets/css/landing.css '.header-actions {'
 check_contains assets/css/landing.css '.header-contact-link::after {'
 check_contains assets/css/landing.css '.mobile-nav-contact {'
 check_contains assets/css/landing.css '.ua-icon {'
+check_contains assets/css/landing.css '.ua-icon-image {'
 check_contains assets/css/landing.css '.ua-icon--feature {'
+check_contains assets/css/landing.css '.ua-icon-image--feature {'
+check_contains assets/css/landing.css '.ua-icon-image--signal {'
 check_contains assets/css/landing.css '.feature-card-icon {'
 check_contains assets/css/landing.css '.button-icon {'
 check_contains assets/css/landing.css '.mobile-nav-icon-close {'
@@ -234,6 +260,9 @@ check_contains public/chapters/index.html 'class="site-header-inner"'
 check_contains public/chapters/index.html 'class="button button-header" href="../book/">'
 check_contains public/chapters/index.html '<span class="button-label">Start Reading</span>'
 check_contains public/chapters/index.html '../assets/icons/homepage-sprite.svg#icon-start-reading'
+check_not_contains public/chapters/index.html '../assets/icons/homepage-cropped/icon-start-reading.png'
+check_not_contains public/chapters/index.html '../assets/icons/homepage-cropped/icon-menu.png'
+check_not_contains public/chapters/index.html '../assets/icons/homepage-cropped/icon-close.png'
 check_contains public/chapters/index.html 'class="current-link" href="./">Chapters</a>'
 check_contains public/chapters/index.html 'href="../#countries">Countries</a>'
 check_contains public/chapters/index.html 'href="../#about">About</a>'

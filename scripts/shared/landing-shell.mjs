@@ -11,8 +11,8 @@ function resolveAssetPath(basePath, relativePath) {
   return `${basePath}${relativePath}`;
 }
 
-function resolveHomepageIconSpriteHref(basePath, iconId) {
-  return `${resolveAssetPath(basePath, "assets/icons/homepage-sprite.svg")}#${iconId}`;
+function resolveHomepageIconSpriteHref(basePath, iconName) {
+  return resolveAssetPath(basePath, `assets/icons/homepage-sprite.svg#${iconName}`);
 }
 
 export const CONTACT_HREF = "mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas";

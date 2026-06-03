@@ -648,6 +648,15 @@ img {
   color: currentColor;
 }
 
+.ua-icon-image {
+  display: inline-block;
+  width: auto;
+  height: 1em;
+  flex: 0 0 auto;
+  object-fit: contain;
+  vertical-align: middle;
+}
+
 .ua-icon use {
   pointer-events: none;
 }
@@ -655,6 +664,22 @@ img {
 .ua-icon--feature {
   width: 48px;
   height: 48px;
+}
+
+.ua-icon-image--sm {
+  height: 18px;
+}
+
+.ua-icon-image--feature {
+  height: 48px;
+}
+
+.ua-icon-image--signal {
+  height: 28px;
+}
+
+.ua-icon-image--audience {
+  height: 44px;
 }
 
 .feature-grid,
@@ -712,6 +737,10 @@ img {
 
 .feature-card-icon {
   color: var(--accent);
+}
+
+.feature-card-icon.ua-icon-image {
+  justify-self: start;
 }
 
 .country-card {
@@ -938,6 +967,10 @@ img {
   height: 100%;
 }
 
+.audience-icon.ua-icon-image {
+  width: auto;
+}
+
 .ua-icon--audience {
   width: 44px;
   height: 44px;
@@ -965,6 +998,10 @@ img {
 .country-signal-icon {
   margin-top: 0.12rem;
   color: var(--accent);
+}
+
+.country-signal-icon.ua-icon-image {
+  width: auto;
 }
 
 .country-signal-copy {
