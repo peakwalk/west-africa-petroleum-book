@@ -385,6 +385,18 @@ body {
 }
 
 .book-home-icon {
+  display: block;
+  height: auto;
+  max-width: 100%;
+  flex: 0 0 auto;
+}
+
+.book-home-icon-full {
+  width: 138px;
+}
+
+.book-home-icon-compact {
+  display: none;
   width: 24px;
   height: 24px;
 }
@@ -796,6 +808,16 @@ body {
 
   .chapter-nav-next {
     text-align: left;
+  }
+}
+
+@media (max-width: 900px) {
+  .book-home-icon-full {
+    display: none;
+  }
+
+  .book-home-icon-compact {
+    display: block;
   }
 }
 
