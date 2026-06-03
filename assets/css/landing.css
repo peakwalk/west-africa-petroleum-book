@@ -938,6 +938,11 @@ img {
   height: 100%;
 }
 
+.ua-icon--audience {
+  width: 44px;
+  height: 44px;
+}
+
 .country-signal-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -946,13 +951,25 @@ img {
 
 .country-signal {
   display: grid;
-  gap: 0.28rem;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 0.65rem;
   padding: 0.8rem 0.85rem;
   border: 1px solid var(--line);
   border-radius: 0.75rem;
   background:
     linear-gradient(180deg, rgba(247, 248, 249, 0.98), rgba(238, 242, 244, 0.94)),
     var(--surface-muted);
+}
+
+.country-signal-icon {
+  margin-top: 0.12rem;
+  color: var(--accent);
+}
+
+.country-signal-copy {
+  display: grid;
+  gap: 0.28rem;
 }
 
 .country-signal-label,
