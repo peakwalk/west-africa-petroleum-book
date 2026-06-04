@@ -11,7 +11,5 @@ default-theme = "light"
 preferred-dark-theme = "navy"
 additional-css = ["theme/custom.css"]
 additional-js = ["theme/ga.js", "theme/custom.js"]
-git-repository-url = "https://github.com/peakwalk/west-africa-petroleum-book"
-edit-url-template = "https://github.com/peakwalk/west-africa-petroleum-book/edit/main/{path}"
 site-url = "/west-africa-petroleum-book/book/"
 no-section-label = true

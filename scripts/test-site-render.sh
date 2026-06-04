@@ -26,6 +26,16 @@ check_not_contains() {
   fi
 }
 
+check_tree_not_contains() {
+  tree_path="$1"
+  pattern="$2"
+
+  if rg -Fq -- "$pattern" "$tree_path"; then
+    echo "Unexpected pattern '$pattern' found under $tree_path" >&2
+    exit 1
+  fi
+}
+
 check_exists() {
   file_path="$1"
 
@@ -118,6 +128,8 @@ check_contains scripts/generate-chapters-page.mjs 'renderLandingFooter'
 check_contains scripts/shared/landing-shell.mjs 'function renderLandingHead'
 check_contains scripts/shared/landing-shell.mjs 'function renderLandingHeader'
 check_contains scripts/shared/landing-shell.mjs 'function renderLandingFooter'
+check_not_contains book.toml 'git-repository-url = "https://github.com/peakwalk/west-africa-petroleum-book"'
+check_not_contains book.toml 'edit-url-template = "https://github.com/peakwalk/west-africa-petroleum-book/edit/main/{path}"'
 
 check_contains public/index.html 'class="landing-shell"'
 check_contains public/index.html 'class="hero-panel"'
@@ -365,6 +377,7 @@ check_contains public/book/index.html 'upstream-atlas-icon.png'
 check_contains public/book/index.html 'class="book-home-icon book-home-icon-full"'
 check_contains public/book/index.html 'class="book-home-icon book-home-icon-compact"'
 check_contains public/book/index.html 'title="Contact Us"'
+check_not_contains public/book/index.html 'title="Git repository"'
 check_contains public/book/index.html 'class="toolbar-search-slot hidden"'
 check_contains public/book/index.html 'id="mdbook-search-wrapper" class="hidden"'
 check_contains public/book/index.html 'id="mdbook-content" class="content reader-layout"'
@@ -384,6 +397,9 @@ check_not_contains public/book/index.html 'title="Change theme"'
 check_contains public/book/index.html 'class="book-outline-inner"'
 check_contains public/book/index.html 'class="chapter-nav-card chapter-nav-next"'
 check_not_contains public/book/toc.html 'href="index.html" target="_parent">Home</a>'
+check_not_contains public/book/print.html 'title="Git repository"'
+check_not_contains public/book/404.html 'title="Git repository"'
+check_tree_not_contains public/book 'https://github.com/peakwalk/west-africa-petroleum-book'
 check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'reader-layout'
 check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'reader-main'
 check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'reader-outline'
