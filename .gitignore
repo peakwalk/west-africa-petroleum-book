@@ -6,3 +6,5 @@ extracted-media/
 temp/
 .worktrees/
 output/
+__pycache__/
+*.py[cod]

@@ -1280,6 +1280,61 @@ body.book-page-aux-index .reader-article {
   color: var(--ink);
 }
 
+.reader-article .api-density-formula {
+  box-sizing: border-box;
+  width: max-content;
+  max-width: 100%;
+  margin: 24px auto 22px;
+  padding: 13px 22px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.34em;
+  overflow-x: auto;
+  border: 1px solid rgba(43, 91, 166, 0.14);
+  border-left: 3px solid rgba(43, 91, 166, 0.72);
+  border-radius: 6px;
+  background: linear-gradient(180deg, #ffffff 0%, rgba(248, 250, 252, 0.96) 100%);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.075);
+  color: var(--ink);
+  font-family: "Lora", Georgia, serif;
+  font-size: clamp(18px, 1.55vw, 23px);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.api-density-formula-term {
+  font-style: italic;
+}
+
+.api-density-fraction {
+  display: inline-grid;
+  grid-template-rows: auto auto;
+  align-items: center;
+  min-width: 5.8em;
+  text-align: center;
+  line-height: 1;
+}
+
+.api-density-numerator,
+.api-density-denominator {
+  display: block;
+}
+
+.api-density-numerator {
+  padding: 0 1em 0.08em;
+  border-bottom: 0.055em solid currentColor;
+  font-style: normal;
+}
+
+.api-density-denominator {
+  padding-top: 0.14em;
+  font-size: 0.82em;
+  font-style: italic;
+}
+
 .figure-card,
 .figure-anchor-target {
   scroll-margin-top: 1.2rem;

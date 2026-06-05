@@ -119,13 +119,18 @@ reservoir containing hydrocarbons. These amplitude anomalies include
 Bright Spot or Dim Spot, Flat Spot, Gas Chimneys, etc. typically seen
 during **AVO scans**.
 
-``` math
-\mathbf{Densité\ API =}\frac{\mathbf{141,5}}{\mathbf{Densité\ à\ 15{^\circ}C}}\mathbf{- 131,5}
-```
-
 **API density**: A scale adopted by the **American Petroleum Institute
 (API)** that evaluates whether oil is light or heavy in relation to
 water. It is calculated by the formula:
+
+<div class="api-density-formula" role="img" aria-label="API density equals 141.5 divided by Density at 15 degrees Celsius minus 131.5">
+  <span class="api-density-formula-term" aria-hidden="true">API&nbsp;density&nbsp;=</span>
+  <span class="api-density-fraction" aria-hidden="true">
+    <span class="api-density-numerator">141.5</span>
+    <span class="api-density-denominator">Density&nbsp;at&nbsp;15&deg;C</span>
+  </span>
+  <span class="api-density-formula-term" aria-hidden="true">&minus;&nbsp;131.5</span>
+</div>
 
 - **Light oil (API \> 30°)** Light oil is highly prized on the world
   market because of its low viscosity and its ability to produce
