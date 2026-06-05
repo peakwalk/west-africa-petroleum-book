@@ -6,7 +6,7 @@
       <p class="book-cover-subtitle">Roles and responsibilities of States and analysis of tax regimes</p>
     </div>
     <figure class="book-cover-figure">
-      <img src="../images/figure-001.png" alt="Oil pumpjack used as the cover image for the West Africa petroleum reference book">
+      <img src="../images/figure-001.webp" alt="Oil pumpjack used as the cover image for the West Africa petroleum reference book">
     </figure>
     <div class="book-cover-footer">
       <p class="book-cover-imprint">Upstream Atlas</p>

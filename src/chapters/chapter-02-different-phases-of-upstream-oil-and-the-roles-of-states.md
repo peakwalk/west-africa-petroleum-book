@@ -249,9 +249,9 @@ and depth of the sedimentary layers and thus give an idea of the
 distribution and thickness of the sedimentary formations (Figure 7 a and
 b).
 
-![Figure 006](../images/figure-006.png)
+![Figure 006](../images/figure-006.webp)
 
-![Figure 007](../images/figure-007.png)
+![Figure 007](../images/figure-007.webp)
 
 Figure 7: Gravimetric
 acquisition (a) showing anomalies in the Coastal Sedimentary Basin of
@@ -276,13 +276,13 @@ positioning of exploration wells (Figure 9).
 
 b
 
-![Figure 008](../images/figure-008.png)
+![Figure 008](../images/figure-008.webp)
 
 a
 
 Multiple qv streamers
 
-![Figure 009](../images/figure-009.png)
+![Figure 009](../images/figure-009.webp)
 
 Source
 
@@ -310,7 +310,7 @@ order to maximize the chances of success of exploratory wells.
 
 Positioning an exploratory well
 
-![Figure 011](../images/figure-011.png)
+![Figure 011](../images/figure-011.webp)
 
 Figure 10: Electromagnetism coupled with seismic reflection showing the contrast of resistivity at the level of the traps highlighted by the seismic
 
@@ -347,13 +347,13 @@ effect of sedimentary subsidence pressure and geothermal temperature, of
 microscopic animals and plants (phytoplankton and zooplankton) that
 lived in the sea.
 
-![Figure 012](../images/figure-012.png)
+![Figure 012](../images/figure-012.webp)
 
 Figure 11: Geological
 section showing the stratigraphic extent of a fictitious petroleum
 system (Magoon and Dow, 1994, modified by Schlumberger)
 
-![Figure 013](../images/figure-013.png)
+![Figure 013](../images/figure-013.webp)
 
 Figure 12: Geoseismic section showing petroleum systems in the Benin Coastal Sedimentary Basin, Kerr McGee, 2003
 
@@ -378,13 +378,13 @@ processes (unconformity, lateral change of facies, bevel, etc.) (Figure
 The identified traps are then mapped using software in order to assess
 their geometry and assess their size (Figure 15).
 
-![Figure 014](../images/figure-014.png)
+![Figure 014](../images/figure-014.webp)
 
-![Figure 015](../images/figure-015.png)
+![Figure 015](../images/figure-015.webp)
 
 Figure 13: Seismic interpretation showing a structural trap (anticline)
 
-![Figure 016](../images/figure-016.png)
+![Figure 016](../images/figure-016.webp)
 
 Figure 14: Some types of traps
 
@@ -718,7 +718,7 @@ CAPEX, OPEX, Risk
 Figure 17: Methodology
 Tank Evaluation
 
-![Figure 019](../images/figure-019.png)
+![Figure 019](../images/figure-019.webp)
 
 Figure 18: Diagram showing a reservoir model (Vilgeir Dalen, StatoilHydro, 2007)
 
@@ -1259,6 +1259,6 @@ financed by a part of the income from production in accordance with the
 contractual provisions which generally provide for provisions for the
 execution of the abandonment works.
 
-![Figure 020](../images/figure-020.png)
+![Figure 020](../images/figure-020.webp)
 
 Figure 20: Cash flows during the different phases of upstream oil activities (Dr. Alfred Kjemperud, 2007)

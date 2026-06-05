@@ -23,7 +23,7 @@ export const WEBSITE_LEGAL_LINKS = {
   terms: "terms-of-use.html",
 };
 const ICON_LOGO_PATH = "assets/images/upstream-atlas-icon.png";
-const NAV_LOGO_PATH = "assets/images/upstream-atlas-nav-logo.png";
+const NAV_LOGO_PATH = "assets/images/upstream-atlas-nav-logo.webp";
 
 export function resolveShellLinks(currentPage) {
   if (currentPage === "chapters") {
