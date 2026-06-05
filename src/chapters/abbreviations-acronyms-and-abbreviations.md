@@ -1,0 +1,59 @@
+# Abbreviations, Acronyms and Abbreviations
+
+<div class="reference-index reference-index-abbreviations">
+  <section class="reference-index-group">
+    <dl class="reference-glossary-list">
+      <div class="reference-glossary-item"><dt>ABEX</dt><dd>Abandon Expenditures</dd></div>
+      <div class="reference-glossary-item"><dt>AFREC</dt><dd>African Energy Commission</dd></div>
+      <div class="reference-glossary-item"><dt>IEA</dt><dd>International Energy Agency</dd></div>
+      <div class="reference-glossary-item"><dt>APPO</dt><dd>Organization of African Petroleum Producers</dd></div>
+      <div class="reference-glossary-item"><dt>AVO</dt><dd>Amplitude Variation with Offset</dd></div>
+      <div class="reference-glossary-item"><dt>API</dt><dd>American Petroleum Institute</dd></div>
+      <div class="reference-glossary-item"><dt>BBL/D/1K</dt><dd>One Thousand Barrels Per Day</dd></div>
+      <div class="reference-glossary-item"><dt>BCF</dt><dd>Billion cubic feet</dd></div>
+      <div class="reference-glossary-item"><dt>CAPEX</dt><dd>Capital Expenditures</dd></div>
+      <div class="reference-glossary-item"><dt>ECOWAS</dt><dd>Economic Community of West African States</dd></div>
+      <div class="reference-glossary-item"><dt>CO2</dt><dd>Carbon Dioxide</dd></div>
+      <div class="reference-glossary-item"><dt>CPI</dt><dd>International Oil Company</dd></div>
+      <div class="reference-glossary-item"><dt>CPP</dt><dd>Production Sharing Contract</dd></div>
+      <div class="reference-glossary-item"><dt>CNPC</dt><dd>China National Petroleum Corporation</dd></div>
+      <div class="reference-glossary-item"><dt>UNCTAD</dt><dd>United Nations Conference on Trade and Development</dd></div>
+      <div class="reference-glossary-item"><dt>DHI</dt><dd>Direct Hydrocarbons Indicator</dd></div>
+      <div class="reference-glossary-item"><dt>DPB</dt><dd>Benin Oil Depot Company</dd></div>
+      <div class="reference-glossary-item"><dt>DW</dt><dd>Deep Water</dd></div>
+      <div class="reference-glossary-item"><dt>IMF</dt><dd>International Monetary Fund</dd></div>
+      <div class="reference-glossary-item"><dt>GAO</dt><dd>West Africa Gas Pipeline</dd></div>
+      <div class="reference-glossary-item"><dt>LNG</dt><dd>Liquefied Natural Gas</dd></div>
+      <div class="reference-glossary-item"><dt>GNPC</dt><dd>Ghanean National Petroleum Company</dd></div>
+      <div class="reference-glossary-item"><dt>LPG</dt><dd>Liquefied Petroleum Gas</dd></div>
+      <div class="reference-glossary-item"><dt>EITI</dt><dd>Extractive Industries Transparency Initiative</dd></div>
+      <div class="reference-glossary-item"><dt>MMBBLS</dt><dd>Million de barils</dd></div>
+      <div class="reference-glossary-item"><dt>NNPC</dt><dd>Nigerian National Petroleum Company</dd></div>
+      <div class="reference-glossary-item"><dt>NOx</dt><dd>x Nitrogen oxide</dd></div>
+      <div class="reference-glossary-item"><dt>OPEX</dt><dd>Operating Expenditures</dd></div>
+      <div class="reference-glossary-item"><dt>NATO</dt><dd>North Atlantic Treaty Organization</dd></div>
+      <div class="reference-glossary-item"><dt>PDO</dt><dd>Development and Operation Plan</dd></div>
+      <div class="reference-glossary-item"><dt>PETROCI</dt><dd>National Company of Petroleum Operations of Côte d'Ivoire</dd></div>
+      <div class="reference-glossary-item"><dt>PETROSEN</dt><dd>Société Nationale des Pétroles du Sénégal</dd></div>
+      <div class="reference-glossary-item"><dt>GDP</dt><dd>Gross Domestic Product</dd></div>
+      <div class="reference-glossary-item"><dt>PPS</dt><dd>Sèmè Oil Project</dd></div>
+      <div class="reference-glossary-item"><dt>PSA</dt><dd>Production Sharing Contract</dd></div>
+      <div class="reference-glossary-item"><dt>SAPETRO</dt><dd>South Atlantic Petroleum</dd></div>
+      <div class="reference-glossary-item"><dt>SAR</dt><dd>Société Africaine de Raffinage</dd></div>
+      <div class="reference-glossary-item"><dt>SIR</dt><dd>Société Ivoirienne de Raffinage</dd></div>
+      <div class="reference-glossary-item"><dt>SMB</dt><dd>Multinational Bitumen Company</dd></div>
+      <div class="reference-glossary-item"><dt>SONANGOL</dt><dd>Société Nationale des Pétroles de l’Angola</dd></div>
+      <div class="reference-glossary-item"><dt>SONATRACH</dt><dd>National Hydrocarbons Company of Algeria</dd></div>
+      <div class="reference-glossary-item"><dt>SONIDEP</dt><dd>Nigerien Oil Company</dd></div>
+      <div class="reference-glossary-item"><dt>SORAZ</dt><dd>Zinder Refining Company</dd></div>
+      <div class="reference-glossary-item"><dt>SW</dt><dd>Shallow Water</dd></div>
+      <div class="reference-glossary-item"><dt>TCF</dt><dd>Trillion Cubic Feet (1000 BCF)</dd></div>
+      <div class="reference-glossary-item"><dt>TOR</dt><dd>Tema Oil Refinery</dd></div>
+      <div class="reference-glossary-item"><dt>UDW</dt><dd>Ultra Deep Water</dd></div>
+      <div class="reference-glossary-item"><dt>VSP</dt><dd>Vertical Seismic Profil</dd></div>
+      <div class="reference-glossary-item"><dt>WAPCo</dt><dd>West African gaz Pipeline Company</dd></div>
+      <div class="reference-glossary-item"><dt>WAPCO</dt><dd>West African Oil Pipeline Company</dd></div>
+      <div class="reference-glossary-item"><dt>AfCFTA</dt><dd>African Continental Free Trade Area</dd></div>
+    </dl>
+  </section>
+</div>

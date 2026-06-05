@@ -2,7 +2,10 @@
 
 # Front Matter
 
-- [Book Front Matter](chapters/front-matter.md)
+- [Cover](chapters/front-matter.md)
+- [List of Figures](chapters/list-of-figures.md)
+- [List of Tables](chapters/list-of-tables.md)
+- [Abbreviations, Acronyms and Abbreviations](chapters/abbreviations-acronyms-and-abbreviations.md)
 - [Foreword](chapters/foreword.md)
 - [General Introduction](chapters/general-introduction.md)
 

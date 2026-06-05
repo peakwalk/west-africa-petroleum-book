@@ -151,7 +151,7 @@ geologically promising areas. These include:
   of Guinea, an oil-rich province proven by discoveries in Nigeria and
   Benin, Ghana and Côte d'Ivoire.
 
-![Figure 003](../images/figure-003.png)
+![Figure 003](../images/figure-003-trimmed.png)
 
 ![Figure 004](../images/figure-004.png)
 
