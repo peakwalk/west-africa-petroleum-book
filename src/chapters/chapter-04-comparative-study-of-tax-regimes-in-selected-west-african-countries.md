@@ -1,7 +1,6 @@
 # Chapter 4: Comparative Study of Tax Regimes in Selected West African Countries
 
-> **Case study of Benin, Niger, Ghana, Côte d'Ivoire, Nigeria and
-> Senegal**
+Case study of Benin, Niger, Ghana, Côte d'Ivoire, Nigeria and Senegal
 
 ## 4.1- Design principles of the flow diagram associated with the oil contract
 
@@ -18,7 +17,7 @@ the most out of their resources.
 The legal and regulatory instruments on which States must base their
 design of this decision-making tool are the Petroleum Code and
 especially the tax regime.
-### Petroleum Code
+### 4.1.1- Petroleum Code
 
 It is the legal instrument that governs the exercise of oil operations.
 It provides, among other things, provisions that are likely to encourage
@@ -26,7 +25,7 @@ companies or consortiums of oil companies to carry out oil operations,
 given the particularly high costs of research work, but also provides
 provisions that regulate the distribution of revenues between the State
 and the partners.
-### Tax regime
+### 4.1.2- Tax regime
 
 The tax regime is generally enshrined in the oil laws of the states. In
 Benin, for example, Law No. 2019-06 of 15 November 2019 on the Petroleum
@@ -55,8 +54,7 @@ a progressive tax regime where the state rent is much more based on
 income taxes, additional taxes etc. resulting from the benefits of the
 project.
 
-1.  ***Key tax elements
-    applied in selected West African countries***
+## 4.2- *Key tax elements applied in selected West African countries*
 
 ### 4.2.1- Redevance ad valorem (royalty)
 
@@ -276,15 +274,15 @@ must secure their share by other measures, most often by taxation.
 The R-factor can be used as a trigger for both royalty and profit
 sharing. It is determined in different ways:
 
-1)  **R-Factor=Cumulative Revenue/Cumulative Cost**
+**R-Factor=Cumulative Revenue/Cumulative Cost**
 
-2)  **R-Factor = (Cumulative Revenue - Cumulative Opex) / Cumulative
-    Capex**
+**R-Factor = (Cumulative Revenue - Cumulative Opex) / Cumulative
+Capex**
 
-3)  **R-Factor = (Cumulative Revenues - Cumulative Profits) /
-    (Cumulative Investments + Cumulative Opex)**
+**R-Factor = (Cumulative Revenues - Cumulative Profits) /
+(Cumulative Investments + Cumulative Opex)**
 
-4)  **R-Factor=Cumulative Net Revenue/Cumulative Costs**
+**R-Factor=Cumulative Net Revenue/Cumulative Costs**
 
 When the – R factor becomes larger and larger, it means that the
 profitability of the project becomes higher with a drastic decrease in
@@ -568,10 +566,9 @@ countries covered by this study. These elements make it possible to
 determine the share of the oil rent accruing to the State and the
 contractor.
 
-3.  ***In-depth analysis
-    of tax regimes by country***
+## 4.3- *In-depth analysis of tax regimes by country*
 
-**4.3.1- Nigeria**
+### 4.3.1- Nigeria
 
 Nigeria's tax system is one of the most complex in the region, the
 result of decades of incremental change. The 2021 Petroleum Industry Law
@@ -790,9 +787,7 @@ profit)</td>
 </tbody>
 </table>
 
-3.  ***State/Contractor
-    income associated with the tax system in selected West African
-    countries***
+## 4.4- *State/Contractor income associated with the tax system in selected West African countries*
 
 The calculation of the parties' cash flow on the basis of the tax terms
 negotiated and agreed in the contracts of the countries subject to this
@@ -808,155 +803,29 @@ of the cash flow of the different parties to the contract from the
 respective tax regimes of Benin, Ghana, Côte d'Ivoire, Nigeria, Senegal
 and Niger, is as follows (Figure 25 to 30):
 
-**STATE**
-
-10
-
-Post-royalty income: 90
-
-Taxable
-
-0
-
-14,85
-
-Net cash flow
-
--2,23
-
-\+ 2,23
-
-State participation
-
-15%
-
-2,23 (SNH-BENIN)
-
-12,62
-
-Partner net cash flow
-
-**75,62**
-
-Total gross cash flow of the contractor
-
 Figure 25: Simplified
 organizational chart showing the share of the State and the Contractor
 in the taxation associated with the CPP of Benin
-
-Corporate tax:
-
-35%
-
-+20,82
-
--20,82
-
-Total gross cash flow of the contractor
-
-**52,88**
 
 Figure 26: Simplified
 organizational chart showing the share of the State and the Contractor
 in the taxation used in the Ghana model contract
 
-Taxable: 0
-
-86,5
-
-13,5
-
-Gross cash flow
-
-Total gross cash flow of the contractor
-
-**85,35**
-
 Figure 27: Simplified
 organizational chart showing the share of the State and the contractor
 resulting from the taxation associated with the CPP of Côte d'Ivoire
-
-12,5
-
-Post-royalty income: 87.5
-
-+14,55
-
--14,55
-
-Profit tax: 50%
-
-14,55 (29,1-14,55)
-
-**Net cash flow (CPI+NNPC)**
-
-**-8,73**
-
-State participation: 60%
-
-**+8.73 (NNPC)**
-
-**Total gross cash flow of the contractor**
-
-**62,69**
 
 Figure 28: Simplified
 organizational chart showing the share of the State and the Contractor
 in the taxation associated with the CPP of Nigeria
 
-9
-
-Post-royalty income: 91
-
-+5,46
-
--5,46
-
-Profit tax: 25%
-
-16,38
-
-Net cash flow (CPI+PETROSEN)
-
--1,64
-
-State participation: 10%
-
-+1,64
-
-**69,34**
-
-**Total gross cash flow of the contractor**
-
 Figure 29: Simplified
 organizational chart showing the share of the State and the Contractor
 resulting from the taxation associated with the Senegalese CPP
 
-15
-
-Post-royalty income:85
-
-Imposable/taxable :0
-
-15,3
-
-Net cash flow (CPI+SONIDEP)
-
-+1,53
-
--1,53
-
-State participation: 10%
-
-**Total gross cash flow of the contractor**
-
-**73,27**
-
 Figure 30: Simplified
 diagram showing the share of the State and the Contractor resulting from
 the taxation associated with the CPP of Niger
-
-Figure 30 :
 
 On the basis of the tax parameters summarized above on the basis of the
 legislative and regulatory texts of the six countries that were the
@@ -1109,12 +978,9 @@ Figure 32: Graph showing
 the distribution of the cash flow between the State and the contractor
 considering 100 barrels of oil extracted
 
-4.  ***Analysis and
-    interpretations***
+## 4.5- *Analysis and interpretations*
 
-    1.  **On the net
-        income of States/contractors and attractiveness to foreign
-        investment**
+### 4.5.1- On the net income of States/contractors and attractiveness to foreign investment
 
 It appears from the analysis of the graph in Figure 31 and Table 10 that
 Nigeria's tax system offers a better oil rent (net cash flow) for the
@@ -1197,8 +1063,7 @@ bonuses, legal and financial assistance fees and other fees paid
 upstream, i.e. not based on profitability. This improvement would make
 our code more attractive and competitive.
 
-1.  **On the overall
-    State/Contracting Party cash flows**
+### 4.5.2- On the overall State/Contracting Party cash flows
 
 The oil rent thus generated by these tax regimes for each country, as
 shown in Table 10, is an apparent value because it is conditioned by the
@@ -1293,8 +1158,7 @@ subject of great concern. To this end, we suggest:
   Projects, the majority of whose shareholders will be African
   countries.
 
-  7.  **Partial
-      conclusion**
+## 4.7- Partial conclusion
 
 Comparative analysis of tax regimes shows that in West Africa, there is
 a clear correlation between tax conditions, geological maturity and

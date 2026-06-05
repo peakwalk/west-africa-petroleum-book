@@ -11,11 +11,9 @@ Authorization to operate
 
 Exploration Authorization
 
-1.  ***Pre-licensing
-    phase***
+## 2.1- *Pre-licensing phase*
 
-> **2.1.1- Definition of
-> the concept**
+### 2.1.1- Definition of the concept
 
 During this phase, the State puts in place the policy as well as the
 regulatory and technical tools necessary for oil exploration, promotion,
@@ -58,8 +56,7 @@ a contract is signed and/or an authorization is issued that gives the
 IPCs the right to explore and exploit hydrocarbons in a well-defined
 area commonly known as an oil ***block***.
 
-2.  **Strategy for
-    awarding petroleum licences or authorizations**
+### 2.1.2- Strategy for awarding petroleum licences or authorizations
 
 Promotion is the operation of attracting investors in oil exploration
 and exploitation. Countries with oil potential and wishing to embark on
@@ -158,8 +155,7 @@ exploration activities.
 
 This was the beginning of investments in the hydrocarbon sector.
 
-2.  **Financing of
-    pre-licensing phase investments**
+### 2.1.3- Financing of pre-licensing phase investments
 
 As a general rule, pre-licensing activities are under the sovereignty of
 the host state. The implementation of policy documents, legislation and
@@ -178,8 +174,7 @@ contracts with oil companies. These service companies usually acquire
 the data at their own expense on the basis of a service contract and
 market and market it to international oil companies.
 
-3.  **Importance of the
-    pre-licensing phase and responsibilities of the State**
+### 2.1.4- Importance of the pre-licensing phase and responsibilities of the State
 
 The pre-licensing phase is very essential in the sense that the lack of
 knowledge of its oil potential and the non-existence from the outset of
@@ -207,11 +202,9 @@ signing of "**one-sided contracts"** with foreign partners in the
 geo-extractive sector in general and in the oil industry in particular
 in Africa.
 
-1.  ***Exploration
-    phase***
+## 2.2- *Exploration phase*
 
-> **2.2.1- Exploration
-> methods and strategies**
+### 2.2.1- Exploration methods and strategies
 
 Exploration is the phase of upstream oil activities that consists of the
 search for hydrocarbons in the subsoil using geological and geophysical
@@ -501,8 +494,7 @@ appraisal or delineation wells, geological and geophysical studies of
 reservoirs as well as an evaluation of reserves to decide on the
 development of the deposit when it is commercially exploitable.
 
-3.  **Financing of
-    exploration activities**
+### 2.2.3- Financing of exploration activities
 
 Exploration activities are almost entirely funded by the IPCs as states
 lack the financial resources, technology, human skills and operational
@@ -516,8 +508,7 @@ About 2/3 of the exploration wells are dry. In the absence of commercial
 discovery during the exploration period, the CPIs lose all their
 investments.
 
-4.  **Responsibilities of
-    States in the exploration phase**
+### 2.2.4- Responsibilities of States in the exploration phase
 
 During this phase, the host country, although it does not often take
 financial risks, has a great responsibility vis-à-vis the contracting
@@ -600,11 +591,9 @@ of their implementation through the development of a directory of the
 costs of the activities. This directory will have to be updated to serve
 as a reference for confrontations and audits.
 
-1.  ***Development
-    Phase***
+## 2.3- *Development Phase*
 
-> **2.3.1- Definition and
-> strategies**
+### 2.3.1- Definition and strategies
 
 The development of an oil field consists of carrying out operations that
 contribute to the establishment of the production infrastructure of the
@@ -882,11 +871,9 @@ led to the abandonment of the SAPETRO redevelopment project which could
 not produce a single drop of oil and in turn put an end to Benin's dream
 of becoming a producing country again in 2015".*
 
-1.  ***Phase de
-    Production***
+## 2.4- *Phase de Production*
 
-> ***2.4.1- Definition
-> and characteristics***
+### 2.4.1- Definition and characteristics
 
 This is the phase most awaited by the parties, namely the State and the
 contractor. Good tank management is always related to the technology
@@ -1165,10 +1152,9 @@ regulatory role. As such, they must work more to:
   in the upstream oil sector in order to ensure that the performance of
   operations is carried out in accordance with the rules of the art and
   in transparency.
-### Abandonment
+## 2.5- *Abandonment*
 
-> ***2.5.1- Definition of
-> the concept***
+### 2.5.1- Definition of the concept
 
 The abandonment or closure of a field occurs when the recoverable
 reserves are exhausted or when the installations have reached their
@@ -1229,8 +1215,7 @@ criteria, in particular the cost of decommissioning, etc. The State, in
 its decision, must set the maximum duration of the decommissioning on
 the basis of the contractor's recommendations.
 
-1.  ***Summary of
-    expenses and revenues during the life cycle of an oil project***
+## 2.6- *Summary of expenses and revenues during the life cycle of an oil project*
 
 The summary of cash flows from pre-licensing to abandonment indicates
 the expenditures (investments) incurred in oil exploration and

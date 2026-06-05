@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading1"/>
+      </w:pPr>
+      <w:r><w:t>Chapter 2: Different Phases of Upstream Oil and the Roles of States</w:t></w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading2"/>
+      </w:pPr>
+      <w:r><w:t>2.1- Pre-licensing phase</w:t></w:r>
+    </w:p>
+    <w:p>
+      <w:r><w:t>Body paragraph before figure.</w:t></w:r>
+    </w:p>
+    <w:p>
+      <w:r><w:t>Delimitation of oil perimeters or blocksCall for applicationsDirect consultationSubmission of bidsBid evaluation/evaluationAttributionNegotiationFigure 6: Process for Assigning Oil Block to the IPC for Petroleum Exploration and DevelopmentFigure 6: Process for Assigning Oil Block to the IPC for Petroleum Exploration and Development</w:t></w:r>
+    </w:p>
+    <w:p>
+      <w:r><w:t>Body paragraph after figure.</w:t></w:r>
+    </w:p>
+  </w:body>
+</w:document>

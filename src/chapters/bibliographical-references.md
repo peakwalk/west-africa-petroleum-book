@@ -4,11 +4,12 @@
 
 2.  **Alfred Kjemperud (2007)**: Petroleum contracts: fiscal régime –
     Taxation, The bridge Group AS
-### Anne-Charlotte ARMYNOT DU CHATELET, Alban LIEGEARD (2016):
+
+3.  **Anne-Charlotte ARMYNOT DU CHATELET, Alban LIEGEARD (2016):**
     Global oil and gas markets and security of supply, in Panorama
     énergies-climat N°11 5p
 
-4.  **World Bank (2023-2024**): Global Governance Indicators
+4.  **World Bank (2023-2024):** Global Governance Indicators
 
 5.  **Bruce S. Hart (2000):** 3-D Seismic Interpretation: A Primer for
     Geologists, McGill University, Montreal, Quebec; SEPM Short Course
@@ -126,10 +127,10 @@
 40. **Republic of Senegal (2012):** Hydrocarbon Production Research and
     Sharing Contract, Cayar Offshore Profond
 
-41. **Republic of Senegal (2019**): Law No. 2019‐03 of 1 February2019 on
+41. **Republic of Senegal (2019):** Law No. 2019‐03 of 1 February2019 on
     the Metropolitan Code
 
-42. **Republic of Senegal (2020**): Decree No. 2020‐2061 of 27 October
+42. **Republic of Senegal (2020):** Decree No. 2020‐2061 of 27 October
     2020 laying down the modalitiesfor the application of Law No.
     2019‐03 of 1February 2019 on the Petroleum Code
 

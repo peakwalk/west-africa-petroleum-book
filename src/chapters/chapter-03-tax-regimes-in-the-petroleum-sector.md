@@ -96,14 +96,6 @@ depend on the tax regime adopted by that country.
 Figure 23: Classification
 of tax regimes
 
-- Argentina
-
-- Brazil
-
-- Venezuela
-
-- Philippines…
-
 ## 3.2- The concession system
 
 The concession known as a license or lease is the oldest and most widely
@@ -125,14 +117,12 @@ system has the following characteristics:
 
 - The oil company holds title to the equipment.
 
-> ***3.3- The contractual
-> system*:**
+## 3.3- *The contractual system:*
 
 In this system, there are two categories or types of contracts, namely
 the Production Sharing Contract (PPC) and the Service Contracts.
 
-1.  **The Production
-    Sharing Contract (PPC)**
+### 3.3.1- The Production Sharing Contract (PPC)
 
 ***The Production** Sharing Contract **(** PSC **)*** is the most
 commonly signed type of oil contract in Africa and is based
@@ -211,8 +201,7 @@ The essential characteristics of a PPC are:
 - the State retains its title to the oil. In other words, the contractor
   never holds title to the oil
 
-  1.  **Service
-      Contracts**
+### 3.3.2- Service Contracts
 
 Service contracts can be divided into pure service contracts and risky
 service contracts.
@@ -250,8 +239,7 @@ contracts, except for the method of payment (cash or in-kind) and the
 same elements and mechanisms are used to regulate the relationship
 between the two parties in these two types of contracts.
 
-4.  ***Structure of Oil
-    Tax Systems in West Africa***
+## 3.4- *Structure of Oil Tax Systems in West Africa*
 
 Most tax systems in West Africa are based on a combination of
 instruments, each serving a specific function. Royalties generate quick
@@ -272,8 +260,7 @@ It is the interaction between these elements, rather than a single
 component, that determines the overall share of government and
 influences how investors assess risks and rewards.
 
-5.  ***Contractual
-    frameworks in West Africa***
+## 3.5- *Contractual frameworks in West Africa*
 
 Production sharing contracts (PSCs) are the dominant model in West
 Africa. They allow governments to retain ownership of resources while

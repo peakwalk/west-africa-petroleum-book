@@ -253,7 +253,7 @@ Political instability and the absence of democratic governance are
 challenges for the transparent management of oil rents.
 
 ## 6.7- Other West African countries
-### Mauritania
+### 6.7.1- Mauritania
 
 Mauritania is an emerging hydrocarbon producer with significant offshore
 gas potential, notably through its participation in the Grand Tortue
@@ -288,7 +288,7 @@ Operationally, offshore gas exploitation reduces some risks, but
 requires considerable technical and financial resources. Mauritania's
 ability to effectively manage these projects will depend on further
 institutional development and international support.
-### Sierra Leone
+### 6.7.2- Sierra Leone
 
 Sierra Leone has experienced intermittent exploration activities in its
 offshore basins, with several discoveries indicating potential
@@ -316,7 +316,7 @@ The main challenge for Sierra Leone is the transition from exploration
 to production, while putting in place strong governance systems. Without
 strong institutions, the country risks replicating the difficulties
 faced by other resource-rich economies.
-### Liberia
+### 6.7.3- Liberia
 
 Liberia has conducted offshore exploration activities and identified
 potential hydrocarbon resources, but commercial production has not yet
@@ -340,8 +340,7 @@ Liberia's main challenge is to attract investment in a competitive
 global environment, while ensuring that governance systems are robust
 enough to manage future resource development.
 
-4.  **Guinea and
-    Guinea-Bissau**
+### 6.7.4- Guinea and Guinea-Bissau
 
 Guinea and Guinea-Bissau have limited but promising hydrocarbon
 potential, mainly in offshore basins. Exploration has been sporadic and
@@ -359,7 +358,7 @@ reflecting broader governance weaknesses (Transparency International,
 
 The development of the oil sector in these countries will depend heavily
 on improved political stability and governance.
-### The Gambia
+### 6.7.5- The Gambia
 
 The Gambia has been conducting offshore exploration activities and has
 identified potential hydrocarbon resources, but the sector remains at a

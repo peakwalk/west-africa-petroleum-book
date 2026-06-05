@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading1"/>
+      </w:pPr>
+      <w:r><w:t>Chapter 2: Different Phases of Upstream Oil and the Roles of States</w:t></w:r>
+    </w:p>
+    <w:p>
+      <w:r><w:t>Intro paragraph.</w:t></w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="ListParagraph"/>
+        <w:numPr>
+          <w:ilvl w:val="1"/>
+          <w:numId w:val="28"/>
+        </w:numPr>
+        <w:outlineLvl w:val="1"/>
+      </w:pPr>
+      <w:r><w:t>Pre-licensing phase</w:t></w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading3"/>
+      </w:pPr>
+      <w:r><w:t>2.1.1- Definition of the concept</w:t></w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="ListParagraph"/>
+        <w:numPr>
+          <w:ilvl w:val="2"/>
+          <w:numId w:val="42"/>
+        </w:numPr>
+        <w:outlineLvl w:val="2"/>
+      </w:pPr>
+      <w:r><w:t>Strategy for awarding petroleum licences or authorizations</w:t></w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="ListParagraph"/>
+        <w:numPr>
+          <w:ilvl w:val="2"/>
+          <w:numId w:val="42"/>
+        </w:numPr>
+        <w:outlineLvl w:val="2"/>
+      </w:pPr>
+      <w:r><w:t>Financing of pre-licensing phase investments</w:t></w:r>
+    </w:p>
+  </w:body>
+</w:document>

@@ -153,33 +153,41 @@
 })();
 
 (function () {
-  function normalizeOutline(onThisPage) {
-    const outlineAnchors = Array.from(onThisPage.querySelectorAll("a.header-in-summary"));
-
-    if (!outlineAnchors.length) {
-      return;
-    }
-
+  function buildOutlineList(outlineAnchors) {
     const flatList = document.createElement("ol");
 
     outlineAnchors.forEach(function (anchor) {
       const listItem = document.createElement("li");
       const linkWrapper = document.createElement("span");
+      const normalizedAnchor = document.createElement("a");
+      const targetSelector = anchor.getAttribute("href") || "";
+      const targetHeadingId =
+        targetSelector && targetSelector.startsWith("#")
+          ? decodeURIComponent(targetSelector.slice(1))
+          : "";
+      const targetHeadingElement = targetHeadingId
+        ? document.getElementById(targetHeadingId)
+        : null;
+      const targetHeading = targetHeadingElement
+        ? targetHeadingElement.querySelector("a.header")
+        : null;
 
       listItem.className = "header-item";
       linkWrapper.className = "chapter-link-wrapper";
 
-      anchor.textContent = anchor.textContent
-        .replace(/^\s*\d+(?:\.\d+)*(?:\s*[-–]\s*)?/, "")
-        .replace(/\s+/g, " ")
-        .trim();
+      normalizedAnchor.className = "header-in-summary";
+      normalizedAnchor.href = targetSelector;
+      normalizedAnchor.textContent = (
+        (targetHeading && targetHeading.textContent) ||
+        anchor.textContent
+      ).replace(/\s+/g, " ").trim();
 
-      linkWrapper.appendChild(anchor);
+      linkWrapper.appendChild(normalizedAnchor);
       listItem.appendChild(linkWrapper);
       flatList.appendChild(listItem);
     });
 
-    onThisPage.replaceChildren(flatList);
+    return flatList;
   }
 
   function updateProgress() {
@@ -513,14 +521,17 @@
 
   function moveOutline() {
     const outlineBody = document.querySelector(".book-outline-body");
-    const onThisPage = document.querySelector(".on-this-page");
+    const outlineAnchors = Array.from(document.querySelectorAll(".on-this-page a.header-in-summary"));
 
-    if (!outlineBody || !onThisPage || onThisPage.parentElement === outlineBody) {
+    if (!outlineBody || !outlineAnchors.length) {
       return;
     }
 
-    normalizeOutline(onThisPage);
-    outlineBody.replaceChildren(onThisPage);
+    const outlineContainer = document.createElement("div");
+    outlineContainer.className = "on-this-page";
+    outlineContainer.appendChild(buildOutlineList(outlineAnchors));
+
+    outlineBody.replaceChildren(outlineContainer);
     document.body.classList.add("book-outline-ready");
   }
 

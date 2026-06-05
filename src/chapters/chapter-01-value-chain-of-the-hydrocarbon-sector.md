@@ -9,8 +9,7 @@ downstream.
 Figure 1: Oil Sector
 Value Chain
 
-1.  ***The Upstream
-    segment***
+## 1.1- *The Upstream segment*
 
 ### 1.1.1 - Features
 
@@ -257,11 +256,9 @@ States and to which States must cooperate and pool their efforts in
 order to put in place appropriate strategies for the responsible and
 sustainable exploitation of their hydrocarbon resources.
 
-1.  *The **midstream
-    segment***
+## 1.2- *The midstream segment*
 
-> **1.2.1-
-> Characteristics**
+### 1.2.1- Characteristics
 
 The midstream segment of the oil and gas industry connects upstream and
 downstream oil activities and includes natural gas liquefaction and
@@ -383,11 +380,9 @@ gas-fired power plants and the creation of an African oil market will
 boost the development of the midstream and, in turn, strengthen people's
 access to clean energy.
 
-1.  ***Le segment Aval
-    (downstream)***
+## 1.3- *Le segment Aval (downstream)*
 
-> **1.3.1-
-> Characteristics**
+### 1.3.1- Characteristics
 
 This segment deals with crude oil refining, transportation, storage and
 distribution of ***petroleum products*** as well as ***petrochemical***
@@ -485,8 +480,7 @@ downstream oil sector, namely:
   refineries that do not meet international standards, with the
   exception of the new DANGOTE refinery in Nigeria.
 
-  1.  ***Weaknesses in
-      the West African oil industry value chain***
+## 1.4- *Weaknesses in the West African oil industry value chain*
 
 The value chain of the oil industry is not structured in Africa in
 general and in West Africa in particular. The oil sector faces
@@ -601,8 +595,7 @@ of its objectives and bodies in order to be more operational to solve
 the problems listed above faced by the different segments of the value
 chain of the hydrocarbon sector in Africa.
 
-1.  ***Possible solutions
-    for an oil industry serving the region***
+## 1.5- *Possible solutions for an oil industry serving the region*
 
 The need for a reorganization of the entire value chain is a solution to
 boost development in Africa. This reorganization involves:

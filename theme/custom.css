@@ -735,9 +735,15 @@ body {
   line-height: 1.4;
 }
 
+.on-this-page a.active,
 .on-this-page a.current-header,
+.on-this-page a:active,
+.on-this-page a:focus-visible,
 .on-this-page a:hover {
-  color: var(--fg);
+  color: #64748b;
+  text-decoration: none;
+  font-weight: 400;
+  outline: none;
 }
 
 #mdbook-searchbar {
@@ -1544,6 +1550,13 @@ body.book-page-aux-index .reader-article {
 @media (min-width: 1024px) {
   :root {
     --sidebar-width: 288px;
+  }
+}
+
+@media (min-width: 1281px) {
+  .book-sidebar-shell .chapter .header-toggle,
+  .book-sidebar-shell .chapter ol.section {
+    display: none;
   }
 }
 
