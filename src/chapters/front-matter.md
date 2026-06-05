@@ -8,6 +8,9 @@
     <figure class="book-cover-figure">
       <img src="../images/figure-001.webp" alt="Oil pumpjack used as the cover image for the West Africa petroleum reference book">
     </figure>
+    <p class="book-cover-entry" data-reading-time-ignore="true">
+      <a class="book-cover-entry-link" href="../chapters/foreword.html">Start reading</a>
+    </p>
     <div class="book-cover-footer">
       <p class="book-cover-imprint">Upstream Atlas</p>
       <p class="book-cover-edition">Digital Reading Edition</p>

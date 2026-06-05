@@ -1,5 +1,5 @@
 (function () {
-  const defaultChapterPath = "chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html";
+  const defaultChapterPath = "chapters/foreword.html";
 
   function isBookHomePath(pathname) {
     return /\/book(?:\/index\.html)?\/?$/.test(pathname);
