@@ -201,8 +201,11 @@
                             <nav class="chapter-pagination" aria-label="Chapter navigation">
                                 {{#if previous}}
                                 <a rel="prev" href="{{ path_to_root }}{{ previous.link }}" class="chapter-nav-card chapter-nav-previous">
-                                    <span class="chapter-nav-label">Previous chapter</span>
-                                    <strong>{{ previous.name }}{{ previous.title }}</strong>
+                                    <span class="chapter-nav-arrow" aria-hidden="true">‹</span>
+                                    <span class="chapter-nav-body">
+                                        <span class="chapter-nav-label">Previous chapter</span>
+                                        <strong class="chapter-nav-title">{{ previous.name }}{{ previous.title }}</strong>
+                                    </span>
                                 </a>
                                 {{else}}
                                 <span class="chapter-nav-card chapter-nav-placeholder" aria-hidden="true"></span>
@@ -210,8 +213,11 @@
 
                                 {{#if next}}
                                 <a rel="next prefetch" href="{{ path_to_root }}{{ next.link }}" class="chapter-nav-card chapter-nav-next">
-                                    <span class="chapter-nav-label">Next chapter</span>
-                                    <strong>{{ next.name }}{{ next.title }}</strong>
+                                    <span class="chapter-nav-body">
+                                        <span class="chapter-nav-label">Next chapter</span>
+                                        <strong class="chapter-nav-title">{{ next.name }}{{ next.title }}</strong>
+                                    </span>
+                                    <span class="chapter-nav-arrow" aria-hidden="true">›</span>
                                 </a>
                                 {{/if}}
                             </nav>
