@@ -980,10 +980,6 @@ body.book-page-aux-index {
   --quote-border: var(--primary);
 }
 
-body.book-page-aux-index .reader-layout {
-  grid-template-columns: minmax(0, 1fr);
-}
-
 body.book-page-aux-index .reader-main {
   padding-top: 32px;
 }
