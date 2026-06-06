@@ -118,6 +118,43 @@ class ExtractMarkdownTests(unittest.TestCase):
             ],
         )
 
+    def test_strips_html_superscript_markers_from_table_sources(self) -> None:
+        tmp_dir = Path(tempfile.mkdtemp())
+        chapter_dir = tmp_dir / "chapters"
+        chapter_dir.mkdir(parents=True, exist_ok=True)
+        chapter_path = chapter_dir / "chapter-03-value-chain.md"
+        chapter_path.write_text(
+            "# Chapter 3: Tables and Captions\n\n"
+            "## 3.1- *State of play*\n\n"
+            "Paragraph before the table.\n\n"
+            "| Country | Value |\n"
+            "|:--|:--|\n"
+            "| Benin | 331<sup>1</sup> |\n\n"
+            "Table 1: Estimation of hydrocarbon resources in West Africa\n\n"
+            "<sup>1</sup> Data Ministries\n\n"
+            "<sup>2</sup> RPS Energy Report, 2006\n",
+            encoding="utf-8",
+        )
+        summary_path = tmp_dir / "SUMMARY.md"
+        summary_path.write_text(
+            "# Summary\n\n"
+            "- [Chapter 3: Tables and Captions](chapters/chapter-03-value-chain.md)\n",
+            encoding="utf-8",
+        )
+
+        book = extract_markdown_book(summary_path, chapter_dir)
+        chapter = book.chapters[0]
+
+        self.assertEqual(
+            [block.text for block in chapter.body],
+            [
+                "Paragraph before the table.",
+                "Table 1: Estimation of hydrocarbon resources in West Africa",
+                "Data Ministries",
+                "RPS Energy Report, 2006",
+            ],
+        )
+
     def test_ignores_html_tables_and_inline_figure_labels(self) -> None:
         tmp_dir = Path(tempfile.mkdtemp())
         chapter_dir = tmp_dir / "chapters"

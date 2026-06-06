@@ -1506,6 +1506,16 @@ body.book-page-aux-index .reader-article {
   padding-top: 0.9rem;
 }
 
+#figure-7.figure-card--multi .figure-media-grid {
+  box-sizing: border-box;
+  width: calc(100% - 1.75rem);
+  margin: 0 auto 0.85rem;
+}
+
+#figure-7.figure-card--multi .figure-caption {
+  padding-top: 1rem;
+}
+
 .figure-caption {
   margin: 0;
   padding: 0.9rem 0.15rem 0;
@@ -1563,6 +1573,12 @@ body.book-page-aux-index .reader-article {
     width: 100%;
     height: auto;
   }
+
+  #figure-7.figure-card--multi .figure-media-grid {
+    width: 100%;
+    margin-bottom: 0.65rem;
+  }
+
 }
 
 .table-anchor-target {
@@ -1621,6 +1637,27 @@ body.book-page-aux-index .reader-article {
 
 .table-caption em {
   font-style: normal;
+}
+
+.table-notes-group {
+  display: grid;
+  gap: 0.25rem;
+  margin-top: 0.1rem;
+}
+
+.table-notes {
+  margin: 0;
+  color: rgba(31, 41, 55, 0.84);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.table-data-table sup,
+.table-notes sup {
+  position: relative;
+  top: -0.35em;
+  font-size: 0.72em;
+  line-height: 0;
 }
 
 .table-anchor-target:target {

@@ -306,6 +306,40 @@
       return !table.closest(".table-anchor-target");
     });
 
+    function isTableNoteElement(element) {
+      if (!element || !element.matches("p")) {
+        return false;
+      }
+
+      if (element.classList.contains("table-notes")) {
+        return true;
+      }
+
+      const marker = element.firstElementChild;
+      return (
+        marker &&
+        marker.tagName.toLowerCase() === "sup" &&
+        /^\d+$/.test((marker.textContent || "").trim())
+      );
+    }
+
+    function collectTableNotes(captionElement, tableBlock, captionPosition) {
+      const notes = [];
+      let currentElement =
+        captionElement && captionPosition === "after"
+          ? captionElement.nextElementSibling
+          : tableBlock.nextElementSibling;
+
+      while (isTableNoteElement(currentElement)) {
+        const note = currentElement;
+        currentElement = currentElement.nextElementSibling;
+        note.classList.add("table-notes");
+        notes.push(note);
+      }
+
+      return notes;
+    }
+
     tables.forEach(function (table) {
       const tableBlock =
         table.parentElement && table.parentElement.classList.contains("table-wrapper")
@@ -356,6 +390,7 @@
 
       const tableId = "table-" + match[1];
       const captionTextValue = (match[2] || "").trim();
+      const tableNotes = collectTableNotes(captionElement, tableBlock, captionPosition);
       const wrapper = document.createElement("div");
       const tableShell = document.createElement("div");
       const tableScroll = document.createElement("div");
@@ -394,6 +429,14 @@
       wrapper.appendChild(tableShell);
       tableShell.appendChild(tableScroll);
       tableScroll.appendChild(tableBlock);
+      if (tableNotes.length > 0) {
+        const notesGroup = document.createElement("div");
+        notesGroup.className = "table-notes-group";
+        tableNotes.forEach(function (note) {
+          notesGroup.appendChild(note);
+        });
+        wrapper.appendChild(notesGroup);
+      }
     });
   }
 

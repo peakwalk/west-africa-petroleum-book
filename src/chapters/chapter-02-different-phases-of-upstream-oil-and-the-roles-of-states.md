@@ -4,12 +4,10 @@ The Upstream Oil sector includes five (05) categories of activities or
 phases that follow one another (Figure 5): Pre-licence, Exploration,
 Development, Production and Abandonment.
 
+![Figure 005: Different phases of upstream oil](../images/figure-005-upstream-phases-transparent.webp)
+
 Figure 5: Different
 phases of upstream oil
-
-Authorization to operate
-
-Exploration Authorization
 
 ## 2.1- *Pre-licensing phase*
 
@@ -146,6 +144,8 @@ of oil contracts and negotiation techniques as well as technicians
 experienced in the sector. This team can be made up of lawyers, oil
 economists, geoscientists, etc.
 
+![Figure 006: Process for Assigning Oil Block to the IPC for Petroleum Exploration and Development](../images/figure-006-block-assignment-transparent.webp)
+
 Figure 6: Process for
 Assigning Oil Block to the IPC for Petroleum Exploration and Development
 
@@ -242,9 +242,9 @@ and depth of the sedimentary layers and thus give an idea of the
 distribution and thickness of the sedimentary formations (Figure 7 a and
 b).
 
-![Figure 006](../images/figure-006.webp)
-
 ![Figure 007](../images/figure-007.webp)
+
+![Figure 006](../images/figure-006.webp)
 
 Figure 7: Gravimetric
 acquisition (a) showing anomalies in the Coastal Sedimentary Basin of
@@ -267,24 +267,10 @@ hydrocarbon traps and Direct Hydrocarbon Indicators (HIDs) such as
 Bright Spots, Flat Spots and Gas chimneys etc. which condition the
 positioning of exploration wells (Figure 9).
 
-b
-
 ![Figure 008](../images/figure-008.webp)
-
-a
-
-Multiple qv streamers
-
-![Figure 009](../images/figure-009.webp)
-
-Source
 
 Figure 8: 3D acquisition
 principle (a) and seismic cube (b)
-
-Well Positioning
-
-Exploratory
 
 ![Figure 010](../images/figure-010.jpg)
 

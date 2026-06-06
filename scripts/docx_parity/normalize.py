@@ -1,6 +1,7 @@
 import re
 
 INLINE_MARKUP_RE = re.compile(r"[*_`]+")
+LEADING_SUP_MARKER_RE = re.compile(r"^\s*<sup>\s*\d+\s*</sup>\s*", re.IGNORECASE)
 MARKDOWN_ESCAPE_RE = re.compile(r"\\([\\`*_{}\[\]()#+\-.!|$<>])")
 WHITESPACE_RE = re.compile(r"\s+")
 HEADING_NUMBER_RE = re.compile(
@@ -14,6 +15,7 @@ DOUBLE_BRACE_RE = re.compile(r"\{\{([^{}]*)\}\}")
 
 def normalize_visible_text(value: str) -> str:
     unescaped = MARKDOWN_ESCAPE_RE.sub(r"\1", value)
+    unescaped = LEADING_SUP_MARKER_RE.sub("", unescaped)
     stripped = INLINE_MARKUP_RE.sub("", unescaped)
     collapsed = WHITESPACE_RE.sub(" ", stripped.replace("\u00a0", " "))
     return collapsed.strip()

@@ -68,23 +68,23 @@ billion cubic feet **(**372 TCF**)** of natural gas (Table 1).
 
 | **Country**       | **Crude Oil Reserves (MMBLS)** | **Gas Reserves (BCF)** |
 |:------------------|:-------------------------------|:-----------------------|
-| **Nigeria**       | 30.031\*                       | 202.000\*              |
+| **Nigeria**       | 30.031<sup>1</sup>             | 202.000<sup>1</sup>    |
 | **Ghana**         | 1813 (732 proven)              | 4,100 (1,771 proven)   |
-| **Senegal**       | 2 030\*                        | 42 024\*               |
-| **Mauritania**    | 20 (proven)\*                  | 110 000 (estimation)\* |
-| **Ivory Coast**   | 3.100 (estimation)\*           | 4.600 (estimation)\*   |
+| **Senegal**       | 2 030<sup>1</sup>              | 42 024<sup>1</sup>     |
+| **Mauritania**    | 20 (proven)<sup>1</sup>        | 110 000 (estimation)<sup>1</sup> |
+| **Ivory Coast**   | 3.100 (estimation)<sup>1</sup> | 4.600 (estimation)<sup>1</sup> |
 | **Niger**         | 150                            |                        |
 | **Benin**         | 331 (estimation)               | 477                    |
 | **Guinea-Biseau** | 840                            |                        |
-| **Mali**          | 645 (estimation)\*\*           | 9 000 (estimation)\*\* |
+| **Mali**          | 645 (estimation)<sup>2</sup>   | 9 000 (estimation)<sup>2</sup> |
 | **Total**         | **38 960**                     | **371 724**            |
 
 Table 1: Estimation of
 hydrocarbon resources in West Africa
 
-\*Data Ministries
+<sup>1</sup> Data Ministries
 
-\*\*RPS Energy Report, 2006
+<sup>2</sup> RPS Energy Report, 2006
 
 According to Trading Economics (2025), the four (04) largest producers
 in 2024 (Table 2) are Nigeria (Benin Basin, Niger Delta and
@@ -623,8 +623,6 @@ boost development in Africa. This reorganization involves:
 - the development of healthy cooperation between States in terms of
   sharing experience.
 
+![Figure 004: Synthetic diagram showing the different oil cuts](../images/figure-004-oil-cuts-transparent.webp)
+
 Figure 4: Synthetic diagram showing the different oil cuts
-
-0 to 80-100°C
-
-120 to 180°C
