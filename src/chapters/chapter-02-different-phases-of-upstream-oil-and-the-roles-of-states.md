@@ -382,7 +382,9 @@ Thus, the determination of the geological risk of a prospect makes it
 possible to calculate the probability of success of this prospect. It is
 determined by the formula:
 
-**P(prospect) = P(source rock) x P(reservoir) x P(trap)**
+<div class="book-formula" role="img" aria-label="P prospect equals P source rock times P reservoir times P trap">
+  <span class="book-formula-line" aria-hidden="true">P(prospect) = P(source rock) x P(reservoir) x P(trap)</span>
+</div>
 
 Waterproof trap + waterproof cover
 
@@ -407,14 +409,18 @@ area are used.
 Thus, the quantity of hydrocarbons (VHcP) in place, i.e. oil (STOIIP) or
 gas (GIIP) in place, is determined as follows:
 
-**VHcP = GRV x N/G x Ø x Shc x 1/FVF**
+<div class="book-formula" role="img" aria-label="VHcP equals GRV times N over G times phi times Shc times 1 over FVF">
+  <span class="book-formula-line" aria-hidden="true">VHcP = GRV x N/G x Ø x Shc x 1/FVF</span>
+</div>
 
 With
 
 **IBC = Gross Rock Volume: it is determined by taking into account the
 geometric shape of the reservoir and its thickness**
 
-**IBCs = ∑Deposit Area x Deposit Thickness**
+<div class="book-formula" role="img" aria-label="IBCs equals the sum of deposit area times deposit thickness">
+  <span class="book-formula-line" aria-hidden="true">IBCs = ∑Deposit Area x Deposit Thickness</span>
+</div>
 
 **N/G**: This is the ratio between the net thickness of the tank and the
 gross thickness of the tank. It should be noted that the thickness of
@@ -425,40 +431,60 @@ interspersed with layers of impermeable clay.
 logs, core measurements and knowledge from similar formations. It is
 determined as follows:
 
-**Porosity (Ø) = Pore Volume (Vv)/ Reservoir Volume (V)**
+<div class="book-formula" role="img" aria-label="Porosity phi equals pore volume over reservoir volume">
+  <span class="book-formula-line" aria-hidden="true">Porosity (Ø) = Pore Volume (Vv)/ Reservoir Volume (V)</span>
+</div>
 
 **Shc =** Hydrocarbon saturation determined by knowing the water
 saturation Sw. It is usually calculated from the well digraphies in the
 effective porosity zone.
 
-**Shc = 1-Sw**
+<div class="book-formula" role="img" aria-label="Shc equals 1 minus Sw">
+  <span class="book-formula-line" aria-hidden="true">Shc = 1-Sw</span>
+</div>
 
 **FVF**: This is the Volumetric Factor of Formation. It expresses the
 change in the volume of the oil from the tank to the surface under
 standard pressure and temperature conditions (pressure: 1 atm and
 temperature: 15° Celsius). FVF of the oil is Bo and for the gas is Bg.
 
-**FVF = Reservoir Volume/Surface Volume**
-
-- **For the oil**
-
-FVF = Bo and Shc = So (oil saturation)
-
-Thus,
-
-**STIIOP = GRV x N/G x Ø x So x 1/Bo**
-
-**Associated gas in place = STOIIP x GOR**
-
-- **For gas**
-
-FVF = Bg and Shc = Sg (Gas Saturation)
-
-Thus,
-
-**GIIP = GRV x N/G x Ø x Sg x 1/Bg**
-
-**Condensate in place = GIIP x CGR**
+<div class="formula-derivation" aria-label="FVF derivation for oil and gas">
+  <div class="book-formula book-formula--primary" role="img" aria-label="FVF equals reservoir volume over surface volume">
+    <span class="book-formula-line" aria-hidden="true">FVF = Reservoir Volume/Surface Volume</span>
+  </div>
+  <div class="formula-case-grid">
+    <section class="formula-case" aria-label="Oil case derivation">
+      <p class="formula-case-title">For the oil</p>
+      <div class="formula-case-stack">
+        <div class="book-formula book-formula--secondary" role="img" aria-label="FVF equals Bo and Shc equals So for oil saturation">
+          <span class="book-formula-line" aria-hidden="true">FVF = Bo and Shc = So (oil saturation)</span>
+        </div>
+        <p class="formula-case-connector">Thus</p>
+        <div class="book-formula book-formula--secondary book-formula--result" role="img" aria-label="STIIOP equals GRV times N over G times phi times So times 1 over Bo">
+          <span class="book-formula-line" aria-hidden="true">STIIOP = GRV x N/G x Ø x So x 1/Bo</span>
+        </div>
+        <div class="book-formula book-formula--secondary" role="img" aria-label="Associated gas in place equals STOIIP times GOR">
+          <span class="book-formula-line" aria-hidden="true">Associated gas in place = STOIIP x GOR</span>
+        </div>
+      </div>
+    </section>
+    <section class="formula-case" aria-label="Gas case derivation">
+      <p class="formula-case-title">For gas</p>
+      <div class="formula-case-stack">
+        <div class="book-formula book-formula--secondary" role="img" aria-label="FVF equals Bg and Shc equals Sg for gas saturation">
+          <span class="book-formula-line" aria-hidden="true">FVF = Bg and Shc = Sg (Gas Saturation)</span>
+        </div>
+        <p class="formula-case-connector">Thus</p>
+        <div class="book-formula book-formula--secondary book-formula--result" role="img" aria-label="GIIP equals GRV times N over G times phi times Sg times 1 over Bg">
+          <span class="book-formula-line" aria-hidden="true">GIIP = GRV x N/G x Ø x Sg x 1/Bg</span>
+        </div>
+        <div class="book-formula book-formula--secondary" role="img" aria-label="Condensate in place equals GIIP times CGR">
+          <span class="book-formula-line" aria-hidden="true">Condensate in place = GIIP x CGR</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
 
 with:
 

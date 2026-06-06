@@ -123,7 +123,7 @@ during **AVO scans**.
 (API)** that evaluates whether oil is light or heavy in relation to
 water. It is calculated by the formula:
 
-<div class="api-density-formula" role="img" aria-label="API density equals 141.5 divided by Density at 15 degrees Celsius minus 131.5">
+<div class="book-formula api-density-formula" role="img" aria-label="API density equals 141.5 divided by Density at 15 degrees Celsius minus 131.5">
   <span class="api-density-formula-term" aria-hidden="true">API&nbsp;density&nbsp;=</span>
   <span class="api-density-fraction" aria-hidden="true">
     <span class="api-density-numerator">141.5</span>

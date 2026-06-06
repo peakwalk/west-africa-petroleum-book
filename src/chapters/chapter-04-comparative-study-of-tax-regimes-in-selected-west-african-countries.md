@@ -73,7 +73,9 @@ income. Gross income depends on the quantity of crude oil extracted from
 the deposit, the quality of the crude oil and the variation in the price
 of crude oil on the international market. Thus, we have:
 
-***Post Royalty Revenue = Gross Revenue – Royalty***
+<div class="book-formula" role="img" aria-label="Post royalty revenue equals gross revenue minus royalty">
+  <span class="book-formula-line" aria-hidden="true">Post Royalty Revenue = Gross Revenue &minus; Royalty</span>
+</div>
 
 Table 5 below shows the proportions of royalties adopted in the oil
 regulations of selected West African countries.
@@ -253,9 +255,15 @@ in a concessional system. Oil profit is usually, but not always, taxed.
 
 It is calculated by the following formula:
 
-***Oil Profit = Revenue Post Royalty – Recoverable Costs*** or
+<div class="book-formula" role="img" aria-label="Oil profit equals revenue post royalty minus recoverable costs">
+  <span class="book-formula-line" aria-hidden="true">Oil Profit = Revenue Post Royalty &minus; Recoverable Costs</span>
+</div>
 
-***Oil Profit = Gross Revenue – Royalty – Recoverable Costs***
+<p class="book-formula-bridge">or</p>
+
+<div class="book-formula" role="img" aria-label="Oil profit equals gross revenue minus royalty minus recoverable costs">
+  <span class="book-formula-line" aria-hidden="true">Oil Profit = Gross Revenue &minus; Royalty &minus; Recoverable Costs</span>
+</div>
 
 In the Production Sharing Contracts of Benin and Niger, the share of the
 oil profit accruing to the contractor is no longer taxed.
@@ -274,15 +282,21 @@ must secure their share by other measures, most often by taxation.
 The R-factor can be used as a trigger for both royalty and profit
 sharing. It is determined in different ways:
 
-**R-Factor=Cumulative Revenue/Cumulative Cost**
+<div class="book-formula" role="img" aria-label="R factor equals cumulative revenue over cumulative cost">
+  <span class="book-formula-line" aria-hidden="true">R-Factor=Cumulative Revenue/Cumulative Cost</span>
+</div>
 
-**R-Factor = (Cumulative Revenue - Cumulative Opex) / Cumulative
-Capex**
+<div class="book-formula" role="img" aria-label="R factor equals cumulative revenue minus cumulative operating expenditure over cumulative capital expenditure">
+  <span class="book-formula-line" aria-hidden="true">R-Factor = (Cumulative Revenue &minus; Cumulative Opex) / Cumulative Capex</span>
+</div>
 
-**R-Factor = (Cumulative Revenues - Cumulative Profits) /
-(Cumulative Investments + Cumulative Opex)**
+<div class="book-formula" role="img" aria-label="R factor equals cumulative revenues minus cumulative profits over cumulative investments plus cumulative operating expenditure">
+  <span class="book-formula-line" aria-hidden="true">R-Factor = (Cumulative Revenues &minus; Cumulative Profits) / (Cumulative Investments + Cumulative Opex)</span>
+</div>
 
-**R-Factor=Cumulative Net Revenue/Cumulative Costs**
+<div class="book-formula" role="img" aria-label="R factor equals cumulative net revenue over cumulative costs">
+  <span class="book-formula-line" aria-hidden="true">R-Factor=Cumulative Net Revenue/Cumulative Costs</span>
+</div>
 
 When the – R factor becomes larger and larger, it means that the
 profitability of the project becomes higher with a drastic decrease in
@@ -375,9 +389,12 @@ of H)</td>
 <td style="text-align: center;"><p>Negotiable</p>
 <p><strong>32.5% to 47.5</strong>% modulated by an H-factor for the
 contractor (Eni -2019 contract) i.e.</p>
-<p><strong>100-(32.5xH) to 100-(47.5xH) for the State</strong></p>
-<p><strong>H=1.626 – 0.141Ln (oil price deflated as of December
-2011)</strong></p></td>
+<div class="book-formula" role="img" aria-label="State share equals 100 minus 32.5 times H to 100 minus 47.5 times H">
+  <span class="book-formula-line" aria-hidden="true">100-(32.5xH) to 100-(47.5xH) for the State</span>
+</div>
+<div class="book-formula" role="img" aria-label="H equals 1.626 minus 0.141 natural logarithm of oil price deflated as of December 2011">
+  <span class="book-formula-line" aria-hidden="true">H=1.626 &minus; 0.141Ln (oil price deflated as of December 2011)</span>
+</div></td>
 </tr>
 <tr>
 <td style="text-align: left;"><strong>NIGERIA</strong></td>
