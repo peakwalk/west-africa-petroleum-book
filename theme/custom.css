@@ -1,6 +1,24 @@
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: block;
+  src: url("../reader-fonts/inter-var.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Literata";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: block;
+  src: url("../reader-fonts/literata-var.woff2") format("woff2");
+}
+
 :root {
   --menu-bar-height: 56px;
   --reader-left-offset: 0px;
+  --reader-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --reader-serif: "Literata", Georgia, serif;
   --sidebar-width: 256px;
   --outline-width: 256px;
   --ink: #1e293b;
@@ -92,7 +110,7 @@ html:not(.js) {
 
 html,
 body {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--reader-sans);
 }
 
 html,
@@ -167,6 +185,13 @@ body {
   box-shadow: none;
 }
 
+.reader-article,
+.reader-article p,
+.reader-article li,
+.reader-article blockquote {
+  font-family: var(--reader-serif);
+}
+
 .reader-outline {
   position: relative;
   align-self: stretch;
@@ -219,8 +244,11 @@ body {
 
 .content h1,
 .content h2,
-.content h3 {
-  font-family: "Lora", Georgia, serif;
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
+  font-family: var(--reader-serif);
   font-weight: 500;
   letter-spacing: -0.01em;
 }
@@ -230,9 +258,34 @@ body {
 .chapter,
 .on-this-page,
 .chapter-nav-card,
+.book-outline-body,
+.book-cover-kicker,
+.book-cover-entry-link,
+.book-cover-imprint,
+.book-cover-edition,
+.reference-index,
+.reference-index li,
+.reference-glossary-list,
+.reference-glossary-list dt,
+.reference-glossary-list dd,
+.reader-article table,
+.reader-article thead,
+.reader-article tbody,
+.reader-article th,
+.reader-article td,
+.reader-article table p,
+.reader-article table li,
+.figure-caption,
+.figure-caption-label,
+.figure-caption-text,
+.table-caption,
+.table-caption-label,
+.table-caption-text,
+.table-notes,
+.table-notes sup,
 #mdbook-searchbar,
 #mdbook-searchresults {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: var(--reader-sans);
 }
 
 .content h1 {
@@ -907,7 +960,7 @@ body {
 .chapter-nav-title {
   display: block;
   color: var(--deep);
-  font-family: "Lora", Georgia, serif;
+  font-family: var(--reader-serif);
   font-size: 1.24rem;
   font-weight: 600;
   line-height: 1.14;
@@ -1005,11 +1058,11 @@ body.book-page-aux-index .reader-article {
 
 .book-cover-frame {
   position: relative;
-  width: min(100%, 700px);
-  aspect-ratio: 3 / 4;
+  width: min(100%, 760px);
+  min-height: min(940px, calc(100vh - 7rem));
   display: grid;
-  grid-template-rows: auto auto minmax(0, 1fr) auto;
-  gap: clamp(1rem, 2vw, 1.4rem);
+  grid-template-rows: auto auto auto auto auto;
+  gap: 0;
   padding: clamp(1.5rem, 3vw, 2.25rem);
   border: 1px solid rgba(35, 53, 83, 0.14);
   border-radius: 0.95rem;
@@ -1047,17 +1100,19 @@ body.book-page-aux-index .reader-article {
   display: grid;
   gap: 0.95rem;
   max-width: 31rem;
+  margin-top: clamp(2rem, 4vw, 3.4rem);
+  padding-bottom: clamp(1.5rem, 3vw, 2.75rem);
 }
 
 .book-cover-title {
   margin: 0;
   color: var(--primary-deep);
-  font-family: "Lora", Georgia, serif;
-  font-size: clamp(2.55rem, 5vw, 4.3rem);
+  font-family: var(--reader-serif);
+  font-size: clamp(2.35rem, 4.4vw, 3.9rem);
   font-weight: 700;
-  line-height: 0.96;
-  letter-spacing: -0.035em;
-  max-width: 12ch;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  max-width: 13ch;
   text-wrap: pretty;
 }
 
@@ -1071,10 +1126,8 @@ body.book-page-aux-index .reader-article {
 
 .book-cover-figure {
   margin: 0;
-  align-self: end;
   position: relative;
   z-index: 1;
-  min-height: 0;
   border: 1px solid rgba(15, 31, 58, 0.14);
   border-radius: 0.9rem;
   background: #ffffff;
@@ -1083,17 +1136,18 @@ body.book-page-aux-index .reader-article {
 }
 
 .book-cover-figure img {
+  display: block;
   width: 100%;
   max-width: none;
   margin: 0;
   border-radius: 0;
-  aspect-ratio: 5 / 4;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
   object-position: 61% center;
 }
 
 .book-cover-entry {
-  margin: 0;
+  margin: clamp(1rem, 2vw, 1.25rem) 0 0;
   position: relative;
   z-index: 1;
   display: flex;
@@ -1133,6 +1187,7 @@ body.book-page-aux-index .reader-article {
   align-items: flex-end;
   justify-content: space-between;
   gap: 1rem;
+  margin-top: clamp(1rem, 2vw, 1.25rem);
   padding-top: 0.85rem;
   border-top: 1px solid rgba(35, 53, 83, 0.14);
 }
@@ -1156,7 +1211,6 @@ body.book-page-aux-index .reader-article {
   .book-cover-frame {
     width: 100%;
     min-height: 0;
-    aspect-ratio: auto;
     padding: 22px 20px 20px;
   }
 
@@ -1166,6 +1220,16 @@ body.book-page-aux-index .reader-article {
 
   .book-cover-title {
     max-width: none;
+    font-size: clamp(2.25rem, 11vw, 3.4rem);
+  }
+
+  .book-cover-title-block {
+    margin-top: 2rem;
+    padding-bottom: 1.25rem;
+  }
+
+  .book-cover-figure img {
+    aspect-ratio: 4 / 3;
   }
 
   .book-cover-entry-link {
@@ -1297,7 +1361,7 @@ body.book-page-aux-index .reader-article {
   background: linear-gradient(180deg, #ffffff 0%, rgba(248, 250, 252, 0.96) 100%);
   box-shadow: 0 10px 24px rgba(15, 23, 42, 0.075);
   color: var(--ink);
-  font-family: "Lora", Georgia, serif;
+  font-family: var(--reader-serif);
   font-size: clamp(18px, 1.55vw, 23px);
   font-weight: 500;
   line-height: 1.05;
@@ -1548,7 +1612,7 @@ body.book-page-aux-index .reader-article {
 
 .table-caption-text {
   color: rgba(30, 58, 138, 0.88);
-  font-family: "Lora", Georgia, serif;
+  font-family: var(--reader-serif);
   font-size: 16px;
   font-style: italic;
   font-weight: 600;

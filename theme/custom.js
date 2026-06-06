@@ -492,16 +492,16 @@
   }
 
   function applyPageVariants() {
-    const frontMatterPath = "front-matter.html";
+    const coverPath = "cover.html";
     const listOfFiguresPath = "list-of-figures.html";
     const listOfTablesPath = "list-of-tables.html";
     const abbreviationsPath = "abbreviations-acronyms-and-abbreviations.html";
-    const isFrontMatter = window.location.pathname.endsWith("/chapters/" + frontMatterPath);
+    const isCoverPage = window.location.pathname.endsWith("/chapters/" + coverPath);
     const isListOfFigures = window.location.pathname.endsWith("/chapters/" + listOfFiguresPath);
     const isListOfTables = window.location.pathname.endsWith("/chapters/" + listOfTablesPath);
     const isAbbreviationsPage = window.location.pathname.endsWith("/chapters/" + abbreviationsPath);
 
-    if (isFrontMatter) {
+    if (isCoverPage) {
       document.body.classList.add("book-page-cover");
       return;
     }

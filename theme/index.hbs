@@ -18,9 +18,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:wght@400;500;600;700&display=swap">
+        <link rel="preload" href="{{ path_to_root }}reader-fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+        <link rel="preload" href="{{ path_to_root }}reader-fonts/literata-var.woff2" as="font" type="font/woff2" crossorigin>
         <link rel="icon" href="{{ path_to_root }}../assets/images/upstream-atlas-favicon.png?v=2" type="image/png" sizes="32x32">
         <link rel="shortcut icon" href="{{ path_to_root }}../assets/images/upstream-atlas-favicon.png?v=2" type="image/png">
         <link rel="apple-touch-icon" href="{{ path_to_root }}../assets/images/upstream-atlas-favicon.png?v=2">
@@ -59,6 +58,13 @@
         <script src="{{ resource "toc.js" }}"></script>
     </head>
     <body>
+    <script>
+        (function applyInitialBookPageVariant() {
+            if (window.location.pathname.endsWith("/chapters/cover.html")) {
+                document.body.classList.add("book-page-cover");
+            }
+        })();
+    </script>
     <div id="mdbook-help-container">
         <div id="mdbook-help-popup">
             <h2 class="mdbook-help-title">Keyboard shortcuts</h2>

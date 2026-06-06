@@ -2,7 +2,7 @@
 
 # Front Matter
 
-- [Cover](chapters/front-matter.md)
+- [Cover](chapters/cover.md)
 - [List of Figures](chapters/list-of-figures.md)
 - [List of Tables](chapters/list-of-tables.md)
 - [Abbreviations, Acronyms and Abbreviations](chapters/abbreviations-acronyms-and-abbreviations.md)
