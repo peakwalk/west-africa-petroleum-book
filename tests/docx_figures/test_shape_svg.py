@@ -46,7 +46,7 @@ class ShapeSvgTest(unittest.TestCase):
         )
 
         self.assertIn("<svg", svg)
-        self.assertIn("REGIME FISCAL", svg)
+        self.assertIn("FISCAL REGIME", svg)
         self.assertIn("Gross income: 100", svg)
         self.assertIn("Gross cash flow", svg)
         self.assertIn("FLOW CHART BENIN", svg)
@@ -197,7 +197,7 @@ class ShapeSvgTest(unittest.TestCase):
             paragraph_end=record.caption_paragraph_index,
         )
 
-        self.assertLess(svg.index("<path "), svg.index("REGIME FISCAL"))
+        self.assertLess(svg.index("<path "), svg.index("FISCAL REGIME"))
         self.assertLess(svg.index("<path "), svg.index("Profit sharing Oil"))
 
     def test_render_shape_figure_30_keeps_regime_title_padding_small(self) -> None:
@@ -217,7 +217,7 @@ class ShapeSvgTest(unittest.TestCase):
                 for node in foreign_object.iter()
                 if (node.text or "").strip()
             )
-            if text == "REGIME FISCAL":
+            if text == "FISCAL REGIME":
                 regime_style = list(foreign_object)[0].attrib.get("style", "")
                 break
 
@@ -243,16 +243,16 @@ class ShapeSvgTest(unittest.TestCase):
                 for node in foreign_object.iter()
                 if (node.text or "").strip()
             )
-            if text in {"Profit sharing Oil 60/40", "Imposable/taxable :0"}:
+            if text in {"Profit sharing Oil 60/40", "Taxable income: 0"}:
                 positions[text] = (
                     float(foreign_object.attrib["y"]),
                     float(foreign_object.attrib["height"]),
                 )
 
         self.assertIn("Profit sharing Oil 60/40", positions)
-        self.assertIn("Imposable/taxable :0", positions)
+        self.assertIn("Taxable income: 0", positions)
         profit_y, profit_height = positions["Profit sharing Oil 60/40"]
-        imposable_y, _ = positions["Imposable/taxable :0"]
+        imposable_y, _ = positions["Taxable income: 0"]
         self.assertGreaterEqual(imposable_y - (profit_y + profit_height), 800.0)
 
 

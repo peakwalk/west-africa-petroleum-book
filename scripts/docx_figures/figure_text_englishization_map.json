@@ -1,0 +1,73 @@
+{
+  "19": {
+    "chart": {
+      "Production annuel (mbls/an)": "Annual production (mbbls/year)",
+      "Année": "Year",
+      "Profil de production 2": "Production profile",
+      "Découverte": "Discovery",
+      "Début élaboration": "Start of development",
+      "du Plan de Développement": "plan preparation",
+      "Firt Oil (Début production)": "First oil (start of production)",
+      "Montée rapide de la production (rapid build up)": "Rapid production ramp-up",
+      "Montée douce de la prouction": "Gradual production",
+      "(gradual build up)": "ramp-up",
+      "Plateau élévé de courte durée": "High plateau of short duration",
+      "Plateau basse de longue durée": "Low plateau of long duration",
+      "Phase de déclin": "Decline phase",
+      "Phase abandon": "Abandonment phase"
+    }
+  },
+  "24": {
+    "chart": {
+      "Cost stop/Amortissement": "Cost stop/Depreciation",
+      "Pays": "COUNTRIES",
+      "Bénin": "Benin",
+      "Côte d'Ivoire": "Ivory Coast",
+      "Sénégal": "Senegal",
+      "sup": ">"
+    }
+  },
+  "25": {
+    "document": {
+      "REGIME FISCAL": "FISCAL REGIME"
+    }
+  },
+  "26": {
+    "document": {
+      "REGIME FISCAL": "FISCAL REGIME"
+    }
+  },
+  "27": {
+    "document": {
+      "REGIME FISCAL": "FISCAL REGIME",
+      "FLOW CHART CÔTE D’IVOIRE": "FLOW CHART IVORY COAST"
+    }
+  },
+  "28": {
+    "document": {
+      "REGIME FISCAL": "FISCAL REGIME",
+      "FLOW CHART DU NIGERIA": "FLOW CHART NIGERIA"
+    }
+  },
+  "29": {
+    "document": {
+      "REGIME FISCAL": "FISCAL REGIME"
+    }
+  },
+  "30": {
+    "document": {
+      "REGIME FISCAL": "FISCAL REGIME",
+      "Imposable/taxable :0": "Taxable income: 0"
+    }
+  },
+  "31": {
+    "chart": {
+      "Part": "Share",
+      "Bénin": "Benin",
+      "Côte d’Ivoire": "Ivory Coast",
+      "Sénégal": "Senegal",
+      "Contractant": "Contractor",
+      "Etat": "State"
+    }
+  }
+}

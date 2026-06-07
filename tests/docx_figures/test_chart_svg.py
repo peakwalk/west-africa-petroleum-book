@@ -16,24 +16,24 @@ class ChartSvgTest(unittest.TestCase):
         self.assertEqual(chart.chart_type, "barChart")
         self.assertEqual(
             chart.categories,
-            ["Ghana", "Bénin", "Côte d'Ivoire", "Sénégal", "Nigeria", "Niger"],
+            ["Ghana", "Benin", "Ivory Coast", "Senegal", "Nigeria", "Niger"],
         )
         self.assertEqual([series.title for series in chart.series], [
             "Cost stop",
             "1000-3000 m min S/DW Min ONS",
-            "sup 3000 m DW UDW Max",
+            "> 3000 m DW UDW Max",
         ])
         self.assertEqual(chart.series[0].values, [0.0, 70.0, 60.0, 55.0, 60.0, None])
         self.assertEqual(chart.series[1].values, [None, 75.0, None, 60.0, None, 70.0])
         self.assertEqual(chart.series[2].values, [None, 80.0, 80.0, 70.0, 70.0, None])
-        self.assertEqual(chart.value_axis_title, "Cost stop/Amortissement")
+        self.assertEqual(chart.value_axis_title, "Cost stop/Depreciation")
 
     def test_parse_chart31_series_values(self) -> None:
         chart = parse_chart_part(DOCX_PATH, "word/charts/chart3.xml")
 
         self.assertEqual(chart.chart_type, "bar3DChart")
-        self.assertEqual(chart.value_axis_title, "Part (%)")
-        self.assertEqual([series.title for series in chart.series], ["Contractant", "Etat"])
+        self.assertEqual(chart.value_axis_title, "Share (%)")
+        self.assertEqual([series.title for series in chart.series], ["Contractor", "State"])
         self.assertEqual(chart.series[0].values, [34.1, 41.23, 41.4, 13.5, 32.47, 34.0])
         self.assertEqual(chart.series[1].values, [65.9, 58.77, 58.6, 86.5, 67.53, 66.0])
 
@@ -41,7 +41,7 @@ class ChartSvgTest(unittest.TestCase):
         chart = parse_chart_part(DOCX_PATH, "word/charts/chart1.xml")
 
         self.assertEqual(chart.chart_type, "lineChart")
-        self.assertEqual(chart.value_axis_title, "Production annuel (mbls/an)")
+        self.assertEqual(chart.value_axis_title, "Annual production (mbbls/year)")
         self.assertEqual(chart.categories[:5], ["0", "2", "4", "6", "8"])
         self.assertEqual(chart.series[0].values[:6], [0.0, 0.0, 0.0, 0.0, 550.0, 1095.0])
         self.assertEqual(chart.series[1].values[:6], [0.0, 0.0, 0.0, 0.0, 250.0, 500.0])
@@ -52,9 +52,9 @@ class ChartSvgTest(unittest.TestCase):
         svg = render_chart_svg(chart, width=1200, height=760)
 
         self.assertIn("<svg", svg)
-        self.assertIn("Contractant", svg)
-        self.assertIn("Etat", svg)
-        self.assertIn("Bénin", svg)
+        self.assertIn("Contractor", svg)
+        self.assertIn("State", svg)
+        self.assertIn("Benin", svg)
         self.assertIn("75.62", svg)
 
     def test_render_line_chart_svg_contains_axis_labels(self) -> None:
@@ -63,9 +63,20 @@ class ChartSvgTest(unittest.TestCase):
         svg = render_chart_svg(chart, width=1200, height=760)
 
         self.assertIn("<svg", svg)
-        self.assertIn("Production annuel (mbls/an)", svg)
+        self.assertIn("Annual production (mbbls/year)", svg)
         self.assertIn("polyline", svg)
         self.assertIn(">46<", svg)
+
+    def test_render_chart24_svg_uses_english_axis_and_category_labels(self) -> None:
+        chart = parse_chart_part(DOCX_PATH, "word/charts/chart2.xml")
+
+        svg = render_chart_svg(chart, width=1200, height=760)
+
+        self.assertIn("&gt; 3000 m DW UDW Max", svg)
+        self.assertIn("Benin", svg)
+        self.assertIn("Ivory Coast", svg)
+        self.assertNotIn("PAYS", svg)
+        self.assertNotIn("Pays", svg)
 
 
 if __name__ == "__main__":
