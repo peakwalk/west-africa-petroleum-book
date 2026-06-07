@@ -217,7 +217,7 @@ development costs (CAPEX) to be recouped.
 The graph below (Figure 24) shows the cost stop in the West African
 countries covered by our study.
 
-![Figure 024](../images/figure-024.png)
+![Figure 024](../images/figure-024.webp)
 
 Figure 24: Graph showing
 the cost stops applied in some West African countries
@@ -822,7 +822,7 @@ of the cash flow of the different parties to the contract from the
 respective tax regimes of Benin, Ghana, Côte d'Ivoire, Nigeria, Senegal
 and Niger, is as follows (Figure 25 to 30):
 
-![Figure 025](../images/figure-025.png)
+![Figure 025](../images/figure-025.webp)
 
 Figure 25: Simplified
 organizational chart showing the share of the State and the Contractor
@@ -834,19 +834,19 @@ Figure 26: Simplified
 organizational chart showing the share of the State and the Contractor
 in the taxation used in the Ghana model contract
 
-![Figure 027](../images/figure-027.png)
+![Figure 027](../images/figure-027.webp)
 
 Figure 27: Simplified
 organizational chart showing the share of the State and the contractor
 resulting from the taxation associated with the CPP of Côte d'Ivoire
 
-![Figure 028](../images/figure-028.png)
+![Figure 028](../images/figure-028.webp)
 
 Figure 28: Simplified
 organizational chart showing the share of the State and the Contractor
 in the taxation associated with the CPP of Nigeria
 
-![Figure 029](../images/figure-029.png)
+![Figure 029](../images/figure-029.webp)
 
 Figure 29: Simplified
 organizational chart showing the share of the State and the Contractor
@@ -1001,13 +1001,13 @@ Flow</strong></th>
 </tbody>
 </table>
 
-![Figure 031](../images/figure-031.png)
+![Figure 031](../images/figure-031.webp)
 
 Figure 31: Graph showing
 the share of net profit accruing to the CPI and the States according to
 the tax regime applicable in these States
 
-![Figure 032](../images/figure-032.png)
+![Figure 032](../images/figure-032.webp)
 
 Figure 32: Graph showing
 the distribution of the cash flow between the State and the contractor

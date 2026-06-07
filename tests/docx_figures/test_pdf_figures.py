@@ -6,11 +6,16 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 from scripts.docx_figures.pdf_figures import (
     PdfCaptionBounds,
     PdfFigurePlacement,
     build_search_windows,
+)
+from scripts.render_pdf_figures import (
+    ensure_lossless_webp_outputs,
+    find_cwebp_binary,
 )
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
@@ -33,23 +38,48 @@ class PdfFiguresTest(unittest.TestCase):
     def test_chapter_2_uses_pdf_asset_for_figure_17(self) -> None:
         chapter_text = CHAPTER_02_PATH.read_text(encoding="utf-8")
 
-        self.assertIn("![Figure 017](../images/figure-017.png)", chapter_text)
-        self.assertTrue((ROOT_DIR / "src/images/figure-017.png").exists())
+        self.assertIn("![Figure 017](../images/figure-017.webp)", chapter_text)
+        self.assertTrue((ROOT_DIR / "src/images/figure-017.webp").exists())
 
     def test_chapter_2_uses_pdf_asset_for_figure_19(self) -> None:
         chapter_text = CHAPTER_02_PATH.read_text(encoding="utf-8")
 
-        self.assertIn("![Figure 019](../images/figure-019.png)", chapter_text)
-        self.assertTrue((ROOT_DIR / "src/images/figure-019.png").exists())
+        self.assertIn("![Figure 019](../images/figure-019.webp)", chapter_text)
+        self.assertTrue((ROOT_DIR / "src/images/figure-019.webp").exists())
 
-    def test_chapter_3_uses_pdf_asset_for_figure_21(self) -> None:
+    def test_chapter_4_uses_webp_assets_for_selected_pdf_figures(self) -> None:
+        chapter_text = (
+            ROOT_DIR
+            / "src/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn("![Figure 025](../images/figure-025.webp)", chapter_text)
+        self.assertIn("![Figure 027](../images/figure-027.webp)", chapter_text)
+        self.assertIn("![Figure 028](../images/figure-028.webp)", chapter_text)
+        self.assertIn("![Figure 029](../images/figure-029.webp)", chapter_text)
+        self.assertIn("![Figure 024](../images/figure-024.webp)", chapter_text)
+        self.assertIn("![Figure 031](../images/figure-031.webp)", chapter_text)
+        self.assertIn("![Figure 032](../images/figure-032.webp)", chapter_text)
+        self.assertTrue((ROOT_DIR / "src/images/figure-025.webp").exists())
+        self.assertTrue((ROOT_DIR / "src/images/figure-027.webp").exists())
+        self.assertTrue((ROOT_DIR / "src/images/figure-028.webp").exists())
+        self.assertTrue((ROOT_DIR / "src/images/figure-029.webp").exists())
+        self.assertTrue((ROOT_DIR / "src/images/figure-024.webp").exists())
+        self.assertTrue((ROOT_DIR / "src/images/figure-031.webp").exists())
+        self.assertTrue((ROOT_DIR / "src/images/figure-032.webp").exists())
+
+    def test_chapter_3_uses_pdf_asset_for_selected_figures(self) -> None:
         chapter_text = (
             ROOT_DIR
             / "src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md"
         ).read_text(encoding="utf-8")
 
-        self.assertIn("![Figure 021](../images/figure-021.png)", chapter_text)
-        self.assertTrue((ROOT_DIR / "src/images/figure-021.png").exists())
+        self.assertIn("![Figure 021](../images/figure-021.webp)", chapter_text)
+        self.assertIn("![Figure 022](../images/figure-022.webp)", chapter_text)
+        self.assertIn("![Figure 023](../images/figure-023.webp)", chapter_text)
+        self.assertTrue((ROOT_DIR / "src/images/figure-021.webp").exists())
+        self.assertTrue((ROOT_DIR / "src/images/figure-022.webp").exists())
+        self.assertTrue((ROOT_DIR / "src/images/figure-023.webp").exists())
 
     def test_figure_22_source_asset_is_high_resolution_png(self) -> None:
         output_path = ROOT_DIR / "src/images/figure-022.png"
@@ -127,12 +157,68 @@ class PdfFiguresTest(unittest.TestCase):
             )
 
             output_path = output_dir / "figure-024.png"
+            webp_path = output_dir / "figure-024.webp"
             self.assertTrue(output_path.exists(), msg=result.stdout)
+            self.assertTrue(webp_path.exists(), msg=result.stdout)
 
             width, height = _png_dimensions(output_path)
             self.assertGreater(width, 1500)
             self.assertGreater(height, 1000)
             self.assertGreater(output_path.stat().st_size, 100_000)
+
+    def test_find_cwebp_binary_uses_homebrew_fallback(self) -> None:
+        with mock.patch("scripts.render_pdf_figures.shutil.which", return_value=None):
+            with mock.patch.object(Path, "exists", autospec=True) as exists:
+                exists.side_effect = lambda path: str(path) == "/opt/homebrew/bin/cwebp"
+                self.assertEqual(find_cwebp_binary(), Path("/opt/homebrew/bin/cwebp"))
+
+    def test_ensure_lossless_webp_outputs_invokes_cwebp(self) -> None:
+        png_bytes = (
+            b"\x89PNG\r\n\x1a\n"
+            b"\x00\x00\x00\rIHDR"
+            b"\x00\x00\x00\x01\x00\x00\x00\x01\x08\x06\x00\x00\x00"
+            b"\x1f\x15\xc4\x89"
+            b"\x00\x00\x00\rIDATx\x9cc````\xf8\x0f\x00\x01\x04\x01\x00"
+            b"\x18\xdd\x8d\xb4"
+            b"\x00\x00\x00\x00IEND\xaeB`\x82"
+        )
+        with tempfile.TemporaryDirectory() as tmpdir:
+            output_dir = Path(tmpdir)
+            png_path = output_dir / "figure-024.png"
+            png_path.write_bytes(png_bytes)
+
+            encoder = output_dir / "fake-cwebp"
+            encoder.write_text(
+                "#!/bin/sh\n"
+                "in=\"\"\n"
+                "out=\"\"\n"
+                "while [ \"$#\" -gt 0 ]; do\n"
+                "  case \"$1\" in\n"
+                "    -o)\n"
+                "      shift\n"
+                "      out=\"$1\"\n"
+                "      ;;\n"
+                "    -*)\n"
+                "      ;;\n"
+                "    *)\n"
+                "      in=\"$1\"\n"
+                "      ;;\n"
+                "  esac\n"
+                "  shift\n"
+                "done\n"
+                "cp \"$in\" \"$out\"\n",
+                encoding="utf-8",
+            )
+            encoder.chmod(0o755)
+
+            created = ensure_lossless_webp_outputs(
+                output_dir=output_dir,
+                figure_numbers=[24],
+                cwebp_binary=encoder,
+            )
+
+            self.assertEqual(created, [24])
+            self.assertTrue((output_dir / "figure-024.webp").exists())
 
 
 if __name__ == "__main__":

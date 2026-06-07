@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
+import shutil
+import subprocess
 import sys
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
@@ -29,6 +31,55 @@ DEFAULT_PDF = Path(
 DEFAULT_SUMMARY = Path("src/SUMMARY.md")
 DEFAULT_CHAPTERS_DIR = Path("src/chapters")
 DEFAULT_OUTPUT_DIR = Path("src/images")
+LOSSLESS_WEBP_FIGURES = {17, 19, 21, 22, 23, 24, 25, 27, 28, 29, 31, 32}
+
+
+def find_cwebp_binary() -> Path | None:
+    resolved = shutil.which("cwebp")
+    if resolved:
+        return Path(resolved)
+    for candidate in (Path("/opt/homebrew/bin/cwebp"), Path("/usr/local/bin/cwebp")):
+        if candidate.exists():
+            return candidate
+    return None
+
+
+def ensure_lossless_webp_outputs(
+    *,
+    output_dir: Path,
+    figure_numbers: list[int],
+    cwebp_binary: Path | None = None,
+) -> list[int]:
+    binary = cwebp_binary or find_cwebp_binary()
+    if binary is None:
+        return []
+
+    rendered: list[int] = []
+    for figure_number in figure_numbers:
+        if figure_number not in LOSSLESS_WEBP_FIGURES:
+            continue
+        png_path = output_dir / f"figure-{figure_number:03d}.png"
+        webp_path = output_dir / f"figure-{figure_number:03d}.webp"
+        if not png_path.exists():
+            continue
+        result = subprocess.run(
+            [
+                str(binary),
+                "-quiet",
+                "-lossless",
+                "-z",
+                "9",
+                str(png_path),
+                "-o",
+                str(webp_path),
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if result.returncode == 0 and webp_path.exists():
+            rendered.append(figure_number)
+    return rendered
 
 
 def parse_args() -> argparse.Namespace:
@@ -87,6 +138,16 @@ def main() -> int:
         print(result.stdout, end="")
     if result.stderr:
         print(result.stderr, file=sys.stderr, end="")
+    if result.returncode == 0:
+        rendered_webp = ensure_lossless_webp_outputs(
+            output_dir=output_dir,
+            figure_numbers=requested,
+        )
+        for figure_number in rendered_webp:
+            print(
+                f"Rendered Figure {figure_number} -> "
+                f"{(output_dir / f'figure-{figure_number:03d}.webp').resolve()}"
+            )
     return result.returncode
 
 

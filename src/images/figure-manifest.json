@@ -449,7 +449,8 @@
     "published_assets": [
       "figure-017.jpg",
       "figure-017.png",
-      "figure-017.svg"
+      "figure-017.svg",
+      "figure-017.webp"
     ]
   },
   {
@@ -501,7 +502,8 @@
     },
     "published_assets": [
       "figure-019.png",
-      "figure-019.svg"
+      "figure-019.svg",
+      "figure-019.webp"
     ]
   },
   {
@@ -548,7 +550,8 @@
       "wps_shape_count": 9
     },
     "published_assets": [
-      "figure-021.png"
+      "figure-021.png",
+      "figure-021.webp"
     ]
   },
   {
@@ -573,7 +576,8 @@
       "wps_shape_count": 2
     },
     "published_assets": [
-      "figure-022.png"
+      "figure-022.png",
+      "figure-022.webp"
     ]
   },
   {
@@ -596,7 +600,8 @@
     },
     "published_assets": [
       "figure-023.png",
-      "figure-023.svg"
+      "figure-023.svg",
+      "figure-023.webp"
     ]
   },
   {
@@ -623,7 +628,8 @@
     },
     "published_assets": [
       "figure-024.png",
-      "figure-024.svg"
+      "figure-024.svg",
+      "figure-024.webp"
     ]
   },
   {
@@ -646,7 +652,8 @@
     },
     "published_assets": [
       "figure-025.png",
-      "figure-025.svg"
+      "figure-025.svg",
+      "figure-025.webp"
     ]
   },
   {
@@ -692,7 +699,8 @@
     },
     "published_assets": [
       "figure-027.png",
-      "figure-027.svg"
+      "figure-027.svg",
+      "figure-027.webp"
     ]
   },
   {
@@ -715,7 +723,8 @@
     },
     "published_assets": [
       "figure-028.png",
-      "figure-028.svg"
+      "figure-028.svg",
+      "figure-028.webp"
     ]
   },
   {
@@ -738,7 +747,8 @@
     },
     "published_assets": [
       "figure-029.png",
-      "figure-029.svg"
+      "figure-029.svg",
+      "figure-029.webp"
     ]
   },
   {
@@ -787,7 +797,8 @@
     },
     "published_assets": [
       "figure-031.png",
-      "figure-031.svg"
+      "figure-031.svg",
+      "figure-031.webp"
     ]
   },
   {
@@ -812,7 +823,8 @@
     },
     "published_assets": [
       "figure-032.png",
-      "figure-032.svg"
+      "figure-032.svg",
+      "figure-032.webp"
     ]
   }
 ]

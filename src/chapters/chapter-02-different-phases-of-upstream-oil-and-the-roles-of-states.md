@@ -686,7 +686,7 @@ essential decision-making tool that allows:
 - to make an economic planning or forecast to help in an investment
   decision.
 
-![Figure 017](../images/figure-017.png)
+![Figure 017](../images/figure-017.webp)
 
 Figure 17: Methodology
 Tank Evaluation
@@ -872,7 +872,7 @@ accidents, pollution and production interruption.
 The life cycle of a hydrocarbon field put into production presents the
 different phases as shown in Figure 19 below.
 
-![Figure 019](../images/figure-019.png)
+![Figure 019](../images/figure-019.webp)
 
 Figure 19: Production
 profile of an oil field showing the life cycle of an oil field

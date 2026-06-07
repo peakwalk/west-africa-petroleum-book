@@ -104,14 +104,21 @@ check_exists src/images/figure-013.webp
 check_exists src/images/figure-014.webp
 check_exists src/images/figure-015.webp
 check_exists src/images/figure-016.webp
-check_exists src/images/figure-019.png
+check_exists src/images/figure-019.webp
 check_exists src/images/figure-020.webp
-check_exists src/images/figure-021.png
+check_exists src/images/figure-017.webp
+check_exists src/images/figure-021.webp
+check_exists src/images/figure-022.webp
+check_exists src/images/figure-023.webp
 check_exists src/images/figure-026.svg
 check_exists src/images/figure-030.svg
-for figure in 023 024 025 027 028 029 031 032; do
-  check_exists "src/images/figure-${figure}.png"
-done
+check_exists src/images/figure-024.webp
+check_exists src/images/figure-025.webp
+check_exists src/images/figure-027.webp
+check_exists src/images/figure-028.webp
+check_exists src/images/figure-029.webp
+check_exists src/images/figure-031.webp
+check_exists src/images/figure-032.webp
 check_exists src/images/figure-001.webp
 check_exists src/images/figure-003-trimmed.png
 check_exists assets/images/west-africa-intelligence-overlay.svg
@@ -438,8 +445,14 @@ check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-
 check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'reader-main'
 check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'reader-outline'
 check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'reader-article'
+check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'figure-024.webp'
+check_not_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'figure-024.png'
 check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'figure-030.svg'
 check_not_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'figure-030.png'
+check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'figure-031.webp'
+check_not_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'figure-031.png'
+check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'figure-032.webp'
+check_not_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'figure-032.png'
 check_not_contains public/book/chapters/bibliographical-references.html 'TABLE OF CONTENTS'
 check_contains src/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-002.webp'
 check_contains src/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-003-trimmed.webp'
@@ -464,9 +477,9 @@ check_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-
 check_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-014.webp'
 check_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-015.webp'
 check_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-016.webp'
-check_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-017.png'
+check_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-017.webp'
 check_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-018.jpg'
-check_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-019.png'
+check_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-019.webp'
 check_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-020.webp'
 check_not_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-006.png'
 check_not_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-007.png'
@@ -478,19 +491,31 @@ check_not_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-
 check_not_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-014.png'
 check_not_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-015.png'
 check_not_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-016.png'
+check_not_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-017.png'
+check_not_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-017.svg'
+check_not_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-019.png'
 check_not_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-019.svg'
 check_not_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-020.png'
 check_not_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'Multiple qv streamers'
 check_not_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md '![Figure 009](../images/figure-009.webp)'
 check_not_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'Authorization to operate'
 check_not_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'Exploration Authorization'
-check_contains src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md 'figure-021.png'
-check_not_contains src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md 'figure-021.webp'
-node -e 'const fs=require("fs");const text=fs.readFileSync("src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md","utf8");const img21=text.indexOf("![Figure 021](../images/figure-021.png)");const cap21=text.indexOf("Figure 21: Economic Value");const img22=text.indexOf("![Figure 022](../images/figure-022.png)");const cap22=text.indexOf("Figure 22: Distribution of income from production");if(img21===-1||cap21===-1||img21>cap21){console.error("Expected Figure 21 image to appear before its caption in chapter 3");process.exit(1);}if(img22===-1||cap22===-1||img22>cap22){console.error("Expected Figure 22 image to appear before its caption in chapter 3");process.exit(1);}'
-check_contains src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md 'figure-023.png'
+check_contains src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md 'figure-021.webp'
+check_not_contains src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md 'figure-021.png'
+node -e 'const fs=require("fs");const text=fs.readFileSync("src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md","utf8");const img21=text.indexOf("![Figure 021](../images/figure-021.webp)");const cap21=text.indexOf("Figure 21: Economic Value");const img22=text.indexOf("![Figure 022](../images/figure-022.webp)");const cap22=text.indexOf("Figure 22: Distribution of income from production");if(img21===-1||cap21===-1||img21>cap21){console.error("Expected Figure 21 image to appear before its caption in chapter 3");process.exit(1);}if(img22===-1||cap22===-1||img22>cap22){console.error("Expected Figure 22 image to appear before its caption in chapter 3");process.exit(1);}'
+check_contains src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md 'figure-022.webp'
+check_not_contains src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md 'figure-022.png'
+check_contains src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md 'figure-023.webp'
+check_not_contains src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md 'figure-023.png'
 check_not_contains src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md 'figure-023.svg'
-for figure in 024 025 027 028 029 031 032; do
-  check_contains src/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md "figure-${figure}.png"
+for figure in 025 027 028 029; do
+  check_contains src/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md "figure-${figure}.webp"
+  check_not_contains src/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md "figure-${figure}.png"
+  check_not_contains src/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md "figure-${figure}.svg"
+done
+for figure in 024 031 032; do
+  check_contains src/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md "figure-${figure}.webp"
+  check_not_contains src/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md "figure-${figure}.png"
   check_not_contains src/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md "figure-${figure}.svg"
 done
 check_contains src/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md 'figure-026.svg'
@@ -544,7 +569,7 @@ check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-
 check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-014.webp'
 check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-015.webp'
 check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-016.webp'
-check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-019.png'
+check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-019.webp'
 check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-020.webp'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html '<p>Authorization to operate</p>'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html '<p>Exploration Authorization</p>'
@@ -558,17 +583,30 @@ check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-014.png'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-015.png'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-016.png'
+check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-019.png'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-019.svg'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-020.png'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html '<p>Multiple qv streamers</p>'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-009.webp'
-check_contains public/book/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.html 'figure-021.png'
-check_not_contains public/book/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.html 'figure-021.webp'
+check_contains public/book/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.html 'figure-021.webp'
+check_not_contains public/book/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.html 'figure-021.png'
+check_contains public/book/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.html 'figure-022.webp'
+check_not_contains public/book/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.html 'figure-022.png'
+check_contains public/book/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.html 'figure-023.webp'
+check_not_contains public/book/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.html 'figure-023.png'
+check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'figure-025.webp'
+check_not_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'figure-025.png'
+check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'figure-027.webp'
+check_not_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'figure-027.png'
+check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'figure-028.webp'
+check_not_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'figure-028.png'
+check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'figure-029.webp'
+check_not_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'figure-029.png'
 check_contains public/book/chapters/cover.html 'Exploration and Exploitation of Petroleum Resources in West Africa'
 check_contains public/book/chapters/cover.html 'Roles and responsibilities of States and analysis of tax regimes'
 check_contains public/book/chapters/cover.html 'Upstream Atlas Reference Edition'
 check_contains public/book/chapters/cover.html 'Digital Reading Edition'
-check_file_size_at_most public/book/images/figure-017.png 600000
+check_file_size_at_most public/book/images/figure-017.webp 100000
 check_file_size_at_most public/book/images/figure-018.jpg 200000
 check_contains public/book/chapters/list-of-figures.html 'List of Figures'
 check_contains public/book/chapters/list-of-figures.html 'class="reference-index reference-index-figures"'

@@ -13,7 +13,7 @@ oil resources (Figure 21). These are:
 3)  the tax regime, which is the regulatory framework developed by the
     State and which defines the tools for managing petroleum resources.
 
-![Figure 021](../images/figure-021.png)
+![Figure 021](../images/figure-021.webp)
 
 Figure 21: Economic Value
 of Hydrocarbon Resources
@@ -55,7 +55,7 @@ well-being, the transfer of skills and by extension iii) the
 exploitation of resources for the longest period of time with the
 highest possible recovery rate.
 
-![Figure 022](../images/figure-022.png)
+![Figure 022](../images/figure-022.webp)
 
 Figure 22: Distribution of income from production (After Johnson, 1995)
 
@@ -95,7 +95,7 @@ concession systems and contractual systems (Figure 23).  The laws or
 regulations applied to oil exploration and exploitation in a country
 depend on the tax regime adopted by that country.
 
-![Figure 023](../images/figure-023.png)
+![Figure 023](../images/figure-023.webp)
 
 Figure 23: Classification
 of tax regimes
