@@ -284,21 +284,23 @@ must secure their share by other measures, most often by taxation.
 The R-factor can be used as a trigger for both royalty and profit
 sharing. It is determined in different ways:
 
-<div class="book-formula" role="img" aria-label="R factor equals cumulative revenue over cumulative cost">
-  <span class="book-formula-line" aria-hidden="true">R-Factor=Cumulative Revenue/Cumulative Cost</span>
-</div>
+<section class="formula-panel formula-panel--r-factor" aria-label="R-factor calculation formulas">
+  <div class="book-formula book-formula--panel-row" data-formula-label="a)" role="img" aria-label="a. R factor equals cumulative revenue over cumulative cost">
+    <span class="book-formula-line" aria-hidden="true">R-Factor=Cumulative Revenue/Cumulative Cost</span>
+  </div>
 
-<div class="book-formula" role="img" aria-label="R factor equals cumulative revenue minus cumulative operating expenditure over cumulative capital expenditure">
-  <span class="book-formula-line" aria-hidden="true">R-Factor = (Cumulative Revenue &minus; Cumulative Opex) / Cumulative Capex</span>
-</div>
+  <div class="book-formula book-formula--panel-row" data-formula-label="b)" role="img" aria-label="b. R factor equals cumulative revenue minus cumulative operating expenditure over cumulative capital expenditure">
+    <span class="book-formula-line" aria-hidden="true">R-Factor = (Cumulative Revenue &minus; Cumulative Opex) / Cumulative Capex</span>
+  </div>
 
-<div class="book-formula" role="img" aria-label="R factor equals cumulative revenues minus cumulative profits over cumulative investments plus cumulative operating expenditure">
-  <span class="book-formula-line" aria-hidden="true">R-Factor = (Cumulative Revenues &minus; Cumulative Profits) / (Cumulative Investments + Cumulative Opex)</span>
-</div>
+  <div class="book-formula book-formula--panel-row" data-formula-label="c)" role="img" aria-label="c. R factor equals cumulative revenues minus cumulative profits over cumulative investments plus cumulative operating expenditure">
+    <span class="book-formula-line" aria-hidden="true">R-Factor = (Cumulative Revenues &minus; Cumulative Profits) / (Cumulative Investments + Cumulative Opex)</span>
+  </div>
 
-<div class="book-formula" role="img" aria-label="R factor equals cumulative net revenue over cumulative costs">
-  <span class="book-formula-line" aria-hidden="true">R-Factor=Cumulative Net Revenue/Cumulative Costs</span>
-</div>
+  <div class="book-formula book-formula--panel-row" data-formula-label="d)" role="img" aria-label="d. R factor equals cumulative net revenue over cumulative costs">
+    <span class="book-formula-line" aria-hidden="true">R-Factor=Cumulative Net Revenue/Cumulative Costs</span>
+  </div>
+</section>
 
 When the – R factor becomes larger and larger, it means that the
 profitability of the project becomes higher with a drastic decrease in
