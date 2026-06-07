@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import re
 from pathlib import Path
 
@@ -174,6 +176,28 @@ def _parse_chapter(chapter_path: Path) -> ChapterSemanticModel:
         if lowered.startswith("<table"):
             flush_paragraph()
             ignoring_html_table = True
+            continue
+        if stripped.startswith("<") and stripped.endswith(">"):
+            cleaned_html = _strip_html_tags(stripped)
+            if "formula" in lowered:
+                flush_paragraph()
+                if cleaned_html:
+                    kind = "paragraph"
+                    text = cleaned_html
+                    if "formula-case-title" in lowered:
+                        kind = "list_item"
+                    elif "formula-case-connector" in lowered and cleaned_html == "Thus":
+                        text = "Thus,"
+                    body.append(BodyBlock(kind=kind, text=text))
+                continue
+            if not cleaned_html:
+                flush_paragraph()
+                continue
+        if stripped.startswith("<") and "formula" in lowered:
+            flush_paragraph()
+            cleaned_formula = _strip_html_tags(stripped)
+            if cleaned_formula:
+                body.append(BodyBlock(kind="paragraph", text=cleaned_formula))
             continue
         if TABLE_ROW_RE.match(stripped):
             flush_paragraph()

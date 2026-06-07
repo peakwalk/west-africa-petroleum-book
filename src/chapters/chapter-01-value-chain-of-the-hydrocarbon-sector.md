@@ -4,7 +4,7 @@ As shown in Figure 1, the value chain of the oil sector or the oil
 industry includes three segments, namely: upstream, midstream and
 downstream.
 
-![Figure 002](../images/figure-002.webp)
+![Figure 001](../images/figure-001-chain.webp)
 
 Figure 1: Oil Sector
 Value Chain
@@ -150,15 +150,15 @@ geologically promising areas. These include:
   of Guinea, an oil-rich province proven by discoveries in Nigeria and
   Benin, Ghana and Côte d'Ivoire.
 
-![Figure 003](../images/figure-003-trimmed.webp)
+![Figure 002a](../images/figure-002-a.webp)
 
-![Figure 004](../images/figure-004.webp)
+![Figure 002b](../images/figure-002-b.webp)
 
 Figure 2: a and b Map
 showing the MSGBC Basin and Map showing the basins of the northern part
 of the Gulf of Guinea in West Africa
 
-![Figure 005](../images/figure-005.jpg)
+![Figure 003](../images/figure-003-map.jpg)
 
 Figure 3: Map showing the sedimentary basins of Mali and Niger
 

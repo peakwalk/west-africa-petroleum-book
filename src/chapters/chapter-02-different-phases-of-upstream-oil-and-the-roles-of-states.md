@@ -244,7 +244,7 @@ b).
 
 ![Figure 007](../images/figure-007.webp)
 
-![Figure 006](../images/figure-006.webp)
+![Figure 007b](../images/figure-007-b.webp)
 
 Figure 7: Gravimetric
 acquisition (a) showing anomalies in the Coastal Sedimentary Basin of
@@ -272,7 +272,7 @@ positioning of exploration wells (Figure 9).
 Figure 8: 3D acquisition
 principle (a) and seismic cube (b)
 
-![Figure 010](../images/figure-010.jpg)
+![Figure 009](../images/figure-009.jpg)
 
 Figure 9: Seismic
 amplitude anomalies showing Brightspots and Flatspots
@@ -289,7 +289,7 @@ order to maximize the chances of success of exploratory wells.
 
 Positioning an exploratory well
 
-![Figure 011](../images/figure-011.webp)
+![Figure 010](../images/figure-010-em.webp)
 
 Figure 10: Electromagnetism coupled with seismic reflection showing the contrast of resistivity at the level of the traps highlighted by the seismic
 
@@ -326,13 +326,13 @@ effect of sedimentary subsidence pressure and geothermal temperature, of
 microscopic animals and plants (phytoplankton and zooplankton) that
 lived in the sea.
 
-![Figure 012](../images/figure-012.webp)
+![Figure 011](../images/figure-011-system.webp)
 
 Figure 11: Geological
 section showing the stratigraphic extent of a fictitious petroleum
 system (Magoon and Dow, 1994, modified by Schlumberger)
 
-![Figure 013](../images/figure-013.webp)
+![Figure 012](../images/figure-012-geoseismic.webp)
 
 Figure 12: Geoseismic section showing petroleum systems in the Benin Coastal Sedimentary Basin, Kerr McGee, 2003
 
@@ -357,15 +357,15 @@ processes (unconformity, lateral change of facies, bevel, etc.) (Figure
 The identified traps are then mapped using software in order to assess
 their geometry and assess their size (Figure 15).
 
-![Figure 014](../images/figure-014.webp)
-
-![Figure 015](../images/figure-015.webp)
+![Figure 013](../images/figure-013-anticline.webp)
 
 Figure 13: Seismic interpretation showing a structural trap (anticline)
 
-![Figure 016](../images/figure-016.webp)
+![Figure 014](../images/figure-014-traps.webp)
 
 Figure 14: Some types of traps
+
+![Figure 015](../images/figure-015-depth-map.webp)
 
 Figure 15: Depth map
 showing the roof of a tank
@@ -569,11 +569,11 @@ data conservation, analysis and management strategy. Côte d'Ivoire and
 Nigeria are a good example of the establishment of a centre for adequate
 storage and preservation and data analysis (Figure 16).
 
-![Figure 017](../images/figure-017.jpg)
+![Figure 016a](../images/figure-016-a.jpg)
+
+![Figure 016b](../images/figure-016-b.jpg)
 
 Figure 16: Photos showing the core library of Côte d'Ivoire at the Direction of the PETROCI Analysis and Research Center
-
-![Figure 018](../images/figure-018.jpg)
 
 - ***Monitoring and control of activities***
 
@@ -686,40 +686,12 @@ essential decision-making tool that allows:
 - to make an economic planning or forecast to help in an investment
   decision.
 
-Excavated material, cores, seismic data, logging, well tests, etc.
-
-**RAW DATA COLLECTION**
-
-Descriptive elements of the reservoir (porosity, permeability, water
-saturation, pressure, oil viscosity, etc.)
-
-**PROCESSING AND INTERPRETATION OF THE DATA COLLECTED**
-
-**INTEGRATION AND**
-
-**MODELING**
-
-Tank Models and Understanding of the Tank
-
-**EVALUATION DES OPTIONS DE RECUPERATION**
-
-- Recovery Methods (Primary, Secondary, and Tertiary)
-
-- Types/types of wells (production, injection and
-  observation/horizontal, vertical, inclined, etc.)
-
-- Etc
-
-Tank Performance Prediction
-
-CAPEX, OPEX, Risk
-
-**ECONOMIC EVALUATION AND DECISIONS**
+![Figure 017](../images/figure-017.png)
 
 Figure 17: Methodology
 Tank Evaluation
 
-![Figure 019](../images/figure-019.webp)
+![Figure 018](../images/figure-018-model.webp)
 
 Figure 18: Diagram showing a reservoir model (Vilgeir Dalen, StatoilHydro, 2007)
 
@@ -899,6 +871,8 @@ accidents, pollution and production interruption.
 
 The life cycle of a hydrocarbon field put into production presents the
 different phases as shown in Figure 19 below.
+
+![Figure 019](../images/figure-019.png)
 
 Figure 19: Production
 profile of an oil field showing the life cycle of an oil field

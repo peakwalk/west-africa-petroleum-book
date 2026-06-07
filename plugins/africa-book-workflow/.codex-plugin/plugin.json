@@ -1,0 +1,32 @@
+{
+  "name": "africa-book-workflow",
+  "version": "0.1.0",
+  "description": "Workspace plugin for the Africa Book mdBook, DOCX parity, and figure publishing workflow.",
+  "author": {
+    "name": "Africa Book Workspace"
+  },
+  "keywords": [
+    "mdbook",
+    "docx",
+    "pdf",
+    "figures",
+    "publishing"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Africa Book Workflow",
+    "shortDescription": "mdBook, DOCX parity, and figure publishing workflow for this repo.",
+    "longDescription": "Guides agents through chapter edits, figure regeneration, PDF-backed asset selection, mdBook builds, and release validation for the Africa Book workspace.",
+    "developerName": "Africa Book Workspace",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Update a chapter and run the right parity checks.",
+      "Fix a figure by choosing the correct DOCX or PDF pipeline.",
+      "Prepare the mdBook site and validate release-facing assets."
+    ]
+  }
+}

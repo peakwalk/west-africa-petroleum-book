@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="820" viewBox="0 0 1280 820" role="img" aria-label="Chart">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<style>
+.chart-title { font: 700 30px Georgia, "Times New Roman", serif; fill: #1f2937; }
+.axis-label { font: 600 18px "Helvetica Neue", Arial, sans-serif; fill: #334155; }
+.tick-label { font: 500 16px "Helvetica Neue", Arial, sans-serif; fill: #475569; }
+.value-label { font: 600 14px "Helvetica Neue", Arial, sans-serif; fill: #0f172a; }
+.legend-label { font: 600 16px "Helvetica Neue", Arial, sans-serif; fill: #0f172a; }
+.grid-line { stroke: #d7dde5; stroke-width: 1; }
+.axis-line { stroke: #94a3b8; stroke-width: 1.5; }
+</style>
+<rect x="128" y="34" width="18" height="18" rx="3" fill="#4472C4"/>
+<text x="156" y="48" class="legend-label">Contractant</text>
+<rect x="348" y="34" width="18" height="18" rx="3" fill="#ED7D31"/>
+<text x="376" y="48" class="legend-label">Etat</text>
+<line x1="128" y1="680.00" x2="1216" y2="680.00" class="grid-line"/>
+<text x="114" y="686.00" text-anchor="end" class="tick-label">0</text>
+<line x1="128" y1="561.60" x2="1216" y2="561.60" class="grid-line"/>
+<text x="114" y="567.60" text-anchor="end" class="tick-label">20</text>
+<line x1="128" y1="443.20" x2="1216" y2="443.20" class="grid-line"/>
+<text x="114" y="449.20" text-anchor="end" class="tick-label">40</text>
+<line x1="128" y1="324.80" x2="1216" y2="324.80" class="grid-line"/>
+<text x="114" y="330.80" text-anchor="end" class="tick-label">60</text>
+<line x1="128" y1="206.40" x2="1216" y2="206.40" class="grid-line"/>
+<text x="114" y="212.40" text-anchor="end" class="tick-label">80</text>
+<line x1="128" y1="88.00" x2="1216" y2="88.00" class="grid-line"/>
+<text x="114" y="94.00" text-anchor="end" class="tick-label">100</text>
+<line x1="128" y1="88" x2="128" y2="680" class="axis-line"/>
+<line x1="128" y1="680" x2="1216" y2="680" class="axis-line"/>
+<text x="40" y="384.00" text-anchor="middle" class="axis-label" transform="rotate(-90 40 384.00)">Part (%)</text>
+<rect x="149.76" y="478.13" width="60.91" height="201.87" rx="6" fill="#4472C4" opacity="0.95"/>
+<text x="180.21" y="470.13" text-anchor="middle" class="value-label">34.1</text>
+<rect x="218.67" y="289.87" width="60.91" height="390.13" rx="6" fill="#ED7D31" opacity="0.95"/>
+<text x="249.12" y="281.87" text-anchor="middle" class="value-label">65.9</text>
+<text x="218.67" y="708.00" text-anchor="middle" class="tick-label">
+<tspan x="218.67" dy="0">Bénin</tspan>
+</text>
+<rect x="331.09" y="435.92" width="60.91" height="244.08" rx="6" fill="#4472C4" opacity="0.95"/>
+<text x="361.55" y="427.92" text-anchor="middle" class="value-label">41.23</text>
+<rect x="400.00" y="332.08" width="60.91" height="347.92" rx="6" fill="#ED7D31" opacity="0.95"/>
+<text x="430.45" y="324.08" text-anchor="middle" class="value-label">58.77</text>
+<text x="400.00" y="708.00" text-anchor="middle" class="tick-label">
+<tspan x="400.00" dy="0">Ghana</tspan>
+</text>
+<rect x="512.43" y="434.91" width="60.91" height="245.09" rx="6" fill="#4472C4" opacity="0.95"/>
+<text x="542.88" y="426.91" text-anchor="middle" class="value-label">41.4</text>
+<rect x="581.33" y="333.09" width="60.91" height="346.91" rx="6" fill="#ED7D31" opacity="0.95"/>
+<text x="611.79" y="325.09" text-anchor="middle" class="value-label">58.6</text>
+<text x="581.33" y="708.00" text-anchor="middle" class="tick-label">
+<tspan x="581.33" dy="0">Côte</tspan>
+<tspan x="581.33" dy="20">d’Ivoire</tspan>
+</text>
+<rect x="693.76" y="600.08" width="60.91" height="79.92" rx="6" fill="#4472C4" opacity="0.95"/>
+<text x="724.21" y="592.08" text-anchor="middle" class="value-label">13.5</text>
+<rect x="762.67" y="167.92" width="60.91" height="512.08" rx="6" fill="#ED7D31" opacity="0.95"/>
+<text x="793.12" y="159.92" text-anchor="middle" class="value-label">86.5</text>
+<text x="762.67" y="708.00" text-anchor="middle" class="tick-label">
+<tspan x="762.67" dy="0">Nigeria</tspan>
+</text>
+<rect x="875.09" y="487.78" width="60.91" height="192.22" rx="6" fill="#4472C4" opacity="0.95"/>
+<text x="905.55" y="479.78" text-anchor="middle" class="value-label">32.47</text>
+<rect x="944.00" y="280.22" width="60.91" height="399.78" rx="6" fill="#ED7D31" opacity="0.95"/>
+<text x="974.45" y="272.22" text-anchor="middle" class="value-label">67.53</text>
+<text x="944.00" y="708.00" text-anchor="middle" class="tick-label">
+<tspan x="944.00" dy="0">Sénégal</tspan>
+</text>
+<rect x="1056.43" y="478.72" width="60.91" height="201.28" rx="6" fill="#4472C4" opacity="0.95"/>
+<text x="1086.88" y="470.72" text-anchor="middle" class="value-label">34</text>
+<rect x="1125.33" y="289.28" width="60.91" height="390.72" rx="6" fill="#ED7D31" opacity="0.95"/>
+<text x="1155.79" y="281.28" text-anchor="middle" class="value-label">66</text>
+<text x="1125.33" y="708.00" text-anchor="middle" class="tick-label">
+<tspan x="1125.33" dy="0">Niger</tspan>
+</text>
+</svg>

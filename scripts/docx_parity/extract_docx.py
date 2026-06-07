@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import re
 from collections import defaultdict
 from pathlib import Path
@@ -47,6 +49,23 @@ SOURCE_CREDIT_MARKERS = (
     "trading economics",
     "energy",
     "bank",
+)
+FIGURE_17_METHOD_CAPTION = "figure 17: methodology tank evaluation"
+RESERVOIR_METHOD_MARKERS = (
+    "excavated material, cores, seismic data, logging, well tests, etc.",
+    "raw data collection",
+    "descriptive elements of the reservoir",
+    "processing and interpretation of the data collected",
+    "integration and",
+    "modeling",
+    "tank models and understanding of the tank",
+    "evaluation des options de recuperation",
+    "recovery methods (primary, secondary, and tertiary)",
+    "types/types of wells",
+    "etc",
+    "tank performance prediction",
+    "capex, opex, risk",
+    "economic evaluation and decisions",
 )
 
 
@@ -412,6 +431,25 @@ def _looks_like_source_credit(text: str) -> bool:
     if not normalized or len(normalized.split()) > 8:
         return False
     return any(marker in lowered for marker in SOURCE_CREDIT_MARKERS)
+
+
+def _matches_reservoir_method_fragment(text: str) -> bool:
+    lowered = _dedupe_exact_double(text).lower()
+    return any(marker in lowered for marker in RESERVOIR_METHOD_MARKERS)
+
+
+def _should_start_reservoir_method_cluster(
+    text: str, future_texts: list[str]
+) -> bool:
+    if not _matches_reservoir_method_fragment(text):
+        return False
+    lowered_future = [_dedupe_exact_double(candidate).lower() for candidate in future_texts]
+    if not any(FIGURE_17_METHOD_CAPTION in candidate for candidate in lowered_future):
+        return False
+    marker_count = 1 + sum(
+        1 for candidate in lowered_future if _matches_reservoir_method_fragment(candidate)
+    )
+    return marker_count >= 6
 
 
 def _looks_like_immediate_pre_caption_label(text: str) -> bool:
@@ -781,6 +819,7 @@ def extract_docx_book(
     current_section_prefix = ""
     seen_outline = False
     suppress_pre_heading_figure_labels = False
+    suppress_reservoir_method_cluster = False
 
     def flush_chapter() -> None:
         nonlocal current_title, current_outline, current_body, current_source, current_section_prefix, seen_outline, suppress_pre_heading_figure_labels
@@ -830,6 +869,12 @@ def extract_docx_book(
 
         if wait_for_expected_title and not current_title:
             continue
+
+        if suppress_reservoir_method_cluster:
+            if _dedupe_exact_double(text).lower() == FIGURE_17_METHOD_CAPTION:
+                suppress_reservoir_method_cluster = False
+            else:
+                continue
 
         level = _paragraph_level(paragraph, style_levels)
         num_pr = _num_pr(paragraph)
@@ -887,6 +932,9 @@ def extract_docx_book(
 
         semantic_callout = _looks_like_semantic_callout(_dedupe_exact_double(text)) or _looks_like_source_credit(text)
         pre_caption_graphic_fragment = _looks_like_pre_caption_graphic_fragment(text)
+        if _should_start_reservoir_method_cluster(text, future_texts):
+            suppress_reservoir_method_cluster = True
+            continue
         if (
             num_id is None
             and any(_is_caption_candidate(candidate) for candidate in future_texts)
@@ -979,6 +1027,7 @@ def extract_docx_chapter_by_anchors(
     current_section_prefix = ""
     seen_outline = False
     suppress_pre_heading_figure_labels = False
+    suppress_reservoir_method_cluster = False
     normalized_chapter_title = normalize_visible_text(chapter_title)
 
     paragraphs = document_root.findall(".//w:body/w:p", W_NS)
@@ -1030,6 +1079,12 @@ def extract_docx_chapter_by_anchors(
         if started and text.upper() == "TABLE OF CONTENTS":
             break
 
+        if suppress_reservoir_method_cluster:
+            if _dedupe_exact_double(text).lower() == FIGURE_17_METHOD_CAPTION:
+                suppress_reservoir_method_cluster = False
+            else:
+                continue
+
         num_pr = _num_pr(paragraph)
         num_id, ilvl = _extract_num_values(num_pr)
 
@@ -1077,6 +1132,9 @@ def extract_docx_chapter_by_anchors(
 
         semantic_callout = _looks_like_semantic_callout(_dedupe_exact_double(text)) or _looks_like_source_credit(text)
         pre_caption_graphic_fragment = _looks_like_pre_caption_graphic_fragment(text)
+        if _should_start_reservoir_method_cluster(text, future_texts):
+            suppress_reservoir_method_cluster = True
+            continue
         if (
             num_id is None
             and any(_is_caption_candidate(candidate) for candidate in future_texts)

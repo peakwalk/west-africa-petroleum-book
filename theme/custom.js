@@ -207,6 +207,11 @@
   }
 
   function annotateFigureCaptions() {
+    const figureVariantClasses = {
+      "2": ["figure-card--flush-media", "figure-card--panel-pair"],
+      "7": ["figure-card--inset-media"],
+    };
+
     const captions = Array.from(document.querySelectorAll(".reader-article p")).filter(function (paragraph) {
       return /^Figure\s+\d+:/i.test((paragraph.textContent || "").trim());
     });
@@ -287,6 +292,10 @@
       if (mediaCandidates.length > 1) {
         wrapper.classList.add("figure-card--multi");
       }
+
+      (figureVariantClasses[match[1]] || []).forEach(function (className) {
+        wrapper.classList.add(className);
+      });
 
       insertionAnchor.replaceWith(wrapper);
       wrapper.appendChild(mediaBlock);

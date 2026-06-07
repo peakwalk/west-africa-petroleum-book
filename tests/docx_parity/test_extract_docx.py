@@ -1253,6 +1253,58 @@ class ExtractDocxTests(unittest.TestCase):
             ],
         )
 
+    def test_ignores_figure_17_reservoir_methodology_cluster(self) -> None:
+        tmp_dir = Path(tempfile.mkdtemp())
+        docx_path = tmp_dir / "fixture-figure-17-methodology-cluster.docx"
+        document = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading1"/></w:pPr>
+      <w:r><w:t>Chapter 2: Different Phases of Upstream Oil and the Roles of States</w:t></w:r>
+    </w:p>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading2"/></w:pPr>
+      <w:r><w:t>2.3- Development phase</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t>Excavated material, cores, seismic data, logging, well tests, etc.</w:t></w:r></w:p>
+    <w:p><w:r><w:t>RAW DATA COLLECTION</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Descriptive elements of the reservoir</w:t></w:r></w:p>
+    <w:p><w:r><w:t>PROCESSING AND INTERPRETATION OF THE DATA COLLECTED</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Tank Models and Understanding of the Tank</w:t></w:r></w:p>
+    <w:p><w:r><w:t>CAPEX, OPEX, Risk</w:t></w:r></w:p>
+    <w:p><w:r><w:t>ECONOMIC EVALUATION AND DECISIONS</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Figure 17: Methodology Tank Evaluation</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Figure 18: Diagram showing a reservoir model (Vilgeir Dalen, StatoilHydro, 2007)</w:t></w:r></w:p>
+  </w:body>
+</w:document>
+"""
+        with zipfile.ZipFile(docx_path, "w") as archive:
+            archive.writestr("[Content_Types].xml", CONTENT_TYPES)
+            archive.writestr("_rels/.rels", RELS)
+            archive.writestr("word/document.xml", document)
+            archive.writestr(
+                "word/numbering.xml",
+                (FIXTURE_DIR / "numbering-section-restart.xml").read_text(
+                    encoding="utf-8"
+                ),
+            )
+            archive.writestr(
+                "word/styles.xml",
+                (FIXTURE_DIR / "styles-headings.xml").read_text(encoding="utf-8"),
+            )
+
+        book = extract_docx_book(docx_path)
+        chapter = book.chapters[0]
+
+        self.assertEqual(
+            [block.text for block in chapter.body],
+            [
+                "Figure 17: Methodology Tank Evaluation",
+                "Figure 18: Diagram showing a reservoir model (Vilgeir Dalen, StatoilHydro, 2007)",
+            ],
+        )
+
     def test_preserves_source_credit_lines_before_later_table_caption(self) -> None:
         tmp_dir = Path(tempfile.mkdtemp())
         docx_path = tmp_dir / "fixture-source-credits.docx"
