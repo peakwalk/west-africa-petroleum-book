@@ -1557,9 +1557,31 @@ body.book-page-aux-index .reader-article {
 
 .reader-article td .book-formula,
 .reader-article th .book-formula {
-  margin: 10px auto;
-  padding: 10px 14px;
-  font-size: clamp(15px, 1.1vw, 18px);
+  width: 100%;
+  margin: 0;
+  padding: 0.6rem 0.8rem;
+  justify-items: start;
+  text-align: left;
+  font-size: inherit;
+  font-weight: 560;
+  line-height: 1.22;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  border-color: rgba(43, 91, 166, 0.12);
+  border-left-color: rgba(43, 91, 166, 0.58);
+  border-radius: 0.8rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 250, 252, 0.92) 100%);
+  box-shadow: none;
+}
+
+.reader-article td .book-formula .book-formula-line,
+.reader-article th .book-formula .book-formula-line {
+  width: 100%;
+}
+
+.reader-article td .book-formula + .book-formula,
+.reader-article th .book-formula + .book-formula {
+  margin-top: 0.55rem;
 }
 
 .api-density-formula-term {
@@ -1780,11 +1802,13 @@ body.book-page-aux-index .reader-article {
 
 .table-scroll {
   overflow-x: auto;
-  padding: 0.25rem;
+  padding: 0.75rem;
 }
 
 .table-anchor-table {
+  box-sizing: border-box;
   width: 100%;
+  min-width: 100%;
   margin: 0;
 }
 
