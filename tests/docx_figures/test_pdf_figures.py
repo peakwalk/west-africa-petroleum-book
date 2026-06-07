@@ -68,17 +68,17 @@ class PdfFiguresTest(unittest.TestCase):
         self.assertTrue((ROOT_DIR / "src/images/figure-031.webp").exists())
         self.assertTrue((ROOT_DIR / "src/images/figure-032.webp").exists())
 
-    def test_chapter_3_uses_pdf_asset_for_selected_figures(self) -> None:
+    def test_chapter_3_uses_published_assets_for_selected_figures(self) -> None:
         chapter_text = (
             ROOT_DIR
             / "src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md"
         ).read_text(encoding="utf-8")
 
         self.assertIn("![Figure 021](../images/figure-021.webp)", chapter_text)
-        self.assertIn("![Figure 022](../images/figure-022.webp)", chapter_text)
+        self.assertIn("![Figure 022](../images/figure-022.svg)", chapter_text)
         self.assertIn("![Figure 023](../images/figure-023.webp)", chapter_text)
         self.assertTrue((ROOT_DIR / "src/images/figure-021.webp").exists())
-        self.assertTrue((ROOT_DIR / "src/images/figure-022.webp").exists())
+        self.assertTrue((ROOT_DIR / "src/images/figure-022.svg").exists())
         self.assertTrue((ROOT_DIR / "src/images/figure-023.webp").exists())
 
     def test_figure_22_source_asset_is_high_resolution_png(self) -> None:
@@ -90,6 +90,17 @@ class PdfFiguresTest(unittest.TestCase):
         self.assertGreater(width, 2400)
         self.assertGreater(height, 1400)
         self.assertGreater(output_path.stat().st_size, 500_000)
+
+    def test_figure_22_svg_uses_english_labels(self) -> None:
+        svg_text = (ROOT_DIR / "src/images/figure-022.svg").read_text(encoding="utf-8")
+
+        self.assertIn("GOVERNMENT SHARE", svg_text)
+        self.assertIn("CONTRACTOR SHARE", svg_text)
+        self.assertIn("RECOVERABLE COSTS", svg_text)
+        self.assertIn("CONTRACTOR ENTITLEMENT", svg_text)
+        self.assertNotIn("PART DU GOUVERNEMENT", svg_text)
+        self.assertNotIn("PART DU CONTRACTANT", svg_text)
+        self.assertNotIn("COUTS RECUPERABLES", svg_text)
 
     def test_build_search_windows_separates_multiple_figures_on_the_same_page(self) -> None:
         placements = [

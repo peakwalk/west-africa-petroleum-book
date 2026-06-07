@@ -108,7 +108,7 @@ check_exists src/images/figure-019.webp
 check_exists src/images/figure-020.webp
 check_exists src/images/figure-017.webp
 check_exists src/images/figure-021.webp
-check_exists src/images/figure-022.webp
+check_exists src/images/figure-022.svg
 check_exists src/images/figure-023.webp
 check_exists src/images/figure-026.svg
 check_exists src/images/figure-030.svg
@@ -502,9 +502,10 @@ check_not_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-
 check_not_contains src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'Exploration Authorization'
 check_contains src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md 'figure-021.webp'
 check_not_contains src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md 'figure-021.png'
-node -e 'const fs=require("fs");const text=fs.readFileSync("src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md","utf8");const img21=text.indexOf("![Figure 021](../images/figure-021.webp)");const cap21=text.indexOf("Figure 21: Economic Value");const img22=text.indexOf("![Figure 022](../images/figure-022.webp)");const cap22=text.indexOf("Figure 22: Distribution of income from production");if(img21===-1||cap21===-1||img21>cap21){console.error("Expected Figure 21 image to appear before its caption in chapter 3");process.exit(1);}if(img22===-1||cap22===-1||img22>cap22){console.error("Expected Figure 22 image to appear before its caption in chapter 3");process.exit(1);}'
-check_contains src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md 'figure-022.webp'
+node -e 'const fs=require("fs");const text=fs.readFileSync("src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md","utf8");const img21=text.indexOf("![Figure 021](../images/figure-021.webp)");const cap21=text.indexOf("Figure 21: Economic Value");const img22=text.indexOf("![Figure 022](../images/figure-022.svg)");const cap22=text.indexOf("Figure 22: Distribution of income from production");if(img21===-1||cap21===-1||img21>cap21){console.error("Expected Figure 21 image to appear before its caption in chapter 3");process.exit(1);}if(img22===-1||cap22===-1||img22>cap22){console.error("Expected Figure 22 image to appear before its caption in chapter 3");process.exit(1);}'
+check_contains src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md 'figure-022.svg'
 check_not_contains src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md 'figure-022.png'
+check_not_contains src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md 'figure-022.webp'
 check_contains src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md 'figure-023.webp'
 check_not_contains src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md 'figure-023.png'
 check_not_contains src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md 'figure-023.svg'
@@ -590,7 +591,7 @@ check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-009.webp'
 check_contains public/book/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.html 'figure-021.webp'
 check_not_contains public/book/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.html 'figure-021.png'
-check_contains public/book/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.html 'figure-022.webp'
+check_contains public/book/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.html 'figure-022.svg'
 check_not_contains public/book/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.html 'figure-022.png'
 check_contains public/book/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.html 'figure-023.webp'
 check_not_contains public/book/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.html 'figure-023.png'

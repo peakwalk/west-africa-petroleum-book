@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2541" height="1507" viewBox="0 0 2541 1507" role="img" aria-labelledby="title desc">
+  <title id="title">Figure 22 - Revenue breakdown</title>
+  <desc id="desc">An English redrawn version of the production revenue distribution diagram.</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000000" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+
+  <rect width="2541" height="1507" fill="#ffffff"/>
+  <rect x="44" y="46" width="2453" height="1415" rx="2" fill="none" stroke="#000000" stroke-width="10"/>
+
+  <text x="1270.5" y="136" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="50" font-weight="700" fill="#000000">REVENUE BREAKDOWN</text>
+
+  <g filter="url(#shadow)">
+    <rect x="174" y="190" width="217" height="1080" fill="#b4b4b4" stroke="#000000" stroke-width="6"/>
+    <g transform="translate(282.5 730) rotate(90)">
+      <text text-anchor="middle" textLength="700" lengthAdjust="spacing" font-family="Arial, Helvetica, sans-serif" font-size="52" font-weight="500" fill="#ffffff">GROSS REVENUE</text>
+    </g>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="416" y="190" width="177" height="1080" fill="#f4bc19" stroke="#000000" stroke-width="6"/>
+    <rect x="416" y="190" width="177" height="350" fill="#fff200" stroke="#000000" stroke-width="6"/>
+    <line x1="457" y1="562" x2="457" y2="1140" stroke="#c89a0f" stroke-width="3" opacity="0.55"/>
+    <line x1="547" y1="562" x2="547" y2="1140" stroke="#c89a0f" stroke-width="3" opacity="0.55"/>
+    <g transform="translate(504.5 365) rotate(90)">
+      <text text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700" fill="#000000">PROFIT</text>
+    </g>
+    <g transform="translate(504.5 905) rotate(90)">
+      <text text-anchor="middle" textLength="650" lengthAdjust="spacingAndGlyphs" font-family="Arial, Helvetica, sans-serif" font-size="52" font-weight="700" fill="#000000">RECOVERABLE COSTS</text>
+    </g>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="610" y="410" width="208" height="860" fill="#4d77c6" stroke="#000000" stroke-width="6"/>
+    <g transform="translate(714 840) rotate(90)">
+      <text text-anchor="middle" textLength="580" lengthAdjust="spacing" font-family="Arial, Helvetica, sans-serif" font-size="52" font-weight="500" fill="#ffffff">TOTAL COSTS</text>
+    </g>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="832" y="190" width="868" height="1080" fill="#f1b513" stroke="#000000" stroke-width="6"/>
+    <rect x="832" y="190" width="868" height="214" fill="#95d14a" stroke="#000000" stroke-width="6"/>
+    <rect x="832" y="404" width="868" height="160" fill="#cf0000" stroke="#000000" stroke-width="6"/>
+    <rect x="832" y="564" width="868" height="218" fill="#f4b81a" stroke="#000000" stroke-width="6"/>
+    <rect x="832" y="782" width="868" height="308" fill="#f4b81a" stroke="#000000" stroke-width="6"/>
+    <rect x="832" y="1090" width="868" height="180" fill="#f4b81a" stroke="#000000" stroke-width="6"/>
+
+    <text x="1266" y="308" text-anchor="middle" dominant-baseline="middle" font-family="Arial, Helvetica, sans-serif" font-size="52" font-weight="500" fill="#000000">GOVERNMENT SHARE</text>
+    <text x="1266" y="484" text-anchor="middle" dominant-baseline="middle" font-family="Arial, Helvetica, sans-serif" font-size="50" font-weight="500" fill="#ffffff" letter-spacing="0.5">CONTRACTOR SHARE</text>
+    <text x="1266" y="673" text-anchor="middle" dominant-baseline="middle" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="500" fill="#000000">OPERATING COSTS</text>
+    <text x="1266" y="936" text-anchor="middle" dominant-baseline="middle" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="500" fill="#000000">DEVELOPMENT COSTS</text>
+    <text x="1266" y="1180" text-anchor="middle" dominant-baseline="middle" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="500" fill="#000000">EXPLORATION COSTS</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="1717" y="190" width="212" height="1080" fill="#4d77c6" stroke="#000000" stroke-width="6"/>
+    <rect x="1717" y="190" width="212" height="190" fill="#7fbe53" stroke="#000000" stroke-width="6"/>
+    <g transform="translate(1823 285) rotate(90)">
+      <text text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="52" font-weight="500" fill="#ffffff">RENT</text>
+    </g>
+    <g transform="translate(1823 825) rotate(90)">
+      <text text-anchor="middle" textLength="760" lengthAdjust="spacingAndGlyphs" font-family="Arial, Helvetica, sans-serif" font-size="46" font-weight="500" fill="#ffffff">CONTRACTOR ENTITLEMENT</text>
+    </g>
+  </g>
+
+  <g font-family="Arial, Helvetica, sans-serif" font-size="30" fill="#111111">
+    <text x="1990" y="224">Bonus, Royalty,</text>
+    <text x="1990" y="276">Gov. particip.,</text>
+    <text x="1990" y="328">Taxes, govt. share</text>
+  </g>
+</svg>

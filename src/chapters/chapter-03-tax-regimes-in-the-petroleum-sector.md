@@ -55,7 +55,7 @@ well-being, the transfer of skills and by extension iii) the
 exploitation of resources for the longest period of time with the
 highest possible recovery rate.
 
-![Figure 022](../images/figure-022.webp)
+![Figure 022](../images/figure-022.svg)
 
 Figure 22: Distribution of income from production (After Johnson, 1995)
 
