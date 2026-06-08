@@ -587,6 +587,79 @@
     document.body.classList.add("book-outline-ready");
   }
 
+  function getActiveSidebarChapterLink() {
+    return (
+      document.querySelector("#mdbook-sidebar a.active") ||
+      document.querySelector("#mdbook-sidebar a.current-header")
+    );
+  }
+
+  function installMobileChapterBar() {
+    const bar = document.querySelector(".reader-mobile-chapter-bar");
+    const toggle = document.querySelector(".reader-mobile-chapter-toggle");
+    const kicker = document.querySelector(".reader-mobile-chapter-kicker");
+    const title = document.querySelector(".reader-mobile-chapter-title");
+    const sidebarToggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+    const activeLink = getActiveSidebarChapterLink();
+
+    if (!bar || !toggle || !kicker || !title || !sidebarToggle || !activeLink) {
+      return;
+    }
+
+    const normalizedTitle = (activeLink.textContent || "").replace(/\s+/g, " ").trim();
+
+    function syncExpandedState() {
+      toggle.setAttribute("aria-expanded", sidebarToggle.checked ? "true" : "false");
+    }
+
+    kicker.textContent = "Chapter";
+    title.textContent = normalizedTitle;
+    bar.classList.remove("hidden");
+    bar.setAttribute("aria-hidden", "false");
+
+    if (!toggle.dataset.mobileChapterBarBound) {
+      toggle.addEventListener("click", function () {
+        sidebarToggle.checked = !sidebarToggle.checked;
+        syncExpandedState();
+      });
+
+      sidebarToggle.addEventListener("change", syncExpandedState);
+      toggle.dataset.mobileChapterBarBound = "true";
+    }
+
+    syncExpandedState();
+  }
+
+  function installInlineOutlineCard() {
+    const anchor = document.querySelector(".reader-mobile-outline-anchor");
+    const outline = document.querySelector(".book-outline-body .on-this-page");
+
+    if (!anchor) {
+      return;
+    }
+
+    if (!outline) {
+      anchor.hidden = true;
+      anchor.setAttribute("aria-hidden", "true");
+      anchor.replaceChildren();
+      return;
+    }
+
+    const card = document.createElement("section");
+    const label = document.createElement("p");
+    const body = outline.cloneNode(true);
+
+    card.className = "reader-mobile-outline-card";
+    label.className = "book-outline-label";
+    label.textContent = "On This Page";
+    card.appendChild(label);
+    card.appendChild(body);
+
+    anchor.hidden = false;
+    anchor.removeAttribute("aria-hidden");
+    anchor.replaceChildren(card);
+  }
+
   function installHeaderSearchSlot() {
     const searchWrap = document.getElementById("mdbook-search-wrapper");
     const searchToggle = document.getElementById("mdbook-search-toggle");
@@ -738,6 +811,8 @@
       installHeaderSearchSlot();
       installChapterPaginationHeightSync();
       moveOutline();
+      installMobileChapterBar();
+      installInlineOutlineCard();
       updateProgress();
     });
 
@@ -746,6 +821,8 @@
     if (sidebar) {
       const observer = new MutationObserver(function () {
         moveOutline();
+        installMobileChapterBar();
+        installInlineOutlineCard();
       });
 
       observer.observe(sidebar, { childList: true, subtree: true });
