@@ -429,6 +429,7 @@ check_contains public/book/index.html 'upstream-atlas-icon.png'
 check_contains public/book/index.html 'class="book-home-icon book-home-icon-full"'
 check_contains public/book/index.html 'class="book-home-icon book-home-icon-compact"'
 check_contains public/book/index.html 'class="book-sidebar-intro"'
+check_not_contains public/book/index.html 'Reader Edition'
 check_contains public/book/index.html 'class="reader-sidebar-scroll"'
 check_not_contains public/book/index.html 'class="book-sidebar-utilities"'
 check_not_contains public/book/index.html 'Reference Surfaces'
@@ -719,6 +720,7 @@ check_contains theme/custom.css '.reader-article p,'
 check_contains theme/custom.css '.reader-article li {'
 check_contains theme/custom.css 'color: var(--ink);'
 check_contains theme/custom.css '--reader-left-offset: 0px;'
+check_contains theme/custom.css '--sidebar-scroll-padding-block: 1.8rem;'
 check_contains theme/custom.css '--toolbar-search-width: 420px;'
 check_contains theme/custom.css '--toolbar-contact-width: 106px;'
 check_contains theme/custom.css '--toolbar-utility-gap: 24px;'
@@ -847,6 +849,7 @@ check_contains theme/index.hbs '<div id="mdbook-search-overlay-root" aria-hidden
 check_contains theme/index.hbs '<div id="mdbook-search-wrapper" class="hidden">'
 check_contains theme/index.hbs '<div class="toolbar-search-slot hidden" aria-hidden="true"></div>'
 check_contains theme/index.hbs 'class="book-sidebar-intro"'
+check_not_contains theme/index.hbs 'Reader Edition'
 check_contains theme/index.hbs 'class="reader-sidebar-scroll"'
 check_contains theme/index.hbs 'class="reader-sidebar-projection"'
 check_not_contains theme/index.hbs 'class="book-sidebar-utilities"'
@@ -887,35 +890,38 @@ function block(selector) {
 const expectations = [
   [".book-sidebar-intro {", ["padding: 1.55rem 1.75rem 1.05rem;", "border-bottom: 0;"]],
   [".book-sidebar-intro::after {", ["inset-inline: 0;", "border-bottom: 1px solid rgba(11, 31, 51, 0.08);"]],
-  [".book-sidebar-kicker {", ["color: var(--brand-gold);", "font-size: 0.75rem;", "letter-spacing: 0.12em;"]],
-  [".book-sidebar-book-title {", ["font-family: var(--reader-sans);", "font-size: 1rem;", "line-height: 1.28;"]],
+  [".book-sidebar-book-title {", ["font-family: var(--reader-sans);", "max-width: 24ch;", "font-size: 0.9375rem;", "line-height: 1.42;", "text-transform: uppercase;"]],
   [".reader-sidebar-scroll {", ["padding: var(--sidebar-scroll-padding-block) 1rem 1rem;", "overflow-y: auto;"]],
-  [".reader-sidebar-section {", ["position: relative;", "gap: 0.4rem;", "padding-top: 1.1rem;", "padding-inline: 0.75rem;", "border-top: 0;"]],
+  [".reader-sidebar-section {", ["position: relative;", "gap: 0.4rem;", "padding-top: 2.4rem;", "padding-inline: 0.75rem;", "border-top: 0;"]],
   [".reader-sidebar-section::before {", ["inset-inline: 0;", "border-top: 1px solid rgba(11, 31, 51, 0.08);"]],
   [".reader-sidebar-section:first-child::before {", ["content: none;"]],
   [".reader-sidebar-section--active::before {", ["border-top-color: rgba(49, 99, 194, 0.2);"]],
-  [".reader-sidebar-section-header {", ["gap: 0.2rem;"]],
+  [".reader-sidebar-section-header {", ["gap: 0.2rem;", "line-height: 25%;"]],
   [".reader-sidebar-section-kicker {", ["font-size: 0.75rem;", "letter-spacing: 0.12em;"]],
   [".reader-sidebar-section-title {", ["font-size: 0.875rem;", "line-height: 1.35;"]],
   [".reader-sidebar-section-icon {", ["width: 1.1875rem;", "height: 1.1875rem;", "color: rgba(82, 97, 113, 0.88);"]],
-  [".reader-sidebar-section--part .reader-sidebar-section-header {", ["display: flex;", "flex-wrap: wrap;", "column-gap: 0.5rem;"]],
-  [".reader-sidebar-section--part .reader-sidebar-section-kicker {", ["color: var(--brand-gold);", "font-size: 0.75rem;", "letter-spacing: 0.16em;"]],
-  [".reader-sidebar-section--part .reader-sidebar-section-title {", ["font-family: var(--reader-sans);", "font-size: 0.875rem;", "line-height: 1.35;"]],
+  [".reader-sidebar-section--part {", ["gap: 0.8rem;"]],
+  [".reader-sidebar-section--part .reader-sidebar-section-header {", ["display: block;"]],
+  [".reader-sidebar-section--part .reader-sidebar-section-kicker {", ["display: inline;", "color: var(--brand-gold);", "font-size: 0.75rem;", "letter-spacing: normal;"]],
+  [".reader-sidebar-section--part .reader-sidebar-section-title {", ["display: inline;", "color: var(--brand-gold);", "font-family: var(--reader-sans);", "font-size: 0.75rem;", "line-height: 1.35;", "text-transform: uppercase;"]],
+  [".reader-sidebar-section--part .reader-sidebar-section-title::before {", ['content: "|";']],
+  [".reader-sidebar-section--part.reader-sidebar-section--active .reader-sidebar-section-title {", ["color: var(--brand-gold);"]],
   [".reader-sidebar-section--front-matter .reader-sidebar-section-header {", ["grid-template-columns: auto minmax(0, 1fr);", "align-items: center;", "column-gap: 0.625rem;"]],
-  [".reader-sidebar-section--front-matter .reader-sidebar-section-title,", ["color: rgba(11, 31, 51, 0.68);", "font-family: var(--reader-sans);", "font-weight: 650;", "text-transform: none;"]],
-  [".reader-sidebar-section--front-matter .reader-sidebar-section-body,", ["gap: 0.2rem;"]],
-  [".reader-sidebar-section-body {", ["gap: 0.2rem;"]],
-  [".reader-sidebar-row {", ["grid-template-columns: 2.25rem minmax(0, 1fr);", "gap: 0.625rem;", "padding: 0.625rem 0.75rem;", "border-radius: 0.75rem;"]],
-  [".reader-sidebar-row-index {", ["font-size: 0.6875rem;", "letter-spacing: 0.14em;"]],
+  [".reader-sidebar-section--front-matter .reader-sidebar-section-title,", ["color: var(--sidebar-fg);", "font-family: var(--reader-sans);", "font-weight: 650;", "text-transform: none;"]],
+  [".reader-sidebar-section--front-matter .reader-sidebar-section-body,", ["gap: 0.3rem;"]],
+  [".reader-sidebar-section-body {", ["gap: 0.35rem;", "padding-bottom: 0.75rem;"]],
+  [".reader-sidebar-row {", ["grid-template-columns: 2.25rem minmax(0, 1fr);", "gap: 0.625rem;", "padding: 0.5rem 1.75rem 0.5rem 0.75rem;", "border-radius: 0.75rem;", "color: var(--sidebar-fg);"]],
+  [".reader-sidebar-row-index {", ["color: currentColor;", "font-size: 0.6875rem;", "letter-spacing: 0.14em;"]],
   [".reader-sidebar-row-title {", ["font-family: var(--reader-sans);", "font-size: 0.8125rem;", "line-height: 1.45;"]],
-  [".reader-sidebar-row--reference {", ["padding: 0.5rem 0;", "border-radius: 0.5rem;"]],
-  [".reader-sidebar-section--front-matter .reader-sidebar-row--reference {", ["padding: 0.5rem 0 0.5rem calc(1.1875rem + 0.625rem);"]],
+  [".reader-sidebar-row--reference {", ["padding: 0.4rem 1.25rem 0.4rem 0.75rem;", "border-radius: 0.5rem;"]],
+  [".reader-sidebar-section--front-matter .reader-sidebar-row--reference {", ["padding: 0.4rem 1.25rem 0.4rem calc(1.1875rem + 0.625rem);"]],
   [".reader-sidebar-row--reference.reader-sidebar-row--with-icon {", ["grid-template-columns: 1.375rem minmax(0, 1fr);", "gap: 0.5rem;"]],
   [".reader-sidebar-row--reference .reader-sidebar-row-title {", ["font-size: 0.8125rem;", "line-height: 1.45;"]],
   [".reader-sidebar-row-icon {", ["width: 1.375rem;", "height: 1.375rem;", "border-radius: 999px;"]],
-  [".reader-sidebar-row--reference.reader-sidebar-row--active {", ["padding: 0.5rem 1.25rem 0.5rem 0.75rem;"]],
-  [".reader-sidebar-section--front-matter .reader-sidebar-row--reference.reader-sidebar-row--active {", ["padding: 0.5rem 1.25rem 0.5rem calc(1.1875rem + 0.625rem);"]],
-  [".reader-sidebar-row--active {", ["padding-inline-end: 1.75rem;", "box-shadow: 0 8px 18px rgba(49, 99, 194, 0.14);"]],
+  [".reader-sidebar-row:hover,", ["border-color: rgba(49, 99, 194, 0.12);", "background: rgba(49, 99, 194, 0.06);", "color: var(--sidebar-fg);"]],
+  [".reader-sidebar-row--reference.reader-sidebar-row--active {", ["padding: 0.4rem 1.25rem 0.4rem 0.75rem;"]],
+  [".reader-sidebar-section--front-matter .reader-sidebar-row--reference.reader-sidebar-row--active {", ["padding: 0.4rem 1.25rem 0.4rem calc(1.1875rem + 0.625rem);"]],
+  [".reader-sidebar-row--active {", ["box-shadow: 0 8px 18px rgba(49, 99, 194, 0.14);"]],
   [".reader-sidebar-row--active:link,", ["color: #ffffff !important;", "-webkit-text-fill-color: #ffffff;"]],
   [".reader-sidebar-row--active .reader-sidebar-row-index,", ["color: #ffffff !important;", "-webkit-text-fill-color: #ffffff;"]],
   [".reader-sidebar-row--active .reader-sidebar-row-icon {", ["color: #ffffff;", "background: rgba(255, 255, 255, 0.14);"]],
@@ -1036,12 +1042,10 @@ for (const expected of [
   "margin-inline-start: 0;",
   ".book-sidebar-intro {",
   "padding: 1.5rem 1.75rem 1rem;",
-  ".book-sidebar-kicker {",
-  "font-size: 0.75rem;",
   ".book-sidebar-book-title {",
-  "font-size: 1.5rem;",
-  "line-height: 1.22;",
-  "max-width: 13ch;",
+  "max-width: 24ch;",
+  "font-size: 0.9375rem;",
+  "line-height: 1.42;",
   ".reader-sidebar-scroll {",
   "padding: 1rem 1.5rem 1.5rem;",
   ".reader-sidebar-section {",
@@ -1061,21 +1065,22 @@ for (const expected of [
   ".reader-sidebar-section--front-matter .reader-sidebar-section-body,",
   ".reader-sidebar-section--part .reader-sidebar-section-kicker {",
   "font-size: 0.75rem;",
-  "letter-spacing: 0.18em;",
+  "letter-spacing: normal;",
   ".reader-sidebar-section--part .reader-sidebar-section-title {",
   "font-size: 0.9375rem;",
   "line-height: 1.35;",
   "max-width: 18ch;",
   ".reader-sidebar-section-body {",
   "gap: 0.5rem;",
+  "padding-bottom: 0.875rem;",
   ".reader-sidebar-section--front-matter .reader-sidebar-section-body,",
   "gap: 0.25rem;",
   ".reader-sidebar-row {",
   "grid-template-columns: 2.5rem minmax(0, 1fr);",
   "gap: 0.75rem;",
-  "padding: 0.75rem 1rem;",
+  "padding: 0.75rem 2.5rem 0.75rem 1rem;",
   "border-radius: 0.75rem;",
-  "color: var(--brand-blue);",
+  "color: var(--sidebar-fg);",
   ".reader-sidebar-row-index {",
   "font-size: 0.75rem;",
   ".reader-sidebar-row-title {",
@@ -1083,9 +1088,9 @@ for (const expected of [
   "line-height: 1.35;",
   "font-weight: 600;",
   ".reader-sidebar-row--reference {",
-  "padding: 0.4rem 0;",
+  "padding: 0.4rem 2rem 0.4rem 0.9rem;",
   ".reader-sidebar-section--front-matter .reader-sidebar-row--reference {",
-  "padding: 0.4rem 0 0.4rem calc(1.1875rem + 0.625rem);",
+  "padding: 0.4rem 2rem 0.4rem calc(1.1875rem + 0.625rem);",
   ".reader-sidebar-row--reference.reader-sidebar-row--with-icon {",
   "grid-template-columns: 1.75rem minmax(0, 1fr);",
   "gap: 0.75rem;",
@@ -1100,7 +1105,6 @@ for (const expected of [
   ".reader-sidebar-section--front-matter .reader-sidebar-row--reference.reader-sidebar-row--active {",
   "padding: 0.4rem 2rem 0.4rem calc(1.1875rem + 0.625rem);",
   ".reader-sidebar-row--active {",
-  "padding-inline-end: 2.5rem;",
   "box-shadow: 0 14px 30px rgba(49, 99, 194, 0.22);",
   ".reader-sidebar-row--active::after {",
   "inset-inline-end: 1rem;",
@@ -1138,8 +1142,19 @@ NODE
 # Reader projection contract
 check_contains theme/custom.css '.book-sidebar-shell .chapter li a {'
 check_contains theme/custom.css '.book-sidebar-shell .chapter li.part-title {'
+node -e 'const fs=require("fs");const hbs=fs.readFileSync("theme/index.hbs","utf8");for(const expected of ["function bootstrapSidebarProjection()","projection.dataset.projectionSignature = projectionSignature;","sidebar.classList.add(\"book-sidebar-shell--projected\");","customElements.whenDefined(\"mdbook-sidebar-scrollbox\")"]){if(!hbs.includes(expected)){console.error(`Expected theme/index.hbs to include ${expected}`);process.exit(1);}}const navIndex=hbs.indexOf("<nav id=\"mdbook-sidebar\"");const bootstrapIndex=hbs.indexOf("function bootstrapSidebarProjection()");const pageIndex=hbs.indexOf("<div id=\"mdbook-page-wrapper\"");if(navIndex===-1||bootstrapIndex===-1||pageIndex===-1||!(navIndex < bootstrapIndex && bootstrapIndex < pageIndex)){console.error("Expected sidebar projection bootstrap script to run immediately after the sidebar markup and before the page wrapper renders.");process.exit(1);}'
+node -e 'const fs=require("fs");const hbs=fs.readFileSync("theme/index.hbs","utf8");for(const expected of ["const intro = sidebar.querySelector(\".book-sidebar-intro\");","sidebar.style.setProperty(\"--sidebar-intro-height\", intro.offsetHeight + \"px\");"]){if(!hbs.includes(expected)){console.error(`Expected theme/index.hbs to include ${expected}`);process.exit(1);}}const introHeightIndex=hbs.indexOf("sidebar.style.setProperty(\"--sidebar-intro-height\", intro.offsetHeight + \"px\");");const projectedIndex=hbs.indexOf("sidebar.classList.add(\"book-sidebar-shell--projected\");");if(introHeightIndex===-1||projectedIndex===-1||!(introHeightIndex < projectedIndex)){console.error("Expected inline sidebar geometry sync to happen before projected sidebar activation.");process.exit(1);}'
+node -e 'const fs=require("fs");const hbs=fs.readFileSync("theme/index.hbs","utf8");if(hbs.includes("sessionStorage.removeItem(\"reader-sidebar-scroll-offset\");")){console.error("Expected inline sidebar bootstrap to preserve reader-sidebar-scroll-offset until runtime hydration can reconcile any late raw TOC mutations.");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const chapterLink=block(".book-sidebar-shell .chapter li a {");for(const expected of ["font-size: 0.875rem;","line-height: 1.4286;"]){if(!chapterLink.includes(expected)){console.error(`Expected .book-sidebar-shell .chapter li a to include ${expected}`);process.exit(1);}}if(chapterLink.includes("font-size: 14px;")||chapterLink.includes("line-height: 20px;")||chapterLink.includes("font-size: 1.4rem;")||chapterLink.includes("line-height: 2rem;")){console.error("Expected .book-sidebar-shell .chapter li a to use repo-owned typography calibrated for the explicit /book root font contract");process.exit(1);}const partTitle=block(".book-sidebar-shell .chapter li.part-title {");if(!partTitle.includes("font-size: 0.75rem;")){console.error("Expected .book-sidebar-shell .chapter li.part-title to include font-size: 0.75rem;");process.exit(1);}if(partTitle.includes("font-size: 12px;")||partTitle.includes("font-size: 1.2rem;")){console.error("Expected .book-sidebar-shell .chapter li.part-title to stop using legacy sizing under the explicit /book root font contract");process.exit(1);}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const bookTitle=block(".book-sidebar-book-title {");if(!bookTitle.includes("color: var(--sidebar-fg);")){console.error("Expected .book-sidebar-book-title to align with the normal sidebar navigation text color.");process.exit(1);}const frontBackTitle=block(".reader-sidebar-section--front-matter .reader-sidebar-section-title,");if(!frontBackTitle.includes("color: var(--sidebar-fg);")){console.error("Expected Front Matter and Back Matter section titles to align with the normal sidebar navigation text color.");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const start=css.indexOf(".reader-sidebar-section--front-matter .reader-sidebar-section-body,");if(start===-1){console.error("Expected Front Matter body selector to remain present in theme/custom.css");process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error("Expected closing brace for Front Matter body selector block");process.exit(1);}const frontMatterBody=css.slice(start,end+1);if(frontMatterBody.includes("padding-inline-start:")){console.error("Expected Front Matter body container position to remain unchanged; use row padding instead of container padding.");process.exit(1);}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const activeRow=block(".reader-sidebar-row--active {");if(activeRow.includes("padding-inline-end:")){console.error("Expected active sidebar rows to preserve the same inline geometry as inactive rows; reserve the indicator gutter in the base row instead of shifting active items.");process.exit(1);}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const visitedRow=block(".reader-sidebar-row:link,");for(const expected of ["color: var(--sidebar-fg);","-webkit-text-fill-color: var(--sidebar-fg);"]){if(!visitedRow.includes(expected)){console.error(`Expected reader sidebar normal link/visited contract to include ${expected}`);process.exit(1);}}'
+node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");if(!js.includes(`sessionStorage.setItem("sidebar-scroll-offset"`)){console.error("Expected projected sidebar links to persist sidebar-scroll-offset before navigation so mdBook can restore the same vertical viewport.");process.exit(1);}if(!js.includes(`sessionStorage.setItem("reader-sidebar-scroll-offset"`)){console.error("Expected projected sidebar links to persist a projection-owned reader-sidebar-scroll-offset contract before navigation.");process.exit(1);}if(!js.includes(`sessionStorage.getItem("reader-sidebar-scroll-offset"`)){console.error("Expected projected sidebar install to read back the projection-owned reader-sidebar-scroll-offset contract.");process.exit(1);}const start=js.indexOf("function installSidebarProjection() {");const end=js.indexOf("\n\n  function buildOutlineList(",start);if(start===-1||end===-1){console.error("Expected installSidebarProjection block in theme/custom.js");process.exit(1);}const block=js.slice(start,end);if(block.includes("revealActiveSidebarTarget(scrollContainer);")){console.error("Expected installSidebarProjection to stop re-scrolling the visible sidebar shell after mdBook already restored sidebar position.");process.exit(1);}if(!block.includes("scrollContainer.scrollTop = scrollbox.scrollTop;")){console.error("Expected installSidebarProjection to adopt the raw mdBook scrollbox scrollTop before hiding it.");process.exit(1);}if(!block.includes("scrollContainer.scrollTop += currentOffset - storedProjectionOffset;")){console.error("Expected installSidebarProjection to preserve the clicked projection row offset across page navigations before falling back to raw mdBook scroll restoration.");process.exit(1);}'
+node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");if(!js.includes("const storedProjectionOffset = readAndClearSidebarProjectionOffset();")){console.error("Expected installSidebarProjection to always reconcile any pending reader-sidebar-scroll-offset contract during runtime hydration.");process.exit(1);}if(js.includes("const storedProjectionOffset = projectionChanged ? readAndClearSidebarProjectionOffset() : null;")){console.error("Expected installSidebarProjection to stop skipping reader-sidebar-scroll-offset reconciliation when the early bootstrap projection already exists.");process.exit(1);}'
+node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");const start=js.indexOf("function syncOutlineRailVisibility() {");const end=js.indexOf("\n\n  function syncOutlineActiveState()",start);if(start===-1||end===-1){console.error("Expected syncOutlineRailVisibility() to manage the empty right-rail contract.");process.exit(1);}const block=js.slice(start,end);for(const expected of ["document.querySelector(\"#mdbook-outline-scroll\")","document.querySelector(\".book-outline-body .on-this-page\")","document.querySelector(\".book-outline-figures\")","document.querySelector(\".book-outline-tables\")","document.body.classList.toggle(\"book-outline-empty\", !hasVisibleOutlineContent);","outline.hidden = !hasVisibleOutlineContent;"]){if(!block.includes(expected)){console.error(`Expected syncOutlineRailVisibility() to include ${expected}`);process.exit(1);}}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const layout=block("body.book-outline-empty .reader-layout {");if(!layout.includes("grid-template-columns: minmax(0, 1fr);")){console.error("Expected empty outline pages to collapse the reader layout back to a single content column.");process.exit(1);}const rail=block("body.book-outline-empty .reader-outline {");if(!rail.includes("display: none;")){console.error("Expected empty outline pages to hide the desktop right rail entirely.");process.exit(1);}'
+node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");for(const expected of ["function bindSidebarProjectionRowInteraction(","if (row.dataset.readerSidebarBound === \"true\") {","row.dataset.readerSidebarBound = \"true\";","hydrateSidebarProjectionRows(projection);"]){if(!js.includes(expected)){console.error(`Expected theme/custom.js to include ${expected}`);process.exit(1);}}'
 check_contains theme/custom.js 'new ResizeObserver'
 check_contains theme/custom.js '--sidebar-intro-height'
 check_contains theme/custom.js 'reader-sidebar-scroll'
@@ -1435,9 +1450,11 @@ check_contains theme/custom.js 'function buildHeroMetaItems('
 check_contains theme/custom.js 'function renderChapterHero('
 check_contains theme/custom.js 'function installChapterHero()'
 check_contains theme/custom.js 'function installOutlineReferenceSections()'
+check_contains theme/custom.js 'function buildReferenceRailLabel('
 check_contains theme/custom.js 'function applyReaderPageMeta('
 check_contains theme/custom.js 'function balanceLeadFigureWeight()'
 check_contains theme/custom.js 'function truncateReferenceText('
+check_contains theme/custom.js 'displayText: buildReferenceRailLabel(label, text)'
 check_contains theme/custom.js 'document.querySelector(".toolbar-search-slot")'
 check_contains theme/custom.js 'document.querySelector(".reader-mobile-chapter-toggle")'
 check_contains theme/custom.js 'document.querySelector(".reader-chapter-hero-anchor")'
@@ -1446,6 +1463,8 @@ check_contains theme/custom.js 'document.querySelector(".book-outline-figures")'
 check_contains theme/custom.js 'document.querySelector(".book-outline-tables")'
 check_contains theme/custom.js 'reader-page-meta.json'
 check_contains theme/custom.js 'book-outline-link book-outline-link--reference'
+check_contains theme/custom.js 'title.textContent = baseTitle;'
+check_not_contains theme/custom.js 'title.textContent = baseTitle + " (" + items.length + ")"'
 check_contains theme/custom.js 'const searchresultsOuter = document.getElementById("mdbook-searchresults-outer");'
 check_contains theme/custom.js 'const searchOverlayRoot = document.getElementById("mdbook-search-overlay-root");'
 check_contains theme/custom.js 'searchOverlayRoot.appendChild(searchresultsOuter);'

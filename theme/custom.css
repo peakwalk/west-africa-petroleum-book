@@ -55,7 +55,7 @@
   --toolbar-contact-width: 106px;
   --toolbar-utility-gap: 24px;
   --sidebar-intro-height: 0px;
-  --sidebar-scroll-padding-block: 0.75rem;
+  --sidebar-scroll-padding-block: 1.8rem;
   --reader-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --reader-serif: "Literata", Georgia, serif;
   --sidebar-width: 256px;
@@ -196,6 +196,10 @@ body {
   box-sizing: border-box;
 }
 
+body.book-outline-empty .reader-layout {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .reader-main {
   min-width: 0;
   width: 100%;
@@ -245,6 +249,10 @@ body {
   box-sizing: border-box;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(250, 251, 253, 0.96) 100%);
   border-inline-start: 1px solid var(--book-rail-border);
+}
+
+body.book-outline-empty .reader-outline {
+  display: none;
 }
 
 .book-outline-inner {
@@ -997,12 +1005,14 @@ body {
 
 .book-sidebar-book-title {
   margin: 0;
-  color: var(--ink);
+  color: var(--sidebar-fg);
   font-family: var(--reader-sans);
-  font-size: 1rem;
-  font-weight: 560;
-  line-height: 1.28;
-  letter-spacing: -0.01em;
+  max-width: 24ch;
+  font-size: 0.9375rem;
+  font-weight: 650;
+  line-height: 1.42;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
 }
 
 .reader-sidebar-scroll {
@@ -1043,7 +1053,7 @@ body {
   position: relative;
   display: grid;
   gap: 0.4rem;
-  padding-top: 1.1rem;
+  padding-top: 2.4rem;
   padding-inline: 0.75rem;
   border-top: 0;
 }
@@ -1071,6 +1081,7 @@ body {
 .reader-sidebar-section-header {
   display: grid;
   gap: 0.2rem;
+  line-height: 25%;
 }
 
 .reader-sidebar-section-kicker {
@@ -1104,9 +1115,13 @@ body {
   height: 100%;
 }
 
+.reader-sidebar-section--part {
+  gap: 0.8rem;
+}
+
 .reader-sidebar-section--front-matter .reader-sidebar-section-title,
 .reader-sidebar-section--back-matter .reader-sidebar-section-title {
-  color: rgba(11, 31, 51, 0.68);
+  color: var(--sidebar-fg);
   font-family: var(--reader-sans);
   font-size: 0.875rem;
   font-weight: 650;
@@ -1122,39 +1137,48 @@ body {
 }
 
 .reader-sidebar-section--part .reader-sidebar-section-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  column-gap: 0.5rem;
-  row-gap: 0.14rem;
+  display: block;
 }
 
 .reader-sidebar-section--part .reader-sidebar-section-kicker {
+  display: inline;
   color: var(--brand-gold);
   font-size: 0.75rem;
-  letter-spacing: 0.16em;
+  letter-spacing: normal;
 }
 
 .reader-sidebar-section--part .reader-sidebar-section-title {
-  color: rgba(11, 31, 51, 0.68);
+  display: inline;
+  color: var(--brand-gold);
   font-family: var(--reader-sans);
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-weight: 650;
   line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.reader-sidebar-section--part .reader-sidebar-section-title::before {
+  content: "|";
+  margin-inline: 0.375rem 0.5rem;
 }
 
 .reader-sidebar-section--active .reader-sidebar-section-title {
   color: var(--ink);
 }
 
+.reader-sidebar-section--part.reader-sidebar-section--active .reader-sidebar-section-title {
+  color: var(--brand-gold);
+}
+
 .reader-sidebar-section-body {
   display: grid;
-  gap: 0.2rem;
+  gap: 0.35rem;
+  padding-bottom: 0.75rem;
 }
 
 .reader-sidebar-section--front-matter .reader-sidebar-section-body,
 .reader-sidebar-section--back-matter .reader-sidebar-section-body {
-  gap: 0.2rem;
+  gap: 0.3rem;
 }
 
 .reader-sidebar-row {
@@ -1163,7 +1187,7 @@ body {
   gap: 0.625rem;
   align-items: start;
   position: relative;
-  padding: 0.625rem 0.75rem;
+  padding: 0.5rem 1.75rem 0.5rem 0.75rem;
   border: 1px solid transparent;
   border-radius: 0.75rem;
   color: var(--sidebar-fg);
@@ -1175,9 +1199,15 @@ body {
     box-shadow 160ms ease;
 }
 
+.reader-sidebar-row:link,
+.reader-sidebar-row:visited {
+  color: var(--sidebar-fg);
+  -webkit-text-fill-color: var(--sidebar-fg);
+}
+
 .reader-sidebar-row-index {
   padding-top: 0.16rem;
-  color: rgba(38, 77, 151, 0.78);
+  color: currentColor;
   font-size: 0.6875rem;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -1195,12 +1225,12 @@ body {
 
 .reader-sidebar-row--reference {
   grid-template-columns: minmax(0, 1fr);
-  padding: 0.5rem 0;
+  padding: 0.4rem 1.25rem 0.4rem 0.75rem;
   border-radius: 0.5rem;
 }
 
 .reader-sidebar-section--front-matter .reader-sidebar-row--reference {
-  padding: 0.5rem 0 0.5rem calc(1.1875rem + 0.625rem);
+  padding: 0.4rem 1.25rem 0.4rem calc(1.1875rem + 0.625rem);
 }
 
 .reader-sidebar-row--reference.reader-sidebar-row--with-icon {
@@ -1237,14 +1267,13 @@ body {
 .reader-sidebar-row:focus-visible {
   border-color: rgba(49, 99, 194, 0.12);
   background: rgba(49, 99, 194, 0.06);
-  color: var(--ink);
+  color: var(--sidebar-fg);
 }
 
 .reader-sidebar-row--active {
   border-color: rgba(49, 99, 194, 0.16);
   background: linear-gradient(180deg, rgba(57, 102, 194, 0.96) 0%, rgba(43, 91, 166, 0.98) 100%);
   color: #ffffff;
-  padding-inline-end: 1.75rem;
   box-shadow: 0 8px 18px rgba(49, 99, 194, 0.14);
 }
 
@@ -1260,11 +1289,11 @@ body {
 }
 
 .reader-sidebar-row--reference.reader-sidebar-row--active {
-  padding: 0.5rem 1.25rem 0.5rem 0.75rem;
+  padding: 0.4rem 1.25rem 0.4rem 0.75rem;
 }
 
 .reader-sidebar-section--front-matter .reader-sidebar-row--reference.reader-sidebar-row--active {
-  padding: 0.5rem 1.25rem 0.5rem calc(1.1875rem + 0.625rem);
+  padding: 0.4rem 1.25rem 0.4rem calc(1.1875rem + 0.625rem);
 }
 
 .reader-sidebar-row--active::after {
@@ -2827,9 +2856,9 @@ body.book-page-aux-index .reader-article {
   }
 
   .book-sidebar-book-title {
-    max-width: 13ch;
-    font-size: 1.5rem;
-    line-height: 1.22;
+    max-width: 24ch;
+    font-size: 0.9375rem;
+    line-height: 1.42;
   }
 
   .reader-sidebar-scroll {
@@ -2864,7 +2893,7 @@ body.book-page-aux-index .reader-article {
 
   .reader-sidebar-section--part .reader-sidebar-section-kicker {
     font-size: 0.75rem;
-    letter-spacing: 0.18em;
+    letter-spacing: normal;
   }
 
   .reader-sidebar-section--part .reader-sidebar-section-title {
@@ -2875,6 +2904,7 @@ body.book-page-aux-index .reader-article {
 
   .reader-sidebar-section-body {
     gap: 0.5rem;
+    padding-bottom: 0.875rem;
   }
 
   .reader-sidebar-section--front-matter .reader-sidebar-section-body,
@@ -2885,9 +2915,9 @@ body.book-page-aux-index .reader-article {
   .reader-sidebar-row {
     grid-template-columns: 2.5rem minmax(0, 1fr);
     gap: 0.75rem;
-    padding: 0.75rem 1rem;
+    padding: 0.75rem 2.5rem 0.75rem 1rem;
     border-radius: 0.75rem;
-    color: var(--brand-blue);
+    color: var(--sidebar-fg);
   }
 
   .reader-sidebar-row-index {
@@ -2901,11 +2931,11 @@ body.book-page-aux-index .reader-article {
   }
 
   .reader-sidebar-row--reference {
-    padding: 0.4rem 0;
+    padding: 0.4rem 2rem 0.4rem 0.9rem;
   }
 
   .reader-sidebar-section--front-matter .reader-sidebar-row--reference {
-    padding: 0.4rem 0 0.4rem calc(1.1875rem + 0.625rem);
+    padding: 0.4rem 2rem 0.4rem calc(1.1875rem + 0.625rem);
   }
 
   .reader-sidebar-row--reference.reader-sidebar-row--with-icon {
@@ -2932,7 +2962,6 @@ body.book-page-aux-index .reader-article {
   }
 
   .reader-sidebar-row--active {
-    padding-inline-end: 2.5rem;
     box-shadow: 0 14px 30px rgba(49, 99, 194, 0.22);
   }
 

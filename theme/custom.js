@@ -386,7 +386,46 @@
     title.className = "reader-sidebar-row-title";
     title.textContent = parsed.title;
     row.appendChild(title);
+    bindSidebarProjectionRowInteraction(row);
     return row;
+  }
+
+  function bindSidebarProjectionRowInteraction(row) {
+    if (!row) {
+      return;
+    }
+
+    if (row.dataset.readerSidebarBound === "true") {
+      return;
+    }
+
+    row.dataset.readerSidebarBound = "true";
+    row.addEventListener("click", function (event) {
+      const sidebar = getSidebarShell();
+      const scrollContainer = sidebar ? sidebar.querySelector(".reader-sidebar-scroll") : null;
+
+      if (
+        !scrollContainer ||
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      ) {
+        return;
+      }
+
+      const rowRect = row.getBoundingClientRect();
+      const containerRect = scrollContainer.getBoundingClientRect();
+
+      try {
+        sessionStorage.setItem("sidebar-scroll-offset", String(rowRect.top - containerRect.top));
+        sessionStorage.setItem("reader-sidebar-scroll-offset", String(rowRect.top - containerRect.top));
+      } catch (error) {
+        // Ignore storage failures and let mdBook fall back to its default centering logic.
+      }
+    });
   }
 
   function buildSidebarProjectionSection(group) {
@@ -431,25 +470,31 @@
     return section;
   }
 
-  function revealActiveSidebarTarget(scrollContainer) {
-    const activeRow = scrollContainer.querySelector(".reader-sidebar-row--active");
+  function readAndClearSidebarProjectionOffset() {
+    try {
+      const storedProjectionOffset = sessionStorage.getItem("reader-sidebar-scroll-offset");
 
-    if (!scrollContainer || !activeRow) {
+      if (storedProjectionOffset === null) {
+        return null;
+      }
+
+      sessionStorage.removeItem("reader-sidebar-scroll-offset");
+
+      const parsedOffset = Number.parseFloat(storedProjectionOffset);
+      return Number.isFinite(parsedOffset) ? parsedOffset : null;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function hydrateSidebarProjectionRows(projection) {
+    if (!projection) {
       return;
     }
 
-    const rowRect = activeRow.getBoundingClientRect();
-    const containerRect = scrollContainer.getBoundingClientRect();
-    const rowTop = rowRect.top - containerRect.top + scrollContainer.scrollTop;
-    const rowBottom = rowTop + rowRect.height;
-    const viewportTop = scrollContainer.scrollTop;
-    const viewportBottom = viewportTop + scrollContainer.clientHeight;
-
-    if (rowTop >= viewportTop && rowBottom <= viewportBottom) {
-      return;
-    }
-
-    scrollContainer.scrollTop = Math.max(0, rowTop - Math.round(scrollContainer.clientHeight * 0.32));
+    Array.from(projection.querySelectorAll(".reader-sidebar-row")).forEach(function (row) {
+      bindSidebarProjectionRowInteraction(row);
+    });
   }
 
   function installSidebarProjection() {
@@ -470,8 +515,9 @@
     }
 
     const projectionSignature = rawChapterList.innerHTML + "|" + getCurrentBookPageKey();
+    const projectionChanged = projection.dataset.projectionSignature !== projectionSignature;
 
-    if (projection.dataset.projectionSignature !== projectionSignature) {
+    if (projectionChanged) {
       const fragment = document.createDocumentFragment();
 
       groups.forEach(function (group) {
@@ -482,10 +528,25 @@
       projection.dataset.projectionSignature = projectionSignature;
     }
 
+    hydrateSidebarProjectionRows(projection);
+
     projection.setAttribute("aria-hidden", "false");
     scrollbox.setAttribute("aria-hidden", "true");
     sidebar.classList.add("book-sidebar-shell--projected");
-    revealActiveSidebarTarget(scrollContainer);
+
+    const activeRow = projection.querySelector(".reader-sidebar-row--active");
+    const storedProjectionOffset = readAndClearSidebarProjectionOffset();
+
+    if (activeRow && storedProjectionOffset !== null) {
+      const rowRect = activeRow.getBoundingClientRect();
+      const containerRect = scrollContainer.getBoundingClientRect();
+      const currentOffset = rowRect.top - containerRect.top;
+      if (Math.abs(currentOffset - storedProjectionOffset) > 0.5) {
+        scrollContainer.scrollTop += currentOffset - storedProjectionOffset;
+      }
+    } else if (projectionChanged && Math.abs(scrollContainer.scrollTop - scrollbox.scrollTop) > 0.5) {
+      scrollContainer.scrollTop = scrollbox.scrollTop;
+    }
   }
 
   function buildOutlineList(outlineAnchors) {
@@ -916,6 +977,8 @@
     const outlineSource = document.querySelector("#mdbook-sidebar mdbook-sidebar-scrollbox .chapter-item > .on-this-page");
 
     if (!outlineBody || !outlineSource) {
+      document.body.classList.remove("book-outline-ready");
+      outlineBody && outlineBody.replaceChildren();
       return;
     }
 
@@ -926,6 +989,8 @@
     const desktopOutlineAnchors = outlineAnchors.filter(isTopLevelOutlineAnchor);
 
     if (!outlineAnchors.length) {
+      document.body.classList.remove("book-outline-ready");
+      outlineBody.replaceChildren();
       return;
     }
 
@@ -937,6 +1002,26 @@
 
     outlineBody.replaceChildren(outlineContainer);
     document.body.classList.add("book-outline-ready");
+  }
+
+  function syncOutlineRailVisibility() {
+    const outline = document.querySelector("#mdbook-outline-scroll");
+    const headingOutline = document.querySelector(".book-outline-body .on-this-page");
+    const figuresSection = document.querySelector(".book-outline-figures");
+    const tablesSection = document.querySelector(".book-outline-tables");
+    const hasVisibleOutlineContent =
+      Boolean(headingOutline) ||
+      Boolean(figuresSection && !figuresSection.hidden) ||
+      Boolean(tablesSection && !tablesSection.hidden);
+
+    if (!outline) {
+      document.body.classList.toggle("book-outline-empty", !hasVisibleOutlineContent);
+      return;
+    }
+
+    outline.hidden = !hasVisibleOutlineContent;
+    outline.setAttribute("aria-hidden", hasVisibleOutlineContent ? "false" : "true");
+    document.body.classList.toggle("book-outline-empty", !hasVisibleOutlineContent);
   }
 
   function syncOutlineActiveState() {
@@ -1057,6 +1142,23 @@
     }
 
     return normalized.slice(0, Math.max(0, maxChars - 1)).trimEnd() + "…";
+  }
+
+  function buildReferenceRailLabel(label, text) {
+    const normalizedLabel = normalizeText(label).replace(/:$/, "");
+    const normalizedText = normalizeText(text).replace(/^[a-z](?:\s+and\s+[a-z])?\s+/i, "");
+    const primaryClause = normalizeText((normalizedText.split(/[.;]/)[0] || normalizedText));
+    const conciseText = truncateReferenceText(primaryClause || normalizedText, 44);
+
+    if (!normalizedLabel) {
+      return conciseText;
+    }
+
+    if (!conciseText) {
+      return normalizedLabel;
+    }
+
+    return normalizedLabel + " " + conciseText;
   }
 
   function formatDisplayDate(dateText) {
@@ -1238,7 +1340,7 @@
 
         return {
           href: "#" + element.id,
-          displayText: truncateReferenceText(fullText, 92),
+          displayText: buildReferenceRailLabel(label, text),
           fullText: fullText,
         };
       })
@@ -1280,7 +1382,7 @@
     });
 
     body.replaceChildren(list);
-    title.textContent = baseTitle + " (" + items.length + ")";
+    title.textContent = baseTitle;
     section.hidden = false;
     section.setAttribute("aria-hidden", "false");
   }
@@ -1598,6 +1700,7 @@
       installChapterPaginationHeightSync();
       moveOutline();
       installOutlineReferenceSections();
+      syncOutlineRailVisibility();
       installOutlineScrollSpy();
       installChapterHero();
       installMobileChapterBar();
@@ -1614,6 +1717,7 @@
         installSidebarProjection();
         moveOutline();
         installOutlineReferenceSections();
+        syncOutlineRailVisibility();
         installOutlineScrollSpy();
         installChapterHero();
         installMobileChapterBar();
