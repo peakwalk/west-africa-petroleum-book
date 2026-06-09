@@ -125,7 +125,14 @@
         </script>
 
         <nav id="mdbook-sidebar" class="sidebar book-sidebar-shell" aria-label="Table of contents">
-            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <div class="book-sidebar-intro">
+                <p class="book-sidebar-kicker">Reader Edition</p>
+                <p class="book-sidebar-book-title">{{ book_title }}</p>
+            </div>
+            <div class="reader-sidebar-scroll">
+                <div class="reader-sidebar-projection" aria-hidden="true"></div>
+                <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            </div>
             <noscript>
                 <iframe class="sidebar-iframe-outer" src="{{ path_to_root }}toc.html"></iframe>
             </noscript>
@@ -136,9 +143,15 @@
                 <div id="mdbook-menu-bar-hover-placeholder"></div>
                 <header id="mdbook-menu-bar" class="menu-bar sticky bordered">
                     <div class="book-toolbar">
-                        <div class="toolbar-left">
+                        <div class="toolbar-sidebar">
                             <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
-                                {{fa "solid" "bars"}}
+                                <span class="toolbar-line-icon toolbar-line-icon-menu" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <line x1="2.5" y1="5" x2="21.5" y2="5"></line>
+                                        <line x1="2.5" y1="12" x2="21.5" y2="12"></line>
+                                        <line x1="2.5" y1="19" x2="21.5" y2="19"></line>
+                                    </svg>
+                                </span>
                             </label>
                             <a class="book-home-link" href="{{ path_to_root }}../" aria-label="Upstream Atlas home">
                                 <img class="book-home-icon book-home-icon-full" src="{{ path_to_root }}../assets/images/upstream-atlas-nav-logo.webp" alt="">
@@ -148,17 +161,27 @@
                         </div>
 
                         {{#if search_enabled}}
-                        <div class="toolbar-search-slot hidden" aria-hidden="true"></div>
+                        <div class="toolbar-main">
+                            <div class="toolbar-search-slot hidden" aria-hidden="true"></div>
+                        </div>
+                        {{else}}
+                        <div class="toolbar-main"></div>
                         {{/if}}
 
-                        <div class="toolbar-right">
+                        <div class="toolbar-actions">
                             {{#if search_enabled}}
                             <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
                                 {{fa "solid" "magnifying-glass"}}
                             </button>
                             {{/if}}
                             <a class="icon-button toolbar-link toolbar-contact-link" href="mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas" title="Contact Us" aria-label="Contact Us">
-                                {{fa "solid" "envelope"}}
+                                <span class="toolbar-line-icon toolbar-line-icon-mail" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" focusable="false">
+                                        <rect x="3.75" y="6.25" width="16.5" height="11.5" rx="1.6"></rect>
+                                        <path d="M4.75 7.25 12 12.75 19.25 7.25"></path>
+                                    </svg>
+                                </span>
+                                <span class="toolbar-link-label">Contact</span>
                             </a>
                         </div>
                     </div>
@@ -210,6 +233,7 @@
                     <main id="mdbook-reader-scroll" class="reader-main">
                         <div class="reader-main-inner">
                             <article class="reader-article">
+                                <div class="reader-chapter-hero-anchor"></div>
                                 <div class="reader-mobile-outline-anchor" hidden aria-hidden="true"></div>
                                 {{{ content }}}
                             </article>
@@ -244,6 +268,14 @@
                         <div class="book-outline-inner">
                             <p class="book-outline-label">On This Page</p>
                             <div class="book-outline-body"></div>
+                            <section class="book-outline-section book-outline-figures" hidden aria-hidden="true">
+                                <p class="book-outline-section-title">Figures</p>
+                                <div class="book-outline-section-body"></div>
+                            </section>
+                            <section class="book-outline-section book-outline-tables" hidden aria-hidden="true">
+                                <p class="book-outline-section-title">Tables</p>
+                                <div class="book-outline-section-body"></div>
+                            </section>
                         </div>
                     </aside>
                 </div>

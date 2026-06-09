@@ -147,9 +147,12 @@ check_exists assets/icons/homepage/icon-audience-research.svg
 check_exists assets/icons/homepage/icon-audience-policy.svg
 check_exists assets/icons/homepage/icon-audience-operators.svg
 check_exists assets/icons/homepage-sprite.svg
+check_exists scripts/build_reader_page_meta.mjs
 check_contains package.json '"build:index": "node scripts/generate-index-page.mjs"'
 check_contains package.json '"build:legal": "node scripts/generate-legal-pages.mjs"'
+check_contains package.json '"build:reader-meta": "node scripts/build_reader_page_meta.mjs"'
 check_contains package.json '"build:site": "rm -rf public && mkdir -p public && npm run build:index && npm run build:legal && npm run build:chapters'
+check_contains package.json '&& npm run build:reader-meta"'
 check_contains .github/workflows/pages.yml 'run: npm run build:site'
 check_not_contains .github/workflows/pages.yml 'cp index.html public/index.html'
 check_contains scripts/generate-index-page.mjs 'renderLandingHead'
@@ -159,6 +162,8 @@ check_contains scripts/generate-chapters-page.mjs 'from "./shared/landing-shell.
 check_contains scripts/generate-chapters-page.mjs 'renderLandingHead'
 check_contains scripts/generate-chapters-page.mjs 'renderLandingHeader'
 check_contains scripts/generate-chapters-page.mjs 'renderLandingFooter'
+check_contains scripts/build_reader_page_meta.mjs '"log", "-1"'
+check_contains scripts/build_reader_page_meta.mjs 'reader-page-meta.json'
 check_contains scripts/shared/landing-shell.mjs 'function renderLandingHead'
 check_contains scripts/shared/landing-shell.mjs 'function renderLandingHeader'
 check_contains scripts/shared/landing-shell.mjs 'function renderLandingFooter'
@@ -408,15 +413,31 @@ check_contains public/book/index.html 'id="mdbook-sidebar"'
 check_contains public/book/index.html 'class="light sidebar-visible"'
 check_contains public/book/index.html 'id="book-progress-fill"'
 check_contains public/book/index.html 'class="book-toolbar"'
-check_contains public/book/index.html 'class="toolbar-left"'
-check_contains public/book/index.html 'class="toolbar-right"'
+check_contains public/book/index.html 'class="toolbar-sidebar"'
+check_contains public/book/index.html 'class="toolbar-main"'
+check_contains public/book/index.html 'class="toolbar-actions"'
+check_not_contains public/book/index.html 'class="toolbar-left"'
+check_not_contains public/book/index.html 'class="toolbar-right"'
+check_contains public/book/index.html 'class="toolbar-line-icon toolbar-line-icon-menu"'
+check_not_contains public/book/index.html 'M0 96C0 78.3 14.3 64 32 64H416'
 check_contains public/book/index.html 'class="icon-button toolbar-link toolbar-contact-link"'
+check_contains public/book/index.html 'class="toolbar-line-icon toolbar-line-icon-mail"'
 check_contains public/book/index.html 'href="mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas"'
 check_contains public/book/index.html 'upstream-atlas-nav-logo.webp'
 check_not_contains public/book/index.html 'upstream-atlas-nav-logo.png'
 check_contains public/book/index.html 'upstream-atlas-icon.png'
 check_contains public/book/index.html 'class="book-home-icon book-home-icon-full"'
 check_contains public/book/index.html 'class="book-home-icon book-home-icon-compact"'
+check_contains public/book/index.html 'class="book-sidebar-intro"'
+check_contains public/book/index.html 'class="reader-sidebar-scroll"'
+check_not_contains public/book/index.html 'class="book-sidebar-utilities"'
+check_not_contains public/book/index.html 'Reference Surfaces'
+check_not_contains public/book/index.html 'class="book-sidebar-download"'
+check_not_contains public/book/index.html 'href="../assets/book/upstream-atlas-reader.pdf"'
+check_contains public/book/index.html 'class="toolbar-link-label"'
+check_contains public/book/index.html 'class="reader-chapter-hero-anchor"'
+check_contains public/book/index.html 'class="book-outline-section book-outline-figures"'
+check_contains public/book/index.html 'class="book-outline-section book-outline-tables"'
 check_contains public/book/index.html 'title="Contact Us"'
 check_not_contains public/book/index.html 'title="Git repository"'
 check_contains public/book/index.html 'class="toolbar-search-slot hidden"'
@@ -437,6 +458,9 @@ check_not_contains public/book/index.html 'title="Suggest an edit"'
 check_not_contains public/book/index.html 'title="Change theme"'
 check_contains public/book/index.html 'class="book-outline-inner"'
 check_contains public/book/index.html 'class="chapter-nav-card chapter-nav-next"'
+check_exists public/book/reader-page-meta.json
+check_contains public/book/reader-page-meta.json 'chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html'
+check_order public/book/index.html 'css/general-' 'theme/custom-'
 check_not_contains public/book/toc.html 'href="index.html" target="_parent">Home</a>'
 check_not_contains public/book/print.html 'title="Git repository"'
 check_not_contains public/book/404.html 'title="Git repository"'
@@ -445,6 +469,8 @@ check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-
 check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'reader-main'
 check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'reader-outline'
 check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'reader-article'
+check_not_contains public/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'class="book-sidebar-download"'
+check_not_contains public/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'href="../../assets/book/upstream-atlas-reader.pdf"'
 check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'figure-024.webp'
 check_not_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'figure-024.png'
 check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'figure-030.svg'
@@ -542,6 +568,11 @@ check_contains public/book/chapters/cover.html 'Start reading'
 check_contains public/book/chapters/cover.html 'href="../chapters/foreword.html"'
 check_contains public/book/chapters/cover.html 'figure-001.webp'
 check_not_contains public/book/chapters/cover.html 'figure-001.png'
+check_contains public/book/index.html 'class="book-cover-entry-link"'
+check_contains public/book/index.html 'src="images/figure-001.webp"'
+check_contains public/book/index.html 'href="chapters/foreword.html"'
+check_not_contains public/book/index.html 'src="../images/figure-001.webp"'
+check_not_contains public/book/index.html 'href="../chapters/foreword.html"'
 check_contains public/book/chapters/cover.html 'function applyInitialBookPageVariant()'
 check_contains public/book/chapters/cover.html 'document.body.classList.add("book-page-cover")'
 check_order public/book/chapters/cover.html 'document.body.classList.add("book-page-cover")' 'id="mdbook-content" class="content reader-layout"'
@@ -659,6 +690,8 @@ check_not_contains public/book/chapters/chapter-01-value-chain-of-the-hydrocarbo
 check_contains public/book/index.html 'upstream-atlas-favicon.png?v=2'
 check_not_contains public/book/index.html 'fonts.googleapis.com'
 check_not_contains public/book/index.html 'fonts.gstatic.com'
+
+# Reader shell contract
 check_contains public/book/index.html 'rel="preload" href="reader-fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin'
 check_contains public/book/index.html 'rel="preload" href="reader-fonts/literata-var.woff2" as="font" type="font/woff2" crossorigin'
 check_contains public/book/chapters/cover.html 'rel="preload" href="../reader-fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin'
@@ -686,13 +719,60 @@ check_contains theme/custom.css '.reader-article p,'
 check_contains theme/custom.css '.reader-article li {'
 check_contains theme/custom.css 'color: var(--ink);'
 check_contains theme/custom.css '--reader-left-offset: 0px;'
+check_contains theme/custom.css '--toolbar-search-width: 420px;'
+check_contains theme/custom.css '--toolbar-contact-width: 106px;'
+check_contains theme/custom.css '--toolbar-utility-gap: 24px;'
 check_contains theme/custom.css '.book-toolbar {'
+check_contains theme/custom.css 'display: grid;'
+check_contains theme/custom.css 'grid-template-columns: var(--sidebar-width) minmax(0, 1fr) auto;'
+check_contains theme/custom.css 'padding: 0;'
+check_contains theme/custom.css '.toolbar-sidebar,'
+check_contains theme/custom.css '.toolbar-main,'
+check_contains theme/custom.css '.toolbar-actions {'
+check_contains theme/custom.css '.toolbar-sidebar {'
+check_contains theme/custom.css 'width: var(--sidebar-width);'
+check_contains theme/custom.css 'justify-content: flex-start;'
+check_contains theme/custom.css '.toolbar-main {'
+check_contains theme/custom.css 'position: static;'
+check_contains theme/custom.css 'padding-inline: 1.5rem 1rem;'
+check_contains theme/custom.css 'pointer-events: auto;'
+check_contains theme/custom.css '.toolbar-main .toolbar-search-slot {'
+check_contains theme/custom.css 'width: min(100%, var(--toolbar-search-width));'
+check_contains theme/custom.css 'max-width: var(--toolbar-search-width);'
+check_contains theme/custom.css 'margin-inline: auto;'
+check_contains theme/custom.css 'pointer-events: auto;'
+check_contains theme/custom.css '.toolbar-actions {'
+check_contains theme/custom.css 'justify-content: flex-end;'
+check_contains theme/custom.css 'min-width: calc(var(--toolbar-contact-width) + 1rem);'
+check_contains theme/custom.css 'padding-inline-end: 24px;'
 check_contains theme/custom.css '.toolbar-contact-link {'
-check_contains theme/custom.css 'min-height: 56px;'
-check_contains theme/custom.css 'padding: 0 16px;'
+check_contains theme/custom.css 'width: auto !important;'
+check_contains theme/custom.css 'min-height: 36px;'
+check_contains theme/custom.css '.toolbar-actions .toolbar-contact-link {'
+check_contains theme/custom.css '.toolbar-line-icon {'
+check_contains theme/custom.css 'width: 20px;'
+check_contains theme/custom.css 'height: 20px;'
+check_contains theme/custom.css '.toolbar-line-icon svg {'
+check_contains theme/custom.css 'stroke-width: 1.8;'
+check_contains theme/custom.css 'stroke-linecap: round;'
+check_contains theme/custom.css 'stroke-linejoin: round;'
+check_contains theme/custom.css '.toolbar-contact-link .toolbar-line-icon {'
+check_contains theme/custom.css 'transform: translateY(0.25px);'
+check_contains theme/custom.css '.toolbar-link-label {'
+check_contains theme/custom.css 'font-size: 0.875rem;'
 check_contains theme/custom.css '.book-home-icon {'
+check_contains theme/custom.css 'gap: 1rem;'
 check_contains theme/custom.css '.book-home-icon-full {'
 check_contains theme/custom.css 'width: 138px;'
+check_contains theme/custom.css '#mdbook-menu-bar .book-toolbar #mdbook-sidebar-toggle {'
+check_contains theme/custom.css 'width: 28px;'
+check_contains theme/custom.css 'height: 28px;'
+check_contains theme/custom.css 'flex: 0 0 28px;'
+check_contains theme/custom.css '#mdbook-menu-bar .book-toolbar #mdbook-sidebar-toggle .toolbar-line-icon-menu {'
+check_contains theme/custom.css 'width: 16px;'
+check_contains theme/custom.css 'height: 16px;'
+check_contains theme/custom.css '#mdbook-menu-bar .book-toolbar #mdbook-sidebar-toggle .toolbar-line-icon-menu svg {'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const selector="#mdbook-menu-bar .book-toolbar #mdbook-sidebar-toggle .toolbar-line-icon-menu svg {";const start=css.indexOf(selector);const end=css.indexOf("}",start);if(start===-1||end===-1){console.error(`Expected rule block for ${selector}`);process.exit(1);}const block=css.slice(start,end+1);if(!block.includes("stroke-width: 2;")){console.error("Expected toggle menu icon stroke-width: 2;");process.exit(1);}'
 check_contains theme/custom.css '.book-home-icon-compact {'
 check_contains theme/custom.css 'width: 24px;'
 check_contains theme/custom.css 'height: 24px;'
@@ -701,24 +781,23 @@ check_not_contains theme/custom.css 'body.book-page-aux-index .chapter-paginatio
 check_contains theme/custom.css '@media (max-width: 900px) {'
 check_not_contains theme/custom.css '.book-home-label {'
 check_contains theme/custom.css '.toolbar-search-slot {'
-check_contains theme/custom.css 'width: 17rem;'
-check_contains theme/custom.css 'max-width: calc(100vw - 12rem);'
+check_contains theme/custom.css '.toolbar-search-slot.hidden {'
+check_contains theme/custom.css 'width: min(100%, var(--toolbar-search-width));'
+check_contains theme/custom.css 'max-width: var(--toolbar-search-width);'
 check_contains theme/custom.css '.toolbar-search-slot #mdbook-searchbar-outer {'
 check_contains theme/custom.css '#mdbook-search-overlay-root .searchresults-outer {'
 check_contains theme/custom.css '.toolbar-search-slot #mdbook-searchbar {'
+check_contains theme/custom.css '#mdbook-searchbar::placeholder {'
+check_contains theme/custom.css '.toolbar-actions .toolbar-contact-link:hover,'
 check_contains theme/custom.css 'position: fixed;'
-check_contains theme/custom.css 'inset-inline-start: var(--reader-left-offset);'
-check_contains theme/custom.css 'inset-inline-end: var(--outline-width);'
+check_contains theme/custom.css 'inset-inline-start: auto;'
+check_contains theme/custom.css 'inset-inline-end: calc(16px + var(--toolbar-contact-width) + var(--toolbar-utility-gap));'
+check_contains theme/custom.css 'width: min(100vw - 2rem, var(--toolbar-search-width));'
 check_contains theme/custom.css 'top: calc(var(--menu-bar-height) + 12px);'
-check_contains theme/custom.css 'max-width: none;'
+check_contains theme/custom.css 'max-width: calc(100vw - 2rem);'
 check_contains theme/custom.css 'max-height: calc(100dvh - var(--menu-bar-height) - 2rem);'
-check_contains theme/custom.css '@media (min-width: 1281px) {'
-check_contains theme/custom.css 'inset-inline-start: 50%;'
-check_contains theme/custom.css 'transform: translateX(-50%);'
-check_contains theme/custom.css 'width: 420px;'
-check_contains theme/custom.css 'max-width: calc(100vw - 28rem);'
 check_contains theme/custom.css '@media (max-width: 1280px) {'
-check_contains theme/custom.css 'inset-inline-end: 0;'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const searchbar=block(".toolbar-search-slot #mdbook-searchbar {");for(const expected of ["background: rgba(255, 255, 255, 0.94);","border: 1px solid rgba(17, 35, 63, 0.08);","box-shadow: 0 10px 22px rgba(15, 31, 58, 0.08);","color: var(--ink);"]){if(!searchbar.includes(expected)){console.error(`Expected .toolbar-search-slot #mdbook-searchbar to include ${expected}`);process.exit(1);}}const placeholder=block("#mdbook-searchbar::placeholder {");for(const expected of ["color: rgba(11, 31, 51, 0.52);","opacity: 1;"]){if(!placeholder.includes(expected)){console.error(`Expected #mdbook-searchbar::placeholder to include ${expected}`);process.exit(1);}}const contact=block(".toolbar-actions .toolbar-contact-link {");for(const expected of ["color: rgba(11, 31, 51, 0.72);"]){if(!contact.includes(expected)){console.error(`Expected .toolbar-actions .toolbar-contact-link to include ${expected}`);process.exit(1);}}const contactHover=block(".toolbar-actions .toolbar-contact-link:hover,");for(const expected of ["color: var(--brand-blue-deep);","background: rgba(49, 99, 194, 0.06);"]){if(!contactHover.includes(expected)){console.error(`Expected .toolbar-actions .toolbar-contact-link:hover, to include ${expected}`);process.exit(1);}}'
 check_contains theme/custom.css '#mdbook-menu-bar .book-toolbar .icon-button,'
 check_contains theme/custom.css '#mdbook-menu-bar .book-toolbar .toolbar-link {'
 check_contains theme/custom.css 'display: inline-flex;'
@@ -738,10 +817,27 @@ check_contains theme/custom.css '.reader-layout {'
 check_contains theme/custom.css '--outline-width: 256px;'
 check_contains theme/custom.css 'grid-template-columns: minmax(0, 1fr) var(--outline-width);'
 check_contains theme/custom.css '.book-sidebar-shell {'
+check_contains theme/custom.css '.book-sidebar-intro {'
+check_not_contains theme/custom.css '.book-sidebar-utility-nav {'
+check_not_contains theme/custom.css '.book-sidebar-utility-link {'
+check_contains theme/custom.css '--sidebar-intro-height:'
+check_not_contains theme/custom.css '--sidebar-utilities-height:'
+check_contains theme/custom.css '.reader-sidebar-scroll {'
+check_contains theme/custom.css '.reader-sidebar-projection {'
+check_contains theme/custom.css '.reader-sidebar-section {'
+check_contains theme/custom.css '.reader-sidebar-section-header {'
+check_contains theme/custom.css '.reader-sidebar-section-body {'
+check_contains theme/custom.css '.reader-sidebar-row {'
+check_contains theme/custom.css '.reader-sidebar-row-index {'
+check_contains theme/custom.css '.reader-sidebar-row-title {'
+check_contains theme/custom.css '.reader-sidebar-row--active {'
+check_contains theme/custom.css '.reader-sidebar-section--active::before {'
+check_not_contains theme/custom.css '.book-sidebar-utility-link-icon {'
+check_not_contains theme/custom.css '.book-sidebar-download {'
 check_contains theme/custom.css '--sidebar-width: 256px;'
 check_contains theme/custom.css 'top: var(--menu-bar-height);'
 check_contains theme/custom.css '@media (min-width: 1024px) {'
-check_contains theme/custom.css '--sidebar-width: 288px;'
+check_contains theme/custom.css '--sidebar-width: 320px;'
 check_contains theme/custom.css '--content-max-width: 896px;'
 check_contains theme/index.hbs "shim.id = 'mdbook-sidebar-resize-handle';"
 check_contains theme/index.hbs "shim.style.display = 'none';"
@@ -750,14 +846,336 @@ check_contains theme/index.hbs '<ul id="mdbook-theme-list" class="theme-popup" a
 check_contains theme/index.hbs '<div id="mdbook-search-overlay-root" aria-hidden="true"></div>'
 check_contains theme/index.hbs '<div id="mdbook-search-wrapper" class="hidden">'
 check_contains theme/index.hbs '<div class="toolbar-search-slot hidden" aria-hidden="true"></div>'
+check_contains theme/index.hbs 'class="book-sidebar-intro"'
+check_contains theme/index.hbs 'class="reader-sidebar-scroll"'
+check_contains theme/index.hbs 'class="reader-sidebar-projection"'
+check_not_contains theme/index.hbs 'class="book-sidebar-utilities"'
+check_not_contains theme/index.hbs 'class="book-sidebar-utility-link-icon"'
+check_not_contains theme/index.hbs 'Reference Surfaces'
+check_not_contains theme/index.hbs 'class="book-sidebar-download"'
+check_contains theme/index.hbs 'class="toolbar-link-label"'
 check_contains theme/index.hbs 'class="reader-mobile-chapter-bar hidden"'
 check_contains theme/index.hbs 'class="reader-mobile-chapter-toggle"'
+check_contains theme/index.hbs 'class="reader-chapter-hero-anchor"'
 check_contains theme/index.hbs 'class="reader-mobile-outline-anchor"'
+check_contains theme/index.hbs 'class="book-outline-section book-outline-figures"'
+check_contains theme/index.hbs 'class="book-outline-section book-outline-tables"'
 check_contains theme/index.hbs 'function applyInitialBookPageVariant()'
+node -e 'const fs=require("fs");const text=fs.readFileSync("scripts/test-site-render.sh","utf8");const legacy=["/book ","62.5%"," root contract"].join("");if(text.includes(legacy)){console.error("Expected scripts/test-site-render.sh to stop referring to the legacy /book root contract in test messages");process.exit(1);}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");if(!/:root\s*\{[^}]*font-size:\s*100%;/s.test(css)){console.error("Expected theme/custom.css to declare the repo-owned /book root font-size: 100%");process.exit(1);}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const rootMatch=css.match(/:root\s*\{[\s\S]*?\n\}/);if(!rootMatch){console.error("Expected :root block in theme/custom.css");process.exit(1);}for(const expected of ["--reader-ink: #0b1f33;","--reader-muted: #526171;","--reader-brand: #3163c2;","--reader-brand-deep: #264d97;","--reader-sidebar-width: 320px;","--reader-sidebar-width-base: 256px;","--reader-outline-width: 256px;","--reader-content-max: 896px;","--reader-logo-width-desktop: 138px;","--reader-logo-width-narrow: 216px;","--reader-figure-radius: 20px;","--reader-table-radius: 16px;","--reader-formula-radius: 6px;"]){if(!rootMatch[0].includes(expected)){console.error(`Expected :root token mapping for ${expected}`);process.exit(1);}}'
+node <<'NODE'
+const fs = require("fs");
+const css = fs.readFileSync("theme/custom.css", "utf8");
+
+function block(selector) {
+  const start = css.indexOf(selector);
+  if (start === -1) {
+    console.error(`Expected selector block: ${selector}`);
+    process.exit(1);
+  }
+
+  const end = css.indexOf("}", start);
+  if (end === -1) {
+    console.error(`Expected closing brace for selector block: ${selector}`);
+    process.exit(1);
+  }
+
+  return css.slice(start, end + 1);
+}
+
+const expectations = [
+  [".book-sidebar-intro {", ["padding: 1.55rem 1.75rem 1.05rem;", "border-bottom: 0;"]],
+  [".book-sidebar-intro::after {", ["inset-inline: 0;", "border-bottom: 1px solid rgba(11, 31, 51, 0.08);"]],
+  [".book-sidebar-kicker {", ["color: var(--brand-gold);", "font-size: 0.75rem;", "letter-spacing: 0.12em;"]],
+  [".book-sidebar-book-title {", ["font-family: var(--reader-sans);", "font-size: 1rem;", "line-height: 1.28;"]],
+  [".reader-sidebar-scroll {", ["padding: var(--sidebar-scroll-padding-block) 1rem 1rem;", "overflow-y: auto;"]],
+  [".reader-sidebar-section {", ["position: relative;", "gap: 0.4rem;", "padding-top: 1.1rem;", "padding-inline: 0.75rem;", "border-top: 0;"]],
+  [".reader-sidebar-section::before {", ["inset-inline: 0;", "border-top: 1px solid rgba(11, 31, 51, 0.08);"]],
+  [".reader-sidebar-section:first-child::before {", ["content: none;"]],
+  [".reader-sidebar-section--active::before {", ["border-top-color: rgba(49, 99, 194, 0.2);"]],
+  [".reader-sidebar-section-header {", ["gap: 0.2rem;"]],
+  [".reader-sidebar-section-kicker {", ["font-size: 0.75rem;", "letter-spacing: 0.12em;"]],
+  [".reader-sidebar-section-title {", ["font-size: 0.875rem;", "line-height: 1.35;"]],
+  [".reader-sidebar-section-icon {", ["width: 1.1875rem;", "height: 1.1875rem;", "color: rgba(82, 97, 113, 0.88);"]],
+  [".reader-sidebar-section--part .reader-sidebar-section-header {", ["display: flex;", "flex-wrap: wrap;", "column-gap: 0.5rem;"]],
+  [".reader-sidebar-section--part .reader-sidebar-section-kicker {", ["color: var(--brand-gold);", "font-size: 0.75rem;", "letter-spacing: 0.16em;"]],
+  [".reader-sidebar-section--part .reader-sidebar-section-title {", ["font-family: var(--reader-sans);", "font-size: 0.875rem;", "line-height: 1.35;"]],
+  [".reader-sidebar-section--front-matter .reader-sidebar-section-header {", ["grid-template-columns: auto minmax(0, 1fr);", "align-items: center;", "column-gap: 0.625rem;"]],
+  [".reader-sidebar-section--front-matter .reader-sidebar-section-title,", ["color: rgba(11, 31, 51, 0.68);", "font-family: var(--reader-sans);", "font-weight: 650;", "text-transform: none;"]],
+  [".reader-sidebar-section--front-matter .reader-sidebar-section-body,", ["gap: 0.2rem;"]],
+  [".reader-sidebar-section-body {", ["gap: 0.2rem;"]],
+  [".reader-sidebar-row {", ["grid-template-columns: 2.25rem minmax(0, 1fr);", "gap: 0.625rem;", "padding: 0.625rem 0.75rem;", "border-radius: 0.75rem;"]],
+  [".reader-sidebar-row-index {", ["font-size: 0.6875rem;", "letter-spacing: 0.14em;"]],
+  [".reader-sidebar-row-title {", ["font-family: var(--reader-sans);", "font-size: 0.8125rem;", "line-height: 1.45;"]],
+  [".reader-sidebar-row--reference {", ["padding: 0.5rem 0;", "border-radius: 0.5rem;"]],
+  [".reader-sidebar-section--front-matter .reader-sidebar-row--reference {", ["padding: 0.5rem 0 0.5rem calc(1.1875rem + 0.625rem);"]],
+  [".reader-sidebar-row--reference.reader-sidebar-row--with-icon {", ["grid-template-columns: 1.375rem minmax(0, 1fr);", "gap: 0.5rem;"]],
+  [".reader-sidebar-row--reference .reader-sidebar-row-title {", ["font-size: 0.8125rem;", "line-height: 1.45;"]],
+  [".reader-sidebar-row-icon {", ["width: 1.375rem;", "height: 1.375rem;", "border-radius: 999px;"]],
+  [".reader-sidebar-row--reference.reader-sidebar-row--active {", ["padding: 0.5rem 1.25rem 0.5rem 0.75rem;"]],
+  [".reader-sidebar-section--front-matter .reader-sidebar-row--reference.reader-sidebar-row--active {", ["padding: 0.5rem 1.25rem 0.5rem calc(1.1875rem + 0.625rem);"]],
+  [".reader-sidebar-row--active {", ["padding-inline-end: 1.75rem;", "box-shadow: 0 8px 18px rgba(49, 99, 194, 0.14);"]],
+  [".reader-sidebar-row--active:link,", ["color: #ffffff !important;", "-webkit-text-fill-color: #ffffff;"]],
+  [".reader-sidebar-row--active .reader-sidebar-row-index,", ["color: #ffffff !important;", "-webkit-text-fill-color: #ffffff;"]],
+  [".reader-sidebar-row--active .reader-sidebar-row-icon {", ["color: #ffffff;", "background: rgba(255, 255, 255, 0.14);"]],
+  [".reader-sidebar-row--active::after {", ["inset-inline-end: 0.75rem;", "width: 0.4rem;", "height: 0.4rem;"]],
+  [".book-outline-label {", ["font-size: 11px;", "letter-spacing: 0.16em;"]],
+  [".book-outline-section-title {", ["font-size: 0.6875rem;", "letter-spacing: 0.16em;"]],
+  [".book-outline-link--reference {", ["font-size: 0.8125rem;", "-webkit-line-clamp: 2;"]],
+  [".book-outline-link--reference:visited {", ["font-size: 0.8125rem;", "line-height: 1.55;"]],
+  ["@media (min-width: 1024px) {", ["--sidebar-width: 320px;"]],
+];
+
+for (const [selector, declarations] of expectations) {
+  const rule = block(selector);
+  for (const declaration of declarations) {
+    if (!rule.includes(declaration)) {
+      console.error(`Expected ${selector} to include ${declaration}`);
+      process.exit(1);
+    }
+  }
+}
+NODE
+node <<'NODE'
+const fs = require("fs");
+const css = fs.readFileSync("theme/custom.css", "utf8");
+
+function block(selector) {
+  const start = css.indexOf(selector);
+  if (start === -1) {
+    console.error(`Expected selector block: ${selector}`);
+    process.exit(1);
+  }
+
+  const end = css.indexOf("}", start);
+  if (end === -1) {
+    console.error(`Expected closing brace for selector block: ${selector}`);
+    process.exit(1);
+  }
+
+  return css.slice(start, end + 1);
+}
+
+const shell = block(".book-sidebar-shell {");
+const intro = block(".book-sidebar-intro {");
+const resizeHandle = block(".book-sidebar-shell .sidebar-resize-handle {");
+
+for (const [name, rule, required] of [
+  [
+    ".book-sidebar-shell {",
+    shell,
+    [
+      "background: linear-gradient(180deg, rgba(252, 253, 255, 0.985) 0%, rgba(248, 250, 252, 0.96) 100%);",
+      "box-shadow:",
+      "inset -1px 0 0 rgba(15, 23, 42, 0.035);",
+    ],
+  ],
+  [
+    ".book-sidebar-intro {",
+    intro,
+    [
+      "background: linear-gradient(180deg, rgba(255, 255, 255, 0.995) 0%, rgba(249, 250, 252, 0.98) 100%);",
+    ],
+  ],
+  [
+    ".book-sidebar-shell .sidebar-resize-handle {",
+    resizeHandle,
+    [
+      "background-color: rgba(255, 255, 255, 0.96);",
+    ],
+  ],
+]) {
+  for (const expected of required) {
+    if (!rule.includes(expected)) {
+      console.error(`Expected ${name} to include ${expected}`);
+      process.exit(1);
+    }
+  }
+}
+
+for (const [name, rule] of [
+  [".book-sidebar-shell {", shell],
+  [".book-sidebar-intro {", intro],
+]) {
+  if (rule.includes("background: var(--soft-blue);")) {
+    console.error(`Expected ${name} to stop using the soft-blue solid sidebar surface`);
+    process.exit(1);
+  }
+}
+NODE
+node <<'NODE'
+const fs = require("fs");
+const css = fs.readFileSync("theme/custom.css", "utf8");
+
+function slice(startMarker, endMarker) {
+  const start = css.indexOf(startMarker);
+  const end = css.indexOf(endMarker, start);
+
+  if (start === -1 || end === -1) {
+    console.error(`Expected CSS slice between ${startMarker} and ${endMarker}`);
+    process.exit(1);
+  }
+
+  return css.slice(start, end);
+}
+
+const mobileDrawer = slice("@media (max-width: 1080px) {", "@media (max-width: 760px) {");
+const narrowHeader = slice("@media (max-width: 900px) {", "@media (min-width: 768px) {");
+
+for (const expected of [
+  "--sidebar-width: min(100vw, 40rem);",
+  "#mdbook-sidebar-toggle-anchor:checked ~ #mdbook-sidebar {",
+  "width: 100vw;",
+  "max-width: 100vw;",
+  "z-index: 24;",
+  "background: linear-gradient(180deg, rgba(255, 255, 255, 0.998) 0%, rgba(248, 250, 252, 1) 100%);",
+  "box-shadow: 18px 0 42px rgba(15, 23, 42, 0.16);",
+  "#mdbook-sidebar-toggle-anchor:checked ~ #mdbook-page-wrapper {",
+  "margin-left: 0;",
+  "margin-inline-start: 0;",
+  ".book-sidebar-intro {",
+  "padding: 1.5rem 1.75rem 1rem;",
+  ".book-sidebar-kicker {",
+  "font-size: 0.75rem;",
+  ".book-sidebar-book-title {",
+  "font-size: 1.5rem;",
+  "line-height: 1.22;",
+  "max-width: 13ch;",
+  ".reader-sidebar-scroll {",
+  "padding: 1rem 1.5rem 1.5rem;",
+  ".reader-sidebar-section {",
+  "gap: 0.75rem;",
+  "padding-top: 1rem;",
+  "padding-inline: 0.25rem;",
+  "border-top: 0;",
+  ".reader-sidebar-section::before {",
+  "inset-inline: 0;",
+  ".reader-sidebar-section-header {",
+  "gap: 0.25rem;",
+  ".reader-sidebar-section--front-matter .reader-sidebar-section-header {",
+  "column-gap: 0.625rem;",
+  ".reader-sidebar-section--front-matter .reader-sidebar-section-title,",
+  "font-size: 0.875rem;",
+  "text-transform: none;",
+  ".reader-sidebar-section--front-matter .reader-sidebar-section-body,",
+  ".reader-sidebar-section--part .reader-sidebar-section-kicker {",
+  "font-size: 0.75rem;",
+  "letter-spacing: 0.18em;",
+  ".reader-sidebar-section--part .reader-sidebar-section-title {",
+  "font-size: 0.9375rem;",
+  "line-height: 1.35;",
+  "max-width: 18ch;",
+  ".reader-sidebar-section-body {",
+  "gap: 0.5rem;",
+  ".reader-sidebar-section--front-matter .reader-sidebar-section-body,",
+  "gap: 0.25rem;",
+  ".reader-sidebar-row {",
+  "grid-template-columns: 2.5rem minmax(0, 1fr);",
+  "gap: 0.75rem;",
+  "padding: 0.75rem 1rem;",
+  "border-radius: 0.75rem;",
+  "color: var(--brand-blue);",
+  ".reader-sidebar-row-index {",
+  "font-size: 0.75rem;",
+  ".reader-sidebar-row-title {",
+  "font-size: 1rem;",
+  "line-height: 1.35;",
+  "font-weight: 600;",
+  ".reader-sidebar-row--reference {",
+  "padding: 0.4rem 0;",
+  ".reader-sidebar-section--front-matter .reader-sidebar-row--reference {",
+  "padding: 0.4rem 0 0.4rem calc(1.1875rem + 0.625rem);",
+  ".reader-sidebar-row--reference.reader-sidebar-row--with-icon {",
+  "grid-template-columns: 1.75rem minmax(0, 1fr);",
+  "gap: 0.75rem;",
+  ".reader-sidebar-row--reference .reader-sidebar-row-title {",
+  "font-size: 0.875rem;",
+  "font-weight: 600;",
+  ".reader-sidebar-row-icon {",
+  "width: 1.75rem;",
+  "height: 1.75rem;",
+  ".reader-sidebar-row--reference.reader-sidebar-row--active {",
+  "padding: 0.4rem 2rem 0.4rem 0.9rem;",
+  ".reader-sidebar-section--front-matter .reader-sidebar-row--reference.reader-sidebar-row--active {",
+  "padding: 0.4rem 2rem 0.4rem calc(1.1875rem + 0.625rem);",
+  ".reader-sidebar-row--active {",
+  "padding-inline-end: 2.5rem;",
+  "box-shadow: 0 14px 30px rgba(49, 99, 194, 0.22);",
+  ".reader-sidebar-row--active::after {",
+  "inset-inline-end: 1rem;",
+  "width: 0.5rem;",
+  "height: 0.5rem;",
+]) {
+  if (!mobileDrawer.includes(expected)) {
+    console.error(`Expected mobile drawer CSS to include ${expected}`);
+    process.exit(1);
+  }
+}
+
+for (const expected of [
+  ".book-toolbar {",
+  "grid-template-columns: auto 1fr;",
+  ".toolbar-main,",
+  ".toolbar-actions {",
+  "display: none;",
+  ".toolbar-sidebar {",
+  "gap: 1rem;",
+  "padding-inline-end: 0;",
+  ".book-home-icon-full {",
+  "display: block;",
+  "width: 216px;",
+  ".book-home-icon-compact {",
+  "display: none;",
+]) {
+  if (!narrowHeader.includes(expected)) {
+    console.error(`Expected narrow-header CSS to include ${expected}`);
+    process.exit(1);
+  }
+}
+NODE
+
+# Reader projection contract
 check_contains theme/custom.css '.book-sidebar-shell .chapter li a {'
-check_contains theme/custom.css 'font-size: 14px;'
 check_contains theme/custom.css '.book-sidebar-shell .chapter li.part-title {'
-check_contains theme/custom.css 'font-size: 12px;'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const chapterLink=block(".book-sidebar-shell .chapter li a {");for(const expected of ["font-size: 0.875rem;","line-height: 1.4286;"]){if(!chapterLink.includes(expected)){console.error(`Expected .book-sidebar-shell .chapter li a to include ${expected}`);process.exit(1);}}if(chapterLink.includes("font-size: 14px;")||chapterLink.includes("line-height: 20px;")||chapterLink.includes("font-size: 1.4rem;")||chapterLink.includes("line-height: 2rem;")){console.error("Expected .book-sidebar-shell .chapter li a to use repo-owned typography calibrated for the explicit /book root font contract");process.exit(1);}const partTitle=block(".book-sidebar-shell .chapter li.part-title {");if(!partTitle.includes("font-size: 0.75rem;")){console.error("Expected .book-sidebar-shell .chapter li.part-title to include font-size: 0.75rem;");process.exit(1);}if(partTitle.includes("font-size: 12px;")||partTitle.includes("font-size: 1.2rem;")){console.error("Expected .book-sidebar-shell .chapter li.part-title to stop using legacy sizing under the explicit /book root font contract");process.exit(1);}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const start=css.indexOf(".reader-sidebar-section--front-matter .reader-sidebar-section-body,");if(start===-1){console.error("Expected Front Matter body selector to remain present in theme/custom.css");process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error("Expected closing brace for Front Matter body selector block");process.exit(1);}const frontMatterBody=css.slice(start,end+1);if(frontMatterBody.includes("padding-inline-start:")){console.error("Expected Front Matter body container position to remain unchanged; use row padding instead of container padding.");process.exit(1);}'
+check_contains theme/custom.js 'new ResizeObserver'
+check_contains theme/custom.js '--sidebar-intro-height'
+check_contains theme/custom.js 'reader-sidebar-scroll'
+check_not_contains theme/custom.js '--sidebar-utilities-height'
+check_contains theme/custom.js 'reader-sidebar-projection'
+check_contains theme/custom.js 'reader-sidebar-section'
+check_contains theme/custom.js 'reader-sidebar-section-header'
+check_contains theme/custom.js 'reader-sidebar-section-icon'
+check_contains theme/custom.js 'reader-sidebar-section-body'
+check_contains theme/custom.js 'reader-sidebar-row'
+check_contains theme/custom.js 'reader-sidebar-row-index'
+check_contains theme/custom.js 'reader-sidebar-row-title'
+check_contains theme/custom.js 'reader-sidebar-row--with-icon'
+check_contains theme/custom.js 'reader-sidebar-row-icon'
+check_contains theme/custom.js 'reader-sidebar-row--active'
+check_contains theme/custom.js 'reader-sidebar-section--active'
+check_contains theme/custom.js 'function buildSidebarSectionIcon('
+check_contains theme/custom.js '"front-matter"'
+check_contains theme/custom.js 'M12 5.75v13.4'
+check_not_contains theme/custom.js 'book-sidebar-utility-link--active'
+check_contains theme/custom.js 'function getSidebarReferenceIcon('
+check_contains theme/custom.js 'function buildSidebarReferenceIcon('
+check_contains theme/custom.js 'function installSidebarProjection('
+check_contains theme/custom.js 'function collectReferenceCards('
+check_contains theme/custom.js 'function syncOutlineActiveState('
+check_contains theme/custom.js 'function installOutlineScrollSpy('
+check_contains theme/custom.js 'const outlineSource = document.querySelector("#mdbook-sidebar mdbook-sidebar-scrollbox .chapter-item > .on-this-page");'
+check_contains theme/custom.js 'const outlineAnchors = Array.from(outlineSource.querySelectorAll("a.header-in-summary"));'
+check_contains theme/custom.js 'function isTopLevelOutlineAnchor('
+check_contains theme/custom.js 'const desktopOutlineAnchors = outlineAnchors.filter(isTopLevelOutlineAnchor);'
+check_contains theme/custom.js 'return targetHeadingElement.tagName.toLowerCase() === "h2";'
+check_not_contains theme/custom.js 'const outlineAnchors = Array.from(outlineBody.querySelectorAll(".on-this-page a.header-in-summary"));'
+check_not_contains theme/custom.js 'const outlineAnchors = Array.from(document.querySelectorAll(".on-this-page a.header-in-summary"));'
+check_contains theme/custom.js 'general-conclusion.html'
+check_contains theme/custom.js 'glossary.html'
+check_contains theme/custom.js 'bibliographical-references.html'
 check_contains theme/custom.css '.reader-outline {'
 check_contains theme/custom.css 'overflow-y: auto;'
 check_contains theme/custom.css '#mdbook-page-wrapper {'
@@ -782,7 +1200,7 @@ check_contains theme/custom.css '--brand-gold: #d9b24a;'
 check_contains theme/custom.css '.reader-main-inner {'
 check_contains theme/custom.css 'min-height: fit-content;'
 check_contains theme/custom.css 'height: auto;'
-check_contains theme/custom.css 'background: var(--soft-blue);'
+check_contains theme/custom.css 'background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(250, 251, 253, 0.96) 100%);'
 check_contains theme/custom.css 'border-inline-start: 1px solid var(--book-rail-border);'
 check_contains theme/custom.css '.book-progress {'
 check_contains theme/custom.css 'margin-inline-start: var(--reader-left-offset);'
@@ -791,6 +1209,8 @@ check_contains theme/custom.css 'transition: width 180ms ease, margin-inline-sta
 check_contains theme/custom.css '#mdbook-sidebar-toggle-anchor:checked ~ #mdbook-page-wrapper {'
 check_contains theme/custom.css '--reader-left-offset: var(--sidebar-width);'
 check_contains theme/custom.css 'margin-inline-start: 0;'
+check_not_contains theme/custom.css '--toolbar-sidebar-column:'
+check_not_contains theme/custom.css '--toolbar-actions-column:'
 check_not_contains theme/custom.css 'width: min(100%, calc(100vw - var(--sidebar-width)));'
 check_not_contains theme/custom.css 'margin-inline-start: var(--sidebar-width);'
 check_contains theme/custom.css '.reader-article {'
@@ -805,22 +1225,40 @@ check_contains theme/custom.css 'border: 0;'
 check_contains theme/custom.css 'background: transparent;'
 check_contains theme/custom.css 'box-shadow: none;'
 check_contains theme/custom.css '.book-outline-label {'
-check_contains theme/custom.css 'font-size: 12px;'
+check_contains theme/custom.css 'font-size: 11px;'
+check_contains theme/custom.css '.book-outline-section {'
+check_contains theme/custom.css '.book-outline-section-title {'
+check_contains theme/custom.css '.book-outline-list {'
+check_contains theme/custom.css '.book-outline-link--reference {'
+check_contains theme/custom.css '-webkit-line-clamp: 2;'
 check_contains theme/custom.css '.on-this-page {'
+
+# Reader hero and knowledge object contract
+check_contains theme/custom.css '.reader-chapter-hero {'
+check_contains theme/custom.css '.reader-chapter-eyebrow {'
+check_contains theme/custom.css '.reader-chapter-rule {'
+check_contains theme/custom.css '.reader-chapter-meta {'
+check_contains theme/custom.css '.reader-chapter-meta--inline {'
+check_contains theme/custom.css '.reader-chapter-meta-item--inline {'
+check_contains theme/custom.css '.reader-chapter-dek {'
+check_contains theme/custom.css '.reader-article--lead-figure-balanced .figure-card:first-of-type {'
+check_contains theme/custom.css '.book-outline-active-marker {'
 check_contains theme/custom.css '.reader-mobile-chapter-bar {'
 check_contains theme/custom.css '.reader-mobile-chapter-toggle {'
 check_contains theme/custom.css '.reader-mobile-outline-card {'
+check_contains theme/custom.css '.reader-mobile-outline-card-header {'
+check_contains theme/custom.css '.reader-mobile-outline-toggle {'
 check_contains theme/custom.css '.reader-mobile-outline-card .on-this-page {'
 check_contains theme/custom.css '.on-this-page .chapter-fold-toggle {'
 check_contains theme/custom.css 'display: none;'
 check_contains theme/custom.css '.on-this-page a,'
 check_contains theme/custom.css '.on-this-page a:visited {'
-check_contains theme/custom.css 'font-size: 14px;'
-check_contains theme/custom.css 'color: #64748b;'
+check_contains theme/custom.css 'font-size: 13px;'
+check_contains theme/custom.css 'color: rgba(11, 31, 51, 0.62);'
 check_contains theme/custom.css '.content h1 {'
 check_contains theme/custom.css '.content main {'
 check_contains theme/custom.css 'font-size: 16px;'
-check_contains theme/custom.css 'line-height: 1.625;'
+check_contains theme/custom.css 'line-height: 1.72;'
 check_contains theme/custom.css '.content h1 {'
 check_contains theme/custom.css 'font-size: 30px;'
 check_contains theme/custom.css '@media (min-width: 768px) {'
@@ -830,7 +1268,9 @@ check_contains theme/custom.css 'font-size: 24px;'
 check_contains theme/custom.css '.content h3 {'
 check_contains theme/custom.css 'font-size: 20px;'
 check_contains theme/custom.css '.content p {'
+check_contains theme/custom.css 'max-width: 68ch;'
 check_contains theme/custom.css '.content table {'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const checks=[[".reader-chapter-eyebrow {",["font-size: 12px;","letter-spacing: 0.12em;"]],[".reader-chapter-hero h1 {",["line-height: 1.08;"]],[".reader-chapter-rule {",["width: 32px;","height: 3px;"]],[".reader-chapter-meta-item {",["font-size: 14px;"]],[".reader-mobile-chapter-toggle {",["gap: 0.75rem;","padding: 0.85rem 1rem;","min-height: 48px;"]],[".reader-mobile-chapter-kicker {",["font-size: 13px;"]],[".reader-mobile-chapter-title {",["font-size: 14px;"]],[".reader-mobile-outline-card {",["padding: 14px 16px;","border-radius: 14px;"]],[".reader-mobile-outline-card-header {",["display: flex;","justify-content: space-between;"]],[".reader-mobile-outline-toggle {",["font-size: 0.875rem;","font-weight: 600;"]],[".reader-mobile-outline-card .on-this-page > ol {",["display: flex;","flex-wrap: wrap;","gap: 0.75rem 1rem;"]],[".reader-mobile-outline-card .on-this-page li.header-item {",["min-width: 0;","max-width: 100%;"]],[".book-outline-active-marker {",["width: 0.4375rem;","height: 0.4375rem;"]]];for(const [selector,expected] of checks){const start=css.indexOf(selector);const end=css.indexOf("}",start);if(start===-1||end===-1){console.error(`Expected rule block for ${selector}`);process.exit(1);}const block=css.slice(start,end+1);for(const value of expected){if(!block.includes(value)){console.error(`Expected ${selector} to include ${value}`);process.exit(1);}}}if(!/@media \(min-width: 768px\) \{[\s\S]*?\.reader-chapter-hero h1 \{[\s\S]*?font-size:\s*clamp\(3rem, 4vw, 4\.5rem\);/s.test(css)){console.error("Expected desktop chapter hero title scale to match the reader design token");process.exit(1);}if(!/\.reader-chapter-hero h1 \{[\s\S]*?font-size:\s*clamp\(2\.35rem, 11vw, 4rem\);/s.test(css)){console.error("Expected mobile chapter hero title scale to match the reader design token");process.exit(1);}' 
 check_contains theme/custom.css '.reader-article table,'
 check_contains theme/custom.css 'font-family: var(--reader-sans);'
 check_contains theme/custom.css 'font-size: 14px;'
@@ -875,16 +1315,17 @@ check_contains theme/custom.css '.formula-derivation {'
 check_contains theme/custom.css '.formula-panel {'
 check_contains theme/custom.css '.formula-case-grid {'
 check_contains theme/custom.css '.formula-case-title {'
-node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const panelStart=css.indexOf(".formula-panel {");const panelEnd=css.indexOf("}\n\n.formula-panel .book-formula--panel-row",panelStart);if(panelStart===-1||panelEnd===-1){console.error("Expected .formula-panel rule block");process.exit(1);}const panelBlock=css.slice(panelStart,panelEnd+1);for(const expected of ["border: 1px solid rgba(43, 91, 166, 0.14);","border-left: 3px solid rgba(43, 91, 166, 0.72);","border-radius: 6px;","background: linear-gradient(180deg, #ffffff 0%, rgba(248, 250, 252, 0.96) 100%);","box-shadow: 0 10px 24px rgba(15, 23, 42, 0.075);"]){if(!panelBlock.includes(expected)){console.error(`Expected .formula-panel to include: ${expected}`);process.exit(1);}}const rowStart=css.indexOf(".formula-panel .book-formula--panel-row {");const rowEnd=css.indexOf("}\n\n.formula-panel .book-formula--panel-row::before",rowStart);if(rowStart===-1||rowEnd===-1){console.error("Expected .formula-panel .book-formula--panel-row rule block");process.exit(1);}const rowBlock=css.slice(rowStart,rowEnd+1);for(const expected of ["font-size: clamp(16px, 1.35vw, 20px);","font-weight: 520;","line-height: 1.24;"]){if(!rowBlock.includes(expected)){console.error(`Expected panel row formula styling for: ${expected}`);process.exit(1);}}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const panelStart=css.indexOf(".formula-panel {");const panelEnd=css.indexOf("}\n\n.formula-panel .book-formula--panel-row",panelStart);if(panelStart===-1||panelEnd===-1){console.error("Expected .formula-panel rule block");process.exit(1);}const panelBlock=css.slice(panelStart,panelEnd+1);for(const expected of ["border: 1px solid rgba(43, 91, 166, 0.14);","border-left: 3px solid rgba(43, 91, 166, 0.72);","border-radius: 6px;","background: linear-gradient(180deg, #ffffff 0%, rgba(248, 250, 252, 0.96) 100%);","box-shadow: 0 10px 24px rgba(15, 23, 42, 0.075);"]){if(!panelBlock.includes(expected)){console.error(`Expected .formula-panel to include: ${expected}`);process.exit(1);}}const rowStart=css.indexOf(".formula-panel .book-formula--panel-row {");const rowEnd=css.indexOf("}\n\n.formula-panel .book-formula--panel-row::before",rowStart);if(rowStart===-1||rowEnd===-1){console.error("Expected .formula-panel .book-formula--panel-row rule block");process.exit(1);}const rowBlock=css.slice(rowStart,rowEnd+1);for(const expected of ["font-size: clamp(14.4px, 1vw, 16.8px);","font-weight: 520;","line-height: 1.24;"]){if(!rowBlock.includes(expected)){console.error(`Expected panel row formula styling for: ${expected}`);process.exit(1);}}'
 check_contains theme/custom.css '.reader-article .api-density-formula {'
 check_contains theme/custom.css '.api-density-fraction {'
 check_contains theme/custom.css 'border-left: 3px solid rgba(43, 91, 166, 0.72);'
 check_contains theme/custom.css 'box-shadow: 0 10px 24px rgba(15, 23, 42, 0.075);'
 check_contains theme/custom.css 'font-family: var(--reader-serif);'
 check_contains theme/custom.css 'padding: 13px 22px 12px;'
-check_contains theme/custom.css 'font-size: clamp(16px, 1.35vw, 20px);'
+check_contains theme/custom.css 'font-size: clamp(14.4px, 1vw, 16.8px);'
 check_contains theme/custom.css 'min-width: 5.8em;'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const block=css.match(/\.reader-article \.api-density-formula \{[^}]*\}/);if(!block||!/font-weight:\s*500;/.test(block[0])){console.error("Expected .api-density-formula to use font-weight: 500");process.exit(1);}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const start=css.indexOf(".toolbar-sidebar {");const end=css.indexOf("}\n\n.toolbar-main {",start);if(start===-1||end===-1){console.error("Expected .toolbar-sidebar rule block");process.exit(1);}const block=css.slice(start,end+1);if(block.includes("border-inline-end:")){console.error("Did not expect .toolbar-sidebar to keep a right divider");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const block=css.match(/\.api-density-numerator \{[^}]*\}/);if(!block||!/border-bottom:\s*0\.055em solid currentColor;/.test(block[0])){console.error("Expected .api-density-numerator to use border-bottom: 0.055em solid currentColor");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const start=css.indexOf(".reader-article td .book-formula,");const end=css.indexOf("}\n\n.api-density-formula-term",start);if(start===-1||end===-1){console.error("Expected table formula rule block");process.exit(1);}const block=css.slice(start,end+1);for(const expected of ["width: 100%;","margin: 0;","padding: 0.6rem 0.8rem;","justify-items: start;","text-align: left;","font-size: inherit;","line-height: 1.22;","white-space: normal;","box-shadow: none;"]){if(!block.includes(expected)){console.error(`Expected table formula styling for: ${expected}`);process.exit(1);}}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const block=css.match(/\.reader-article td \.book-formula \+ \.book-formula,\s*\.reader-article th \.book-formula \+ \.book-formula \{[^}]*\}/);if(!block||!/margin-top:\s*0\.55rem;/.test(block[0])){console.error("Expected stacked table formulas to use compact vertical spacing");process.exit(1);}'
@@ -921,6 +1362,7 @@ check_contains theme/custom.css '.figure-caption-text {'
 check_contains theme/custom.css 'display: inline-flex;'
 check_contains theme/custom.css 'justify-content: center;'
 check_contains theme/custom.css 'flex-wrap: wrap;'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const block=css.match(/\.figure-caption-text \{[^}]*\}/);if(!block){console.error("Expected .figure-caption-text rule block");process.exit(1);}for(const expected of ["font-size: 14px;","line-height: 1.55;"]){if(!block[0].includes(expected)){console.error(`Expected figure caption text styling for: ${expected}`);process.exit(1);}}'
 check_contains theme/custom.css '.figure-card img {'
 check_contains theme/custom.css '.figure-anchor-target:target img {'
 check_contains theme/custom.css '.table-anchor-target {'
@@ -935,6 +1377,7 @@ check_contains theme/custom.css '.table-notes {'
 check_contains theme/custom.css 'font-family: var(--reader-serif);'
 check_contains theme/custom.css 'font-style: italic;'
 check_contains theme/custom.css 'color: rgba(30, 58, 138, 0.88);'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const block=css.match(/\.content th \{[^}]*\}/);if(!block){console.error("Expected .content th rule block");process.exit(1);}for(const expected of ["background: var(--brand-blue-deep);","color: #ffffff;","font-size: 14px;"]){if(!block[0].includes(expected)){console.error(`Expected table header styling for: ${expected}`);process.exit(1);}}if(block[0].includes("rgba(241, 245, 249, 0.96)")||block[0].includes("rgba(226, 232, 240, 0.92)")){console.error("Expected .content th to stop using pale mdBook-like header backgrounds");process.exit(1);}'
 check_contains theme/custom.css '.table-data-table th:first-child,'
 check_contains theme/custom.css '.table-data-table td:first-child {'
 check_contains theme/custom.css 'text-align: left !important;'
@@ -958,8 +1401,7 @@ check_contains theme/custom.css 'font-size: 12px;'
 check_contains theme/custom.css 'letter-spacing: 0.04em;'
 check_contains theme/custom.css '#table-6 .table-data-table thead tr:last-child th {'
 check_contains theme/custom.css 'font-size: 13px;'
-check_contains theme/custom.css 'font-style: italic;'
-check_contains theme/custom.css 'background: rgba(239, 246, 255, 0.8);'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");for(const selector of ["#table-6 .table-data-table thead tr:first-child th {","#table-6 .table-data-table thead tr:last-child th {"]){const start=css.indexOf(selector);const end=css.indexOf("}",start);if(start===-1||end===-1){console.error(`Expected rule block for ${selector}`);process.exit(1);}const block=css.slice(start,end+1);if(block.includes("background: rgba(239, 246, 255, 0.8);")||block.includes("background: linear-gradient(180deg, rgba(226, 232, 240, 0.92) 0%, rgba(235, 241, 249, 0.94) 100%);")){console.error(`Expected ${selector} to stop using pale table header backgrounds`);process.exit(1);}if(!block.includes("color: #ffffff;")){console.error(`Expected ${selector} to use white header text`);process.exit(1);}}'
 check_contains theme/custom.css '#table-6 .table-data-table tbody tr:nth-child(even) td {'
 check_contains theme/custom.css 'background: rgba(238, 243, 251, 0.22);'
 check_contains theme/custom.css '#table-6 .table-data-table th + th,'
@@ -972,16 +1414,38 @@ check_contains theme/custom.css '.on-this-page ol,'
 check_contains theme/custom.css '.on-this-page > ol,'
 check_contains theme/custom.css 'padding: 0;'
 check_contains theme/custom.css 'border-left: 0;'
-check_contains theme/custom.css 'font-size: 14px;'
-check_contains theme/custom.css 'line-height: 20px;'
 check_not_contains theme/custom.css '@import url("https://fonts.googleapis.com'
 check_contains theme/custom.js 'document.body.classList.add("book-outline-ready")'
 check_contains theme/custom.js 'function installHeaderSearchSlot()'
 check_contains theme/custom.js 'function installMobileChapterBar()'
+check_contains theme/custom.js 'const desktopToggle = document.getElementById("mdbook-sidebar-toggle");'
+check_contains theme/custom.js 'desktopToggle.click();'
+check_not_contains theme/custom.js 'sidebarToggle.click();'
+check_not_contains theme/custom.js 'sidebarToggle.checked = !sidebarToggle.checked;'
 check_contains theme/custom.js 'function installInlineOutlineCard()'
+check_contains theme/custom.js 'function buildMobileOutlineCardBody('
+check_contains theme/custom.js 'linkWrapper.dataset.headingTag = targetHeadingElement ? targetHeadingElement.tagName.toLowerCase() : ""'
+check_contains theme/custom.js 'data-heading-tag='
+check_not_contains theme/custom.js 'querySelectorAll(":scope > ol > li.header-item > .chapter-link-wrapper > a")'
+check_contains theme/custom.js 'className = "reader-mobile-outline-card-header"'
+check_contains theme/custom.js 'className = "reader-mobile-outline-toggle"'
+check_contains theme/custom.js 'function getActivePartLabel()'
+check_contains theme/custom.js 'function createHeroMetaItem('
+check_contains theme/custom.js 'function buildHeroMetaItems('
+check_contains theme/custom.js 'function renderChapterHero('
+check_contains theme/custom.js 'function installChapterHero()'
+check_contains theme/custom.js 'function installOutlineReferenceSections()'
+check_contains theme/custom.js 'function applyReaderPageMeta('
+check_contains theme/custom.js 'function balanceLeadFigureWeight()'
+check_contains theme/custom.js 'function truncateReferenceText('
 check_contains theme/custom.js 'document.querySelector(".toolbar-search-slot")'
 check_contains theme/custom.js 'document.querySelector(".reader-mobile-chapter-toggle")'
+check_contains theme/custom.js 'document.querySelector(".reader-chapter-hero-anchor")'
 check_contains theme/custom.js 'document.querySelector(".reader-mobile-outline-anchor")'
+check_contains theme/custom.js 'document.querySelector(".book-outline-figures")'
+check_contains theme/custom.js 'document.querySelector(".book-outline-tables")'
+check_contains theme/custom.js 'reader-page-meta.json'
+check_contains theme/custom.js 'book-outline-link book-outline-link--reference'
 check_contains theme/custom.js 'const searchresultsOuter = document.getElementById("mdbook-searchresults-outer");'
 check_contains theme/custom.js 'const searchOverlayRoot = document.getElementById("mdbook-search-overlay-root");'
 check_contains theme/custom.js 'searchOverlayRoot.appendChild(searchresultsOuter);'
@@ -995,7 +1459,7 @@ check_contains theme/custom.js 'const searchToggle = document.getElementById("md
 check_contains theme/custom.js 'searchWrap.classList.add("hidden");'
 check_contains theme/custom.js 'searchToggle.setAttribute("aria-expanded", "false");'
 check_contains theme/custom.js 'searchToggle.focus();'
-check_contains theme/custom.js 'toolbarSearchSlot.classList.toggle("hidden", hidden)'
+check_contains theme/custom.js 'toolbarSearchSlot.classList.toggle("hidden", slotHidden)'
 check_contains theme/custom.js 'requestAnimationFrame(function focusToolbarSearchbar()'
 check_contains theme/custom.js 'searchbar.focus();'
 check_contains theme/custom.js 'searchbar.select();'
@@ -1014,6 +1478,7 @@ check_contains theme/custom.js 'figure-card--flush-media'
 check_contains theme/custom.js 'figure-card--inset-media'
 check_contains theme/custom.js 'mediaBlock.classList.add("figure-media")'
 check_contains theme/custom.js 'mediaCandidates.length > 1'
+check_not_contains package.json 'upstream-atlas-reader.pdf'
 check_contains theme/custom.js 'mediaGrid.className = "figure-media figure-media-grid"'
 check_contains theme/custom.js 'mediaItem.className = "figure-media-item"'
 check_contains theme/custom.js 'wrapper.classList.add(className);'
@@ -1040,14 +1505,19 @@ check_contains theme/custom.js 'ruleItem.className = "table-6-rule-item"'
 check_contains theme/custom.js 'label.className = "table-6-rule-label"'
 check_contains theme/custom.js 'value.className = "table-6-rule-value"'
 check_contains theme/custom.js 'function buildOutlineList('
-check_contains theme/custom.js 'querySelectorAll(".on-this-page a.header-in-summary")'
+check_contains theme/custom.js 'querySelector("#mdbook-sidebar mdbook-sidebar-scrollbox .chapter-item > .on-this-page")'
+check_contains theme/custom.js 'querySelectorAll("a.header-in-summary")'
 check_contains theme/custom.js 'document.getElementById("mdbook-reader-scroll")'
 check_contains theme/custom.js 'chapters/foreword.html'
 check_contains theme/custom.js 'window.location.replace(target.href)'
+check_contains public/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'class="reader-sidebar-projection"'
+check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'class="reader-sidebar-projection"'
+check_not_contains public/book/chapters/glossary.html 'class="book-sidebar-utility-link-icon"'
+check_not_contains public/book/chapters/list-of-figures.html 'class="book-sidebar-utility-link-icon"'
 check_not_contains public/book/index.html 'class="book-shell-grid"'
 check_not_contains public/book/index.html 'class="book-page-surface"'
 check_not_contains public/book/index.html 'class="book-main-column"'
-check_not_contains public/book/index.html 'reader-sidebar'
+check_contains public/book/index.html 'class="reader-sidebar-projection"'
 check_not_contains public/book/index.html 'book-outline-shell'
 check_not_contains public/book/index.html 'toolbar-center'
 check_not_contains public/book/index.html 'book-toolbar-actions'

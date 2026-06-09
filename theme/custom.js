@@ -153,6 +153,341 @@
 })();
 
 (function () {
+  let readerPageMetaPromise = null;
+  let outlineScrollSpyEntries = [];
+  let outlineScrollSpyBound = false;
+  let sidebarShellResizeObserver = null;
+  let mobileOutlineCollapsed = false;
+
+  function normalizeText(text) {
+    return (text || "").replace(/\s+/g, " ").trim();
+  }
+
+  function getReaderScroller() {
+    return (
+      document.getElementById("mdbook-reader-scroll") ||
+      document.getElementById("mdbook-page-wrapper") ||
+      document.documentElement
+    );
+  }
+
+  function getCurrentBookPageKey() {
+    const pathname = window.location.pathname.replace(/\/+$/, "");
+    const bookRootIndex = pathname.lastIndexOf("/book");
+
+    if (bookRootIndex === -1) {
+      return "index.html";
+    }
+
+    const relativePath = pathname.slice(bookRootIndex + "/book".length).replace(/^\/+/, "");
+    return relativePath || "index.html";
+  }
+
+  function getSidebarShell() {
+    return document.getElementById("mdbook-sidebar");
+  }
+
+  function syncSidebarShellGeometry() {
+    const sidebar = getSidebarShell();
+    const intro = sidebar ? sidebar.querySelector(".book-sidebar-intro") : null;
+
+    if (!sidebar || !intro) {
+      return;
+    }
+
+    sidebar.style.setProperty("--sidebar-intro-height", intro.offsetHeight + "px");
+  }
+
+  function installSidebarShellGeometry() {
+    const sidebar = getSidebarShell();
+    const intro = sidebar ? sidebar.querySelector(".book-sidebar-intro") : null;
+
+    if (!sidebar || !intro) {
+      return;
+    }
+
+    if (window.ResizeObserver && !sidebarShellResizeObserver) {
+      sidebarShellResizeObserver = new ResizeObserver(function () {
+        syncSidebarShellGeometry();
+      });
+    }
+
+    if (sidebarShellResizeObserver) {
+      sidebarShellResizeObserver.observe(intro);
+    }
+
+    syncSidebarShellGeometry();
+  }
+
+  function parseSidebarSectionHeading(text) {
+    const normalized = normalizeText(text);
+    const partMatch = normalized.match(/^(Part\s+[IVXLC]+)\s*:\s*(.+)$/i);
+
+    if (/^Front Matter$/i.test(normalized)) {
+      return { type: "front-matter", kicker: "", title: "Front Matter" };
+    }
+
+    if (/^Back Matter$/i.test(normalized)) {
+      return { type: "back-matter", kicker: "", title: "Back Matter" };
+    }
+
+    if (partMatch) {
+      return {
+        type: "part",
+        kicker: normalizeText(partMatch[1]),
+        title: normalizeText(partMatch[2]),
+      };
+    }
+
+    return {
+      type: "part",
+      kicker: "",
+      title: normalized,
+    };
+  }
+
+  function parseSidebarRow(text) {
+    const normalized = normalizeText(text);
+    const chapterMatch = normalized.match(/^Chapter\s+(\d+)\s*:\s*(.+)$/i);
+
+    if (!chapterMatch) {
+      return {
+        type: "reference",
+        index: "",
+        title: normalized,
+      };
+    }
+
+    return {
+      type: "chapter",
+      index: String(Number(chapterMatch[1])).padStart(2, "0"),
+      title: normalizeText(chapterMatch[2]),
+    };
+  }
+
+  const sidebarReferenceIconSvgs = {
+    conclusion:
+      '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M7 4.75h7.75L18.5 8.5v10.75a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><path d="M14.5 4.75V8.5h3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9 12h6M9 15h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg>',
+    glossary:
+      '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M6.5 5.75h8.25a2.5 2.5 0 0 1 2.5 2.5v10.5H9a2.5 2.5 0 0 0-2.5 2.5V5.75Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><path d="M17.25 18.75H9a2.5 2.5 0 0 0-2.5 2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.5 10.25h4.75M9.5 13.25h4.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg>',
+    references:
+      '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M4.75 7.25h10.5a2 2 0 0 1 2 2v8.5H6.75a2 2 0 0 0-2 2V7.25Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9 7.25V5.75a1 1 0 0 1 1-1h9.25v11H17.25" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8.5 11h5M8.5 14h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg>',
+  };
+
+  const sidebarSectionIconSvgs = {
+    "front-matter":
+      '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M5.25 6.25a1.5 1.5 0 0 1 1.5-1.5H11c1.18 0 2.31.31 3.3.9v13.6a5.9 5.9 0 0 0-3.3-.95H6.75a1.5 1.5 0 0 0-1.5 1.5V6.25Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path><path d="M18.75 6.25a1.5 1.5 0 0 0-1.5-1.5H13c-1.18 0-2.31.31-3.3.9v13.6a5.9 5.9 0 0 1 3.3-.95h4.25a1.5 1.5 0 0 1 1.5 1.5V6.25Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 5.75v13.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path></svg>',
+  };
+
+  function getSidebarReferenceIcon(href) {
+    if (!href) {
+      return null;
+    }
+
+    const pathname = new URL(href, window.location.href).pathname.replace(/\/+$/, "");
+
+    if (pathname.endsWith("/chapters/general-conclusion.html")) {
+      return "conclusion";
+    }
+
+    if (pathname.endsWith("/chapters/glossary.html")) {
+      return "glossary";
+    }
+
+    if (pathname.endsWith("/chapters/bibliographical-references.html")) {
+      return "references";
+    }
+
+    return null;
+  }
+
+  function buildSidebarReferenceIcon(iconName) {
+    const icon = document.createElement("span");
+    icon.className = "reader-sidebar-row-icon reader-sidebar-row-icon--" + iconName;
+    icon.setAttribute("aria-hidden", "true");
+    icon.innerHTML = sidebarReferenceIconSvgs[iconName];
+    return icon;
+  }
+
+  function buildSidebarSectionIcon(iconName) {
+    const icon = document.createElement("span");
+    icon.className = "reader-sidebar-section-icon reader-sidebar-section-icon--" + iconName;
+    icon.setAttribute("aria-hidden", "true");
+    icon.innerHTML = sidebarSectionIconSvgs[iconName];
+    return icon;
+  }
+
+  function collectSidebarProjectionGroups(rawChapterList) {
+    const groups = [];
+    let currentGroup = null;
+
+    Array.from(rawChapterList.children).forEach(function (item) {
+      const partTitle = item.classList.contains("part-title")
+        ? item
+        : item.querySelector(".part-title");
+      const sourceLink = item.querySelector("a");
+
+      if (partTitle) {
+        currentGroup = Object.assign({ items: [] }, parseSidebarSectionHeading(partTitle.textContent || ""));
+        groups.push(currentGroup);
+        return;
+      }
+
+      if (!sourceLink) {
+        return;
+      }
+
+      if (!currentGroup) {
+        currentGroup = { type: "front-matter", kicker: "", title: "Front Matter", items: [] };
+        groups.push(currentGroup);
+      }
+
+      currentGroup.items.push({
+        href: sourceLink.href,
+        text: normalizeText(sourceLink.textContent),
+        isActive:
+          sourceLink.classList.contains("active") || sourceLink.classList.contains("current-header"),
+      });
+    });
+
+    return groups.filter(function (group) {
+      return group.items.length > 0;
+    });
+  }
+
+  function buildSidebarProjectionRow(item) {
+    const parsed = parseSidebarRow(item.text);
+    const row = document.createElement("a");
+    const title = document.createElement("span");
+    const referenceIcon = parsed.type === "reference" ? getSidebarReferenceIcon(item.href) : null;
+
+    row.className =
+      "reader-sidebar-row " +
+      (parsed.type === "chapter" ? "reader-sidebar-row--chapter" : "reader-sidebar-row--reference");
+    row.href = item.href;
+
+    if (referenceIcon) {
+      row.classList.add("reader-sidebar-row--with-icon");
+      row.appendChild(buildSidebarReferenceIcon(referenceIcon));
+    }
+
+    if (item.isActive) {
+      row.classList.add("reader-sidebar-row--active");
+      row.setAttribute("aria-current", "page");
+    }
+
+    if (parsed.type === "chapter") {
+      const index = document.createElement("span");
+      index.className = "reader-sidebar-row-index";
+      index.textContent = parsed.index;
+      row.appendChild(index);
+    }
+
+    title.className = "reader-sidebar-row-title";
+    title.textContent = parsed.title;
+    row.appendChild(title);
+    return row;
+  }
+
+  function buildSidebarProjectionSection(group) {
+    const section = document.createElement("section");
+    const header = document.createElement("header");
+    const body = document.createElement("div");
+    const title = document.createElement("span");
+    const isActiveGroup = group.items.some(function (item) {
+      return item.isActive;
+    });
+
+    section.className = "reader-sidebar-section reader-sidebar-section--" + group.type;
+
+    if (isActiveGroup) {
+      section.classList.add("reader-sidebar-section--active");
+    }
+
+    header.className = "reader-sidebar-section-header";
+
+    if (group.type === "front-matter") {
+      header.appendChild(buildSidebarSectionIcon("front-matter"));
+    }
+
+    if (group.kicker) {
+      const kicker = document.createElement("span");
+      kicker.className = "reader-sidebar-section-kicker";
+      kicker.textContent = group.kicker;
+      header.appendChild(kicker);
+    }
+
+    title.className = "reader-sidebar-section-title";
+    title.textContent = group.title;
+    header.appendChild(title);
+
+    body.className = "reader-sidebar-section-body";
+    group.items.forEach(function (item) {
+      body.appendChild(buildSidebarProjectionRow(item));
+    });
+
+    section.appendChild(header);
+    section.appendChild(body);
+    return section;
+  }
+
+  function revealActiveSidebarTarget(scrollContainer) {
+    const activeRow = scrollContainer.querySelector(".reader-sidebar-row--active");
+
+    if (!scrollContainer || !activeRow) {
+      return;
+    }
+
+    const rowRect = activeRow.getBoundingClientRect();
+    const containerRect = scrollContainer.getBoundingClientRect();
+    const rowTop = rowRect.top - containerRect.top + scrollContainer.scrollTop;
+    const rowBottom = rowTop + rowRect.height;
+    const viewportTop = scrollContainer.scrollTop;
+    const viewportBottom = viewportTop + scrollContainer.clientHeight;
+
+    if (rowTop >= viewportTop && rowBottom <= viewportBottom) {
+      return;
+    }
+
+    scrollContainer.scrollTop = Math.max(0, rowTop - Math.round(scrollContainer.clientHeight * 0.32));
+  }
+
+  function installSidebarProjection() {
+    const sidebar = getSidebarShell();
+    const scrollContainer = sidebar ? sidebar.querySelector(".reader-sidebar-scroll") : null;
+    const projection = sidebar ? sidebar.querySelector(".reader-sidebar-projection") : null;
+    const scrollbox = sidebar ? sidebar.querySelector("mdbook-sidebar-scrollbox.sidebar-scrollbox") : null;
+    const rawChapterList = scrollbox ? scrollbox.querySelector(".chapter") : null;
+
+    if (!sidebar || !scrollContainer || !projection || !scrollbox || !rawChapterList) {
+      return;
+    }
+
+    const groups = collectSidebarProjectionGroups(rawChapterList);
+
+    if (!groups.length) {
+      return;
+    }
+
+    const projectionSignature = rawChapterList.innerHTML + "|" + getCurrentBookPageKey();
+
+    if (projection.dataset.projectionSignature !== projectionSignature) {
+      const fragment = document.createDocumentFragment();
+
+      groups.forEach(function (group) {
+        fragment.appendChild(buildSidebarProjectionSection(group));
+      });
+
+      projection.replaceChildren(fragment);
+      projection.dataset.projectionSignature = projectionSignature;
+    }
+
+    projection.setAttribute("aria-hidden", "false");
+    scrollbox.setAttribute("aria-hidden", "true");
+    sidebar.classList.add("book-sidebar-shell--projected");
+    revealActiveSidebarTarget(scrollContainer);
+  }
+
   function buildOutlineList(outlineAnchors) {
     const flatList = document.createElement("ol");
 
@@ -174,14 +509,22 @@
 
       listItem.className = "header-item";
       linkWrapper.className = "chapter-link-wrapper";
+      linkWrapper.dataset.targetId = targetHeadingId;
+      linkWrapper.dataset.headingTag = targetHeadingElement ? targetHeadingElement.tagName.toLowerCase() : "";
 
-      normalizedAnchor.className = "header-in-summary";
+      const activeMarker = document.createElement("span");
+      activeMarker.className = "book-outline-active-marker";
+      activeMarker.hidden = true;
+
+      normalizedAnchor.className = "header-in-summary book-outline-link";
       normalizedAnchor.href = targetSelector;
+      normalizedAnchor.dataset.targetId = targetHeadingId;
       normalizedAnchor.textContent = (
         (targetHeading && targetHeading.textContent) ||
         anchor.textContent
       ).replace(/\s+/g, " ").trim();
 
+      linkWrapper.appendChild(activeMarker);
       linkWrapper.appendChild(normalizedAnchor);
       listItem.appendChild(linkWrapper);
       flatList.appendChild(listItem);
@@ -192,10 +535,7 @@
 
   function updateProgress() {
     const fill = document.getElementById("book-progress-fill");
-    const scroller =
-      document.getElementById("mdbook-reader-scroll") ||
-      document.getElementById("mdbook-page-wrapper") ||
-      document.documentElement;
+    const scroller = getReaderScroller();
 
     if (!fill || !scroller) {
       return;
@@ -573,18 +913,89 @@
 
   function moveOutline() {
     const outlineBody = document.querySelector(".book-outline-body");
-    const outlineAnchors = Array.from(document.querySelectorAll(".on-this-page a.header-in-summary"));
+    const outlineSource = document.querySelector("#mdbook-sidebar mdbook-sidebar-scrollbox .chapter-item > .on-this-page");
 
-    if (!outlineBody || !outlineAnchors.length) {
+    if (!outlineBody || !outlineSource) {
+      return;
+    }
+
+    // mdBook injects the canonical heading list under the active chapter in the
+    // sidebar. Project from that source so the desktop rail and mobile inline
+    // card stay in sync without recursively consuming cloned cards.
+    const outlineAnchors = Array.from(outlineSource.querySelectorAll("a.header-in-summary"));
+    const desktopOutlineAnchors = outlineAnchors.filter(isTopLevelOutlineAnchor);
+
+    if (!outlineAnchors.length) {
       return;
     }
 
     const outlineContainer = document.createElement("div");
     outlineContainer.className = "on-this-page";
-    outlineContainer.appendChild(buildOutlineList(outlineAnchors));
+    outlineContainer.appendChild(
+      buildOutlineList(desktopOutlineAnchors.length ? desktopOutlineAnchors : outlineAnchors)
+    );
 
     outlineBody.replaceChildren(outlineContainer);
     document.body.classList.add("book-outline-ready");
+  }
+
+  function syncOutlineActiveState() {
+    const scroller = getReaderScroller();
+
+    if (!scroller || !outlineScrollSpyEntries.length) {
+      return;
+    }
+
+    const scrollerTop = scroller.getBoundingClientRect().top;
+    let activeEntry = outlineScrollSpyEntries[0];
+
+    outlineScrollSpyEntries.forEach(function (entry) {
+      const top = entry.target.getBoundingClientRect().top - scrollerTop;
+
+      if (top <= 132) {
+        activeEntry = entry;
+      }
+    });
+
+    outlineScrollSpyEntries.forEach(function (entry) {
+      const isActive = entry === activeEntry;
+
+      entry.link.classList.toggle("book-outline-link--active", isActive);
+      entry.wrapper.classList.toggle("chapter-link-wrapper--active", isActive);
+      entry.marker.hidden = !isActive;
+    });
+  }
+
+  function installOutlineScrollSpy() {
+    outlineScrollSpyEntries = Array.from(
+      document.querySelectorAll(".book-outline-body .header-in-summary[data-target-id]")
+    )
+      .map(function (link) {
+        const targetId = link.dataset.targetId || "";
+        const target = targetId ? document.getElementById(targetId) : null;
+        const wrapper = link.closest(".chapter-link-wrapper");
+        const marker = wrapper ? wrapper.querySelector(".book-outline-active-marker") : null;
+
+        if (!target || !wrapper || !marker) {
+          return null;
+        }
+
+        return { link: link, target: target, wrapper: wrapper, marker: marker };
+      })
+      .filter(Boolean);
+
+    if (!outlineScrollSpyBound) {
+      const scroller = getReaderScroller();
+
+      if (scroller) {
+        scroller.addEventListener("scroll", syncOutlineActiveState, { passive: true });
+      }
+
+      window.addEventListener("resize", syncOutlineActiveState, { passive: true });
+      outlineScrollSpyBound = true;
+    }
+
+    syncOutlineActiveState();
   }
 
   function getActiveSidebarChapterLink() {
@@ -594,15 +1005,332 @@
     );
   }
 
+  function getActivePartLabel() {
+    const activeLink = getActiveSidebarChapterLink();
+
+    if (!activeLink) {
+      return "";
+    }
+
+    const activeItem = activeLink.closest("li");
+    let current = activeItem ? activeItem.previousElementSibling : null;
+
+    while (current) {
+      if (current.classList && current.classList.contains("part-title")) {
+        return normalizeText(current.textContent);
+      }
+
+      current = current.previousElementSibling;
+    }
+
+    return "";
+  }
+
+  function parseChapterHeading(text) {
+    const normalized = normalizeText(text);
+    const match = normalized.match(/^(Chapter\s+\d+)\s*:\s*(.+)$/i);
+
+    if (!match) {
+      return {
+        eyebrow: "",
+        title: normalized,
+      };
+    }
+
+    return {
+      eyebrow: match[1],
+      title: normalizeText(match[2]),
+    };
+  }
+
+  function estimateReadMinutes(article) {
+    const text = normalizeText(article.textContent);
+    const words = text ? text.split(/\s+/).length : 0;
+    return Math.max(1, Math.ceil(words / 220));
+  }
+
+  function truncateReferenceText(text, maxChars) {
+    const normalized = normalizeText(text);
+
+    if (normalized.length <= maxChars) {
+      return normalized;
+    }
+
+    return normalized.slice(0, Math.max(0, maxChars - 1)).trimEnd() + "…";
+  }
+
+  function formatDisplayDate(dateText) {
+    if (!dateText) {
+      return "";
+    }
+
+    const date = new Date(dateText + "T00:00:00Z");
+
+    if (Number.isNaN(date.getTime())) {
+      return dateText;
+    }
+
+    return new Intl.DateTimeFormat("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    }).format(date);
+  }
+
+  function createMetaIconSvg(kind) {
+    const icons = {
+      updated:
+        '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.25" y="3.25" width="11.5" height="10.5" rx="1.75"></rect><path d="M5 1.75v3"></path><path d="M11 1.75v3"></path><path d="M2.25 6.25h11.5"></path></svg>',
+      reading:
+        '<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.75"></circle><path d="M8 4.75v3.6l2.45 1.4"></path></svg>',
+      part:
+        '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5h7a1.5 1.5 0 0 1 1.5 1.5v9.5l-2.9-1.65L6.7 13.5 4 11.95Z"></path></svg>',
+    };
+
+    return icons[kind] || icons.part;
+  }
+
+  function createHeroMetaItem(item) {
+    const metaItem = document.createElement("span");
+    const icon = document.createElement("span");
+    const label = document.createElement("span");
+
+    metaItem.className =
+      "reader-chapter-meta-item reader-chapter-meta-item--inline reader-chapter-meta-item--" +
+      item.kind;
+    icon.className = "reader-chapter-meta-icon";
+    icon.innerHTML = createMetaIconSvg(item.kind);
+    label.className = "reader-chapter-meta-copy";
+    label.textContent = item.text;
+
+    metaItem.appendChild(icon);
+    metaItem.appendChild(label);
+    return metaItem;
+  }
+
+  function buildHeroMetaItems(article, pageMeta) {
+    const items = [];
+    const partLabel = (pageMeta && pageMeta.partLabel) || getActivePartLabel();
+    const updatedAt = pageMeta && pageMeta.updatedAt ? formatDisplayDate(pageMeta.updatedAt) : "";
+
+    if (updatedAt) {
+      items.push({ kind: "updated", text: "Updated " + updatedAt });
+    }
+
+    items.push({ kind: "reading", text: estimateReadMinutes(article) + " min read" });
+
+    if (partLabel) {
+      items.push({ kind: "part", text: partLabel });
+    }
+
+    return items;
+  }
+
+  async function applyReaderPageMeta() {
+    if (!readerPageMetaPromise) {
+      readerPageMetaPromise = fetch(path_to_root + "reader-page-meta.json")
+        .then(function (response) {
+          if (!response.ok) {
+            throw new Error("Failed to load reader metadata");
+          }
+
+          return response.json();
+        })
+        .catch(function () {
+          return {};
+        });
+    }
+
+    const pageMeta = await readerPageMetaPromise;
+    return pageMeta[getCurrentBookPageKey()] || null;
+  }
+
+  function renderChapterHero(article, anchor, heading, parsedHeading, pageMeta) {
+    const nextParagraph =
+      heading.nextElementSibling && heading.nextElementSibling.matches("p")
+        ? heading.nextElementSibling
+        : null;
+    const hero = document.createElement("section");
+    const eyebrow = document.createElement("p");
+    const rule = document.createElement("span");
+    const meta = document.createElement("div");
+    const lede = nextParagraph || (pageMeta && pageMeta.lede ? document.createElement("p") : null);
+    const heroMetaItems = buildHeroMetaItems(article, pageMeta);
+    const titleText = (pageMeta && pageMeta.title) || parsedHeading.title;
+    const eyebrowText = (pageMeta && pageMeta.eyebrow) || parsedHeading.eyebrow;
+
+    hero.className = "reader-chapter-hero";
+    eyebrow.className = "reader-chapter-eyebrow";
+    eyebrow.textContent = eyebrowText;
+
+    heading.classList.add("reader-chapter-title");
+    if (!heading.dataset.readerOriginalTitle) {
+      heading.dataset.readerOriginalTitle = normalizeText(heading.textContent);
+    }
+    heading.textContent = titleText;
+
+    rule.className = "reader-chapter-rule";
+    rule.setAttribute("aria-hidden", "true");
+
+    meta.className = "reader-chapter-meta reader-chapter-meta--inline";
+    heroMetaItems.forEach(function (item) {
+      meta.appendChild(createHeroMetaItem(item));
+    });
+
+    hero.appendChild(eyebrow);
+    hero.appendChild(heading);
+    hero.appendChild(rule);
+    hero.appendChild(meta);
+
+    if (lede) {
+      lede.classList.add("reader-chapter-dek");
+      if (!nextParagraph && pageMeta && pageMeta.lede) {
+        lede.textContent = pageMeta.lede;
+      }
+      hero.appendChild(lede);
+    }
+
+    anchor.replaceChildren(hero);
+    anchor.dataset.heroInstalled = "true";
+    article.classList.add("reader-article--chapter");
+  }
+
+  function installChapterHero() {
+    const anchor = document.querySelector(".reader-chapter-hero-anchor");
+    const article = document.querySelector(".reader-article");
+    const activeLink = getActiveSidebarChapterLink();
+
+    if (!anchor || !article || !activeLink || anchor.dataset.heroInstalled === "true") {
+      return;
+    }
+
+    const heading = Array.from(article.children).find(function (child) {
+      return child.tagName === "H1";
+    });
+    const parsedHeading = parseChapterHeading(activeLink.textContent || (heading && heading.textContent) || "");
+
+    if (!heading || !parsedHeading.eyebrow) {
+      return;
+    }
+
+    renderChapterHero(article, anchor, heading, parsedHeading, null);
+
+    applyReaderPageMeta().then(function (pageMeta) {
+      if (!pageMeta || !anchor.isConnected || !heading.isConnected) {
+        return;
+      }
+
+      renderChapterHero(article, anchor, heading, parsedHeading, pageMeta);
+    });
+  }
+
+  function collectReferenceCards(selector, captionSelector, labelSelector, textSelector) {
+    return Array.from(document.querySelectorAll(selector))
+      .map(function (element) {
+        const caption = element.querySelector(captionSelector);
+        const label = caption ? normalizeText(caption.querySelector(labelSelector)?.textContent || "") : "";
+        const text = caption ? normalizeText(caption.querySelector(textSelector)?.textContent || "") : "";
+        const fullText = text ? label + " " + text : label;
+
+        if (!element.id || !label) {
+          return null;
+        }
+
+        return {
+          href: "#" + element.id,
+          displayText: truncateReferenceText(fullText, 92),
+          fullText: fullText,
+        };
+      })
+      .filter(Boolean);
+  }
+
+  function populateOutlineSection(section, items) {
+    const body = section ? section.querySelector(".book-outline-section-body") : null;
+    const title = section ? section.querySelector(".book-outline-section-title") : null;
+
+    if (!section || !body || !title) {
+      return;
+    }
+
+    const baseTitle = title.dataset.baseTitle || normalizeText(title.textContent);
+    title.dataset.baseTitle = baseTitle;
+
+    if (!items.length) {
+      section.hidden = true;
+      section.setAttribute("aria-hidden", "true");
+      title.textContent = baseTitle;
+      body.replaceChildren();
+      return;
+    }
+
+    const list = document.createElement("ol");
+    list.className = "book-outline-list";
+
+    items.forEach(function (item) {
+      const listItem = document.createElement("li");
+      const link = document.createElement("a");
+
+      link.className = "book-outline-link book-outline-link--reference";
+      link.href = item.href;
+      link.textContent = item.displayText;
+      link.title = item.fullText;
+      listItem.appendChild(link);
+      list.appendChild(listItem);
+    });
+
+    body.replaceChildren(list);
+    title.textContent = baseTitle + " (" + items.length + ")";
+    section.hidden = false;
+    section.setAttribute("aria-hidden", "false");
+  }
+
+  function installOutlineReferenceSections() {
+    const figuresSection = document.querySelector(".book-outline-figures");
+    const tablesSection = document.querySelector(".book-outline-tables");
+    const figureItems = collectReferenceCards(".figure-card", ".figure-caption", ".figure-caption-label", ".figure-caption-text");
+    const tableItems = collectReferenceCards(".table-anchor-target", ".table-caption", ".table-caption-label", ".table-caption-text");
+
+    populateOutlineSection(figuresSection, figureItems);
+    populateOutlineSection(tablesSection, tableItems);
+  }
+
+  function balanceLeadFigureWeight() {
+    const article = document.querySelector(".reader-article");
+    const firstFigure = article ? article.querySelector(".figure-card") : null;
+
+    if (!article) {
+      return;
+    }
+
+    article.classList.toggle("reader-article--lead-figure-balanced", Boolean(firstFigure));
+  }
+
+  function isTopLevelOutlineAnchor(anchor) {
+    const targetSelector = anchor.getAttribute("href") || "";
+    const targetHeadingId =
+      targetSelector && targetSelector.startsWith("#")
+        ? decodeURIComponent(targetSelector.slice(1))
+        : "";
+    const targetHeadingElement = targetHeadingId ? document.getElementById(targetHeadingId) : null;
+
+    if (!targetHeadingElement) {
+      return false;
+    }
+
+    return targetHeadingElement.tagName.toLowerCase() === "h2";
+  }
+
   function installMobileChapterBar() {
     const bar = document.querySelector(".reader-mobile-chapter-bar");
     const toggle = document.querySelector(".reader-mobile-chapter-toggle");
+    const desktopToggle = document.getElementById("mdbook-sidebar-toggle");
     const kicker = document.querySelector(".reader-mobile-chapter-kicker");
     const title = document.querySelector(".reader-mobile-chapter-title");
     const sidebarToggle = document.getElementById("mdbook-sidebar-toggle-anchor");
     const activeLink = getActiveSidebarChapterLink();
 
-    if (!bar || !toggle || !kicker || !title || !sidebarToggle || !activeLink) {
+    if (!bar || !toggle || !desktopToggle || !kicker || !title || !sidebarToggle || !activeLink) {
       return;
     }
 
@@ -619,8 +1347,7 @@
 
     if (!toggle.dataset.mobileChapterBarBound) {
       toggle.addEventListener("click", function () {
-        sidebarToggle.checked = !sidebarToggle.checked;
-        syncExpandedState();
+        desktopToggle.click();
       });
 
       sidebarToggle.addEventListener("change", syncExpandedState);
@@ -628,6 +1355,36 @@
     }
 
     syncExpandedState();
+  }
+
+  function buildMobileOutlineCardBody(outline) {
+    const compactOutline = document.createElement("div");
+    const topLevelLinks = Array.from(
+      outline.querySelectorAll(":scope > ol > li.header-item > .chapter-link-wrapper[data-heading-tag=\"h2\"] > a")
+    );
+
+    compactOutline.className = "on-this-page";
+
+    if (!topLevelLinks.length) {
+      return outline.cloneNode(true);
+    }
+
+    const list = document.createElement("ol");
+
+    topLevelLinks.forEach(function (link) {
+      const item = document.createElement("li");
+      const wrapper = document.createElement("span");
+      const clonedLink = link.cloneNode(true);
+
+      item.className = "header-item";
+      wrapper.className = "chapter-link-wrapper";
+      wrapper.appendChild(clonedLink);
+      item.appendChild(wrapper);
+      list.appendChild(item);
+    });
+
+    compactOutline.appendChild(list);
+    return compactOutline;
   }
 
   function installInlineOutlineCard() {
@@ -646,13 +1403,31 @@
     }
 
     const card = document.createElement("section");
+    const header = document.createElement("div");
     const label = document.createElement("p");
-    const body = outline.cloneNode(true);
+    const toggle = document.createElement("button");
+    const body = buildMobileOutlineCardBody(outline);
 
     card.className = "reader-mobile-outline-card";
+    header.className = "reader-mobile-outline-card-header";
     label.className = "book-outline-label";
     label.textContent = "On This Page";
-    card.appendChild(label);
+    toggle.className = "reader-mobile-outline-toggle";
+    toggle.type = "button";
+    toggle.textContent = mobileOutlineCollapsed ? "Show" : "Hide";
+    toggle.setAttribute("aria-expanded", mobileOutlineCollapsed ? "false" : "true");
+    body.hidden = mobileOutlineCollapsed;
+
+    toggle.addEventListener("click", function () {
+      mobileOutlineCollapsed = !mobileOutlineCollapsed;
+      body.hidden = mobileOutlineCollapsed;
+      toggle.textContent = mobileOutlineCollapsed ? "Show" : "Hide";
+      toggle.setAttribute("aria-expanded", mobileOutlineCollapsed ? "false" : "true");
+    });
+
+    header.appendChild(label);
+    header.appendChild(toggle);
+    card.appendChild(header);
     card.appendChild(body);
 
     anchor.hidden = false;
@@ -668,6 +1443,7 @@
     const searchresultsOuter = document.getElementById("mdbook-searchresults-outer");
     const searchOverlayRoot = document.getElementById("mdbook-search-overlay-root");
     const toolbarSearchSlot = document.querySelector(".toolbar-search-slot");
+    const desktopMediaQuery = window.matchMedia("(min-width: 901px)");
 
     if (!searchWrap || !searchToggle || !searchbarOuter || !searchbar || !searchresultsOuter || !searchOverlayRoot || !toolbarSearchSlot) {
       return;
@@ -689,11 +1465,13 @@
     }
 
     function syncToolbarSearchSlot() {
+      const desktopVisible = desktopMediaQuery.matches;
       const hidden = searchWrap.classList.contains("hidden");
-      toolbarSearchSlot.classList.toggle("hidden", hidden);
-      toolbarSearchSlot.setAttribute("aria-hidden", hidden ? "true" : "false");
+      const slotHidden = desktopVisible ? false : hidden;
+      toolbarSearchSlot.classList.toggle("hidden", slotHidden);
+      toolbarSearchSlot.setAttribute("aria-hidden", slotHidden ? "true" : "false");
 
-      if (!hidden && wasHidden) {
+      if (!desktopVisible && !hidden && wasHidden) {
         requestAnimationFrame(function focusToolbarSearchbar() {
           searchbar.focus();
           searchbar.select();
@@ -727,6 +1505,12 @@
     });
 
     observer.observe(searchWrap, { attributes: true, attributeFilter: ["class"] });
+
+    if (desktopMediaQuery.addEventListener) {
+      desktopMediaQuery.addEventListener("change", syncToolbarSearchSlot);
+    } else if (desktopMediaQuery.addListener) {
+      desktopMediaQuery.addListener(syncToolbarSearchSlot);
+    }
   }
 
   function syncChapterPaginationHeights() {
@@ -808,11 +1592,17 @@
   document.addEventListener("DOMContentLoaded", function () {
     requestAnimationFrame(function () {
       applyPageVariants();
+      installSidebarShellGeometry();
+      installSidebarProjection();
       installHeaderSearchSlot();
       installChapterPaginationHeightSync();
       moveOutline();
+      installOutlineReferenceSections();
+      installOutlineScrollSpy();
+      installChapterHero();
       installMobileChapterBar();
       installInlineOutlineCard();
+      balanceLeadFigureWeight();
       updateProgress();
     });
 
@@ -820,9 +1610,15 @@
 
     if (sidebar) {
       const observer = new MutationObserver(function () {
+        installSidebarShellGeometry();
+        installSidebarProjection();
         moveOutline();
+        installOutlineReferenceSections();
+        installOutlineScrollSpy();
+        installChapterHero();
         installMobileChapterBar();
         installInlineOutlineCard();
+        balanceLeadFigureWeight();
       });
 
       observer.observe(sidebar, { childList: true, subtree: true });
