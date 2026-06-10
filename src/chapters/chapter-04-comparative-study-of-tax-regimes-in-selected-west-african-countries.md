@@ -536,17 +536,62 @@ operations allows States to:
 The table below summarises the level of participation of States in the
 countries covered by this study.
 
-| Country     | Initial Ownership (%) | Additional participation (%) | Total (%) |
-|:------------|:---------------------:|:----------------------------:|:---------:|
-| Benin       |       10 to 15        |           possible           |    15     |
-| Ghana       |          15           |              5               |    20     |
-| Ivory Coast |          10           |              12              |    22     |
-| Nigeria     |          60           |              \-              |    60     |
-| Senegal     |          10           |              20              |    30     |
-| Niger       |       10 to 20        |              \-              |    20     |
-
-Table 8: State
-participation rate in selected West African countries
+<table>
+<caption><p>Table 8: State
+participation rate in selected West African countries</p></caption>
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 29%" />
+<col style="width: 37%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Country</th>
+<th style="text-align: center;">Initial Ownership (%)</th>
+<th style="text-align: center;">Additional participation (%)</th>
+<th style="text-align: center;">Total (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Benin</td>
+<td style="text-align: center;">10 to 15</td>
+<td style="text-align: center;">possible</td>
+<td style="text-align: center;">15</td>
+</tr>
+<tr>
+<td style="text-align: left;">Ghana</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">20</td>
+</tr>
+<tr>
+<td style="text-align: left;">Ivory Coast</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">22</td>
+</tr>
+<tr>
+<td style="text-align: left;">Nigeria</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">60</td>
+</tr>
+<tr>
+<td style="text-align: left;">Senegal</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">30</td>
+</tr>
+<tr>
+<td style="text-align: left;">Niger</td>
+<td style="text-align: center;">10 to 20</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">20</td>
+</tr>
+</tbody>
+</table>
 
 An analysis of this table shows that only Nigeria has a high initial
 participation rate, which is above average, i.e. higher than that of the

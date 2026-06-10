@@ -808,19 +808,22 @@
       const tableShell = document.createElement("div");
       const tableScroll = document.createElement("div");
       const caption = document.createElement("p");
+      const captionIcon = document.createElement("span");
       const captionLabel = document.createElement("span");
       const captionText = document.createElement("span");
       wrapper.id = tableId;
       wrapper.className = "table-anchor-target";
-      wrapper.dataset.captionPosition = "before";
+      wrapper.dataset.captionPosition = captionPosition;
       tableCard.className = "table-card";
       tableShell.className = "table-anchor-shell";
       tableScroll.className = "table-scroll";
       caption.className = "table-caption";
+      captionIcon.className = "table-caption-icon";
       captionLabel.className = "table-caption-label";
       captionLabel.textContent = "Table " + match[1];
       captionText.className = "table-caption-text";
       captionText.textContent = captionTextValue;
+      caption.appendChild(captionIcon);
       caption.appendChild(captionLabel);
       caption.appendChild(captionText);
 
