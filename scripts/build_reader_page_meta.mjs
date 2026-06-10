@@ -151,8 +151,8 @@ function normalizeRootIndexChapterPaths() {
 
   const source = fs.readFileSync(bookIndexPath, "utf8");
   const normalized = source
-    .replaceAll('src="../images/', 'src="images/')
-    .replaceAll('href="../chapters/', 'href="chapters/');
+    .split('src="../images/').join('src="images/')
+    .split('href="../chapters/').join('href="chapters/');
 
   if (normalized !== source) {
     fs.writeFileSync(bookIndexPath, normalized);

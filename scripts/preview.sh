@@ -28,6 +28,7 @@ cp -R "$ROOT_DIR/assets" "$PUBLIC_DIR/assets"
 cp -R "$ROOT_DIR/chapters" "$PUBLIC_DIR/chapters"
 
 mdbook build --dest-dir "$PUBLIC_DIR/book"
+npm run build:book-js -- "$PUBLIC_DIR/book" >/dev/null
 npm run build:reader-meta >/dev/null
 
 cat <<EOF
