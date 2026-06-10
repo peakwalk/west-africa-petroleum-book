@@ -863,8 +863,8 @@ check_not_contains theme/index.hbs 'class="book-sidebar-utility-link-icon"'
 check_not_contains theme/index.hbs 'Reference Surfaces'
 check_not_contains theme/index.hbs 'class="book-sidebar-download"'
 check_contains theme/index.hbs 'class="toolbar-link-label"'
-check_contains theme/index.hbs 'class="reader-mobile-chapter-bar hidden"'
-check_contains theme/index.hbs 'class="reader-mobile-chapter-toggle"'
+check_not_contains theme/index.hbs 'reader-mobile-chapter-bar'
+check_not_contains theme/index.hbs 'reader-mobile-chapter-toggle'
 check_contains theme/index.hbs 'class="reader-chapter-hero-anchor"'
 check_contains theme/index.hbs 'class="reader-mobile-outline-anchor"'
 check_contains theme/index.hbs 'class="book-outline-section book-outline-figures"'
@@ -898,7 +898,8 @@ const expectations = [
   [".book-sidebar-intro::after {", ["inset-inline: 0;", "border-bottom: 1px solid rgba(11, 31, 51, 0.08);"]],
   [".book-sidebar-book-title {", ["font-family: var(--reader-sans);", "max-width: 24ch;", "font-size: 0.9rem;", "font-weight: 600;", "line-height: 1.38;", "text-transform: uppercase;"]],
   [".reader-sidebar-scroll {", ["padding: var(--sidebar-scroll-padding-block) 1rem 1rem;", "overflow-y: auto;"]],
-  [".reader-sidebar-section {", ["position: relative;", "gap: 0.4rem;", "padding-top: 2.4rem;", "padding-inline: 0.75rem;", "border-top: 0;"]],
+  [".reader-sidebar-projection {", ["width: 100%;", "box-sizing: border-box;"]],
+  [".reader-sidebar-section {", ["position: relative;", "grid-template-columns: minmax(0, 1fr);", "gap: 0.4rem;", "width: 100%;", "padding-top: 2.4rem;", "padding-inline: 0.75rem;", "border-top: 0;", "box-sizing: border-box;"]],
   [".reader-sidebar-section::before {", ["inset-inline: 0;", "border-top: 1px solid rgba(11, 31, 51, 0.08);"]],
   [".reader-sidebar-section:first-child::before {", ["content: none;"]],
   [".reader-sidebar-section--active::before {", ["border-top-color: rgba(49, 99, 194, 0.2);"]],
@@ -915,10 +916,10 @@ const expectations = [
   [".reader-sidebar-section--front-matter .reader-sidebar-section-header {", ["grid-template-columns: auto minmax(0, 1fr);", "align-items: center;", "column-gap: 0.625rem;"]],
   [".reader-sidebar-section--front-matter .reader-sidebar-section-title,", ["color: var(--sidebar-fg);", "font-family: var(--reader-sans);", "font-weight: 650;", "text-transform: none;"]],
   [".reader-sidebar-section--front-matter .reader-sidebar-section-body,", ["gap: 0.3rem;"]],
-  [".reader-sidebar-section-body {", ["gap: 0.35rem;", "padding-bottom: 0.75rem;"]],
-  [".reader-sidebar-row {", ["grid-template-columns: 2.25rem minmax(0, 1fr);", "gap: 0.625rem;", "padding: 0.5rem 1.75rem 0.5rem 0.75rem;", "border-radius: 0.75rem;", "color: var(--sidebar-fg);"]],
+  [".reader-sidebar-section-body {", ["grid-template-columns: minmax(0, 1fr);", "gap: 0.35rem;", "width: 100%;", "padding-bottom: 0.75rem;", "box-sizing: border-box;"]],
+  [".reader-sidebar-row {", ["grid-template-columns: 2.25rem minmax(0, 1fr);", "gap: 0.625rem;", "width: 100%;", "padding: 0.5rem 1.75rem 0.5rem 0.75rem;", "border-radius: 0.75rem;", "color: var(--sidebar-fg);", "box-sizing: border-box;"]],
   [".reader-sidebar-row-index {", ["color: currentColor;", "font-size: 0.6875rem;", "letter-spacing: 0.14em;"]],
-  [".reader-sidebar-row-title {", ["font-family: var(--reader-sans);", "font-size: 0.8125rem;", "line-height: 1.45;"]],
+  [".reader-sidebar-row-title {", ["display: block;", "width: 100%;", "font-family: var(--reader-sans);", "font-size: 0.8125rem;", "line-height: 1.45;"]],
   [".reader-sidebar-row--reference {", ["padding: 0.4rem 1.25rem 0.4rem 0.75rem;", "border-radius: 0.5rem;"]],
   [".reader-sidebar-section--front-matter .reader-sidebar-row--reference {", ["padding: 0.4rem 1.25rem 0.4rem calc(1.1875rem + 0.625rem);"]],
   [".reader-sidebar-row--reference.reader-sidebar-row--with-icon {", ["grid-template-columns: 1.375rem minmax(0, 1fr);", "gap: 0.5rem;"]],
@@ -1086,10 +1087,10 @@ for (const expected of [
   ".reader-sidebar-section--front-matter .reader-sidebar-section-body,",
   "gap: 0.25rem;",
   ".reader-sidebar-row {",
-  "grid-template-columns: 2.3rem minmax(0, 1fr);",
+  "grid-template-columns: 2.25rem minmax(0, 1fr);",
   "gap: 0.625rem;",
-  "padding: 0.58rem 2.1rem 0.58rem 0.95rem;",
-  "border-radius: 0.6875rem;",
+  "padding: 0.5rem 1.75rem 0.5rem 0.75rem;",
+  "border-radius: 0.75rem;",
   "color: var(--sidebar-fg);",
   ".reader-sidebar-row-index {",
   "font-size: 0.6875rem;",
@@ -1098,22 +1099,23 @@ for (const expected of [
   "line-height: 1.4;",
   "font-weight: 560;",
   ".reader-sidebar-row--reference {",
-  "padding: 0.34rem 1.6rem 0.34rem 0.9rem;",
+  "grid-template-columns: minmax(0, 1fr);",
+  "padding: 0.4rem 1.25rem 0.4rem 0.75rem;",
   ".reader-sidebar-section--front-matter .reader-sidebar-row--reference {",
-  "padding: 0.34rem 1.6rem 0.34rem calc(1.1875rem + 0.625rem);",
+  "padding: 0.4rem 1.25rem 0.4rem calc(1.1875rem + 0.625rem);",
   ".reader-sidebar-row--reference.reader-sidebar-row--with-icon {",
-  "grid-template-columns: 1.5rem minmax(0, 1fr);",
-  "gap: 0.625rem;",
+  "grid-template-columns: 1.375rem minmax(0, 1fr);",
+  "gap: 0.5rem;",
   ".reader-sidebar-row--reference .reader-sidebar-row-title {",
   "font-size: 0.8125rem;",
   "font-weight: 560;",
   ".reader-sidebar-row-icon {",
-  "width: 1.5rem;",
-  "height: 1.5rem;",
+  "width: 1.375rem;",
+  "height: 1.375rem;",
   ".reader-sidebar-row--reference.reader-sidebar-row--active {",
-  "padding: 0.34rem 1.6rem 0.34rem 0.9rem;",
+  "padding: 0.4rem 1.25rem 0.4rem 0.75rem;",
   ".reader-sidebar-section--front-matter .reader-sidebar-row--reference.reader-sidebar-row--active {",
-  "padding: 0.34rem 1.6rem 0.34rem calc(1.1875rem + 0.625rem);",
+  "padding: 0.4rem 1.25rem 0.4rem calc(1.1875rem + 0.625rem);",
   ".reader-sidebar-row--active {",
   "box-shadow: 0 8px 18px rgba(49, 99, 194, 0.16);",
   ".reader-sidebar-row--active::after {",
@@ -1166,6 +1168,7 @@ node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8
 node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");const start=js.indexOf("function syncOutlineRailVisibility() {");const end=js.indexOf("\n\n  function syncOutlineActiveState()",start);if(start===-1||end===-1){console.error("Expected syncOutlineRailVisibility() to manage the empty right-rail contract.");process.exit(1);}const block=js.slice(start,end);for(const expected of ["document.querySelector(\"#mdbook-outline-scroll\")","document.querySelector(\".book-outline-body .on-this-page\")","document.querySelector(\".book-outline-figures\")","document.querySelector(\".book-outline-tables\")","document.body.classList.toggle(\"book-outline-empty\", !hasVisibleOutlineContent);","outline.hidden = !hasVisibleOutlineContent;"]){if(!block.includes(expected)){console.error(`Expected syncOutlineRailVisibility() to include ${expected}`);process.exit(1);}}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const layout=block("body.book-outline-empty .reader-layout {");if(!layout.includes("grid-template-columns: minmax(0, 1fr);")){console.error("Expected empty outline pages to collapse the reader layout back to a single content column.");process.exit(1);}const rail=block("body.book-outline-empty .reader-outline {");if(!rail.includes("display: none;")){console.error("Expected empty outline pages to hide the desktop right rail entirely.");process.exit(1);}'
 node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");for(const expected of ["function bindSidebarProjectionRowInteraction(","if (row.dataset.readerSidebarBound === \"true\") {","row.dataset.readerSidebarBound = \"true\";","hydrateSidebarProjectionRows(projection);"]){if(!js.includes(expected)){console.error(`Expected theme/custom.js to include ${expected}`);process.exit(1);}}'
+node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");for(const expected of ["function installSidebarDisplayStateSync()","function syncSidebarDisplayState()","if (!sidebarToggle.checked) {","if (sidebar.style.display === \"none\") {","sidebar.style.display = \"\";","sidebar.offsetHeight;","sidebar.setAttribute(\"aria-hidden\", \"false\");","requestAnimationFrame(syncSidebarDisplayState);","installSidebarDisplayStateSync();"]){if(!js.includes(expected)){console.error(`Expected theme/custom.js to include ${expected}`);process.exit(1);}}const applyIndex=js.indexOf("applyPageVariants();");const displayIndex=js.indexOf("installSidebarDisplayStateSync();");const shellIndex=js.indexOf("installSidebarShellGeometry();");if(applyIndex===-1||displayIndex===-1||shellIndex===-1||!(applyIndex<displayIndex&&displayIndex<shellIndex)){console.error("Expected sidebar display-state sync to run after page variants and before sidebar geometry/projection work.");process.exit(1);}'
 check_contains theme/custom.js 'new ResizeObserver'
 check_contains theme/custom.js '--sidebar-intro-height'
 check_contains theme/custom.js 'reader-sidebar-scroll'
@@ -1235,6 +1238,7 @@ check_contains theme/custom.css 'transition: width 180ms ease, margin-inline-sta
 check_contains theme/custom.css '#mdbook-sidebar-toggle-anchor:checked ~ #mdbook-page-wrapper {'
 check_contains theme/custom.css '--reader-left-offset: var(--sidebar-width);'
 check_contains theme/custom.css 'margin-inline-start: 0;'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const mediaStart=css.indexOf("@media (max-width: 1080px) {");const mediaEnd=css.indexOf("@media (max-width: 760px) {", mediaStart);if(mediaStart===-1||mediaEnd===-1){console.error("Expected mobile sidebar media query block.");process.exit(1);}const mediaBlock=css.slice(mediaStart, mediaEnd);const match=mediaBlock.match(/#mdbook-sidebar-toggle-anchor:checked ~ #mdbook-page-wrapper \{([^}]*)\}/);if(!match){console.error("Expected mobile open-sidebar page wrapper rule.");process.exit(1);}for(const expected of ["transform: none;","margin-left: 0;","margin-inline-start: 0;"]){if(!match[1].includes(expected)){console.error(`Expected mobile open-sidebar page wrapper rule to include ${expected}`);process.exit(1);}}'
 check_not_contains theme/custom.css '--toolbar-sidebar-column:'
 check_not_contains theme/custom.css '--toolbar-actions-column:'
 check_not_contains theme/custom.css 'width: min(100%, calc(100vw - var(--sidebar-width)));'
@@ -1269,8 +1273,8 @@ check_contains theme/custom.css '.reader-chapter-meta-item--inline {'
 check_contains theme/custom.css '.reader-chapter-dek {'
 check_contains theme/custom.css '.reader-article--lead-figure-balanced .figure-card:first-of-type {'
 check_contains theme/custom.css '.book-outline-active-marker {'
-check_contains theme/custom.css '.reader-mobile-chapter-bar {'
-check_contains theme/custom.css '.reader-mobile-chapter-toggle {'
+check_not_contains theme/custom.css '.reader-mobile-chapter-bar {'
+check_not_contains theme/custom.css '.reader-mobile-chapter-toggle {'
 check_contains theme/custom.css '.reader-mobile-outline-card {'
 check_contains theme/custom.css '.reader-mobile-outline-card-header {'
 check_contains theme/custom.css '.reader-mobile-outline-toggle {'
@@ -1296,7 +1300,7 @@ check_contains theme/custom.css 'font-size: 20px;'
 check_contains theme/custom.css '.content p {'
 check_contains theme/custom.css 'max-width: 68ch;'
 check_contains theme/custom.css '.content table {'
-node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const checks=[[".reader-chapter-eyebrow {",["font-size: 12px;","letter-spacing: 0.12em;"]],[".reader-chapter-hero h1 {",["line-height: 1.08;"]],[".reader-chapter-rule {",["width: 32px;","height: 3px;"]],[".reader-chapter-meta-item {",["font-size: 14px;"]],[".reader-mobile-chapter-toggle {",["gap: 0.75rem;","padding: 0.85rem 1rem;","min-height: 48px;"]],[".reader-mobile-chapter-kicker {",["font-size: 13px;"]],[".reader-mobile-chapter-title {",["font-size: 14px;"]],[".reader-mobile-outline-card {",["padding: 14px 16px;","border-radius: 14px;"]],[".reader-mobile-outline-card-header {",["display: flex;","justify-content: space-between;"]],[".reader-mobile-outline-toggle {",["font-size: 0.875rem;","font-weight: 600;"]],[".reader-mobile-outline-card .on-this-page > ol {",["display: flex;","flex-wrap: wrap;","gap: 0.75rem 1rem;"]],[".reader-mobile-outline-card .on-this-page li.header-item {",["min-width: 0;","max-width: 100%;"]],[".book-outline-active-marker {",["width: 0.4375rem;","height: 0.4375rem;"]]];for(const [selector,expected] of checks){const start=css.indexOf(selector);const end=css.indexOf("}",start);if(start===-1||end===-1){console.error(`Expected rule block for ${selector}`);process.exit(1);}const block=css.slice(start,end+1);for(const value of expected){if(!block.includes(value)){console.error(`Expected ${selector} to include ${value}`);process.exit(1);}}}if(!/@media \(min-width: 768px\) \{[\s\S]*?\.reader-chapter-hero h1 \{[\s\S]*?font-size:\s*clamp\(3rem, 4vw, 4\.5rem\);/s.test(css)){console.error("Expected desktop chapter hero title scale to match the reader design token");process.exit(1);}if(!/\.reader-chapter-hero h1 \{[\s\S]*?font-size:\s*clamp\(2\.35rem, 11vw, 4rem\);/s.test(css)){console.error("Expected mobile chapter hero title scale to match the reader design token");process.exit(1);}' 
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const checks=[[".reader-chapter-eyebrow {",["font-size: 12px;","letter-spacing: 0.12em;"]],[".reader-chapter-hero h1 {",["line-height: 1.08;"]],[".reader-chapter-rule {",["width: 32px;","height: 3px;"]],[".reader-chapter-meta-item {",["font-size: 14px;"]],[".reader-mobile-outline-card {",["padding: 14px 16px;","border-radius: 14px;"]],[".reader-mobile-outline-card-header {",["display: flex;","justify-content: space-between;"]],[".reader-mobile-outline-toggle {",["font-size: 0.875rem;","font-weight: 600;"]],[".reader-mobile-outline-card .on-this-page > ol {",["display: flex;","flex-wrap: wrap;","gap: 0.75rem 1rem;"]],[".reader-mobile-outline-card .on-this-page li.header-item {",["min-width: 0;","max-width: 100%;"]],[".book-outline-active-marker {",["width: 0.4375rem;","height: 0.4375rem;"]]];for(const [selector,expected] of checks){const start=css.indexOf(selector);const end=css.indexOf("}",start);if(start===-1||end===-1){console.error(`Expected rule block for ${selector}`);process.exit(1);}const block=css.slice(start,end+1);for(const value of expected){if(!block.includes(value)){console.error(`Expected ${selector} to include ${value}`);process.exit(1);}}}for(const removed of [".reader-mobile-chapter-toggle {",".reader-mobile-chapter-kicker {",".reader-mobile-chapter-title {"]){if(css.includes(removed)){console.error(`Expected mobile chapter selector styles to be removed: ${removed}`);process.exit(1);}}if(!/@media \(min-width: 768px\) \{[\s\S]*?\.reader-chapter-hero h1 \{[\s\S]*?font-size:\s*clamp\(3rem, 4vw, 4\.5rem\);/s.test(css)){console.error("Expected desktop chapter hero title scale to match the reader design token");process.exit(1);}if(!/\.reader-chapter-hero h1 \{[\s\S]*?font-size:\s*clamp\(2\.35rem, 11vw, 4rem\);/s.test(css)){console.error("Expected mobile chapter hero title scale to match the reader design token");process.exit(1);}' 
 check_contains theme/custom.css '.reader-article table,'
 check_contains theme/custom.css 'font-family: var(--reader-sans);'
 check_contains theme/custom.css 'font-size: 14px;'
@@ -1475,9 +1479,7 @@ check_contains theme/custom.css 'border-left: 0;'
 check_not_contains theme/custom.css '@import url("https://fonts.googleapis.com'
 check_contains theme/custom.js 'document.body.classList.add("book-outline-ready")'
 check_contains theme/custom.js 'function installHeaderSearchSlot()'
-check_contains theme/custom.js 'function installMobileChapterBar()'
-check_contains theme/custom.js 'const desktopToggle = document.getElementById("mdbook-sidebar-toggle");'
-check_contains theme/custom.js 'desktopToggle.click();'
+check_not_contains theme/custom.js 'function installMobileChapterBar()'
 check_not_contains theme/custom.js 'sidebarToggle.click();'
 check_not_contains theme/custom.js 'sidebarToggle.checked = !sidebarToggle.checked;'
 check_contains theme/custom.js 'function installInlineOutlineCard()'
@@ -1499,7 +1501,7 @@ check_contains theme/custom.js 'function balanceLeadFigureWeight()'
 check_contains theme/custom.js 'function truncateReferenceText('
 check_contains theme/custom.js 'displayText: buildReferenceRailLabel(label, text)'
 check_contains theme/custom.js 'document.querySelector(".toolbar-search-slot")'
-check_contains theme/custom.js 'document.querySelector(".reader-mobile-chapter-toggle")'
+check_not_contains theme/custom.js 'document.querySelector(".reader-mobile-chapter-toggle")'
 check_contains theme/custom.js 'document.querySelector(".reader-chapter-hero-anchor")'
 check_contains theme/custom.js 'document.querySelector(".reader-mobile-outline-anchor")'
 check_contains theme/custom.js 'document.querySelector(".book-outline-figures")'

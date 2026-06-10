@@ -549,6 +549,41 @@
     }
   }
 
+  function installSidebarDisplayStateSync() {
+    const sidebar = document.getElementById("mdbook-sidebar");
+    const sidebarToggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+
+    if (!sidebar || !sidebarToggle) {
+      return;
+    }
+
+    function syncSidebarDisplayState() {
+      if (!sidebarToggle.checked) {
+        return;
+      }
+
+      if (sidebar.style.display === "none") {
+        sidebar.style.display = "";
+        // Force layout so width-dependent sidebar rows can resolve immediately.
+        sidebar.offsetHeight;
+      }
+
+      sidebar.setAttribute("aria-hidden", "false");
+      Array.from(sidebar.querySelectorAll("a")).forEach(function (link) {
+        link.tabIndex = 0;
+      });
+    }
+
+    if (!sidebar.dataset.readerSidebarDisplayBound) {
+      sidebarToggle.addEventListener("change", function () {
+        requestAnimationFrame(syncSidebarDisplayState);
+      });
+      sidebar.dataset.readerSidebarDisplayBound = "true";
+    }
+
+    syncSidebarDisplayState();
+  }
+
   function buildOutlineList(outlineAnchors) {
     const flatList = document.createElement("ol");
 
@@ -1431,42 +1466,6 @@
     return targetHeadingElement.tagName.toLowerCase() === "h2";
   }
 
-  function installMobileChapterBar() {
-    const bar = document.querySelector(".reader-mobile-chapter-bar");
-    const toggle = document.querySelector(".reader-mobile-chapter-toggle");
-    const desktopToggle = document.getElementById("mdbook-sidebar-toggle");
-    const kicker = document.querySelector(".reader-mobile-chapter-kicker");
-    const title = document.querySelector(".reader-mobile-chapter-title");
-    const sidebarToggle = document.getElementById("mdbook-sidebar-toggle-anchor");
-    const activeLink = getActiveSidebarChapterLink();
-
-    if (!bar || !toggle || !desktopToggle || !kicker || !title || !sidebarToggle || !activeLink) {
-      return;
-    }
-
-    const normalizedTitle = (activeLink.textContent || "").replace(/\s+/g, " ").trim();
-
-    function syncExpandedState() {
-      toggle.setAttribute("aria-expanded", sidebarToggle.checked ? "true" : "false");
-    }
-
-    kicker.textContent = "Chapter";
-    title.textContent = normalizedTitle;
-    bar.classList.remove("hidden");
-    bar.setAttribute("aria-hidden", "false");
-
-    if (!toggle.dataset.mobileChapterBarBound) {
-      toggle.addEventListener("click", function () {
-        desktopToggle.click();
-      });
-
-      sidebarToggle.addEventListener("change", syncExpandedState);
-      toggle.dataset.mobileChapterBarBound = "true";
-    }
-
-    syncExpandedState();
-  }
-
   function buildMobileOutlineCardBody(outline) {
     const compactOutline = document.createElement("div");
     const topLevelLinks = Array.from(
@@ -1702,6 +1701,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     requestAnimationFrame(function () {
       applyPageVariants();
+      installSidebarDisplayStateSync();
       installSidebarShellGeometry();
       installSidebarProjection();
       installHeaderSearchSlot();
@@ -1711,7 +1711,6 @@
       syncOutlineRailVisibility();
       installOutlineScrollSpy();
       installChapterHero();
-      installMobileChapterBar();
       installInlineOutlineCard();
       balanceLeadFigureWeight();
       updateProgress();
@@ -1721,6 +1720,7 @@
 
     if (sidebar) {
       const observer = new MutationObserver(function () {
+        installSidebarDisplayStateSync();
         installSidebarShellGeometry();
         installSidebarProjection();
         moveOutline();
@@ -1728,7 +1728,6 @@
         syncOutlineRailVisibility();
         installOutlineScrollSpy();
         installChapterHero();
-        installMobileChapterBar();
         installInlineOutlineCard();
         balanceLeadFigureWeight();
       });

@@ -182,6 +182,116 @@ class ThemeCustomCssTest(unittest.TestCase):
         self.assertNotIn("padding: 0.6rem 0.8rem;", block)
         self.assertNotIn("border-radius: 0.8rem;", block)
 
+    def test_mobile_sidebar_open_keeps_page_wrapper_unshifted(self) -> None:
+        css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
+        mobile_block_start = css.index("@media (max-width: 1080px) {")
+        mobile_block_end = css.index("\n}\n\n@media (max-width: 760px) {", mobile_block_start)
+        mobile_block = css[mobile_block_start:mobile_block_end]
+        match = re.search(
+            r"#mdbook-sidebar-toggle-anchor:checked ~ #mdbook-page-wrapper \{(?P<body>.*?)\n  \}",
+            mobile_block,
+            re.DOTALL,
+        )
+        self.assertIsNotNone(match, "Missing mobile page wrapper rule for open sidebar state")
+        rule_body = match.group("body")
+
+        self.assertIn("transform: none;", rule_body)
+        self.assertIn("margin-left: 0;", rule_body)
+        self.assertIn("margin-inline-start: 0;", rule_body)
+
+    def test_mobile_sidebar_rows_keep_desktop_text_width_geometry(self) -> None:
+        css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
+        mobile_block_start = css.index("@media (max-width: 1080px) {")
+        mobile_block_end = css.index("\n}\n\n@media (max-width: 760px) {", mobile_block_start)
+        mobile_block = css[mobile_block_start:mobile_block_end]
+
+        def mobile_rule(selector: str) -> str:
+            match = re.search(
+                rf"^[ \t]*{re.escape(selector)}\s*\{{(?P<body>.*?)^[ \t]*\}}",
+                mobile_block,
+                re.MULTILINE | re.DOTALL,
+            )
+            self.assertIsNotNone(match, f"Missing mobile CSS rule for {selector}")
+            return match.group("body")
+
+        row_block = mobile_rule(".reader-sidebar-row")
+        reference_block = mobile_rule(".reader-sidebar-row--reference")
+        front_matter_reference_block = mobile_rule(
+            ".reader-sidebar-section--front-matter .reader-sidebar-row--reference"
+        )
+        icon_row_block = mobile_rule(".reader-sidebar-row--reference.reader-sidebar-row--with-icon")
+        active_reference_block = mobile_rule(".reader-sidebar-row--reference.reader-sidebar-row--active")
+        front_matter_active_reference_block = mobile_rule(
+            ".reader-sidebar-section--front-matter .reader-sidebar-row--reference.reader-sidebar-row--active"
+        )
+
+        self.assertIn("grid-template-columns: 2.25rem minmax(0, 1fr);", row_block)
+        self.assertIn("padding: 0.5rem 1.75rem 0.5rem 0.75rem;", row_block)
+        self.assertIn("grid-template-columns: minmax(0, 1fr);", reference_block)
+        self.assertIn("padding: 0.4rem 1.25rem 0.4rem 0.75rem;", reference_block)
+        self.assertIn(
+            "padding: 0.4rem 1.25rem 0.4rem calc(1.1875rem + 0.625rem);",
+            front_matter_reference_block,
+        )
+        self.assertIn("grid-template-columns: 1.375rem minmax(0, 1fr);", icon_row_block)
+        self.assertIn("gap: 0.5rem;", icon_row_block)
+        self.assertIn("padding: 0.4rem 1.25rem 0.4rem 0.75rem;", active_reference_block)
+        self.assertIn(
+            "padding: 0.4rem 1.25rem 0.4rem calc(1.1875rem + 0.625rem);",
+            front_matter_active_reference_block,
+        )
+
+    def test_sidebar_title_width_contract_is_explicit(self) -> None:
+        css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
+
+        projection_block = _rule_block(css, ".reader-sidebar-projection")
+        section_block = _rule_block(css, ".reader-sidebar-section")
+        body_block = _rule_block(css, ".reader-sidebar-section-body")
+        row_block = _rule_block(css, ".reader-sidebar-row")
+        title_block = _rule_block(css, ".reader-sidebar-row-title")
+
+        self.assertIn("width: 100%;", projection_block)
+        self.assertIn("box-sizing: border-box;", projection_block)
+        self.assertIn("width: 100%;", section_block)
+        self.assertIn("box-sizing: border-box;", section_block)
+        self.assertIn("grid-template-columns: minmax(0, 1fr);", section_block)
+        self.assertIn("width: 100%;", body_block)
+        self.assertIn("box-sizing: border-box;", body_block)
+        self.assertIn("grid-template-columns: minmax(0, 1fr);", body_block)
+        self.assertIn("width: 100%;", row_block)
+        self.assertIn("box-sizing: border-box;", row_block)
+        self.assertIn("display: block;", title_block)
+        self.assertIn("width: 100%;", title_block)
+
+    def test_sidebar_open_state_restores_display_before_layout_work(self) -> None:
+        js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("function installSidebarDisplayStateSync()", js)
+        self.assertIn('const sidebar = document.getElementById("mdbook-sidebar");', js)
+        self.assertIn('const sidebarToggle = document.getElementById("mdbook-sidebar-toggle-anchor");', js)
+        self.assertIn("function syncSidebarDisplayState()", js)
+        self.assertIn("if (!sidebarToggle.checked) {", js)
+        self.assertIn('if (sidebar.style.display === "none") {', js)
+        self.assertIn('sidebar.style.display = "";', js)
+        self.assertIn("sidebar.offsetHeight;", js)
+        self.assertIn('sidebar.setAttribute("aria-hidden", "false");', js)
+        self.assertIn('requestAnimationFrame(syncSidebarDisplayState);', js)
+        self.assertRegex(
+            js,
+            r'applyPageVariants\(\);\s+installSidebarDisplayStateSync\(\);\s+installSidebarShellGeometry\(\);',
+        )
+
+    def test_mobile_chapter_selector_is_removed(self) -> None:
+        css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
+        js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
+
+        self.assertNotIn(".reader-mobile-chapter-bar {", css)
+        self.assertNotIn(".reader-mobile-chapter-toggle {", css)
+        self.assertNotIn(".reader-mobile-chapter-kicker {", css)
+        self.assertNotIn(".reader-mobile-chapter-title {", css)
+        self.assertNotIn("function installMobileChapterBar()", js)
+        self.assertNotIn('document.querySelector(".reader-mobile-chapter-toggle")', js)
+
 
 if __name__ == "__main__":
     unittest.main()
