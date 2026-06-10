@@ -18,6 +18,7 @@
     "check:docx-figures": "python3 scripts/check_docx_figures.py --docx \"resources/Exploration and Exploitation of Petroleum Resources in West Africa (Matt Edited).docx\" --summary src/SUMMARY.md --chapters-dir src/chapters --manifest src/images/figure-manifest.json",
     "build:site": "rm -rf public && mkdir -p public && npm run build:index && npm run build:legal && npm run build:chapters && cp index.html public/index.html && cp terms-of-use.html public/terms-of-use.html && cp privacy-policy.html public/privacy-policy.html && cp cookie-policy.html public/cookie-policy.html && cp -R assets public/assets && cp -R chapters public/chapters && mdbook build --dest-dir public/book && npm run build:reader-meta",
     "test:site": "sh scripts/test-site-render.sh",
+    "test:preview-build": "sh scripts/test-preview-build.sh",
     "test:preview-cache": "sh scripts/test-preview-cache.sh",
     "preview": "./scripts/preview.sh",
     "serve:book": "mdbook serve"
