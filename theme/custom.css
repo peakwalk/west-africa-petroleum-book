@@ -279,7 +279,7 @@ body.book-outline-empty .reader-outline {
 
 .book-outline-label {
   margin: 0;
-  color: var(--ink);
+  color: var(--links);
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.16em;
@@ -295,7 +295,7 @@ body.book-outline-empty .reader-outline {
 
 .book-outline-section-title {
   margin: 0;
-  color: rgba(38, 77, 151, 0.78);
+  color: var(--links);
   font-size: 0.6875rem;
   font-weight: 800;
   letter-spacing: 0.16em;
@@ -312,7 +312,9 @@ body.book-outline-empty .reader-outline {
 
 .book-outline-link,
 .book-outline-link:visited {
-  color: #526171;
+  display: block;
+  min-width: 0;
+  color: var(--ink);
   font-size: 0.88rem;
   line-height: 1.5;
   text-decoration: none;
@@ -320,7 +322,7 @@ body.book-outline-empty .reader-outline {
 
 .book-outline-link--active,
 .book-outline-link--active:visited {
-  color: var(--brand-blue);
+  color: var(--ink);
   font-weight: 600;
 }
 
@@ -340,18 +342,48 @@ body.book-outline-empty .reader-outline {
 
 .book-outline-link:hover,
 .book-outline-link:focus-visible {
-  color: var(--brand-blue);
+  color: var(--ink);
+}
+
+/* Override mdBook's broader .content a:link / a:visited rules inside the outline rail. */
+.reader-outline .book-outline-link:link,
+.reader-outline .book-outline-link:visited,
+.reader-outline .book-outline-link:hover,
+.reader-outline .book-outline-link:focus-visible {
+  color: var(--ink);
 }
 
 .book-outline-active-marker {
-  position: absolute;
-  inset-inline-start: 0;
-  top: 0.54rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: start;
+  width: var(--book-outline-marker-size);
+  height: calc(var(--book-outline-font-size) * var(--book-outline-line-height));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 120ms ease;
+}
+
+.book-outline-active-marker::before {
+  content: "";
   width: 0.4375rem;
   height: 0.4375rem;
   border-radius: 999px;
   background: var(--brand-blue);
   box-shadow: 0 0 0 2px rgba(49, 99, 194, 0.12);
+}
+
+.book-outline-active-marker--visible {
+  opacity: 1;
+}
+
+.book-outline-link--indexed .book-outline-heading-index {
+  margin-right: 0.24rem;
+}
+
+.book-outline-link--indexed .book-outline-heading-title {
+  min-width: 0;
 }
 
 .content main {
@@ -360,14 +392,14 @@ body.book-outline-empty .reader-outline {
   line-height: 1.72;
 }
 
-.content p {
+.reader-article p {
   max-width: 68ch;
   margin-bottom: 1.15rem;
   color: var(--ink);
   line-height: 1.72;
 }
 
-.content li {
+.reader-article li {
   color: var(--ink);
   line-height: 1.625;
 }
@@ -456,6 +488,49 @@ body.book-outline-empty .reader-outline {
 .reader-article h5,
 .reader-article h6 {
   color: var(--ink);
+}
+
+.reader-article h1:target::before,
+.reader-article h2:target::before,
+.reader-article h3:target::before,
+.reader-article h4:target::before,
+.reader-article h5:target::before,
+.reader-article h6:target::before {
+  display: none;
+  content: none;
+}
+
+.reader-article a.header.reader-heading-link--indexed,
+.reader-article a.header.reader-heading-link--indexed:visited {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 0.85rem;
+  align-items: start;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.reader-article a.header.reader-heading-link--indexed .reader-heading-index {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.8rem;
+  color: var(--brand-blue);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.reader-article a.header.reader-heading-link--indexed .reader-heading-index::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0.05rem;
+  width: 100%;
+  height: 4px;
+  background: var(--brand-gold);
+}
+
+.reader-article a.header.reader-heading-link--indexed .reader-heading-title {
+  min-width: 0;
 }
 
 .content a,
@@ -1357,6 +1432,10 @@ body.book-outline-empty .reader-outline {
 }
 
 .on-this-page {
+  --book-outline-font-size: 13px;
+  --book-outline-line-height: 1.25;
+  --book-outline-marker-size: 0.4375rem;
+  --book-outline-marker-gap: 0.4rem;
   margin: 0;
   padding: 0;
   border: 0;
@@ -1375,7 +1454,6 @@ body.book-outline-empty .reader-outline {
 
 .on-this-page li.header-item {
   margin: 0;
-  line-height: 1.35;
 }
 
 .on-this-page li.header-item:first-child {
@@ -1383,9 +1461,26 @@ body.book-outline-empty .reader-outline {
 }
 
 .on-this-page .chapter-link-wrapper {
-  display: block;
-  position: relative;
-  padding-inline-start: 0.85rem;
+  display: grid;
+  grid-template-columns: var(--book-outline-marker-size) minmax(0, 1fr);
+  column-gap: var(--book-outline-marker-gap);
+  align-items: start;
+}
+
+.on-this-page .chapter-link-wrapper[data-heading-tag="h3"] {
+  padding-inline-start: 1rem;
+}
+
+.on-this-page .chapter-link-wrapper[data-heading-tag="h4"] {
+  padding-inline-start: 2rem;
+}
+
+.on-this-page .chapter-link-wrapper[data-heading-tag="h5"] {
+  padding-inline-start: 3rem;
+}
+
+.on-this-page .chapter-link-wrapper[data-heading-tag="h6"] {
+  padding-inline-start: 4rem;
 }
 
 .on-this-page .chapter-fold-toggle {
@@ -1394,21 +1489,26 @@ body.book-outline-empty .reader-outline {
 
 .on-this-page a,
 .on-this-page a:visited {
-  color: rgba(11, 31, 51, 0.62);
+  color: var(--ink);
   text-decoration: none;
-  font-size: 13px;
+  font-size: var(--book-outline-font-size);
+  line-height: var(--book-outline-line-height);
   font-weight: 500;
-  line-height: 1.45;
 }
 
 .on-this-page a.active,
 .on-this-page a.current-header,
-.on-this-page a:active,
-.on-this-page a:focus-visible,
-.on-this-page a:hover {
-  color: var(--brand-blue-deep);
+.on-this-page a:active {
+  color: var(--ink);
   text-decoration: none;
   font-weight: 600;
+  outline: none;
+}
+
+.on-this-page a:focus-visible,
+.on-this-page a:hover {
+  color: var(--ink);
+  text-decoration: none;
   outline: none;
 }
 
@@ -1484,7 +1584,7 @@ body.book-outline-empty .reader-outline {
 }
 
 .reader-mobile-outline-card .on-this-page .chapter-link-wrapper {
-  padding-inline-start: 0;
+  display: block;
 }
 
 .reader-mobile-outline-card .on-this-page a,
@@ -1581,7 +1681,7 @@ body.book-outline-empty .reader-outline {
 
 .reader-chapter-hero h1 {
   margin: 0;
-  font-size: clamp(2.35rem, 11vw, 4rem);
+  font-size: 48px;
   line-height: 1.08;
   letter-spacing: -0.03em;
 }
@@ -3202,6 +3302,6 @@ body.book-page-aux-index .reader-article {
   }
 
   .reader-chapter-hero h1 {
-    font-size: clamp(3rem, 4vw, 4.5rem);
+    font-size: 48px;
   }
 }

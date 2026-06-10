@@ -163,6 +163,75 @@
     return (text || "").replace(/\s+/g, " ").trim();
   }
 
+  function normalizeHeadingDisplayText(text) {
+    const normalized = normalizeText(text);
+    return normalized.replace(/^(\d+(?:\.\d+)*)(?:\s*-\s*|\s+)?(?=\S)/, "$1 ");
+  }
+
+  function splitHeadingDisplayText(text) {
+    const normalized = normalizeHeadingDisplayText(text);
+    const match = normalized.match(/^(\d+(?:\.\d+)*)\s+(.+)$/);
+
+    if (!match) {
+      return { index: "", title: normalized };
+    }
+
+    return { index: match[1], title: match[2].trim() };
+  }
+
+  function renderIndexedHeadingAnchor(anchor, text) {
+    const normalizedText = normalizeHeadingDisplayText(text);
+    const parts = splitHeadingDisplayText(normalizedText);
+
+    anchor.dataset.readerHeadingDisplayText = normalizedText;
+
+    anchor.textContent = "";
+    anchor.classList.remove("reader-heading-link--indexed");
+
+    if (!parts.index) {
+      anchor.textContent = parts.title;
+      return;
+    }
+
+    const index = document.createElement("span");
+    const title = document.createElement("span");
+
+    index.className = "reader-heading-index";
+    index.textContent = parts.index;
+    title.className = "reader-heading-title";
+    title.textContent = parts.title;
+
+    anchor.classList.add("reader-heading-link--indexed");
+    anchor.appendChild(index);
+    anchor.appendChild(title);
+  }
+
+  function renderOutlineHeadingAnchor(anchor, text) {
+    const normalizedText = normalizeHeadingDisplayText(text);
+    const parts = splitHeadingDisplayText(normalizedText);
+
+    anchor.dataset.readerHeadingDisplayText = normalizedText;
+    anchor.textContent = "";
+    anchor.classList.remove("book-outline-link--indexed");
+
+    if (!parts.index) {
+      anchor.textContent = parts.title;
+      return;
+    }
+
+    const index = document.createElement("span");
+    const title = document.createElement("span");
+
+    index.className = "book-outline-heading-index";
+    index.textContent = parts.index;
+    title.className = "book-outline-heading-title";
+    title.textContent = parts.title;
+
+    anchor.classList.add("book-outline-link--indexed");
+    anchor.appendChild(index);
+    anchor.appendChild(title);
+  }
+
   function getReaderScroller() {
     return (
       document.getElementById("mdbook-reader-scroll") ||
@@ -630,15 +699,17 @@
 
       const activeMarker = document.createElement("span");
       activeMarker.className = "book-outline-active-marker";
-      activeMarker.hidden = true;
+      activeMarker.setAttribute("aria-hidden", "true");
 
       normalizedAnchor.className = "header-in-summary book-outline-link";
       normalizedAnchor.href = targetSelector;
       normalizedAnchor.dataset.targetId = targetHeadingId;
-      normalizedAnchor.textContent = (
-        (targetHeading && targetHeading.textContent) ||
-        anchor.textContent
-      ).replace(/\s+/g, " ").trim();
+      renderOutlineHeadingAnchor(
+        normalizedAnchor,
+        (targetHeading && targetHeading.dataset.readerHeadingDisplayText) ||
+          (targetHeading && targetHeading.textContent) ||
+          anchor.textContent
+      );
 
       linkWrapper.appendChild(activeMarker);
       linkWrapper.appendChild(normalizedAnchor);
@@ -647,6 +718,12 @@
     });
 
     return flatList;
+  }
+
+  function sanitizeArticleHeadingAnchors() {
+    Array.from(document.querySelectorAll(".reader-article a.header")).forEach(function (anchor) {
+      renderIndexedHeadingAnchor(anchor, anchor.textContent);
+    });
   }
 
   function updateProgress() {
@@ -1049,7 +1126,6 @@
     // sidebar. Project from that source so the desktop rail and mobile inline
     // card stay in sync without recursively consuming cloned cards.
     const outlineAnchors = Array.from(outlineSource.querySelectorAll("a.header-in-summary"));
-    const desktopOutlineAnchors = outlineAnchors.filter(isTopLevelOutlineAnchor);
 
     if (!outlineAnchors.length) {
       document.body.classList.remove("book-outline-ready");
@@ -1059,9 +1135,7 @@
 
     const outlineContainer = document.createElement("div");
     outlineContainer.className = "on-this-page";
-    outlineContainer.appendChild(
-      buildOutlineList(desktopOutlineAnchors.length ? desktopOutlineAnchors : outlineAnchors)
-    );
+    outlineContainer.appendChild(buildOutlineList(outlineAnchors));
 
     outlineBody.replaceChildren(outlineContainer);
     document.body.classList.add("book-outline-ready");
@@ -1110,7 +1184,7 @@
 
       entry.link.classList.toggle("book-outline-link--active", isActive);
       entry.wrapper.classList.toggle("chapter-link-wrapper--active", isActive);
-      entry.marker.hidden = !isActive;
+      entry.marker.classList.toggle("book-outline-active-marker--visible", isActive);
     });
   }
 
@@ -1550,21 +1624,6 @@
     article.classList.toggle("reader-article--lead-figure-balanced", Boolean(firstFigure));
   }
 
-  function isTopLevelOutlineAnchor(anchor) {
-    const targetSelector = anchor.getAttribute("href") || "";
-    const targetHeadingId =
-      targetSelector && targetSelector.startsWith("#")
-        ? decodeURIComponent(targetSelector.slice(1))
-        : "";
-    const targetHeadingElement = targetHeadingId ? document.getElementById(targetHeadingId) : null;
-
-    if (!targetHeadingElement) {
-      return false;
-    }
-
-    return targetHeadingElement.tagName.toLowerCase() === "h2";
-  }
-
   function buildMobileOutlineCardBody(outline) {
     const compactOutline = document.createElement("div");
     const topLevelLinks = Array.from(
@@ -1806,6 +1865,7 @@
       installHeaderSearchSlot();
       installChapterPaginationMeta();
       installChapterPaginationHeightSync();
+      sanitizeArticleHeadingAnchors();
       moveOutline();
       installOutlineReferenceSections();
       syncOutlineRailVisibility();
