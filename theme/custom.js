@@ -183,6 +183,26 @@
     return relativePath || "index.html";
   }
 
+  function getBookPageKeyFromHref(href) {
+    if (!href) {
+      return "";
+    }
+
+    try {
+      const pathname = new URL(href, window.location.href).pathname.replace(/\/+$/, "");
+      const bookRootIndex = pathname.lastIndexOf("/book");
+
+      if (bookRootIndex === -1) {
+        return "";
+      }
+
+      const relativePath = pathname.slice(bookRootIndex + "/book".length).replace(/^\/+/, "");
+      return relativePath || "index.html";
+    } catch (error) {
+      return "";
+    }
+  }
+
   function getSidebarShell() {
     return document.getElementById("mdbook-sidebar");
   }
@@ -1271,7 +1291,7 @@
     return items;
   }
 
-  async function applyReaderPageMeta() {
+  async function loadReaderPageMeta() {
     if (!readerPageMetaPromise) {
       readerPageMetaPromise = fetch(path_to_root + "reader-page-meta.json")
         .then(function (response) {
@@ -1286,7 +1306,11 @@
         });
     }
 
-    const pageMeta = await readerPageMetaPromise;
+    return readerPageMetaPromise;
+  }
+
+  async function applyReaderPageMeta() {
+    const pageMeta = await loadReaderPageMeta();
     return pageMeta[getCurrentBookPageKey()] || null;
   }
 
@@ -1366,6 +1390,81 @@
       }
 
       renderChapterHero(article, anchor, heading, parsedHeading, pageMeta);
+    });
+  }
+
+  function extractChapterNumber(text) {
+    const match = normalizeText(text).match(/^Chapter\s+(\d+)\b/i);
+    return match ? String(Number(match[1])) : "";
+  }
+
+  function buildChapterNavDek(text) {
+    const normalized = normalizeText(text);
+
+    if (!normalized) {
+      return "";
+    }
+
+    const sentenceMatch = normalized.match(/^(.+?[.!?])(?:\s|$)/);
+    const primarySentence = normalizeText(sentenceMatch ? sentenceMatch[1] : normalized);
+    return truncateReferenceText(primarySentence || normalized, 118);
+  }
+
+  function applyChapterNavMeta(card, pageMetaByKey) {
+    const title = card.querySelector(".chapter-nav-title");
+    const dek = card.querySelector(".chapter-nav-dek");
+    const badge = card.querySelector(".chapter-nav-arrow");
+
+    if (!title || !dek || !badge) {
+      return;
+    }
+
+    const baseTitle = title.dataset.baseTitle || normalizeText(title.textContent);
+    const pageKey = getBookPageKeyFromHref(card.getAttribute("href"));
+    const pageMeta = pageKey ? pageMetaByKey[pageKey] || null : null;
+    const parsedTitle = parseChapterHeading(baseTitle);
+    const chapterNumber = extractChapterNumber((pageMeta && pageMeta.eyebrow) || baseTitle);
+    const titleText = normalizeText((pageMeta && pageMeta.title) || parsedTitle.title || baseTitle);
+    const dekText = buildChapterNavDek(pageMeta && pageMeta.lede ? pageMeta.lede : "");
+    const isNextCard = card.classList.contains("chapter-nav-next");
+
+    title.dataset.baseTitle = baseTitle;
+    title.textContent = titleText;
+
+    if (dekText) {
+      dek.textContent = dekText;
+      dek.hidden = false;
+    } else {
+      dek.textContent = "";
+      dek.hidden = true;
+    }
+
+    if (isNextCard && chapterNumber) {
+      badge.textContent = chapterNumber;
+      card.dataset.chapterBadgeType = "number";
+    } else {
+      badge.textContent = isNextCard ? "›" : "‹";
+      card.dataset.chapterBadgeType = "arrow";
+    }
+  }
+
+  function installChapterPaginationMeta() {
+    const cards = Array.from(document.querySelectorAll(".chapter-pagination .chapter-nav-card[href]"));
+
+    if (!cards.length) {
+      return;
+    }
+
+    loadReaderPageMeta().then(function (pageMetaByKey) {
+      if (!pageMetaByKey || typeof pageMetaByKey !== "object") {
+        return;
+      }
+
+      cards.forEach(function (card) {
+        if (card.isConnected) {
+          applyChapterNavMeta(card, pageMetaByKey);
+        }
+      });
     });
   }
 
@@ -1705,6 +1804,7 @@
       installSidebarShellGeometry();
       installSidebarProjection();
       installHeaderSearchSlot();
+      installChapterPaginationMeta();
       installChapterPaginationHeightSync();
       moveOutline();
       installOutlineReferenceSections();

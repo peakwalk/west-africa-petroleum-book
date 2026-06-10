@@ -29,25 +29,31 @@ check_not_contains() {
 TARGET="public/book/chapters/glossary.html"
 
 check_contains "$TARGET" 'class="chapter-nav-arrow"'
+check_contains "$TARGET" 'class="chapter-nav-badge-shell"'
+check_contains "$TARGET" 'class="chapter-nav-badge"'
 check_contains "$TARGET" 'class="chapter-nav-label"'
 check_contains "$TARGET" 'class="chapter-nav-body"'
 check_contains "$TARGET" 'class="chapter-nav-title"'
+check_contains "$TARGET" 'class="chapter-nav-dek"'
 check_not_contains "$TARGET" 'class="chapter-nav-meta"'
 check_not_contains "$TARGET" 'class="chapter-pagination-eyebrow"'
 check_not_contains theme/custom.css '.chapter-nav-meta'
 check_not_contains theme/custom.css '.chapter-pagination-eyebrow'
 
 check_contains theme/custom.js 'function syncChapterPaginationHeights()'
+check_contains theme/custom.js 'function installChapterPaginationMeta()'
+check_contains theme/custom.js 'function loadReaderPageMeta()'
+check_contains theme/custom.js 'card.dataset.chapterBadgeType = "number";'
 check_contains theme/custom.js 'card.style.height = "auto";'
 check_contains theme/custom.js 'card.style.height = maxHeight + "px";'
 
-if ! sed -n '203,209p' theme/index.hbs | tr '\n' ' ' | grep -q 'chapter-nav-arrow.*chapter-nav-body'; then
-  echo "Expected previous chapter card to render arrow before body in theme/index.hbs" >&2
+if ! sed -n '/class="chapter-nav-card chapter-nav-previous"/,/<\/a>/p' theme/index.hbs | tr '\n' ' ' | grep -q 'chapter-nav-badge-shell.*chapter-nav-body'; then
+  echo "Expected previous chapter card to render the badge before the body in theme/index.hbs" >&2
   exit 1
 fi
 
-if ! sed -n '215,221p' theme/index.hbs | tr '\n' ' ' | grep -q 'chapter-nav-body.*chapter-nav-arrow'; then
-  echo "Expected next chapter card to render body before arrow in theme/index.hbs" >&2
+if ! sed -n '/class="chapter-nav-card chapter-nav-next"/,/<\/a>/p' theme/index.hbs | tr '\n' ' ' | grep -q 'chapter-nav-body.*chapter-nav-badge-shell'; then
+  echo "Expected next chapter card to render the body before the badge in theme/index.hbs" >&2
   exit 1
 fi
 
@@ -68,13 +74,28 @@ DESKTOP_RULES="$(awk '
   }
 ' theme/custom.css)"
 
-if ! printf '%s' "$DESKTOP_RULES" | grep -q 'min-height: 52px;'; then
-  echo "Expected tighter desktop chapter card height in theme/custom.css" >&2
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'width: 232px;'; then
+  echo "Expected desktop chapter card width to be fixed at 232px in theme/custom.css" >&2
   exit 1
 fi
 
-if ! printf '%s' "$DESKTOP_RULES" | grep -q 'padding: 9px 18px;'; then
-  echo "Expected tighter desktop chapter card padding in theme/custom.css" >&2
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'height: 80px;'; then
+  echo "Expected desktop chapter card height to be fixed at 80px in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'margin-top: 24px;'; then
+  echo "Expected chapter pagination top margin to be 24px in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'min-height: 80px;'; then
+  echo "Expected desktop chapter card minimum height to remain 80px in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'padding: 10px 12px;'; then
+  echo "Expected desktop chapter card padding to match the compact rounded card sizing in theme/custom.css" >&2
   exit 1
 fi
 
@@ -83,18 +104,33 @@ if ! printf '%s' "$DESKTOP_RULES" | grep -q 'box-sizing: border-box;'; then
   exit 1
 fi
 
-if ! printf '%s' "$DESKTOP_RULES" | grep -q 'font-size: 1.85rem;'; then
-  echo "Expected narrower desktop chapter arrow sizing in theme/custom.css" >&2
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'overflow: hidden;'; then
+  echo "Expected desktop chapter cards to clip decorative layers in theme/custom.css" >&2
   exit 1
 fi
 
-if ! printf '%s' "$DESKTOP_RULES" | grep -q 'gap: 0.1rem;'; then
-  echo "Expected tighter desktop chapter body rhythm in theme/custom.css" >&2
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'gap: 12px;'; then
+  echo "Expected desktop chapter pagination gap to be fixed at 12px in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'width: 42px;'; then
+  echo "Expected desktop chapter badge sizing to remain explicit in theme/custom.css" >&2
   exit 1
 fi
 
 if ! printf '%s' "$DESKTOP_RULES" | grep -q 'text-align: right;'; then
   echo "Expected desktop next chapter text to be right-aligned in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q -- '-webkit-line-clamp: 2;'; then
+  echo "Expected desktop chapter card dek copy to clamp to two lines in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'mask: url("data:image/svg+xml,'; then
+  echo "Expected desktop chapter cards to include the inline SVG rig ornament in theme/custom.css" >&2
   exit 1
 fi
 
@@ -139,22 +175,27 @@ if ! printf '%s' "$NARROW_RULES" | grep -q 'align-items: stretch;'; then
   exit 1
 fi
 
-if ! printf '%s' "$NARROW_RULES" | grep -q 'width: min(100%, 86%);'; then
-  echo "Expected stacked narrow-screen chapter cards to use a narrower width in theme/custom.css" >&2
+if ! printf '%s' "$NARROW_RULES" | grep -q 'width: 100%;'; then
+  echo "Expected stacked narrow-screen chapter cards to span the reader column in theme/custom.css" >&2
   exit 1
 fi
 
-if ! printf '%s' "$NARROW_RULES" | grep -q 'align-self: flex-end;'; then
-  echo "Expected narrow-screen next chapter card to align to the right edge in theme/custom.css" >&2
+if ! printf '%s' "$NARROW_RULES" | grep -q 'align-self: stretch;'; then
+  echo "Expected narrow-screen chapter cards to stretch evenly in theme/custom.css" >&2
   exit 1
 fi
 
-if ! printf '%s' "$NARROW_RULES" | grep -q 'padding: 12px 16px;'; then
-  echo "Expected roomier stacked narrow-screen chapter card padding in theme/custom.css" >&2
+if ! printf '%s' "$NARROW_RULES" | grep -q 'min-height: 80px;'; then
+  echo "Expected stacked narrow-screen chapter cards to keep the 80px minimum height in theme/custom.css" >&2
   exit 1
 fi
 
-if ! printf '%s' "$NARROW_RULES" | grep -q 'font-size: 1.1875rem;'; then
+if ! printf '%s' "$NARROW_RULES" | grep -q 'padding: 0.75rem 0.9rem;'; then
+  echo "Expected stacked narrow-screen chapter card padding to match the redesign in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$NARROW_RULES" | grep -q 'font-size: 1rem;'; then
   echo "Expected stacked narrow-screen chapter title sizing in theme/custom.css" >&2
   exit 1
 fi
@@ -166,6 +207,11 @@ fi
 
 if ! printf '%s' "$NARROW_RULES" | grep -q 'justify-self: end;'; then
   echo "Expected narrow-screen next chapter label to right-align in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$NARROW_RULES" | grep -q -- '-webkit-line-clamp: 2;'; then
+  echo "Expected narrow-screen chapter card dek copy to clamp to two lines in theme/custom.css" >&2
   exit 1
 fi
 

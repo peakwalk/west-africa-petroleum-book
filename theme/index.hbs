@@ -569,10 +569,15 @@
                             <nav class="chapter-pagination" aria-label="Chapter navigation">
                                 {{#if previous}}
                                 <a rel="prev" href="{{ path_to_root }}{{ previous.link }}" class="chapter-nav-card chapter-nav-previous">
-                                    <span class="chapter-nav-arrow" aria-hidden="true">‹</span>
+                                    <span class="chapter-nav-badge-shell" aria-hidden="true">
+                                        <span class="chapter-nav-badge">
+                                            <span class="chapter-nav-arrow">‹</span>
+                                        </span>
+                                    </span>
                                     <span class="chapter-nav-body">
                                         <span class="chapter-nav-label">Previous chapter</span>
                                         <strong class="chapter-nav-title">{{ previous.name }}{{ previous.title }}</strong>
+                                        <span class="chapter-nav-dek" hidden></span>
                                     </span>
                                 </a>
                                 {{else}}
@@ -584,8 +589,13 @@
                                     <span class="chapter-nav-body">
                                         <span class="chapter-nav-label">Next chapter</span>
                                         <strong class="chapter-nav-title">{{ next.name }}{{ next.title }}</strong>
+                                        <span class="chapter-nav-dek" hidden></span>
                                     </span>
-                                    <span class="chapter-nav-arrow" aria-hidden="true">›</span>
+                                    <span class="chapter-nav-badge-shell" aria-hidden="true">
+                                        <span class="chapter-nav-badge">
+                                            <span class="chapter-nav-arrow">›</span>
+                                        </span>
+                                    </span>
                                 </a>
                                 {{/if}}
                             </nav>
