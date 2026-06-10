@@ -481,9 +481,7 @@ State)</td>
 </tr>
 <tr>
 <td style="text-align: center;">Ghana</td>
-<td style="text-align: center;"><blockquote>
-<p>35</p>
-</blockquote></td>
+<td style="text-align: center;"><p>35</p></td>
 </tr>
 <tr>
 <td style="text-align: center;">Ivory Coast</td>
@@ -492,15 +490,11 @@ of the State, conferred ENI-2019 contract)</td>
 </tr>
 <tr>
 <td style="text-align: center;">Nigeria</td>
-<td style="text-align: center;"><blockquote>
-<p>50</p>
-</blockquote></td>
+<td style="text-align: center;"><p>50</p></td>
 </tr>
 <tr>
 <td style="text-align: center;">Senegal</td>
-<td style="text-align: center;"><blockquote>
-<p>30</p>
-</blockquote></td>
+<td style="text-align: center;"><p>30</p></td>
 </tr>
 <tr>
 <td style="text-align: center;">Niger</td>

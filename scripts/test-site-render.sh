@@ -658,6 +658,8 @@ check_contains public/book/chapters/list-of-tables.html 'class="chapter-nav-card
 check_contains public/book/chapters/list-of-tables.html 'class="chapter-nav-card chapter-nav-next"'
 check_contains public/book/chapters/list-of-tables.html 'chapter-01-value-chain-of-the-hydrocarbon-sector.html#table-1'
 check_contains public/book/chapters/list-of-tables.html 'chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html#table-11'
+check_not_contains src/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md '<blockquote>'
+node -e 'const fs=require("fs");const html=fs.readFileSync("public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html","utf8");const table7Start=html.indexOf("<p>Table 7:");const table8Start=html.indexOf("<p>Table 8:");if(table7Start===-1||table8Start===-1){console.error("Expected Table 7 and Table 8 markers in chapter 4 HTML.");process.exit(1);}const table7Block=html.slice(table7Start,table8Start);if(table7Block.includes("<blockquote>")){console.error("Expected Table 7 numeric cells to render without blockquote wrappers.");process.exit(1);}for(const expected of [">35<",">50<",">30<"]){if(!table7Block.includes(expected)){console.error(`Expected Table 7 to preserve value ${expected}.`);process.exit(1);}}'
 check_contains public/book/chapters/abbreviations-acronyms-and-abbreviations.html 'Abbreviations, Acronyms and Abbreviations'
 check_contains public/book/chapters/abbreviations-acronyms-and-abbreviations.html 'class="reference-index reference-index-abbreviations"'
 check_contains public/book/chapters/abbreviations-acronyms-and-abbreviations.html 'class="chapter-nav-card chapter-nav-previous"'
@@ -724,6 +726,9 @@ check_contains theme/custom.css '--sidebar-scroll-padding-block: 1.8rem;'
 check_contains theme/custom.css '--toolbar-search-width: 420px;'
 check_contains theme/custom.css '--toolbar-contact-width: 106px;'
 check_contains theme/custom.css '--toolbar-utility-gap: 24px;'
+check_contains theme/custom.css '--reader-dek-measure: 44rem;'
+check_contains theme/custom.css '--reader-figure-max-width: var(--content-max-width);'
+check_contains theme/custom.css '--reader-table-max-width: var(--content-max-width);'
 check_contains theme/custom.css '.book-toolbar {'
 check_contains theme/custom.css 'display: grid;'
 check_contains theme/custom.css 'grid-template-columns: var(--sidebar-width) minmax(0, 1fr) auto;'
@@ -890,13 +895,13 @@ function block(selector) {
 const expectations = [
   [".book-sidebar-intro {", ["padding: 1.55rem 1.75rem 1.05rem;", "border-bottom: 0;"]],
   [".book-sidebar-intro::after {", ["inset-inline: 0;", "border-bottom: 1px solid rgba(11, 31, 51, 0.08);"]],
-  [".book-sidebar-book-title {", ["font-family: var(--reader-sans);", "max-width: 24ch;", "font-size: 0.9375rem;", "line-height: 1.42;", "text-transform: uppercase;"]],
+  [".book-sidebar-book-title {", ["font-family: var(--reader-sans);", "max-width: 24ch;", "font-size: 0.9rem;", "font-weight: 600;", "line-height: 1.38;", "text-transform: uppercase;"]],
   [".reader-sidebar-scroll {", ["padding: var(--sidebar-scroll-padding-block) 1rem 1rem;", "overflow-y: auto;"]],
   [".reader-sidebar-section {", ["position: relative;", "gap: 0.4rem;", "padding-top: 2.4rem;", "padding-inline: 0.75rem;", "border-top: 0;"]],
   [".reader-sidebar-section::before {", ["inset-inline: 0;", "border-top: 1px solid rgba(11, 31, 51, 0.08);"]],
   [".reader-sidebar-section:first-child::before {", ["content: none;"]],
   [".reader-sidebar-section--active::before {", ["border-top-color: rgba(49, 99, 194, 0.2);"]],
-  [".reader-sidebar-section-header {", ["gap: 0.2rem;", "line-height: 25%;"]],
+  [".reader-sidebar-section-header {", ["gap: 0.2rem;", "align-items: start;"]],
   [".reader-sidebar-section-kicker {", ["font-size: 0.75rem;", "letter-spacing: 0.12em;"]],
   [".reader-sidebar-section-title {", ["font-size: 0.875rem;", "line-height: 1.35;"]],
   [".reader-sidebar-section-icon {", ["width: 1.1875rem;", "height: 1.1875rem;", "color: rgba(82, 97, 113, 0.88);"]],
@@ -926,6 +931,9 @@ const expectations = [
   [".reader-sidebar-row--active .reader-sidebar-row-index,", ["color: #ffffff !important;", "-webkit-text-fill-color: #ffffff;"]],
   [".reader-sidebar-row--active .reader-sidebar-row-icon {", ["color: #ffffff;", "background: rgba(255, 255, 255, 0.14);"]],
   [".reader-sidebar-row--active::after {", ["inset-inline-end: 0.75rem;", "width: 0.4rem;", "height: 0.4rem;"]],
+  [".reader-chapter-dek {", ["max-width: var(--reader-dek-measure);"]],
+  [".figure-card {", ["width: min(100%, var(--reader-figure-max-width));"]],
+  [".table-anchor-target {", ["width: min(100%, var(--reader-table-max-width));"]],
   [".book-outline-label {", ["font-size: 11px;", "letter-spacing: 0.16em;"]],
   [".book-outline-section-title {", ["font-size: 0.6875rem;", "letter-spacing: 0.16em;"]],
   [".book-outline-link--reference {", ["font-size: 0.8125rem;", "-webkit-line-clamp: 2;"]],
@@ -1044,8 +1052,8 @@ for (const expected of [
   "padding: 1.5rem 1.75rem 1rem;",
   ".book-sidebar-book-title {",
   "max-width: 24ch;",
-  "font-size: 0.9375rem;",
-  "line-height: 1.42;",
+  "font-size: 0.9rem;",
+  "line-height: 1.38;",
   ".reader-sidebar-scroll {",
   "padding: 1rem 1.5rem 1.5rem;",
   ".reader-sidebar-section {",
@@ -1058,6 +1066,7 @@ for (const expected of [
   ".reader-sidebar-section-header {",
   "gap: 0.25rem;",
   ".reader-sidebar-section--front-matter .reader-sidebar-section-header {",
+  "grid-template-columns: auto minmax(0, 1fr);",
   "column-gap: 0.625rem;",
   ".reader-sidebar-section--front-matter .reader-sidebar-section-title,",
   "font-size: 0.875rem;",
@@ -1067,49 +1076,49 @@ for (const expected of [
   "font-size: 0.75rem;",
   "letter-spacing: normal;",
   ".reader-sidebar-section--part .reader-sidebar-section-title {",
-  "font-size: 0.9375rem;",
-  "line-height: 1.35;",
-  "max-width: 18ch;",
+  "font-size: 0.8125rem;",
+  "line-height: 1.32;",
+  "max-width: 20ch;",
   ".reader-sidebar-section-body {",
   "gap: 0.5rem;",
   "padding-bottom: 0.875rem;",
   ".reader-sidebar-section--front-matter .reader-sidebar-section-body,",
   "gap: 0.25rem;",
   ".reader-sidebar-row {",
-  "grid-template-columns: 2.5rem minmax(0, 1fr);",
-  "gap: 0.75rem;",
-  "padding: 0.75rem 2.5rem 0.75rem 1rem;",
-  "border-radius: 0.75rem;",
+  "grid-template-columns: 2.3rem minmax(0, 1fr);",
+  "gap: 0.625rem;",
+  "padding: 0.58rem 2.1rem 0.58rem 0.95rem;",
+  "border-radius: 0.6875rem;",
   "color: var(--sidebar-fg);",
   ".reader-sidebar-row-index {",
-  "font-size: 0.75rem;",
+  "font-size: 0.6875rem;",
   ".reader-sidebar-row-title {",
-  "font-size: 1rem;",
-  "line-height: 1.35;",
-  "font-weight: 600;",
-  ".reader-sidebar-row--reference {",
-  "padding: 0.4rem 2rem 0.4rem 0.9rem;",
-  ".reader-sidebar-section--front-matter .reader-sidebar-row--reference {",
-  "padding: 0.4rem 2rem 0.4rem calc(1.1875rem + 0.625rem);",
-  ".reader-sidebar-row--reference.reader-sidebar-row--with-icon {",
-  "grid-template-columns: 1.75rem minmax(0, 1fr);",
-  "gap: 0.75rem;",
-  ".reader-sidebar-row--reference .reader-sidebar-row-title {",
   "font-size: 0.875rem;",
-  "font-weight: 600;",
+  "line-height: 1.4;",
+  "font-weight: 560;",
+  ".reader-sidebar-row--reference {",
+  "padding: 0.34rem 1.6rem 0.34rem 0.9rem;",
+  ".reader-sidebar-section--front-matter .reader-sidebar-row--reference {",
+  "padding: 0.34rem 1.6rem 0.34rem calc(1.1875rem + 0.625rem);",
+  ".reader-sidebar-row--reference.reader-sidebar-row--with-icon {",
+  "grid-template-columns: 1.5rem minmax(0, 1fr);",
+  "gap: 0.625rem;",
+  ".reader-sidebar-row--reference .reader-sidebar-row-title {",
+  "font-size: 0.8125rem;",
+  "font-weight: 560;",
   ".reader-sidebar-row-icon {",
-  "width: 1.75rem;",
-  "height: 1.75rem;",
+  "width: 1.5rem;",
+  "height: 1.5rem;",
   ".reader-sidebar-row--reference.reader-sidebar-row--active {",
-  "padding: 0.4rem 2rem 0.4rem 0.9rem;",
+  "padding: 0.34rem 1.6rem 0.34rem 0.9rem;",
   ".reader-sidebar-section--front-matter .reader-sidebar-row--reference.reader-sidebar-row--active {",
-  "padding: 0.4rem 2rem 0.4rem calc(1.1875rem + 0.625rem);",
+  "padding: 0.34rem 1.6rem 0.34rem calc(1.1875rem + 0.625rem);",
   ".reader-sidebar-row--active {",
-  "box-shadow: 0 14px 30px rgba(49, 99, 194, 0.22);",
+  "box-shadow: 0 8px 18px rgba(49, 99, 194, 0.16);",
   ".reader-sidebar-row--active::after {",
-  "inset-inline-end: 1rem;",
-  "width: 0.5rem;",
-  "height: 0.5rem;",
+  "inset-inline-end: 0.9rem;",
+  "width: 0.4rem;",
+  "height: 0.4rem;",
 ]) {
   if (!mobileDrawer.includes(expected)) {
     console.error(`Expected mobile drawer CSS to include ${expected}`);
@@ -1147,6 +1156,7 @@ node -e 'const fs=require("fs");const hbs=fs.readFileSync("theme/index.hbs","utf
 node -e 'const fs=require("fs");const hbs=fs.readFileSync("theme/index.hbs","utf8");if(hbs.includes("sessionStorage.removeItem(\"reader-sidebar-scroll-offset\");")){console.error("Expected inline sidebar bootstrap to preserve reader-sidebar-scroll-offset until runtime hydration can reconcile any late raw TOC mutations.");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const chapterLink=block(".book-sidebar-shell .chapter li a {");for(const expected of ["font-size: 0.875rem;","line-height: 1.4286;"]){if(!chapterLink.includes(expected)){console.error(`Expected .book-sidebar-shell .chapter li a to include ${expected}`);process.exit(1);}}if(chapterLink.includes("font-size: 14px;")||chapterLink.includes("line-height: 20px;")||chapterLink.includes("font-size: 1.4rem;")||chapterLink.includes("line-height: 2rem;")){console.error("Expected .book-sidebar-shell .chapter li a to use repo-owned typography calibrated for the explicit /book root font contract");process.exit(1);}const partTitle=block(".book-sidebar-shell .chapter li.part-title {");if(!partTitle.includes("font-size: 0.75rem;")){console.error("Expected .book-sidebar-shell .chapter li.part-title to include font-size: 0.75rem;");process.exit(1);}if(partTitle.includes("font-size: 12px;")||partTitle.includes("font-size: 1.2rem;")){console.error("Expected .book-sidebar-shell .chapter li.part-title to stop using legacy sizing under the explicit /book root font contract");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const bookTitle=block(".book-sidebar-book-title {");if(!bookTitle.includes("color: var(--sidebar-fg);")){console.error("Expected .book-sidebar-book-title to align with the normal sidebar navigation text color.");process.exit(1);}const frontBackTitle=block(".reader-sidebar-section--front-matter .reader-sidebar-section-title,");if(!frontBackTitle.includes("color: var(--sidebar-fg);")){console.error("Expected Front Matter and Back Matter section titles to align with the normal sidebar navigation text color.");process.exit(1);}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const sectionHeader=block(".reader-sidebar-section-header {");if(sectionHeader.includes("line-height: 25%;")){console.error("Expected sidebar section headers to stop relying on line-height: 25% for visual alignment; use explicit layout instead.");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const start=css.indexOf(".reader-sidebar-section--front-matter .reader-sidebar-section-body,");if(start===-1){console.error("Expected Front Matter body selector to remain present in theme/custom.css");process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error("Expected closing brace for Front Matter body selector block");process.exit(1);}const frontMatterBody=css.slice(start,end+1);if(frontMatterBody.includes("padding-inline-start:")){console.error("Expected Front Matter body container position to remain unchanged; use row padding instead of container padding.");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const activeRow=block(".reader-sidebar-row--active {");if(activeRow.includes("padding-inline-end:")){console.error("Expected active sidebar rows to preserve the same inline geometry as inactive rows; reserve the indicator gutter in the base row instead of shifting active items.");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const visitedRow=block(".reader-sidebar-row:link,");for(const expected of ["color: var(--sidebar-fg);","-webkit-text-fill-color: var(--sidebar-fg);"]){if(!visitedRow.includes(expected)){console.error(`Expected reader sidebar normal link/visited contract to include ${expected}`);process.exit(1);}}'
@@ -1342,56 +1352,85 @@ check_contains theme/custom.css 'min-width: 5.8em;'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const block=css.match(/\.reader-article \.api-density-formula \{[^}]*\}/);if(!block||!/font-weight:\s*500;/.test(block[0])){console.error("Expected .api-density-formula to use font-weight: 500");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const start=css.indexOf(".toolbar-sidebar {");const end=css.indexOf("}\n\n.toolbar-main {",start);if(start===-1||end===-1){console.error("Expected .toolbar-sidebar rule block");process.exit(1);}const block=css.slice(start,end+1);if(block.includes("border-inline-end:")){console.error("Did not expect .toolbar-sidebar to keep a right divider");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const block=css.match(/\.api-density-numerator \{[^}]*\}/);if(!block||!/border-bottom:\s*0\.055em solid currentColor;/.test(block[0])){console.error("Expected .api-density-numerator to use border-bottom: 0.055em solid currentColor");process.exit(1);}'
-node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const start=css.indexOf(".reader-article td .book-formula,");const end=css.indexOf("}\n\n.api-density-formula-term",start);if(start===-1||end===-1){console.error("Expected table formula rule block");process.exit(1);}const block=css.slice(start,end+1);for(const expected of ["width: 100%;","margin: 0;","padding: 0.6rem 0.8rem;","justify-items: start;","text-align: left;","font-size: inherit;","line-height: 1.22;","white-space: normal;","box-shadow: none;"]){if(!block.includes(expected)){console.error(`Expected table formula styling for: ${expected}`);process.exit(1);}}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const start=css.indexOf(".reader-article td .book-formula,");const end=css.indexOf("}\n\n.api-density-formula-term",start);if(start===-1||end===-1){console.error("Expected table formula rule block");process.exit(1);}const block=css.slice(start,end+1);for(const expected of ["width: 100%;","margin: 0;","padding: 4px;","justify-items: start;","text-align: left;","font-size: inherit;","line-height: 1.22;","white-space: normal;","box-shadow: none;","border-radius: 0;"]){if(!block.includes(expected)){console.error(`Expected table formula styling for: ${expected}`);process.exit(1);}}if(block.includes("padding: 0.6rem 0.8rem;")){console.error("Expected table formula cards to stop using the old roomy padding.");process.exit(1);}if(block.includes("border-radius: 0.8rem;")){console.error("Expected table formula cards to remove the old rounded corners.");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const block=css.match(/\.reader-article td \.book-formula \+ \.book-formula,\s*\.reader-article th \.book-formula \+ \.book-formula \{[^}]*\}/);if(!block||!/margin-top:\s*0\.55rem;/.test(block[0])){console.error("Expected stacked table formulas to use compact vertical spacing");process.exit(1);}'
 check_contains theme/custom.css '.figure-card {'
 check_contains theme/custom.css 'box-sizing: border-box;'
 check_contains theme/custom.css 'max-width: 100%;'
-check_contains theme/custom.css '--figure-card-padding: 14px;'
-check_contains theme/custom.css '--figure-media-padding: 0.9rem;'
+check_contains theme/custom.css '--reader-figure-border: 1px solid rgba(11, 31, 51, 0.1);'
+check_contains theme/custom.css '--reader-figure-shell-shadow: 0 16px 32px rgba(15, 23, 42, 0.04);'
+check_contains theme/custom.css '--reader-figure-caption-inset: 1rem;'
+check_contains theme/custom.css '--figure-card-padding-block: 20px;'
+check_contains theme/custom.css '--figure-card-padding-inline: 24px;'
+check_contains theme/custom.css '--figure-card-bg: var(--sidebar-bg);'
+check_contains theme/custom.css '--figure-media-padding: 0;'
+check_contains theme/custom.css '--figure-media-radius: 12px;'
 check_contains theme/custom.css '--figure-divider-gap: 0.95rem;'
 check_contains theme/custom.css '--figure-caption-gap: 0.9rem;'
+check_not_contains theme/custom.css 'padding-bottom: calc(var(--figure-card-padding-block) + 0.15rem);'
+check_contains theme/custom.css 'border: var(--reader-figure-border);'
+check_contains theme/custom.css 'box-shadow: var(--reader-figure-shell-shadow);'
 check_contains theme/custom.css '.figure-media {'
-check_contains theme/custom.css 'padding: var(--figure-media-padding);'
-check_contains theme/custom.css 'border: var(--figure-media-border);'
+check_contains theme/custom.css '.content p.figure-media,'
+check_contains theme/custom.css 'width: 100%;'
+check_contains theme/custom.css 'padding: var(--figure-media-padding) 0;'
+check_contains theme/custom.css 'border-block: var(--figure-media-border);'
+check_contains theme/custom.css 'border-inline: 0;'
 check_contains theme/custom.css 'background: var(--figure-media-bg);'
-check_contains theme/custom.css 'margin: 0 auto var(--figure-divider-gap);'
+check_contains theme/custom.css 'margin: 0;'
 check_contains theme/custom.css '.figure-media-grid {'
 check_contains theme/custom.css 'grid-template-columns: repeat(2, minmax(0, 1fr));'
-check_contains theme/custom.css '.figure-card--flush-media {'
-check_contains theme/custom.css '.figure-card--flush-media .figure-media-grid {'
-check_contains theme/custom.css 'align-items: start;'
 check_contains theme/custom.css '.figure-card--panel-pair .figure-media-item img {'
-check_contains theme/custom.css 'height: clamp(24rem, 42vw, 46rem);'
+check_not_contains theme/custom.css 'height: clamp(24rem, 42vw, 46rem);'
 check_contains theme/custom.css 'object-fit: contain;'
 check_contains theme/custom.css 'border: 0;'
-check_contains theme/custom.css '--figure-image-radius: 0;'
-check_contains theme/custom.css '.figure-card--inset-media {'
-check_contains theme/custom.css '--figure-media-max-width: calc(100% - 1.75rem);'
-check_contains theme/custom.css '--figure-caption-gap: 1rem;'
+check_not_contains theme/custom.css '.figure-card--flush-media {'
+check_not_contains theme/custom.css '.figure-card--flush-media .figure-media-grid {'
+check_not_contains theme/custom.css '.figure-card--inset-media {'
+check_not_contains theme/custom.css 'max-width: calc(var(--figure-media-max-width) - 0.25rem);'
 check_contains theme/custom.css '.figure-media-item {'
-check_contains theme/custom.css '.figure-caption {'
-check_contains theme/custom.css 'padding: var(--figure-caption-gap) var(--figure-caption-inline-padding) 0;'
-check_contains theme/custom.css '.figure-caption-label {'
-check_contains theme/custom.css '.figure-caption-text {'
-check_contains theme/custom.css 'display: inline-flex;'
-check_contains theme/custom.css 'justify-content: center;'
-check_contains theme/custom.css 'flex-wrap: wrap;'
-node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const block=css.match(/\.figure-caption-text \{[^}]*\}/);if(!block){console.error("Expected .figure-caption-text rule block");process.exit(1);}for(const expected of ["font-size: 14px;","line-height: 1.55;"]){if(!block[0].includes(expected)){console.error(`Expected figure caption text styling for: ${expected}`);process.exit(1);}}'
+check_contains theme/custom.css '.figure-card-header {'
+check_contains theme/custom.css '.figure-card-label {'
+check_contains theme/custom.css '.figure-card-footer {'
+check_contains theme/custom.css 'box-sizing: border-box;'
+check_contains theme/custom.css 'margin-bottom: var(--figure-divider-gap);'
+check_contains theme/custom.css 'display: grid;'
+check_contains theme/custom.css 'grid-auto-flow: column;'
+check_contains theme/custom.css 'justify-content: start;'
+check_contains theme/custom.css '.figure-card-label::before {'
+check_contains theme/custom.css 'display: block;'
+check_contains theme/custom.css 'width: 24px;'
+check_contains theme/custom.css 'height: 24px;'
+check_contains theme/custom.css 'background-color: currentColor;'
+check_contains theme/custom.css '-webkit-mask:'
+check_contains theme/custom.css 'mask:'
+check_contains theme/custom.css 'data:image/svg+xml'
+check_not_contains theme/custom.css 'box-shadow: inset 4px 0 0 rgba(49, 99, 194, 0.15);'
+check_contains theme/custom.css '.figure-card-title {'
+check_contains theme/custom.css 'display: block;'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const block=css.match(/\.figure-card-footer \{[^}]*\}/);if(!block){console.error("Expected .figure-card-footer rule block");process.exit(1);}for(const expected of ["width: calc(100% + (2 * var(--figure-card-padding-inline)));","margin-inline: calc(var(--figure-card-padding-inline) * -1);","padding: var(--figure-caption-gap) calc(var(--reader-figure-caption-inset) + var(--figure-card-padding-inline)) 0;","border-top: 0;","text-align: center;"]){if(!block[0].includes(expected)){console.error(`Expected figure footer block styling for: ${expected}`);process.exit(1);}}if(css.includes(".figure-card-footer::before")||css.includes("--figure-divider-extra-inset:")){console.error("Did not expect figure footer divider rule or inset token after removing the footer separator.");process.exit(1);}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const block=css.match(/\.figure-card-title \{[^}]*\}/);if(!block){console.error("Expected .figure-card-title rule block");process.exit(1);}for(const expected of ["font-size: 14px;","line-height: 1.55;","text-align: center;"]){if(!block[0].includes(expected)){console.error(`Expected figure title styling for: ${expected}`);process.exit(1);}}'
 check_contains theme/custom.css '.figure-card img {'
 check_contains theme/custom.css '.figure-anchor-target:target img {'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const start=css.indexOf("@media (max-width: 760px) {");if(start===-1){console.error("Expected mobile figure media query block.");process.exit(1);}const block=css.slice(start, css.indexOf("}\n\n.table-anchor-target {", start));if(block.includes("padding: 0.75rem 0;")){console.error("Expected mobile figure media to stop adding vertical padding overrides.");process.exit(1);}'
+node -e "const fs=require('fs');const js=fs.readFileSync('theme/custom.js','utf8');if(!js.includes('captionLabel.textContent = \"Figure \" + match[1];')){console.error('Expected figure labels to render without a trailing colon.');process.exit(1);}if(js.includes('captionLabel.textContent = \"Figure \" + match[1] + \":\";')){console.error('Expected figure labels to stop rendering a trailing colon.');process.exit(1);}"
 check_contains theme/custom.css '.table-anchor-target {'
+check_contains theme/custom.css '.table-card {'
 check_contains theme/custom.css '.table-anchor-shell {'
 check_contains theme/custom.css '.table-scroll {'
-check_contains theme/custom.css '.table-anchor-target:target .table-anchor-shell {'
-node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const scrollBlock=css.match(/\.table-scroll \{[^}]*\}/);if(!scrollBlock){console.error("Expected .table-scroll rule block");process.exit(1);}for(const expected of ["overflow-x: auto;","padding: 0.75rem;"]){if(!scrollBlock[0].includes(expected)){console.error(`Expected table scroll styling for: ${expected}`);process.exit(1);}}const anchorBlock=css.match(/\.table-anchor-table \{[^}]*\}/);if(!anchorBlock){console.error("Expected .table-anchor-table rule block");process.exit(1);}for(const expected of ["box-sizing: border-box;","width: 100%;","min-width: 100%;","margin: 0;"]){if(!anchorBlock[0].includes(expected)){console.error(`Expected table anchor block styling for: ${expected}`);process.exit(1);}}'
-check_contains theme/custom.css '.table-caption {'
+check_contains theme/custom.css '.table-anchor-target:target .table-card {'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const cardBlock=css.match(/\.table-card \{[^}]*\}/);if(!cardBlock){console.error("Expected .table-card rule block");process.exit(1);}for(const expected of ["display: grid;","gap: 0;","padding: 24px;","border: 1px solid rgba(148, 163, 184, 0.22);","background: var(--sidebar-bg);","box-shadow: 0 14px 28px rgba(15, 23, 42, 0.05);"]){if(!cardBlock[0].includes(expected)){console.error(`Expected table card styling for: ${expected}`);process.exit(1);}}if(cardBlock[0].includes("linear-gradient(")){console.error("Expected table card background to stop using gradients.");process.exit(1);}const targetCardBlock=css.match(/\.table-anchor-target:target \.table-card \{[^}]*\}/);if(!targetCardBlock){console.error("Expected .table-anchor-target:target .table-card rule block");process.exit(1);}if(!targetCardBlock[0].includes("border-color: rgba(43, 91, 166, 0.22);")){console.error("Expected anchored table card styling to keep the border-color highlight.");process.exit(1);}if(targetCardBlock[0].includes("background:")){console.error("Expected anchored table card highlight to stop overriding the card background.");process.exit(1);}if(targetCardBlock[0].includes("box-shadow:")){console.error("Expected anchored table card highlight to stop adding a target-state shadow.");process.exit(1);}const mobileStart=css.indexOf("@media (max-width: 760px) {");if(mobileStart===-1){console.error("Expected mobile table media query block.");process.exit(1);}const mobileEnd=css.indexOf(".content {", mobileStart);const mobileBlock=css.slice(mobileStart, mobileEnd);if(mobileBlock.includes(".table-card {") && !mobileBlock.includes("padding: 24px;")){console.error("Expected mobile table-card padding to stay aligned with the 24px desktop card padding.");process.exit(1);}const shellBlock=css.match(/\.table-anchor-shell \{[^}]*\}/);if(!shellBlock){console.error("Expected .table-anchor-shell rule block");process.exit(1);}for(const expected of ["border: 0;","overflow: hidden;"]){if(!shellBlock[0].includes(expected)){console.error(`Expected table shell styling for: ${expected}`);process.exit(1);}}if(shellBlock[0].includes("border: 1px solid rgba(148, 163, 184, 0.22);")){console.error("Expected table shell border to move to the outer table card.");process.exit(1);}const scrollBlock=css.match(/\.table-scroll \{[^}]*\}/);if(!scrollBlock){console.error("Expected .table-scroll rule block");process.exit(1);}for(const expected of ["overflow-x: auto;","padding: 0;"]){if(!scrollBlock[0].includes(expected)){console.error(`Expected table scroll styling for: ${expected}`);process.exit(1);}}const notesGroupBlock=css.match(/\.table-notes-group \{[^}]*\}/);if(!notesGroupBlock){console.error("Expected .table-notes-group rule block");process.exit(1);}if(!notesGroupBlock[0].includes("margin-top: 0.6rem;")){console.error("Expected table notes group to preserve spacing after removing caption bottom gap.");process.exit(1);}const notesBlock=css.match(/\.content \.table-notes \{[^}]*\}/);if(!notesBlock){console.error("Expected .content .table-notes rule block");process.exit(1);}if(!notesBlock[0].includes("margin-bottom: 0;")){console.error("Expected table notes to explicitly remove bottom margin.");process.exit(1);}const anchorBlock=css.match(/\.table-anchor-table \{[^}]*\}/);if(!anchorBlock){console.error("Expected .table-anchor-table rule block");process.exit(1);}for(const expected of ["box-sizing: border-box;","width: 100%;","min-width: 100%;","margin: 0;"]){if(!anchorBlock[0].includes(expected)){console.error(`Expected table anchor block styling for: ${expected}`);process.exit(1);}}'
+check_contains theme/custom.css '.content .table-caption {'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const block=css.match(/\.content \.table-caption \{[^}]*\}/);if(!block){console.error("Expected .content .table-caption rule block");process.exit(1);}for(const expected of ["max-width: none;","display: grid;","justify-items: start;","row-gap: 8px;","margin-bottom: 24px;"]){if(!block[0].includes(expected)){console.error(`Expected table caption block styling for: ${expected}`);process.exit(1);}}'
 check_contains theme/custom.css '.table-caption-label {'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const block=css.match(/\.table-caption-label \{[^}]*\}/);if(!block){console.error("Expected .table-caption-label rule block");process.exit(1);}for(const expected of ["display: grid;","grid-auto-flow: column;","justify-content: start;"]){if(!block[0].includes(expected)){console.error(`Expected table caption label styling for: ${expected}`);process.exit(1);}}const iconBlock=css.match(/\.table-caption-label::before \{[^}]*\}/);if(!iconBlock){console.error("Expected .table-caption-label::before rule block");process.exit(1);}for(const expected of ["display: block;","width: 24px;","height: 24px;","-webkit-mask:","mask:","data:image/svg+xml"]){if(!iconBlock[0].includes(expected)){console.error(`Expected table caption label icon styling for: ${expected}`);process.exit(1);}}'
 check_contains theme/custom.css '.table-caption-text {'
-check_contains theme/custom.css '.table-notes {'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const block=css.match(/\.table-caption-text \{[^}]*\}/);if(!block){console.error("Expected .table-caption-text rule block");process.exit(1);}for(const expected of ["display: block;","padding-inline-start: calc(24px + 0.55rem);","color: var(--ink);","font-size: 14px;","font-style: normal;"]){if(!block[0].includes(expected)){console.error(`Expected table caption text styling for: ${expected}`);process.exit(1);}}if(block[0].includes("font-size: 16px;")){console.error("Expected table caption text to stop using 16px.");process.exit(1);}if(block[0].includes("font-style: italic;")){console.error("Expected table caption text to stop using italic style.");process.exit(1);}if(block[0].includes("line-height: 0;")){console.error("Expected table caption text to stop forcing line-height: 0.");process.exit(1);}'
+check_contains theme/custom.css '.content .table-notes {'
 check_contains theme/custom.css 'font-family: var(--reader-serif);'
-check_contains theme/custom.css 'font-style: italic;'
-check_contains theme/custom.css 'color: rgba(30, 58, 138, 0.88);'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");if(!css.includes(".content td {\n  background: var(--paper);\n}")){console.error("Expected table body cells to use var(--paper) background.");process.exit(1);}const evenRowBlock=css.match(/\.content tbody tr:nth-child\(even\) td \{[^}]*\}/);if(!evenRowBlock){console.error("Expected .content tbody tr:nth-child(even) td rule block");process.exit(1);}if(!evenRowBlock[0].includes("background: var(--paper);")){console.error("Expected striped table rows to be normalized to var(--paper).");process.exit(1);}if(evenRowBlock[0].includes("var(--table-alternate-bg)")){console.error("Expected general even-row table striping to be removed.");process.exit(1);}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");if(!/\.content td p,\s*\.content th p \{[^}]*margin:\s*0;/s.test(css)){console.error("Expected table cell paragraphs to remove vertical margins.");process.exit(1);}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const multirowBlock=css.match(/\.content thead tr \+ tr th \{[^}]*\}/);if(!multirowBlock){console.error("Expected .content thead tr + tr th rule block");process.exit(1);}for(const expected of ["background: rgba(56, 94, 170, 0.96);","color: #ffffff;","border-top: 2px solid rgba(255, 255, 255, 0.18);"]){if(!multirowBlock[0].includes(expected)){console.error(`Expected multi-row table header styling for: ${expected}`);process.exit(1);}}const rowspanBlock=css.match(/\.content thead th\[rowspan\] \{[^}]*\}/);if(!rowspanBlock||!rowspanBlock[0].includes("vertical-align: middle;")){console.error("Expected rowspan headers to stay vertically centered.");process.exit(1);}const splitBlock=css.match(/\.content thead th \+ th \{[^}]*\}/);if(!splitBlock||!splitBlock[0].includes("border-left-color: rgba(255, 255, 255, 0.12);")){console.error("Expected header cell dividers to be stronger for multi-row headers.");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const block=css.match(/\.content th \{[^}]*\}/);if(!block){console.error("Expected .content th rule block");process.exit(1);}for(const expected of ["background: var(--brand-blue-deep);","color: #ffffff;","font-size: 14px;"]){if(!block[0].includes(expected)){console.error(`Expected table header styling for: ${expected}`);process.exit(1);}}if(block[0].includes("rgba(241, 245, 249, 0.96)")||block[0].includes("rgba(226, 232, 240, 0.92)")){console.error("Expected .content th to stop using pale mdBook-like header backgrounds");process.exit(1);}'
 check_contains theme/custom.css '.table-data-table th:first-child,'
 check_contains theme/custom.css '.table-data-table td:first-child {'
@@ -1417,8 +1456,10 @@ check_contains theme/custom.css 'letter-spacing: 0.04em;'
 check_contains theme/custom.css '#table-6 .table-data-table thead tr:last-child th {'
 check_contains theme/custom.css 'font-size: 13px;'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");for(const selector of ["#table-6 .table-data-table thead tr:first-child th {","#table-6 .table-data-table thead tr:last-child th {"]){const start=css.indexOf(selector);const end=css.indexOf("}",start);if(start===-1||end===-1){console.error(`Expected rule block for ${selector}`);process.exit(1);}const block=css.slice(start,end+1);if(block.includes("background: rgba(239, 246, 255, 0.8);")||block.includes("background: linear-gradient(180deg, rgba(226, 232, 240, 0.92) 0%, rgba(235, 241, 249, 0.94) 100%);")){console.error(`Expected ${selector} to stop using pale table header backgrounds`);process.exit(1);}if(!block.includes("color: #ffffff;")){console.error(`Expected ${selector} to use white header text`);process.exit(1);}}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const block=css.match(/#table-6 \.table-data-table thead tr:last-child th \{[^}]*\}/);if(!block){console.error("Expected #table-6 second-row header rule block");process.exit(1);}if(block[0].includes("font-style: italic;")){console.error("Expected #table-6 second-row headers to stop using italic style.");process.exit(1);}if(block[0].includes("color: rgba(30, 58, 138, 0.82);")){console.error("Expected #table-6 second-row headers to stop using low-contrast blue text.");process.exit(1);}for(const expected of ["background: rgba(56, 94, 170, 0.96);","color: #ffffff;","border-top: 2px solid rgba(255, 255, 255, 0.18);"]){if(!block[0].includes(expected)){console.error(`Expected #table-6 second-row header styling for: ${expected}`);process.exit(1);}}'
 check_contains theme/custom.css '#table-6 .table-data-table tbody tr:nth-child(even) td {'
-check_contains theme/custom.css 'background: rgba(238, 243, 251, 0.22);'
+check_contains theme/custom.css 'background: var(--paper);'
+check_not_contains theme/custom.css 'background: rgba(238, 243, 251, 0.22);'
 check_contains theme/custom.css '#table-6 .table-data-table th + th,'
 check_contains theme/custom.css 'border-left-color: rgba(148, 163, 184, 0.08);'
 check_contains theme/custom.css 'display: table;'
@@ -1493,8 +1534,9 @@ check_contains theme/custom.js 'const figureVariantClasses = {'
 check_contains theme/custom.js 'const wrapper = document.createElement("figure")'
 check_contains theme/custom.js 'wrapper.className = "figure-card figure-anchor-target"'
 check_contains theme/custom.js 'wrapper.classList.add("figure-card--multi")'
-check_contains theme/custom.js 'figure-card--flush-media'
-check_contains theme/custom.js 'figure-card--inset-media'
+check_not_contains theme/custom.js 'figure-card--flush-media'
+check_not_contains theme/custom.js 'figure-card--inset-media'
+check_contains theme/custom.js 'figure-card--panel-pair'
 check_contains theme/custom.js 'mediaBlock.classList.add("figure-media")'
 check_contains theme/custom.js 'mediaCandidates.length > 1'
 check_not_contains package.json 'upstream-atlas-reader.pdf'
@@ -1502,12 +1544,21 @@ check_contains theme/custom.js 'mediaGrid.className = "figure-media figure-media
 check_contains theme/custom.js 'mediaItem.className = "figure-media-item"'
 check_contains theme/custom.js 'wrapper.classList.add(className);'
 check_contains theme/custom.js 'captionLabel.textContent = "Figure "'
-check_contains theme/custom.js '+ ":"'
-check_contains theme/custom.js 'captionLabel.className = "figure-caption-label"'
-check_contains theme/custom.js 'captionText.className = "figure-caption-text"'
+check_not_contains theme/custom.js 'captionLabel.textContent = "Figure " + match[1] + ":";'
+check_contains theme/custom.js 'const header = document.createElement("div")'
+check_contains theme/custom.js 'header.className = "figure-card-header"'
+check_contains theme/custom.js 'captionLabel.className = "figure-card-label"'
+check_contains theme/custom.js 'const footer = document.createElement("figcaption")'
+check_contains theme/custom.js 'footer.className = "figure-card-footer"'
+check_contains theme/custom.js 'captionText.className = "figure-card-title"'
+check_contains theme/custom.js 'wrapper.appendChild(header);'
+check_contains theme/custom.js 'wrapper.appendChild(footer);'
+check_contains theme/custom.js 'collectReferenceCards(".figure-card", ".figure-card-footer", ".figure-card-label", ".figure-card-title")'
 check_contains theme/custom.js 'function annotateTables()'
 check_contains theme/custom.js 'const tableId = "table-" +'
 check_contains theme/custom.js 'wrapper.className = "table-anchor-target"'
+check_contains theme/custom.js 'const tableCard = document.createElement("div")'
+check_contains theme/custom.js 'tableCard.className = "table-card"'
 check_contains theme/custom.js 'const tableShell = document.createElement("div")'
 check_contains theme/custom.js 'tableShell.className = "table-anchor-shell"'
 check_contains theme/custom.js 'const tableScroll = document.createElement("div")'
@@ -1516,6 +1567,12 @@ check_contains theme/custom.js 'const captionLabel = document.createElement("spa
 check_contains theme/custom.js 'captionLabel.className = "table-caption-label"'
 check_contains theme/custom.js 'captionText.className = "table-caption-text"'
 check_contains theme/custom.js 'caption.className = "table-caption"'
+check_contains theme/custom.js 'wrapper.appendChild(tableCard);'
+check_contains theme/custom.js 'tableCard.appendChild(caption);'
+check_contains theme/custom.js 'tableCard.appendChild(tableShell);'
+check_contains theme/custom.js 'tableCard.appendChild(notesGroup);'
+check_not_contains theme/custom.js 'wrapper.appendChild(caption);'
+check_not_contains theme/custom.js 'wrapper.appendChild(notesGroup);'
 check_contains theme/custom.js 'function collectTableNotes('
 check_contains theme/custom.js 'function enhanceTable6()'
 check_contains theme/custom.js 'function parseTable6Rule(text)'
@@ -1542,3 +1599,8 @@ check_not_contains public/book/index.html 'toolbar-center'
 check_not_contains public/book/index.html 'book-toolbar-actions'
 
 echo "Site render checks passed."
+check_not_contains theme/custom.css '.reader-sidebar-section-chevron'
+check_not_contains theme/custom.js 'reader-sidebar-section-chevron'
+check_not_contains theme/custom.js 'function buildSidebarSectionChevron('
+check_not_contains theme/index.hbs 'reader-sidebar-section-chevron'
+check_not_contains theme/index.hbs 'function buildSidebarSectionChevron('

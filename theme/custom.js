@@ -609,8 +609,7 @@
 
   function annotateFigureCaptions() {
     const figureVariantClasses = {
-      "2": ["figure-card--flush-media", "figure-card--panel-pair"],
-      "7": ["figure-card--inset-media"],
+      "2": ["figure-card--panel-pair"],
     };
 
     const captions = Array.from(document.querySelectorAll(".reader-article p")).filter(function (paragraph) {
@@ -640,19 +639,20 @@
 
       let mediaBlock = null;
 
-      caption.classList.add("figure-caption");
-      caption.textContent = "";
-
+      const header = document.createElement("div");
       const captionLabel = document.createElement("span");
-      captionLabel.className = "figure-caption-label";
-      captionLabel.textContent = "Figure " + match[1] + ":";
-
+      const footer = document.createElement("figcaption");
       const captionText = document.createElement("span");
-      captionText.className = "figure-caption-text";
+
+      header.className = "figure-card-header";
+      captionLabel.className = "figure-card-label";
+      captionLabel.textContent = "Figure " + match[1];
+      footer.className = "figure-card-footer";
+      captionText.className = "figure-card-title";
       captionText.textContent = match[2];
 
-      caption.appendChild(captionLabel);
-      caption.appendChild(captionText);
+      header.appendChild(captionLabel);
+      footer.appendChild(captionText);
 
       if (mediaCandidates.length === 1) {
         mediaBlock = mediaCandidates[0];
@@ -699,8 +699,10 @@
       });
 
       insertionAnchor.replaceWith(wrapper);
+      caption.remove();
+      wrapper.appendChild(header);
       wrapper.appendChild(mediaBlock);
-      wrapper.appendChild(caption);
+      wrapper.appendChild(footer);
     });
   }
 
@@ -802,6 +804,7 @@
       const captionTextValue = (match[2] || "").trim();
       const tableNotes = collectTableNotes(captionElement, tableBlock, captionPosition);
       const wrapper = document.createElement("div");
+      const tableCard = document.createElement("div");
       const tableShell = document.createElement("div");
       const tableScroll = document.createElement("div");
       const caption = document.createElement("p");
@@ -810,6 +813,7 @@
       wrapper.id = tableId;
       wrapper.className = "table-anchor-target";
       wrapper.dataset.captionPosition = "before";
+      tableCard.className = "table-card";
       tableShell.className = "table-anchor-shell";
       tableScroll.className = "table-scroll";
       caption.className = "table-caption";
@@ -835,8 +839,9 @@
         nativeCaption.remove();
       }
 
-      wrapper.appendChild(caption);
-      wrapper.appendChild(tableShell);
+      wrapper.appendChild(tableCard);
+      tableCard.appendChild(caption);
+      tableCard.appendChild(tableShell);
       tableShell.appendChild(tableScroll);
       tableScroll.appendChild(tableBlock);
       if (tableNotes.length > 0) {
@@ -845,7 +850,7 @@
         tableNotes.forEach(function (note) {
           notesGroup.appendChild(note);
         });
-        wrapper.appendChild(notesGroup);
+        tableCard.appendChild(notesGroup);
       }
     });
   }
@@ -1330,11 +1335,11 @@
     return Array.from(document.querySelectorAll(selector))
       .map(function (element) {
         const caption = element.querySelector(captionSelector);
-        const label = caption ? normalizeText(caption.querySelector(labelSelector)?.textContent || "") : "";
-        const text = caption ? normalizeText(caption.querySelector(textSelector)?.textContent || "") : "";
+        const label = normalizeText(element.querySelector(labelSelector)?.textContent || "");
+        const text = normalizeText(element.querySelector(textSelector)?.textContent || "");
         const fullText = text ? label + " " + text : label;
 
-        if (!element.id || !label) {
+        if (!element.id || !caption || !label) {
           return null;
         }
 
@@ -1390,7 +1395,7 @@
   function installOutlineReferenceSections() {
     const figuresSection = document.querySelector(".book-outline-figures");
     const tablesSection = document.querySelector(".book-outline-tables");
-    const figureItems = collectReferenceCards(".figure-card", ".figure-caption", ".figure-caption-label", ".figure-caption-text");
+    const figureItems = collectReferenceCards(".figure-card", ".figure-card-footer", ".figure-card-label", ".figure-card-title");
     const tableItems = collectReferenceCards(".table-anchor-target", ".table-caption", ".table-caption-label", ".table-caption-text");
 
     populateOutlineSection(figuresSection, figureItems);

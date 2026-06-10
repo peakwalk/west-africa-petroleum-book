@@ -39,4 +39,4 @@ Press Ctrl+C to stop the server.
 
 EOF
 
-python3 -m http.server "$PORT" --bind "$HOST" --directory "$PUBLIC_DIR"
+python3 "$ROOT_DIR/scripts/preview_server.py" --host "$HOST" --port "$PORT" --directory "$PUBLIC_DIR"
