@@ -360,7 +360,7 @@ class ExtractDocxTests(unittest.TestCase):
             [block.text for block in chapter.body],
             [
                 "Lead-in paragraph.",
-                "Post Royalty Revenue = Gross Revenue – Royalty",
+                "Post Royalty Revenue = Gross Revenue - Royalty",
                 "Table 5 below shows the proportions of royalties adopted in the oil regulations of selected West African countries.",
                 "Table 5: Summary of ad valorem royalty rates applied in selected West African countries",
             ],

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import html
 import re
 from pathlib import Path
 
@@ -64,7 +65,7 @@ def _looks_like_semantic_callout(text: str) -> bool:
 
 
 def _strip_html_tags(text: str) -> str:
-    return normalize_visible_text(HTML_TAG_RE.sub(" ", text))
+    return normalize_visible_text(html.unescape(HTML_TAG_RE.sub(" ", text)))
 
 
 def _parse_chapter(chapter_path: Path) -> ChapterSemanticModel:
@@ -181,6 +182,13 @@ def _parse_chapter(chapter_path: Path) -> ChapterSemanticModel:
             cleaned_html = _strip_html_tags(stripped)
             if "formula" in lowered:
                 flush_paragraph()
+                if "book-formula-bridge" in lowered:
+                    if cleaned_html and body and body[-1].kind == "paragraph":
+                        body[-1] = BodyBlock(
+                            kind="paragraph",
+                            text=normalize_visible_text(f"{body[-1].text} {cleaned_html}"),
+                        )
+                    continue
                 if cleaned_html:
                     kind = "paragraph"
                     text = cleaned_html

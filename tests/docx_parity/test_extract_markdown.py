@@ -282,6 +282,49 @@ class ExtractMarkdownTests(unittest.TestCase):
             ],
         )
 
+    def test_normalizes_html_formula_blocks_and_ignores_formula_bridge(self) -> None:
+        tmp_dir = Path(tempfile.mkdtemp())
+        chapter_dir = tmp_dir / "chapters"
+        chapter_dir.mkdir(parents=True, exist_ok=True)
+        chapter_path = chapter_dir / "chapter-08-formulas.md"
+        chapter_path.write_text(
+            "# Chapter 8: Formula Blocks\n\n"
+            "## 8.1- *Tax formulas*\n\n"
+            "Lead-in paragraph.\n\n"
+            '<div class="book-formula" role="img" aria-label="Post royalty revenue equals gross revenue minus royalty">\n'
+            '  <span class="book-formula-line" aria-hidden="true">Post Royalty Revenue = Gross Revenue &minus; Royalty</span>\n'
+            "</div>\n\n"
+            '<p class="book-formula-bridge">or</p>\n\n'
+            '<div class="book-formula" role="img" aria-label="Oil profit equals gross revenue minus royalty minus recoverable costs">\n'
+            '  <span class="book-formula-line" aria-hidden="true">Oil Profit = Gross Revenue &minus; Royalty &minus; Recoverable Costs</span>\n'
+            "</div>\n\n"
+            "Closing paragraph.\n",
+            encoding="utf-8",
+        )
+        summary_path = tmp_dir / "SUMMARY.md"
+        summary_path.write_text(
+            "# Summary\n\n"
+            "- [Chapter 8: Formula Blocks](chapters/chapter-08-formulas.md)\n",
+            encoding="utf-8",
+        )
+
+        book = extract_markdown_book(summary_path, chapter_dir)
+        chapter = book.chapters[0]
+
+        self.assertEqual(
+            [block.kind for block in chapter.body],
+            ["paragraph", "paragraph", "paragraph", "paragraph"],
+        )
+        self.assertEqual(
+            [block.text for block in chapter.body],
+            [
+                "Lead-in paragraph.",
+                "Post Royalty Revenue = Gross Revenue - Royalty or",
+                "Oil Profit = Gross Revenue - Royalty - Recoverable Costs",
+                "Closing paragraph.",
+            ],
+        )
+
     def test_unescapes_currency_markdown_escapes_in_paragraphs(self) -> None:
         tmp_dir = Path(tempfile.mkdtemp())
         chapter_dir = tmp_dir / "chapters"
