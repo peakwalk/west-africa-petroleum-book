@@ -1281,11 +1281,22 @@
     return normalized.slice(0, Math.max(0, maxChars - 1)).trimEnd() + "…";
   }
 
-  function buildReferenceRailLabel(label, text) {
+  function buildReferenceRailParts(label, text) {
     const normalizedLabel = normalizeText(label).replace(/:$/, "");
     const normalizedText = normalizeText(text).replace(/^[a-z](?:\s+and\s+[a-z])?\s+/i, "");
     const primaryClause = normalizeText((normalizedText.split(/[.;]/)[0] || normalizedText));
     const conciseText = truncateReferenceText(primaryClause || normalizedText, 44);
+
+    return {
+      label: normalizedLabel,
+      title: conciseText,
+    };
+  }
+
+  function buildReferenceRailLabel(label, text) {
+    const parts = buildReferenceRailParts(label, text);
+    const normalizedLabel = parts.label;
+    const conciseText = parts.title;
 
     if (!normalizedLabel) {
       return conciseText;
@@ -1296,6 +1307,31 @@
     }
 
     return normalizedLabel + " " + conciseText;
+  }
+
+  function renderReferenceOutlineAnchor(anchor, item) {
+    const labelText = normalizeText(item.referenceLabel || "");
+    const titleText = normalizeText(item.referenceTitle || "");
+
+    anchor.textContent = "";
+    anchor.classList.remove("book-outline-link--reference-split");
+
+    if (!labelText || !titleText) {
+      anchor.textContent = item.displayText;
+      return;
+    }
+
+    const label = document.createElement("span");
+    const title = document.createElement("span");
+
+    label.className = "book-outline-link--reference-label";
+    label.textContent = labelText;
+    title.className = "book-outline-link--reference-title";
+    title.textContent = titleText;
+
+    anchor.classList.add("book-outline-link--reference-split");
+    anchor.appendChild(label);
+    anchor.appendChild(title);
   }
 
   function formatDisplayDate(dateText) {
@@ -1548,6 +1584,7 @@
         const caption = element.querySelector(captionSelector);
         const label = normalizeText(element.querySelector(labelSelector)?.textContent || "");
         const text = normalizeText(element.querySelector(textSelector)?.textContent || "");
+        const referenceParts = buildReferenceRailParts(label, text);
         const fullText = text ? label + " " + text : label;
 
         if (!element.id || !caption || !label) {
@@ -1558,6 +1595,8 @@
           href: "#" + element.id,
           displayText: buildReferenceRailLabel(label, text),
           fullText: fullText,
+          referenceLabel: referenceParts.label,
+          referenceTitle: referenceParts.title,
         };
       })
       .filter(Boolean);
@@ -1591,8 +1630,8 @@
 
       link.className = "book-outline-link book-outline-link--reference";
       link.href = item.href;
-      link.textContent = item.displayText;
       link.title = item.fullText;
+      renderReferenceOutlineAnchor(link, item);
       listItem.appendChild(link);
       list.appendChild(listItem);
     });
