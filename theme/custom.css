@@ -297,6 +297,10 @@ body.book-outline-empty .reader-outline {
   border-top: 1px solid rgba(11, 31, 51, 0.07);
 }
 
+.book-outline-section[hidden] {
+  display: none;
+}
+
 .book-outline-section-title {
   margin: 0;
   color: var(--links);
@@ -353,10 +357,8 @@ body.book-outline-empty .reader-outline {
 .reader-outline .book-outline-link--reference-title {
   min-width: 0;
   color: var(--ink);
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  display: block;
+  white-space: normal;
 }
 
 .book-outline-link:hover,

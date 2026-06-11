@@ -13,6 +13,10 @@ function normalizeText(text) {
   return (text || "").replace(/\s+/g, " ").trim();
 }
 
+function countMatches(text, pattern) {
+  return (text.match(pattern) || []).length;
+}
+
 function stripMarkdown(text) {
   return normalizeText(
     text
@@ -101,6 +105,25 @@ function deriveHtmlPath(markdownPath) {
   return markdownPath.replace(/\.md$/i, ".html");
 }
 
+function buildReferenceSections(markdownSource) {
+  const figureCount =
+    countMatches(markdownSource, /!\[[^\]]*]\([^)]+\)/g) +
+    countMatches(markdownSource, /^Figure\s+\d+\s*:/gim);
+  const markdownTableCount = countMatches(
+    markdownSource,
+    /^\s*\|?(?:\s*:?-+:?\s*\|)+\s*:?-+:?\s*\|?\s*$/gm
+  );
+  const htmlTableCount = countMatches(markdownSource, /<table\b/gi);
+  const labeledFormulaCount = countMatches(markdownSource, /\bdata-equation-label\s*=/gi);
+  const standaloneFormulaCount = countMatches(markdownSource, /<div class="book-formula\b/gi);
+
+  return {
+    figures: figureCount > 0,
+    tables: markdownTableCount > 0 || htmlTableCount > 0,
+    formulas: labeledFormulaCount > 0 || standaloneFormulaCount > 0,
+  };
+}
+
 function getUpdatedAt(relativeSourcePath) {
   try {
     const updatedAt = execFileSync(
@@ -138,6 +161,7 @@ function buildPageMeta() {
       partLabel: entry.partLabel,
       updatedAt: getUpdatedAt(path.join("src", entry.sourcePath)),
       lede,
+      referenceSections: buildReferenceSections(markdownSource),
     };
   });
 

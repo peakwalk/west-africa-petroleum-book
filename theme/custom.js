@@ -1451,12 +1451,10 @@
   function buildReferenceRailParts(label, text) {
     const normalizedLabel = normalizeText(label).replace(/:$/, "");
     const normalizedText = normalizeText(text).replace(/^[a-z](?:\s+and\s+[a-z])?\s+/i, "");
-    const primaryClause = normalizeText((normalizedText.split(/[.;]/)[0] || normalizedText));
-    const conciseText = truncateReferenceText(primaryClause || normalizedText, 44);
 
     return {
       label: normalizedLabel,
-      title: conciseText,
+      title: normalizedText,
     };
   }
 
@@ -1797,7 +1795,7 @@
       .filter(Boolean);
   }
 
-  function populateOutlineSection(section, items) {
+  function populateOutlineSection(section, items, enabled) {
     const body = section ? section.querySelector(".book-outline-section-body") : null;
     const title = section ? section.querySelector(".book-outline-section-title") : null;
 
@@ -1808,7 +1806,7 @@
     const baseTitle = title.dataset.baseTitle || normalizeText(title.textContent);
     title.dataset.baseTitle = baseTitle;
 
-    if (!items.length) {
+    if (!enabled || !items.length) {
       section.hidden = true;
       section.setAttribute("aria-hidden", "true");
       title.textContent = baseTitle;
@@ -1837,17 +1835,22 @@
     section.setAttribute("aria-hidden", "false");
   }
 
-  function installOutlineReferenceSections() {
+  async function installOutlineReferenceSections() {
     const figuresSection = document.querySelector(".book-outline-figures");
     const tablesSection = document.querySelector(".book-outline-tables");
     const formulasSection = document.querySelector(".book-outline-formulas");
     const figureItems = collectReferenceCards(".figure-card", ".figure-card-footer", ".figure-card-label", ".figure-card-title");
     const tableItems = collectReferenceCards(".table-anchor-target", ".table-caption", ".table-caption-label", ".table-caption-text");
     const formulaItems = collectFormulaCards();
+    const pageMeta = await applyReaderPageMeta();
+    const referenceSections = pageMeta && pageMeta.referenceSections ? pageMeta.referenceSections : null;
+    const figuresEnabled = !referenceSections || referenceSections.figures !== false;
+    const tablesEnabled = !referenceSections || referenceSections.tables !== false;
+    const formulasEnabled = !referenceSections || referenceSections.formulas !== false;
 
-    populateOutlineSection(figuresSection, figureItems);
-    populateOutlineSection(tablesSection, tableItems);
-    populateOutlineSection(formulasSection, formulaItems);
+    populateOutlineSection(figuresSection, figureItems, figuresEnabled);
+    populateOutlineSection(tablesSection, tableItems, tablesEnabled);
+    populateOutlineSection(formulasSection, formulaItems, formulasEnabled);
   }
 
   function balanceLeadFigureWeight() {
@@ -2105,8 +2108,7 @@
       installChapterPaginationHeightSync();
       sanitizeArticleHeadingAnchors();
       moveOutline();
-      installOutlineReferenceSections();
-      syncOutlineRailVisibility();
+      installOutlineReferenceSections().then(syncOutlineRailVisibility);
       installOutlineScrollSpy();
       installChapterHero();
       installInlineOutlineCard();
@@ -2122,8 +2124,7 @@
         installSidebarShellGeometry();
         installSidebarProjection();
         moveOutline();
-        installOutlineReferenceSections();
-        syncOutlineRailVisibility();
+        installOutlineReferenceSections().then(syncOutlineRailVisibility);
         installOutlineScrollSpy();
         installChapterHero();
         installInlineOutlineCard();

@@ -221,7 +221,7 @@ class ThemeCustomCssTest(unittest.TestCase):
         self.assertIn("font-weight: 600;", note_term_block)
         self.assertIn('const formulasSection = document.querySelector(".book-outline-formulas");', js)
         self.assertIn("const formulaItems = collectFormulaCards();", js)
-        self.assertIn("populateOutlineSection(formulasSection, formulaItems);", js)
+        self.assertIn("populateOutlineSection(formulasSection, formulaItems, formulasEnabled);", js)
         self.assertIn('formulaCard.className = "formula-card";', js)
         self.assertIn('captionLabel.textContent = "Equation " + formulaLabel;', js)
 
@@ -235,6 +235,35 @@ class ThemeCustomCssTest(unittest.TestCase):
         self.assertIn('document.querySelectorAll(".formula-anchor-target[data-formula-nav=\\"true\\"]")', js)
         self.assertIn('captionLabel.textContent = "Equation " + formulaLabel;', js)
         self.assertNotIn("function getFormulaSubLabel(index)", js)
+
+    def test_outline_reference_sections_are_gated_by_reader_page_meta(self) -> None:
+        js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("const referenceSections = pageMeta && pageMeta.referenceSections ? pageMeta.referenceSections : null;", js)
+        self.assertIn("const figuresEnabled = !referenceSections || referenceSections.figures !== false;", js)
+        self.assertIn("const tablesEnabled = !referenceSections || referenceSections.tables !== false;", js)
+        self.assertIn("const formulasEnabled = !referenceSections || referenceSections.formulas !== false;", js)
+        self.assertIn("populateOutlineSection(figuresSection, figureItems, figuresEnabled);", js)
+        self.assertIn("populateOutlineSection(tablesSection, tableItems, tablesEnabled);", js)
+        self.assertIn("populateOutlineSection(formulasSection, formulaItems, formulasEnabled);", js)
+        self.assertIn("installOutlineReferenceSections().then(syncOutlineRailVisibility);", js)
+
+    def test_hidden_outline_sections_stay_hidden(self) -> None:
+        css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
+        block = _rule_block(css, ".book-outline-section[hidden]")
+
+        self.assertIn("display: none;", block)
+
+    def test_outline_reference_titles_wrap_without_truncation(self) -> None:
+        css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
+        js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
+        block = _rule_block(css, ".reader-outline .book-outline-link--reference-title")
+
+        self.assertIn("white-space: normal;", block)
+        self.assertNotIn("overflow: hidden;", block)
+        self.assertNotIn("display: -webkit-box;", block)
+        self.assertNotIn("-webkit-line-clamp:", block)
+        self.assertNotIn("const conciseText = truncateReferenceText(primaryClause || normalizedText, 44);", js)
 
     def test_formula_card_inner_formula_wraps_without_scrollbar(self) -> None:
         css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")

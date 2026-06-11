@@ -964,7 +964,7 @@ const expectations = [
   [".book-outline-link--reference {", ["display: grid;", "grid-template-columns: auto minmax(0, 1fr);", "column-gap: 0.8rem;", "font-size: 0.8125rem;"]],
   [".book-outline-link--reference:visited {", ["font-size: 0.8125rem;", "line-height: 1.55;"]],
   [".reader-outline .book-outline-link--reference-label {", ["color: var(--links);", "white-space: nowrap;"]],
-  [".reader-outline .book-outline-link--reference-title {", ["color: var(--ink);", "-webkit-line-clamp: 2;"]],
+  [".reader-outline .book-outline-link--reference-title {", ["color: var(--ink);", "display: block;", "white-space: normal;"]],
   ["@media (min-width: 1024px) {", ["--sidebar-width: 320px;"]],
 ];
 
@@ -1378,7 +1378,7 @@ check_contains theme/custom.css '.book-outline-section {'
 check_contains theme/custom.css '.book-outline-section-title {'
 check_contains theme/custom.css '.book-outline-list {'
 check_contains theme/custom.css '.book-outline-link--reference {'
-check_contains theme/custom.css '-webkit-line-clamp: 2;'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const block=css.match(/\.reader-outline \.book-outline-link--reference-title \{[^}]*\}/);if(!block){console.error("Expected .reader-outline .book-outline-link--reference-title rule block");process.exit(1);}for(const expected of ["display: block;","white-space: normal;"]){if(!block[0].includes(expected)){console.error(`Expected outline reference title styling for: ${expected}`);process.exit(1);}}for(const forbidden of ["overflow: hidden;","display: -webkit-box;","-webkit-line-clamp: 2;"]){if(block[0].includes(forbidden)){console.error(`Did not expect outline reference title styling to include ${forbidden}`);process.exit(1);}}'
 check_contains theme/custom.css '.on-this-page {'
 
 # Reader hero and knowledge object contract
