@@ -257,15 +257,23 @@ in a concessional system. Oil profit is usually, but not always, taxed.
 
 It is calculated by the following formula:
 
-<div class="book-formula" role="img" aria-label="Oil profit equals revenue post royalty minus recoverable costs">
-  <span class="book-formula-line" aria-hidden="true">Oil Profit = Revenue Post Royalty &minus; Recoverable Costs</span>
-</div>
+<section class="formula-group formula-group--split formula-group--oil-profit" data-equation-label="4.1" aria-label="Oil profit formulas">
+  <div class="formula-split-entry">
+    <div class="book-formula" role="img" aria-label="Oil profit equals revenue post royalty minus recoverable costs">
+      <span class="book-formula-line" aria-hidden="true">Oil Profit = Revenue Post Royalty &minus; Recoverable Costs</span>
+    </div>
+  </div>
 
-<p class="book-formula-bridge">or</p>
+  <div class="formula-split-divider" aria-hidden="true">
+    <span class="book-formula-bridge">or</span>
+  </div>
 
-<div class="book-formula" role="img" aria-label="Oil profit equals gross revenue minus royalty minus recoverable costs">
-  <span class="book-formula-line" aria-hidden="true">Oil Profit = Gross Revenue &minus; Royalty &minus; Recoverable Costs</span>
-</div>
+  <div class="formula-split-entry">
+    <div class="book-formula" role="img" aria-label="Oil profit equals gross revenue minus royalty minus recoverable costs">
+      <span class="book-formula-line" aria-hidden="true">Oil Profit = Gross Revenue &minus; Royalty &minus; Recoverable Costs</span>
+    </div>
+  </div>
+</section>
 
 In the Production Sharing Contracts of Benin and Niger, the share of the
 oil profit accruing to the contractor is no longer taxed.
@@ -284,7 +292,7 @@ must secure their share by other measures, most often by taxation.
 The R-factor can be used as a trigger for both royalty and profit
 sharing. It is determined in different ways:
 
-<section class="formula-panel formula-panel--r-factor" aria-label="R-factor calculation formulas">
+<section class="formula-panel formula-panel--r-factor" data-equation-label="4.2" aria-label="R-factor calculation formulas">
   <div class="book-formula book-formula--panel-row" data-formula-label="a)" role="img" aria-label="a. R factor equals cumulative revenue over cumulative cost">
     <span class="book-formula-line" aria-hidden="true">R-Factor=Cumulative Revenue/Cumulative Cost</span>
   </div>

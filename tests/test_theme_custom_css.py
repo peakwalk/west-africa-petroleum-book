@@ -19,6 +19,15 @@ def _rule_block(css: str, selector: str) -> str:
 
 
 class ThemeCustomCssTest(unittest.TestCase):
+    def test_reader_article_ordered_lists_align_with_body_copy(self) -> None:
+        css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
+        block = _rule_block(css, ".reader-article ol")
+
+        self.assertIn("margin-left: 0;", block)
+        self.assertIn("padding-left: 0;", block)
+        self.assertIn("padding-inline-start: 0;", block)
+        self.assertIn("list-style-position: inside;", block)
+
     def test_figure_card_uses_border_box_layout(self) -> None:
         css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
         block = _rule_block(css, ".figure-card")
@@ -171,16 +180,138 @@ class ThemeCustomCssTest(unittest.TestCase):
         self.assertIn("tableCard.appendChild(tableShell);", js)
         self.assertIn("tableCard.appendChild(notesGroup);", js)
 
-    def test_table_formula_cards_use_compact_padding_without_radius(self) -> None:
+    def test_table_formula_cards_use_compact_padding_without_excess_chrome(self) -> None:
         css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
-        start = css.index(".reader-article td .book-formula,")
-        end = css.index("}\n\n.api-density-formula-term", start)
+        start = css.index(".reader-article td .formula-card,")
+        end = css.index("}\n\n.reader-article td .formula-card > .book-formula,", start)
         block = css[start : end + 1]
 
-        self.assertIn("padding: 4px;", block)
-        self.assertIn("border-radius: 0;", block)
-        self.assertNotIn("padding: 0.6rem 0.8rem;", block)
-        self.assertNotIn("border-radius: 0.8rem;", block)
+        self.assertIn("padding: 0.5rem 0.65rem;", block)
+        self.assertIn("box-shadow: none;", block)
+        self.assertNotIn("padding: var(--reader-table-card-padding);", block)
+        self.assertNotIn("box-shadow: var(--reader-table-card-shadow);", block)
+
+    def test_formula_cards_share_table_card_shell_and_notes_layout(self) -> None:
+        css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
+        js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
+
+        card_block = _rule_block(css, ".formula-card")
+        embedded_block = _rule_block(css, ".formula-card--embedded")
+        caption_block = _rule_block(css, ".content .formula-caption")
+        label_block = _rule_block(css, ".formula-caption-label")
+        nested_formula_block = _rule_block(css, ".formula-card > .book-formula")
+        notes_group_block = _rule_block(css, ".formula-notes-group")
+        note_block = _rule_block(css, ".content .formula-note")
+        note_term_block = _rule_block(css, ".formula-note-term")
+
+        self.assertIn("padding: var(--reader-table-card-padding);", card_block)
+        self.assertIn("border: var(--reader-table-card-border);", card_block)
+        self.assertIn("background: var(--reader-table-card-bg);", card_block)
+        self.assertIn("box-shadow: var(--reader-table-card-shadow);", card_block)
+        self.assertIn("padding: 1rem 1.1rem;", embedded_block)
+        self.assertIn("box-shadow: none;", embedded_block)
+        self.assertIn("margin: 0 0 0.85rem;", caption_block)
+        self.assertIn("text-transform: uppercase;", label_block)
+        self.assertIn("margin: 0;", nested_formula_block)
+        self.assertIn("padding: 0;", nested_formula_block)
+        self.assertIn("border: 0;", nested_formula_block)
+        self.assertIn("background: transparent;", nested_formula_block)
+        self.assertIn("margin-top: 0.2rem;", notes_group_block)
+        self.assertIn("font-size: 12px;", note_block)
+        self.assertIn("font-weight: 600;", note_term_block)
+        self.assertIn('const formulasSection = document.querySelector(".book-outline-formulas");', js)
+        self.assertIn("const formulaItems = collectFormulaCards();", js)
+        self.assertIn("populateOutlineSection(formulasSection, formulaItems);", js)
+        self.assertIn('formulaCard.className = "formula-card";', js)
+        self.assertIn('captionLabel.textContent = "Equation " + formulaLabel;', js)
+
+    def test_formula_annotation_uses_explicit_equation_labels(self) -> None:
+        js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
+
+        self.assertIn('document.querySelectorAll(".reader-article [data-equation-label]:not(.book-formula)")', js)
+        self.assertIn('document.querySelectorAll(".reader-article .book-formula[data-equation-label]")', js)
+        self.assertIn('const formulaLabel = normalizeText(element.dataset.equationLabel || "");', js)
+        self.assertIn('formulaWrapper.dataset.formulaNav = "true";', js)
+        self.assertIn('document.querySelectorAll(".formula-anchor-target[data-formula-nav=\\"true\\"]")', js)
+        self.assertIn('captionLabel.textContent = "Equation " + formulaLabel;', js)
+        self.assertNotIn("function getFormulaSubLabel(index)", js)
+
+    def test_formula_card_inner_formula_wraps_without_scrollbar(self) -> None:
+        css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
+
+        nested_formula_block = _rule_block(css, ".formula-card > .book-formula")
+        nested_line_block = _rule_block(css, ".formula-card > .book-formula .book-formula-line")
+
+        self.assertIn("overflow: visible;", nested_formula_block)
+        self.assertIn("white-space: normal;", nested_formula_block)
+        self.assertNotIn("overflow-x: auto;", nested_formula_block)
+        self.assertIn("width: 100%;", nested_line_block)
+        self.assertIn("min-width: 0;", nested_line_block)
+        self.assertNotIn("width: max-content;", nested_line_block)
+
+    def test_formula_where_blocks_and_group_children_are_borderless_inside_cards(self) -> None:
+        css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
+
+        group_block = _rule_block(
+            css,
+            ".formula-group > .book-formula,\n.formula-group--split .formula-split-entry > .book-formula,\n.formula-card > .formula-derivation > .book-formula,\n.formula-group .formula-derivation > .book-formula,\n.formula-where .book-formula--local",
+        )
+        where_block = _rule_block(css, ".formula-where")
+        where_label_block = _rule_block(css, ".content .formula-where-label")
+        where_item_block = _rule_block(css, ".content .formula-where-item")
+
+        self.assertIn("border: 0;", group_block)
+        self.assertIn("background: transparent;", group_block)
+        self.assertIn("box-shadow: none;", group_block)
+        self.assertIn("border-top: 1px solid rgba(148, 163, 184, 0.22);", where_block)
+        self.assertIn("text-transform: uppercase;", where_label_block)
+        self.assertIn("font-size: 12px;", where_item_block)
+
+    def test_volumetric_formula_group_uses_clear_visual_hierarchy(self) -> None:
+        css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
+
+        main_block = _rule_block(css, ".formula-group--volumetric > .book-formula")
+        with_label_block = _rule_block(css, ".content .formula-group--volumetric .formula-where-label")
+        spec_grid_block = _rule_block(css, ".formula-spec-grid--two")
+        spec_copy_block = _rule_block(css, ".formula-where--volumetric .formula-spec-copy")
+        local_formula_block = _rule_block(css, ".formula-spec-item .book-formula--local")
+        empty_item_block = _rule_block(css, ".formula-spec-item--empty")
+        derivation_block = _rule_block(css, ".formula-derivation--volumetric")
+        case_block = _rule_block(css, ".formula-group--volumetric .formula-case")
+        case_title_block = _rule_block(css, ".formula-group--volumetric .formula-case-title")
+        case_stack_block = _rule_block(css, ".formula-group--volumetric .formula-case-stack")
+        case_formula_block = _rule_block(css, ".formula-group--volumetric .formula-case .book-formula")
+        case_note_shell_block = _rule_block(css, ".formula-case-note")
+        case_note_block = _rule_block(css, ".formula-case-note .formula-note")
+
+        self.assertIn("font-size: clamp(20px, 1.55vw, 25px);", main_block)
+        self.assertIn("font-size: 11px;", with_label_block)
+        self.assertIn("grid-template-columns: repeat(2, minmax(0, 1fr));", spec_grid_block)
+        self.assertIn("font-size: 12.5px;", spec_copy_block)
+        self.assertIn("font-size: clamp(12.7px, 0.92vw, 14.4px);", local_formula_block)
+        self.assertIn("background: rgba(255, 255, 255, 0.96);", empty_item_block)
+        self.assertIn("margin: 0.55rem 0 0;", derivation_block)
+        self.assertIn("padding: 0;", case_block)
+        self.assertIn("background: var(--reader-table-card-bg);", case_block)
+        self.assertIn("font-size: 11px;", case_title_block)
+        self.assertIn("background: var(--reader-table-card-bg);", case_stack_block)
+        self.assertIn("font-size: 13px;", case_formula_block)
+        self.assertIn("background: rgba(255, 255, 255, 0.92);", case_note_shell_block)
+        self.assertIn("font-size: 12px;", case_note_block)
+
+    def test_reference_layouts_for_split_and_r_factor_formulas_are_available(self) -> None:
+        css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
+
+        split_block = _rule_block(css, ".formula-group--split")
+        divider_block = _rule_block(css, ".formula-split-divider")
+        panel_block = _rule_block(css, ".formula-panel--r-factor")
+        panel_row_block = _rule_block(css, ".formula-panel--r-factor .book-formula--panel-row")
+
+        self.assertIn("grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);", split_block)
+        self.assertIn("flex-direction: column;", divider_block)
+        self.assertIn("border: 1px solid rgba(216, 221, 232, 0.96);", panel_block)
+        self.assertIn("display: flex;", panel_row_block)
+        self.assertIn("font-size: 14px;", panel_row_block)
 
     def test_mobile_sidebar_open_keeps_page_wrapper_unshifted(self) -> None:
         css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")

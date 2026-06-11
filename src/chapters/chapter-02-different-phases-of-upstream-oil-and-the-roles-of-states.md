@@ -382,18 +382,29 @@ Thus, the determination of the geological risk of a prospect makes it
 possible to calculate the probability of success of this prospect. It is
 determined by the formula:
 
-<div class="book-formula" role="img" aria-label="P prospect equals P source rock times P reservoir times P trap">
-  <span class="book-formula-line" aria-hidden="true">P(prospect) = P(source rock) x P(reservoir) x P(trap)</span>
-</div>
+<section class="formula-group formula-group--prospect" data-equation-label="2.1" aria-label="Prospect formula">
+  <div class="book-formula" role="img" aria-label="P prospect equals P source rock times P reservoir times P trap">
+    <span class="book-formula-line" aria-hidden="true">P(prospect) = P(source rock) x P(reservoir) x P(trap)</span>
+  </div>
 
-Waterproof trap + waterproof cover
-
-Porosity and permeability of reservoir rock
-
-Geological hazards
-
-Maturity of the bedrock and therefore its degree of migration to the
-reservoir
+  <div class="formula-where formula-where--grid formula-where--prospect" aria-label="Prospect formula definitions">
+    <p class="formula-where-label">with:</p>
+    <div class="formula-spec-grid formula-spec-grid--two">
+      <article class="formula-spec-item">
+        <p class="formula-spec-copy"><span class="formula-where-term">P(prospect):</span> Geological hazards</p>
+      </article>
+      <article class="formula-spec-item">
+        <p class="formula-spec-copy"><span class="formula-where-term">P(source rock):</span> Maturity of the bedrock and therefore its degree of migration to the reservoir</p>
+      </article>
+      <article class="formula-spec-item">
+        <p class="formula-spec-copy"><span class="formula-where-term">P(reservoir):</span> Porosity and permeability of reservoir rock</p>
+      </article>
+      <article class="formula-spec-item">
+        <p class="formula-spec-copy"><span class="formula-where-term">P(trap):</span> Waterproof trap + waterproof cover</p>
+      </article>
+    </div>
+  </div>
+</section>
 
 ***(iv) Volumetric assessment of hydrocarbon resources***
 
@@ -409,89 +420,86 @@ area are used.
 Thus, the quantity of hydrocarbons (VHcP) in place, i.e. oil (STOIIP) or
 gas (GIIP) in place, is determined as follows:
 
-<div class="book-formula" role="img" aria-label="VHcP equals GRV times N over G times phi times Shc times 1 over FVF">
-  <span class="book-formula-line" aria-hidden="true">VHcP = GRV x N/G x Ø x Shc x 1/FVF</span>
-</div>
-
-With
-
-**IBC = Gross Rock Volume: it is determined by taking into account the
-geometric shape of the reservoir and its thickness**
-
-<div class="book-formula" role="img" aria-label="IBCs equals the sum of deposit area times deposit thickness">
-  <span class="book-formula-line" aria-hidden="true">IBCs = ∑Deposit Area x Deposit Thickness</span>
-</div>
-
-**N/G**: This is the ratio between the net thickness of the tank and the
-gross thickness of the tank. It should be noted that the thickness of
-the deposit does not often have a uniform lithology. It is often
-interspersed with layers of impermeable clay.
-
-**Ø (Phi)** = Reservoir porosity which is estimated from electrical
-logs, core measurements and knowledge from similar formations. It is
-determined as follows:
-
-<div class="book-formula" role="img" aria-label="Porosity phi equals pore volume over reservoir volume">
-  <span class="book-formula-line" aria-hidden="true">Porosity (Ø) = Pore Volume (Vv)/ Reservoir Volume (V)</span>
-</div>
-
-**Shc =** Hydrocarbon saturation determined by knowing the water
-saturation Sw. It is usually calculated from the well digraphies in the
-effective porosity zone.
-
-<div class="book-formula" role="img" aria-label="Shc equals 1 minus Sw">
-  <span class="book-formula-line" aria-hidden="true">Shc = 1-Sw</span>
-</div>
-
-**FVF**: This is the Volumetric Factor of Formation. It expresses the
-change in the volume of the oil from the tank to the surface under
-standard pressure and temperature conditions (pressure: 1 atm and
-temperature: 15° Celsius). FVF of the oil is Bo and for the gas is Bg.
-
-<div class="formula-derivation" aria-label="FVF derivation for oil and gas">
-  <div class="book-formula book-formula--primary" role="img" aria-label="FVF equals reservoir volume over surface volume">
-    <span class="book-formula-line" aria-hidden="true">FVF = Reservoir Volume/Surface Volume</span>
+<section class="formula-group formula-group--volumetric" data-equation-label="2.2" aria-label="Volumetric assessment formulas">
+  <div class="book-formula" role="img" aria-label="VHcP equals GRV times N over G times phi times Shc times 1 over FVF">
+    <span class="book-formula-line" aria-hidden="true">VHcP = GRV x N/G x Ø x Shc x 1/FVF</span>
   </div>
-  <div class="formula-case-grid">
-    <section class="formula-case" aria-label="Oil case derivation">
-      <p class="formula-case-title">For the oil</p>
-      <div class="formula-case-stack">
-        <div class="book-formula book-formula--secondary" role="img" aria-label="FVF equals Bo and Shc equals So for oil saturation">
-          <span class="book-formula-line" aria-hidden="true">FVF = Bo and Shc = So (oil saturation)</span>
-        </div>
-        <p class="formula-case-connector">Thus</p>
-        <div class="book-formula book-formula--secondary book-formula--result" role="img" aria-label="STIIOP equals GRV times N over G times phi times So times 1 over Bo">
-          <span class="book-formula-line" aria-hidden="true">STIIOP = GRV x N/G x Ø x So x 1/Bo</span>
-        </div>
-        <div class="book-formula book-formula--secondary" role="img" aria-label="Associated gas in place equals STOIIP times GOR">
-          <span class="book-formula-line" aria-hidden="true">Associated gas in place = STOIIP x GOR</span>
-        </div>
-      </div>
-    </section>
-    <section class="formula-case" aria-label="Gas case derivation">
-      <p class="formula-case-title">For gas</p>
-      <div class="formula-case-stack">
-        <div class="book-formula book-formula--secondary" role="img" aria-label="FVF equals Bg and Shc equals Sg for gas saturation">
-          <span class="book-formula-line" aria-hidden="true">FVF = Bg and Shc = Sg (Gas Saturation)</span>
-        </div>
-        <p class="formula-case-connector">Thus</p>
-        <div class="book-formula book-formula--secondary book-formula--result" role="img" aria-label="GIIP equals GRV times N over G times phi times Sg times 1 over Bg">
-          <span class="book-formula-line" aria-hidden="true">GIIP = GRV x N/G x Ø x Sg x 1/Bg</span>
-        </div>
-        <div class="book-formula book-formula--secondary" role="img" aria-label="Condensate in place equals GIIP times CGR">
-          <span class="book-formula-line" aria-hidden="true">Condensate in place = GIIP x CGR</span>
-        </div>
-      </div>
-    </section>
-  </div>
+
+<div class="formula-where formula-where--grid formula-where--volumetric" aria-label="Volumetric assessment formula definitions">
+<p class="formula-where-label">with:</p>
+<div class="formula-spec-grid formula-spec-grid--two formula-spec-grid--volumetric">
+  <article class="formula-spec-item">
+    <p class="formula-spec-copy"><span class="formula-where-term">IBC = Gross Rock Volume:</span> it is determined by taking into account the geometric shape of the reservoir and its thickness</p>
+    <div class="book-formula book-formula--local" role="img" aria-label="IBCs equals the sum of deposit area times deposit thickness">
+      <span class="book-formula-line" aria-hidden="true">IBCs = ∑Deposit Area x Deposit Thickness</span>
+    </div>
+  </article>
+  <article class="formula-spec-item">
+    <p class="formula-spec-copy"><span class="formula-where-term">N/G:</span> This is the ratio between the net thickness of the tank and the gross thickness of the tank. It should be noted that the thickness of the deposit does not often have a uniform lithology. It is often interspersed with layers of impermeable clay.</p>
+  </article>
+  <article class="formula-spec-item">
+    <p class="formula-spec-copy"><span class="formula-where-term">Ø (Phi):</span> Reservoir porosity which is estimated from electrical logs, core measurements and knowledge from similar formations. It is determined as follows:</p>
+    <div class="book-formula book-formula--local" role="img" aria-label="Porosity phi equals pore volume over reservoir volume">
+      <span class="book-formula-line" aria-hidden="true">Porosity (Ø) = Pore Volume (Vv)/ Reservoir Volume (V)</span>
+    </div>
+  </article>
+  <article class="formula-spec-item">
+    <p class="formula-spec-copy"><span class="formula-where-term">Shc =</span> Hydrocarbon saturation determined by knowing the water saturation Sw. It is usually calculated from the well digraphies in the effective porosity zone.</p>
+    <div class="book-formula book-formula--local" role="img" aria-label="Shc equals 1 minus Sw">
+      <span class="book-formula-line" aria-hidden="true">Shc = 1-Sw</span>
+    </div>
+  </article>
+  <article class="formula-spec-item">
+    <p class="formula-spec-copy"><span class="formula-where-term">FVF:</span> This is the Volumetric Factor of Formation. It expresses the change in the volume of the oil from the tank to the surface under standard pressure and temperature conditions (pressure: 1 atm and temperature: 15° Celsius). FVF of the oil is Bo and for the gas is Bg.</p>
+    <div class="book-formula book-formula--local" role="img" aria-label="FVF equals reservoir volume over surface volume">
+      <span class="book-formula-line" aria-hidden="true">FVF = Reservoir Volume/Surface Volume</span>
+    </div>
+  </article>
+  <article class="formula-spec-item formula-spec-item--empty" aria-hidden="true"></article>
+</div>
 </div>
 
-with:
-
-**GOR**: called Gas-Oil Ratio is the ratio of gas volume to oil produced
-
-**CGR**: called Condensate-Gas Ratio is the ratio of ***condensate
-volume*** to the volume of gas produced
+  <div class="formula-derivation formula-derivation--volumetric" aria-label="FVF derivation for oil and gas">
+    <div class="formula-case-grid">
+      <section class="formula-case" aria-label="Oil case derivation">
+        <p class="formula-case-title">For the oil</p>
+        <div class="formula-case-stack">
+          <div class="book-formula book-formula--secondary" role="img" aria-label="FVF equals Bo and Shc equals So for oil saturation">
+            <span class="book-formula-line" aria-hidden="true">FVF = Bo and Shc = So (oil saturation)</span>
+          </div>
+          <p class="formula-case-connector">Thus</p>
+          <div class="book-formula book-formula--secondary book-formula--result" role="img" aria-label="STIIOP equals GRV times N over G times phi times So times 1 over Bo">
+            <span class="book-formula-line" aria-hidden="true">STIIOP = GRV x N/G x Ø x So x 1/Bo</span>
+          </div>
+          <div class="book-formula book-formula--secondary" role="img" aria-label="Associated gas in place equals STOIIP times GOR">
+            <span class="book-formula-line" aria-hidden="true">Associated gas in place = STOIIP x GOR</span>
+          </div>
+        </div>
+        <div class="formula-case-note">
+          <p class="formula-note"><span class="formula-note-term">GOR:</span> called Gas-Oil Ratio is the ratio of gas volume to oil produced</p>
+        </div>
+      </section>
+      <section class="formula-case" aria-label="Gas case derivation">
+        <p class="formula-case-title">For gas</p>
+        <div class="formula-case-stack">
+          <div class="book-formula book-formula--secondary" role="img" aria-label="FVF equals Bg and Shc equals Sg for gas saturation">
+            <span class="book-formula-line" aria-hidden="true">FVF = Bg and Shc = Sg (Gas Saturation)</span>
+          </div>
+          <p class="formula-case-connector">Thus</p>
+          <div class="book-formula book-formula--secondary book-formula--result" role="img" aria-label="GIIP equals GRV times N over G times phi times Sg times 1 over Bg">
+            <span class="book-formula-line" aria-hidden="true">GIIP = GRV x N/G x Ø x Sg x 1/Bg</span>
+          </div>
+          <div class="book-formula book-formula--secondary" role="img" aria-label="Condensate in place equals GIIP times CGR">
+            <span class="book-formula-line" aria-hidden="true">Condensate in place = GIIP x CGR</span>
+          </div>
+        </div>
+        <div class="formula-case-note">
+          <p class="formula-note"><span class="formula-note-term">CGR:</span> called Condensate-Gas Ratio is the ratio of <em>condensate volume</em> to the volume of gas produced</p>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>
 
 A lead ranking is performed when multiple leads are mapped on a
 contracted block. This classification is based on geological hazards
