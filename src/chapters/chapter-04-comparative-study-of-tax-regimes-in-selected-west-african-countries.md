@@ -73,7 +73,7 @@ income. Gross income depends on the quantity of crude oil extracted from
 the deposit, the quality of the crude oil and the variation in the price
 of crude oil on the international market. Thus, we have:
 
-<div class="book-formula" role="img" aria-label="Post royalty revenue equals gross revenue minus royalty">
+<div class="book-formula" data-equation-label="4.1" role="img" aria-label="Post royalty revenue equals gross revenue minus royalty">
   <span class="book-formula-line" aria-hidden="true">Post Royalty Revenue = Gross Revenue &minus; Royalty</span>
 </div>
 
@@ -257,7 +257,7 @@ in a concessional system. Oil profit is usually, but not always, taxed.
 
 It is calculated by the following formula:
 
-<section class="formula-group formula-group--split formula-group--oil-profit" data-equation-label="4.1" aria-label="Oil profit formulas">
+<section class="formula-group formula-group--split formula-group--oil-profit" data-equation-label="4.2" aria-label="Oil profit formulas">
   <div class="formula-split-entry">
     <div class="book-formula" role="img" aria-label="Oil profit equals revenue post royalty minus recoverable costs">
       <span class="book-formula-line" aria-hidden="true">Oil Profit = Revenue Post Royalty &minus; Recoverable Costs</span>
@@ -292,7 +292,7 @@ must secure their share by other measures, most often by taxation.
 The R-factor can be used as a trigger for both royalty and profit
 sharing. It is determined in different ways:
 
-<section class="formula-panel formula-panel--r-factor" data-equation-label="4.2" aria-label="R-factor calculation formulas">
+<section class="formula-panel formula-panel--r-factor" data-equation-label="4.3" aria-label="R-factor calculation formulas">
   <div class="book-formula book-formula--panel-row" data-formula-label="a)" role="img" aria-label="a. R factor equals cumulative revenue over cumulative cost">
     <span class="book-formula-line" aria-hidden="true">R-Factor=Cumulative Revenue/Cumulative Cost</span>
   </div>

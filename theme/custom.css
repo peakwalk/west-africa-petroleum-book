@@ -53,6 +53,11 @@
   --reader-outline-section-gap: 8px;
   --reader-outline-dot-size: 8px;
   --reader-article-body-measure: 68ch;
+  --reader-h2-body-align-scale: 0.6666667;
+  --reader-h3-body-align-scale: 0.8;
+  --reader-article-body-width: 39rem;
+  --reader-heading-measure: 34ch;
+  --reader-chapter-title-measure: 26ch;
   --reader-article-body-line-height: 1.72;
   --reader-dek-measure: 44rem;
   --reader-figure-max-width: var(--content-max-width);
@@ -435,14 +440,44 @@ body.book-outline-empty .reader-outline {
   line-height: 1.72;
 }
 
+.reader-article {
+  /* Use one authoritative content column so headings and body share the same left edge. */
+  --reader-article-column-max: min(100%, var(--reader-article-body-width));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, var(--reader-article-column-max)) minmax(0, 1fr);
+}
+
+.reader-article > * {
+  grid-column: 1 / -1;
+}
+
+.reader-article > p,
+.reader-article > ul,
+.reader-article > ol,
+.reader-article > h2,
+.reader-article > h3,
+.reader-article > h4,
+.reader-article > h5,
+.reader-article > h6,
+.reader-article > blockquote,
+.reader-article > .reader-chapter-hero {
+  grid-column: 2;
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+}
+
 .reader-article p {
-  max-width: 68ch;
+  max-width: var(--reader-article-body-measure);
+  max-width: min(100%, var(--reader-article-body-width));
+  margin-inline: auto;
   margin-bottom: 1.15rem;
   color: var(--ink);
   line-height: 1.72;
 }
 
 .reader-article li {
+  max-width: none;
   color: var(--ink);
   line-height: 1.625;
 }
@@ -452,7 +487,16 @@ body.book-outline-empty .reader-outline {
   margin: 0;
 }
 
+.reader-article ul {
+  max-width: var(--reader-article-body-measure);
+  max-width: min(100%, var(--reader-article-body-width));
+  margin-inline: auto;
+}
+
 .reader-article ol {
+  max-width: var(--reader-article-body-measure);
+  max-width: min(100%, var(--reader-article-body-width));
+  margin-inline: auto;
   margin-left: 0;
   padding-left: 0;
   padding-inline-start: 0;
@@ -545,6 +589,28 @@ body.book-outline-empty .reader-outline {
   color: var(--ink);
 }
 
+.reader-article h2,
+.reader-article h3,
+.reader-article h4,
+.reader-article h5,
+.reader-article h6 {
+  position: relative;
+  margin-inline: auto;
+}
+
+.reader-article h2 {
+  max-width: calc(var(--reader-article-body-measure) * var(--reader-h2-body-align-scale));
+  max-width: min(100%, var(--reader-article-body-width));
+}
+
+.reader-article h3,
+.reader-article h4,
+.reader-article h5,
+.reader-article h6 {
+  max-width: calc(var(--reader-article-body-measure) * var(--reader-h3-body-align-scale));
+  max-width: min(100%, var(--reader-article-body-width));
+}
+
 .reader-article h1:target::before,
 .reader-article h2:target::before,
 .reader-article h3:target::before,
@@ -561,6 +627,8 @@ body.book-outline-empty .reader-outline {
   grid-template-columns: auto minmax(0, 1fr);
   column-gap: 0.85rem;
   align-items: start;
+  width: 100%;
+  max-width: 100%;
   color: var(--ink);
   text-decoration: none;
 }
@@ -571,6 +639,7 @@ body.book-outline-empty .reader-outline {
   padding-bottom: 0.8rem;
   color: var(--brand-blue);
   line-height: 1;
+  text-align: start;
   white-space: nowrap;
 }
 
@@ -585,7 +654,48 @@ body.book-outline-empty .reader-outline {
 }
 
 .reader-article a.header.reader-heading-link--indexed .reader-heading-title {
+  display: block;
   min-width: 0;
+  max-width: var(--reader-heading-measure);
+  width: 100%;
+  text-wrap: balance;
+}
+
+@media (max-width: 760px) {
+  .reader-article a.header.reader-heading-link--indexed,
+  .reader-article a.header.reader-heading-link--indexed:visited {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 0.85rem;
+    width: min(100%, var(--reader-article-body-width));
+    margin-inline: auto;
+  }
+
+  .reader-article a.header.reader-heading-link--indexed .reader-heading-index {
+    position: relative;
+    top: auto;
+    right: auto;
+    text-align: start;
+  }
+
+  .reader-article a.header.reader-heading-link--indexed .reader-heading-title {
+    display: block;
+  }
+}
+
+.content .reader-article > p,
+.content .reader-article > ul,
+.content .reader-article > ol,
+.content .reader-article > h2,
+.content .reader-article > h3,
+.content .reader-article > h4,
+.content .reader-article > h5,
+.content .reader-article > h6,
+.content .reader-article > blockquote,
+.content .reader-article > .reader-chapter-hero {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
 }
 
 .content a,
@@ -1747,6 +1857,8 @@ body.book-outline-empty .reader-outline {
 
 .reader-chapter-hero {
   display: grid;
+  width: min(100%, var(--reader-article-body-measure));
+  margin-inline: auto;
   gap: 1rem;
   margin-bottom: 2rem;
 }
@@ -1758,6 +1870,7 @@ body.book-outline-empty .reader-outline {
 .reader-chapter-hero .reader-chapter-eyebrow {
   margin: 0;
   display: inline-flex;
+  justify-self: start;
   align-items: center;
   width: fit-content;
   padding: 0.45rem 0.85rem;
@@ -1778,10 +1891,13 @@ body.book-outline-empty .reader-outline {
   font-size: 48px;
   line-height: 1.08;
   letter-spacing: -0.03em;
+  max-width: var(--reader-chapter-title-measure);
+  text-wrap: balance;
 }
 
 .reader-chapter-rule {
   display: block;
+  justify-self: start;
   width: 32px;
   height: 3px;
   border-radius: 999px;
@@ -2462,9 +2578,9 @@ body.book-page-aux-index .reader-article {
   box-shadow: 0 10px 24px rgba(15, 23, 42, 0.075);
   color: var(--ink);
   font-family: var(--reader-serif);
-  font-size: clamp(14.4px, 1vw, 16.8px);
+  font-size: 16px;
   font-weight: 500;
-  line-height: 1.05;
+  line-height: 1.2;
   letter-spacing: 0;
   white-space: nowrap;
 }
@@ -2608,6 +2724,19 @@ body.book-page-aux-index .reader-article {
   margin: 0;
 }
 
+/* Keep top-level article formulas on the same content column as body copy. */
+.reader-article > .book-formula,
+.reader-article > .formula-anchor-target,
+.reader-article > .formula-group,
+.reader-article > .formula-panel,
+.reader-article > .formula-derivation,
+.reader-article > .formula-where {
+  grid-column: 2;
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+}
+
 .formula-group {
   display: grid;
   gap: 0.85rem;
@@ -2656,8 +2785,8 @@ body.book-page-aux-index .reader-article {
 
 .formula-group--prospect > .book-formula,
 .formula-group--volumetric > .book-formula {
-  font-size: clamp(20px, 1.55vw, 25px);
-  line-height: 1.04;
+  font-size: 16px;
+  line-height: 1.2;
 }
 
 .formula-group--prospect > .book-formula .book-formula-line,
@@ -2679,8 +2808,8 @@ body.book-page-aux-index .reader-article {
 
 .formula-group--split > .formula-split-entry > .book-formula {
   width: 100%;
-  font-size: clamp(18px, 1.35vw, 22px);
-  line-height: 1.34;
+  font-size: 16px;
+  line-height: 1.28;
 }
 
 .formula-group--split > .formula-split-entry:first-child > .book-formula {
@@ -2884,9 +3013,9 @@ body.book-page-aux-index .reader-article {
   justify-items: center;
   text-align: center;
   white-space: normal;
-  font-size: clamp(14.4px, 1vw, 16.8px);
+  font-size: 16px;
   font-weight: 520;
-  line-height: 1.24;
+  line-height: 1.28;
 }
 
 .formula-panel .book-formula--panel-row::before {
@@ -3922,5 +4051,6 @@ body.book-page-aux-index .reader-article {
 
   .reader-chapter-hero h1 {
     font-size: 48px;
+    max-width: var(--reader-chapter-title-measure);
   }
 }
