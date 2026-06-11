@@ -895,7 +895,7 @@ check_contains theme/index.hbs 'class="book-outline-section book-outline-formula
 check_contains theme/index.hbs 'function applyInitialBookPageVariant()'
 node -e 'const fs=require("fs");const text=fs.readFileSync("scripts/test-site-render.sh","utf8");const legacy=["/book ","62.5%"," root contract"].join("");if(text.includes(legacy)){console.error("Expected scripts/test-site-render.sh to stop referring to the legacy /book root contract in test messages");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");if(!/:root\s*\{[^}]*font-size:\s*100%;/s.test(css)){console.error("Expected theme/custom.css to declare the repo-owned /book root font-size: 100%");process.exit(1);}'
-node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const rootMatch=css.match(/:root\s*\{[\s\S]*?\n\}/);if(!rootMatch){console.error("Expected :root block in theme/custom.css");process.exit(1);}for(const expected of ["--reader-ink: #0b1f33;","--reader-muted: #526171;","--reader-brand: #3163c2;","--reader-brand-deep: #264d97;","--reader-sidebar-width: 320px;","--reader-sidebar-width-base: 256px;","--reader-outline-width: 256px;","--reader-content-max: 896px;","--reader-logo-width-desktop: 138px;","--reader-logo-width-narrow: 216px;","--reader-figure-radius: 20px;","--reader-table-radius: 16px;","--reader-formula-radius: 6px;"]){if(!rootMatch[0].includes(expected)){console.error(`Expected :root token mapping for ${expected}`);process.exit(1);}}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const rootMatch=css.match(/:root\s*\{[\s\S]*?\n\}/);if(!rootMatch){console.error("Expected :root block in theme/custom.css");process.exit(1);}for(const expected of ["--reader-ink: #0b1f33;","--reader-muted: #526171;","--reader-brand: #3163c2;","--reader-brand-deep: #264d97;","--reader-sidebar-width: 320px;","--reader-sidebar-width-base: 256px;","--reader-outline-width: 256px;","--reader-content-max: 896px;","--reader-logo-width-desktop: 138px;","--reader-logo-width-narrow: 180px;","--reader-figure-radius: 20px;","--reader-table-radius: 16px;","--reader-formula-radius: 6px;"]){if(!rootMatch[0].includes(expected)){console.error(`Expected :root token mapping for ${expected}`);process.exit(1);}}'
 node <<'NODE'
 const fs = require("fs");
 const css = fs.readFileSync("theme/custom.css", "utf8");
@@ -1165,12 +1165,105 @@ for (const expected of [
   "padding-inline-end: 0;",
   ".book-home-icon-full {",
   "display: block;",
-  "width: 216px;",
+  "width: var(--reader-logo-width-narrow);",
   ".book-home-icon-compact {",
   "display: none;",
 ]) {
   if (!narrowHeader.includes(expected)) {
     console.error(`Expected narrow-header CSS to include ${expected}`);
+    process.exit(1);
+  }
+}
+NODE
+
+node - <<'NODE'
+const fs = require("fs");
+const css = fs.readFileSync("theme/custom.css", "utf8");
+const formulaRule = css.match(/\.formula-group--volumetric \.formula-case \.book-formula \{[\s\S]*?\n\}/);
+if (!formulaRule) {
+  console.error("Expected volumetric formula rule in theme/custom.css");
+  process.exit(1);
+}
+for (const expected of [
+  "width: 100%;",
+  "overflow-x: auto;",
+  "overflow-y: hidden;",
+  "white-space: nowrap;",
+]) {
+  if (!formulaRule[0].includes(expected)) {
+    console.error(`Expected volumetric formula CSS to include ${expected}`);
+    process.exit(1);
+  }
+}
+const formulaLineRule = css.match(/\.formula-group--volumetric \.formula-case \.book-formula-line \{[\s\S]*?\n\}/);
+if (!formulaLineRule) {
+  console.error("Expected volumetric formula line rule in theme/custom.css");
+  process.exit(1);
+}
+for (const expected of [
+  "width: max-content;",
+  "min-width: 100%;",
+]) {
+  if (!formulaLineRule[0].includes(expected)) {
+    console.error(`Expected volumetric formula line CSS to include ${expected}`);
+    process.exit(1);
+  }
+}
+const mobileFormulaStart = css.indexOf("@media (max-width: 760px) {", css.indexOf(".formula-case-grid {"));
+const mobileFormulaEnd = css.indexOf(".reader-article td .formula-card,", mobileFormulaStart);
+if (mobileFormulaStart === -1 || mobileFormulaEnd === -1) {
+  console.error("Expected narrow formula media query block in theme/custom.css");
+  process.exit(1);
+}
+const mobileFormulaBlock = css.slice(mobileFormulaStart, mobileFormulaEnd);
+for (const expected of [
+  ".formula-group--volumetric .formula-case .book-formula {",
+  "overflow-x: visible;",
+  "overflow-y: visible;",
+  "white-space: normal;",
+  "line-height: 1.4;",
+  ".formula-group--volumetric .formula-case .book-formula-line {",
+  "width: 100%;",
+  "min-width: 0;",
+]) {
+  if (!mobileFormulaBlock.includes(expected)) {
+    console.error(`Expected narrow formula media CSS to include ${expected}`);
+    process.exit(1);
+  }
+}
+for (const expected of [
+  ".formula-group--volumetric .formula-case .book-formula + .formula-case-connector {",
+  "margin-top: 0.85rem;",
+  ".formula-group--volumetric .formula-case-connector + .book-formula {",
+  "margin-top: -1rem;",
+]) {
+  if (!css.includes(expected)) {
+    console.error(`Expected volumetric connector spacing CSS to include ${expected}`);
+    process.exit(1);
+  }
+}
+NODE
+
+node - <<'NODE'
+const fs = require("fs");
+const css = fs.readFileSync("theme/custom.css", "utf8");
+const mobileReaderStart = css.lastIndexOf("@media (max-width: 760px) {");
+const mobileReaderEnd = css.indexOf("@media (max-width: 900px) {", mobileReaderStart);
+if (mobileReaderStart === -1 || mobileReaderEnd === -1) {
+  console.error("Expected narrow reader layout media query block in theme/custom.css");
+  process.exit(1);
+}
+const mobileReaderBlock = css.slice(mobileReaderStart, mobileReaderEnd);
+for (const expected of [
+  ".reader-layout {",
+  "padding: 1.5rem 0 2rem;",
+  ".reader-main {",
+  "padding: 24px 12px 40px;",
+  "padding-inline-start: calc(12px + var(--reader-left-offset));",
+  "padding-inline-end: 12px;",
+]) {
+  if (!mobileReaderBlock.includes(expected)) {
+    console.error(`Expected narrow reader layout CSS to include ${expected}`);
     process.exit(1);
   }
 }
@@ -1451,6 +1544,7 @@ check_contains theme/custom.css '.table-anchor-shell {'
 check_contains theme/custom.css '.table-scroll {'
 check_contains theme/custom.css '.table-anchor-target:target .table-card {'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const cardBlock=css.match(/\.table-card \{[^}]*\}/);if(!cardBlock){console.error("Expected .table-card rule block");process.exit(1);}for(const expected of ["display: grid;","gap: 0;","padding: var(--reader-table-card-padding);","border: var(--reader-table-card-border);","background: var(--reader-table-card-bg);","box-shadow: var(--reader-table-card-shadow);"]){if(!cardBlock[0].includes(expected)){console.error(`Expected table card styling for: ${expected}`);process.exit(1);}}if(cardBlock[0].includes("linear-gradient(")){console.error("Expected table card background to stop using gradients.");process.exit(1);}const targetCardBlock=css.match(/\.table-anchor-target:target \.table-card \{[^}]*\}/);if(!targetCardBlock){console.error("Expected .table-anchor-target:target .table-card rule block");process.exit(1);}if(!targetCardBlock[0].includes("border-color: rgba(43, 91, 166, 0.22);")){console.error("Expected anchored table card styling to keep the border-color highlight.");process.exit(1);}if(targetCardBlock[0].includes("background:")){console.error("Expected anchored table card highlight to stop overriding the card background.");process.exit(1);}if(targetCardBlock[0].includes("box-shadow:")){console.error("Expected anchored table card highlight to stop adding a target-state shadow.");process.exit(1);}const mobileStart=css.indexOf("@media (max-width: 760px) {");if(mobileStart===-1){console.error("Expected mobile table media query block.");process.exit(1);}const mobileEnd=css.indexOf(".content {", mobileStart);const mobileBlock=css.slice(mobileStart, mobileEnd);if(mobileBlock.includes(".table-card {") && !mobileBlock.includes("padding: var(--reader-table-card-padding-mobile);")){console.error("Expected mobile table-card padding to use the tighter mobile token.");process.exit(1);}const shellBlock=css.match(/\.table-anchor-shell \{[^}]*\}/);if(!shellBlock){console.error("Expected .table-anchor-shell rule block");process.exit(1);}for(const expected of ["border: 0;","overflow: hidden;"]){if(!shellBlock[0].includes(expected)){console.error(`Expected table shell styling for: ${expected}`);process.exit(1);}}if(shellBlock[0].includes("border: 1px solid rgba(148, 163, 184, 0.22);")){console.error("Expected table shell border to move to the outer table card.");process.exit(1);}const scrollBlock=css.match(/\.table-scroll \{[^}]*\}/);if(!scrollBlock){console.error("Expected .table-scroll rule block");process.exit(1);}for(const expected of ["overflow-x: auto;","padding: 0;"]){if(!scrollBlock[0].includes(expected)){console.error(`Expected table scroll styling for: ${expected}`);process.exit(1);}}const notesGroupBlock=css.match(/\.table-notes-group \{[^}]*\}/);if(!notesGroupBlock){console.error("Expected .table-notes-group rule block");process.exit(1);}if(!notesGroupBlock[0].includes("margin-top: 0.6rem;")){console.error("Expected table notes group to preserve spacing after removing caption bottom gap.");process.exit(1);}const notesBlock=css.match(/\.content \.table-notes \{[^}]*\}/);if(!notesBlock){console.error("Expected .content .table-notes rule block");process.exit(1);}if(!notesBlock[0].includes("margin-bottom: 0;")){console.error("Expected table notes to explicitly remove bottom margin.");process.exit(1);}const anchorBlock=css.match(/\.table-anchor-table \{[^}]*\}/);if(!anchorBlock){console.error("Expected .table-anchor-table rule block");process.exit(1);}for(const expected of ["box-sizing: border-box;","width: 100%;","min-width: 100%;","margin: 0;"]){if(!anchorBlock[0].includes(expected)){console.error(`Expected table anchor block styling for: ${expected}`);process.exit(1);}}const table8Block=css.match(/#table-8 \.table-anchor-table \{[^}]*\}/);if(!table8Block||!table8Block[0].includes("min-width: 40rem;")){console.error("Expected Table 8 to pin a stable minimum width for mobile scrolling.");process.exit(1);}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const cardBlock=css.match(/\.table-card \{[^}]*\}/);if(!cardBlock){console.error("Expected .table-card rule block");process.exit(1);}for(const expected of ["display: grid;","gap: 0;","padding: var(--reader-table-card-padding);","border: var(--reader-table-card-border);","background: var(--reader-table-card-bg);","box-shadow: var(--reader-table-card-shadow);"]){if(!cardBlock[0].includes(expected)){console.error(`Expected table card styling for: ${expected}`);process.exit(1);}}if(cardBlock[0].includes("linear-gradient(")){console.error("Expected table card background to stop using gradients.");process.exit(1);}const targetCardBlock=css.match(/\.table-anchor-target:target \.table-card \{[^}]*\}/);if(!targetCardBlock){console.error("Expected .table-anchor-target:target .table-card rule block");process.exit(1);}if(!targetCardBlock[0].includes("border-color: rgba(43, 91, 166, 0.22);")){console.error("Expected anchored table card styling to keep the border-color highlight.");process.exit(1);}if(targetCardBlock[0].includes("background:")){console.error("Expected anchored table card highlight to stop overriding the card background.");process.exit(1);}if(targetCardBlock[0].includes("box-shadow:")){console.error("Expected anchored table card highlight to stop adding a target-state shadow.");process.exit(1);}const mobileStart=css.indexOf("@media (max-width: 760px) {");if(mobileStart===-1){console.error("Expected mobile table media query block.");process.exit(1);}const mobileEnd=css.indexOf(".content {", mobileStart);const mobileBlock=css.slice(mobileStart, mobileEnd);if(mobileBlock.includes(".table-card {") && !mobileBlock.includes("padding: var(--reader-table-card-padding-mobile);")){console.error("Expected mobile table-card padding to use the tighter mobile token.");process.exit(1);}const shellBlock=css.match(/\.table-anchor-shell \{[^}]*\}/);if(!shellBlock){console.error("Expected .table-anchor-shell rule block");process.exit(1);}for(const expected of ["border: 0;","overflow: hidden;"]){if(!shellBlock[0].includes(expected)){console.error(`Expected table shell styling for: ${expected}`);process.exit(1);}}if(shellBlock[0].includes("border: 1px solid rgba(148, 163, 184, 0.22);")){console.error("Expected table shell border to move to the outer table card.");process.exit(1);}const scrollBlock=css.match(/\.table-scroll \{[^}]*\}/);if(!scrollBlock){console.error("Expected .table-scroll rule block");process.exit(1);}for(const expected of ["overflow-x: auto;","padding: 0;"]){if(!scrollBlock[0].includes(expected)){console.error(`Expected table scroll styling for: ${expected}`);process.exit(1);}}const notesGroupBlock=css.match(/\.table-notes-group \{[^}]*\}/);if(!notesGroupBlock){console.error("Expected .table-notes-group rule block");process.exit(1);}if(!notesGroupBlock[0].includes("margin-top: 0.6rem;")){console.error("Expected table notes group to preserve spacing after removing caption bottom gap.");process.exit(1);}const notesBlock=css.match(/\.content \.table-notes \{[^}]*\}/);if(!notesBlock){console.error("Expected .content .table-notes rule block");process.exit(1);}if(!notesBlock[0].includes("margin-bottom: 0;")){console.error("Expected table notes to explicitly remove bottom margin.");process.exit(1);}const anchorBlock=css.match(/\.table-anchor-table \{[^}]*\}/);if(!anchorBlock){console.error("Expected .table-anchor-table rule block");process.exit(1);}for(const expected of ["box-sizing: border-box;","width: 100%;","min-width: 100%;","margin: 0;"]){if(!anchorBlock[0].includes(expected)){console.error(`Expected table anchor block styling for: ${expected}`);process.exit(1);}}const table8Block=css.match(/#table-8 \.table-anchor-table \{[^}]*\}/);if(!table8Block||!table8Block[0].includes("min-width: 40rem;")){console.error("Expected Table 8 to pin a stable minimum width for mobile scrolling.");process.exit(1);}const table6FormulaBlock=css.match(/#table-6 \.table-6-rules-cell > \.book-formula \{[^}]*\}/);if(!table6FormulaBlock){console.error("Expected Table 6 formula sizing rule block.");process.exit(1);}for(const expected of ["margin: 0.25rem 0 0.35rem;","font-size: inherit;","line-height: 1.3;","box-shadow: none;","border-top-left-radius: 0;","border-bottom-left-radius: 0;"]){if(!table6FormulaBlock[0].includes(expected)){console.error(`Expected Table 6 formula styling for: ${expected}`);process.exit(1);}}const table6TextGapBlock=css.match(/#table-6 \.table-6-rules-cell > p \+ \.book-formula \{[^}]*\}/);if(!table6TextGapBlock||!table6TextGapBlock[0].includes("margin-top: 0.15rem;")){console.error("Expected Table 6 text-to-formula spacing override.");process.exit(1);}const table6FormulaGapBlock=css.match(/#table-6 \.table-6-rules-cell > \.book-formula \+ \.book-formula \{[^}]*\}/);if(!table6FormulaGapBlock||!table6FormulaGapBlock[0].includes("margin-top: 0.3rem;")){console.error("Expected Table 6 stacked formula spacing override.");process.exit(1);}const table6LastFormulaBlock=css.match(/#table-6 \.table-6-rules-cell > \.book-formula:last-child \{[^}]*\}/);if(!table6LastFormulaBlock||!table6LastFormulaBlock[0].includes("margin-bottom: 0;")){console.error("Expected Table 6 last formula bottom spacing override.");process.exit(1);}'
 check_contains theme/custom.css '.content .table-caption {'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const block=css.match(/\.content \.table-caption \{[^}]*\}/);if(!block){console.error("Expected .content .table-caption rule block");process.exit(1);}for(const expected of ["max-width: none;","display: grid;","grid-template-columns: var(--reader-table-caption-icon-size) minmax(0, 1fr);","column-gap: 0.55rem;","row-gap: 8px;","margin-bottom: 24px;"]){if(!block[0].includes(expected)){console.error(`Expected table caption block styling for: ${expected}`);process.exit(1);}}'
 check_contains theme/custom.css '.table-caption-icon {'

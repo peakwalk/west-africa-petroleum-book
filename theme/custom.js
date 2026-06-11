@@ -990,6 +990,171 @@
     });
   }
 
+  function annotateFormulas() {
+    function getFormulaText(element) {
+      const explicitNavText = normalizeText(element.dataset.formulaNavText || "");
+      const line = element.matches(".book-formula")
+        ? element.querySelector(".book-formula-line")
+        : element.querySelector(".book-formula-line");
+      const formulaText = normalizeText((line && line.textContent) || element.textContent || "");
+      const ariaLabel = normalizeText(element.getAttribute("aria-label") || "");
+
+      return explicitNavText || formulaText || ariaLabel;
+    }
+
+    function buildFormulaNotesGroup(notesElement) {
+      const notes = [];
+
+      Array.from(notesElement.children).forEach(function (child) {
+        if (!child.matches("p, li")) {
+          return;
+        }
+
+        child.classList.add("formula-note");
+        notes.push(child);
+      });
+
+      notesElement.remove();
+
+      if (!notes.length) {
+        return null;
+      }
+
+      const notesGroup = document.createElement("div");
+      notesGroup.className = "formula-notes-group";
+      notes.forEach(function (note) {
+        notesGroup.appendChild(note);
+      });
+      return notesGroup;
+    }
+
+    function collectFormulaAttachmentsAfterElement(element) {
+      const attachments = [];
+      let currentElement = element.nextElementSibling;
+
+      while (
+        currentElement &&
+        (currentElement.classList.contains("formula-where") || currentElement.classList.contains("formula-notes"))
+      ) {
+        const attachment = currentElement;
+        currentElement = currentElement.nextElementSibling;
+
+        if (attachment.classList.contains("formula-notes")) {
+          const notesGroup = buildFormulaNotesGroup(attachment);
+
+          if (notesGroup) {
+            attachments.push(notesGroup);
+          }
+
+          continue;
+        }
+
+        attachment.remove();
+        attachments.push(attachment);
+      }
+
+      return attachments;
+    }
+
+    function buildFormulaId(formulaLabel) {
+      return "formula-" + formulaLabel.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+    }
+
+    function annotateEquationElement(element) {
+      const formulaLabel = normalizeText(element.dataset.equationLabel || "");
+
+      if (!formulaLabel || element.closest(".formula-anchor-target")) {
+        return;
+      }
+
+      const formulaTextValue = getFormulaText(element);
+      const formulaTitleValue = normalizeText(element.dataset.formulaTitle || "");
+      const isStandaloneFormula = element.matches(".book-formula");
+      const isInlineFormula = isStandaloneFormula && Boolean(element.closest("td, th"));
+      const isEmbeddedFormula =
+        isStandaloneFormula && Boolean(element.closest(".formula-panel, .formula-case, .formula-where, .formula-group"));
+      const formulaWrapper = document.createElement("div");
+      const formulaCard = document.createElement("div");
+      const caption = document.createElement("p");
+      const captionLabel = document.createElement("span");
+      const captionText = document.createElement("span");
+      const attachments = collectFormulaAttachmentsAfterElement(element);
+
+      formulaWrapper.id = buildFormulaId(formulaLabel);
+      formulaWrapper.className = "formula-anchor-target";
+      formulaWrapper.dataset.formulaNumber = formulaLabel;
+      formulaWrapper.dataset.formulaText = formulaTextValue;
+      formulaWrapper.dataset.formulaNav = "true";
+
+      if (isEmbeddedFormula) {
+        formulaWrapper.classList.add("formula-anchor-target--embedded");
+      }
+
+      if (isInlineFormula) {
+        formulaWrapper.classList.add("formula-anchor-target--inline");
+      }
+
+      formulaCard.className = "formula-card";
+
+      if (isEmbeddedFormula) {
+        formulaCard.classList.add("formula-card--embedded");
+      }
+
+      if (isInlineFormula) {
+        formulaCard.classList.add("formula-card--inline");
+      }
+
+      caption.className = "formula-caption";
+      captionLabel.className = "formula-caption-label";
+      captionLabel.textContent = "Equation " + formulaLabel;
+      captionText.className = "formula-caption-text";
+      captionText.textContent = formulaTitleValue || formulaTextValue;
+
+      if (!formulaTitleValue) {
+        captionText.hidden = true;
+      }
+
+      caption.appendChild(captionLabel);
+      caption.appendChild(captionText);
+
+      element.parentElement.insertBefore(formulaWrapper, element);
+      formulaWrapper.appendChild(formulaCard);
+      formulaCard.appendChild(caption);
+      formulaCard.appendChild(element);
+
+      if (isStandaloneFormula) {
+        element.classList.add("book-formula--annotated");
+        element.dataset.formulaNumber = formulaLabel;
+      }
+
+      attachments.forEach(function (attachment) {
+        formulaCard.appendChild(attachment);
+      });
+    }
+
+    const groupCandidates = Array.from(
+      document.querySelectorAll(".reader-article [data-equation-label]:not(.book-formula)")
+    ).filter(function (element) {
+      return !element.closest(".formula-anchor-target");
+    });
+
+    const standaloneCandidates = Array.from(
+      document.querySelectorAll(".reader-article .book-formula[data-equation-label]")
+    ).filter(function (element) {
+      return !element.closest("[data-equation-label]:not(.book-formula)");
+    });
+
+    const candidates = groupCandidates.concat(standaloneCandidates).sort(function (a, b) {
+      if (a === b) {
+        return 0;
+      }
+
+      return a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
+    });
+
+    candidates.forEach(annotateEquationElement);
+  }
+
   function enhanceTable6() {
     function parseTable6Rule(text) {
       const normalized = (text || "").trim().replace(/\s+/g, " ");
@@ -1146,10 +1311,12 @@
     const headingOutline = document.querySelector(".book-outline-body .on-this-page");
     const figuresSection = document.querySelector(".book-outline-figures");
     const tablesSection = document.querySelector(".book-outline-tables");
+    const formulasSection = document.querySelector(".book-outline-formulas");
     const hasVisibleOutlineContent =
       Boolean(headingOutline) ||
       Boolean(figuresSection && !figuresSection.hidden) ||
-      Boolean(tablesSection && !tablesSection.hidden);
+      Boolean(tablesSection && !tablesSection.hidden) ||
+      Boolean(formulasSection && !formulasSection.hidden);
 
     if (!outline) {
       document.body.classList.toggle("book-outline-empty", !hasVisibleOutlineContent);
@@ -1602,6 +1769,34 @@
       .filter(Boolean);
   }
 
+  function collectFormulaCards() {
+    return Array.from(document.querySelectorAll(".formula-anchor-target[data-formula-nav=\"true\"]"))
+      .map(function (element) {
+        const label = normalizeText(element.querySelector(".formula-caption-label")?.textContent || "");
+        const text = normalizeText(
+          element.querySelector(".formula-caption-text")?.textContent ||
+            element.dataset.formulaText ||
+            element.querySelector(".book-formula-line")?.textContent ||
+            ""
+        );
+        const referenceParts = buildReferenceRailParts(label, text);
+        const fullText = text ? label + " " + text : label;
+
+        if (!element.id || !label || !text) {
+          return null;
+        }
+
+        return {
+          href: "#" + element.id,
+          displayText: buildReferenceRailLabel(label, text),
+          fullText: fullText,
+          referenceLabel: referenceParts.label,
+          referenceTitle: referenceParts.title,
+        };
+      })
+      .filter(Boolean);
+  }
+
   function populateOutlineSection(section, items) {
     const body = section ? section.querySelector(".book-outline-section-body") : null;
     const title = section ? section.querySelector(".book-outline-section-title") : null;
@@ -1645,11 +1840,14 @@
   function installOutlineReferenceSections() {
     const figuresSection = document.querySelector(".book-outline-figures");
     const tablesSection = document.querySelector(".book-outline-tables");
+    const formulasSection = document.querySelector(".book-outline-formulas");
     const figureItems = collectReferenceCards(".figure-card", ".figure-card-footer", ".figure-card-label", ".figure-card-title");
     const tableItems = collectReferenceCards(".table-anchor-target", ".table-caption", ".table-caption-label", ".table-caption-text");
+    const formulaItems = collectFormulaCards();
 
     populateOutlineSection(figuresSection, figureItems);
     populateOutlineSection(tablesSection, tableItems);
+    populateOutlineSection(formulasSection, formulaItems);
   }
 
   function balanceLeadFigureWeight() {
@@ -1891,6 +2089,7 @@
     }
   }
 
+  annotateFormulas();
   annotateTables();
   enhanceTable6();
   annotateFigureCaptions();

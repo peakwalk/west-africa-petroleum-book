@@ -27,7 +27,7 @@
   --reader-outline-width: 256px;
   --reader-content-max: 896px;
   --reader-logo-width-desktop: 138px;
-  --reader-logo-width-narrow: 216px;
+  --reader-logo-width-narrow: 180px;
   --reader-figure-radius: 20px;
   --reader-figure-border: 1px solid rgba(11, 31, 51, 0.1);
   --reader-figure-shell-shadow: 0 16px 32px rgba(15, 23, 42, 0.04);
@@ -215,6 +215,7 @@ body.book-outline-empty .reader-layout {
   min-width: 0;
   width: 100%;
   min-height: 0;
+  overflow-x: clip;
   overflow-y: auto;
   overscroll-behavior-y: contain;
   -webkit-overflow-scrolling: touch;
@@ -442,6 +443,11 @@ body.book-outline-empty .reader-outline {
 .reader-article li {
   color: var(--ink);
   line-height: 1.625;
+}
+
+.reader-article li > p:first-child:last-child {
+  display: inline;
+  margin: 0;
 }
 
 .reader-article ol {
@@ -771,6 +777,27 @@ body.book-outline-empty .reader-outline {
   font-weight: 600;
 }
 
+#table-6 .table-6-rules-cell > .book-formula {
+  margin: 0.25rem 0 0.35rem;
+  font-size: inherit;
+  line-height: 1.3;
+  box-shadow: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+#table-6 .table-6-rules-cell > p + .book-formula {
+  margin-top: 0.15rem;
+}
+
+#table-6 .table-6-rules-cell > .book-formula + .book-formula {
+  margin-top: 0.3rem;
+}
+
+#table-6 .table-6-rules-cell > .book-formula:last-child {
+  margin-bottom: 0;
+}
+
 #table-6 .table-data-table tbody td:nth-child(4) ul {
   margin: 0.45rem 0 0.75rem;
   padding-inline-start: 1.2rem;
@@ -814,6 +841,12 @@ body.book-outline-empty .reader-outline {
 }
 
 #mdbook-menu-bar {
+  /* mdBook's default menu controller tracks document scroll, but this reader
+     scrolls inside .reader-main. Keep the header sticky regardless of that JS. */
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0 !important;
+  flex: 0 0 auto;
   background: rgba(255, 255, 255, 0.98);
   border-block-end: 1px solid var(--book-rail-border);
   backdrop-filter: blur(10px);
@@ -1608,6 +1641,10 @@ body.book-outline-empty .reader-outline {
   display: block;
 }
 
+.reader-mobile-outline-card .on-this-page[hidden] {
+  display: none !important;
+}
+
 .reader-mobile-outline-card .on-this-page > ol {
   display: flex;
   flex-wrap: wrap;
@@ -1710,6 +1747,10 @@ body.book-outline-empty .reader-outline {
   display: grid;
   gap: 1rem;
   margin-bottom: 2rem;
+}
+
+.reader-chapter-hero > * {
+  min-width: 0;
 }
 
 .reader-chapter-hero .reader-chapter-eyebrow {
@@ -2951,6 +2992,14 @@ body.book-page-aux-index .reader-article {
   letter-spacing: 0.08em;
 }
 
+.formula-group--volumetric .formula-case .book-formula + .formula-case-connector {
+  margin-top: 0.85rem;
+}
+
+.formula-group--volumetric .formula-case-connector + .book-formula {
+  margin-top: -1rem;
+}
+
 .formula-case .book-formula {
   margin: 0;
   padding: 0;
@@ -2964,13 +3013,18 @@ body.book-page-aux-index .reader-article {
 }
 
 .formula-group--volumetric .formula-case .book-formula {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
   font-size: 13px;
   line-height: 1.28;
 }
 
-.formula-case .book-formula-line {
-  width: 100%;
-  min-width: 0;
+.formula-group--volumetric .formula-case .book-formula-line {
+  width: max-content;
+  min-width: 100%;
 }
 
 .formula-case .book-formula--result .book-formula-line {
@@ -3037,7 +3091,7 @@ body.book-page-aux-index .reader-article {
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 760px) {
   .formula-card {
     padding: var(--reader-table-card-padding-mobile);
   }
@@ -3056,6 +3110,18 @@ body.book-page-aux-index .reader-article {
 
   .formula-case .book-formula {
     font-size: 14px;
+  }
+
+  .formula-group--volumetric .formula-case .book-formula {
+    overflow-x: visible;
+    overflow-y: visible;
+    white-space: normal;
+    line-height: 1.4;
+  }
+
+  .formula-group--volumetric .formula-case .book-formula-line {
+    width: 100%;
+    min-width: 0;
   }
 
   .formula-group--split {
@@ -3722,7 +3788,13 @@ body.book-page-aux-index .reader-article {
   }
 
   .reader-layout {
-    padding: 1.5rem 1rem 2rem;
+    padding: 1.5rem 0 2rem;
+  }
+
+  .reader-main {
+    padding: 24px 12px 40px;
+    padding-inline-start: calc(12px + var(--reader-left-offset));
+    padding-inline-end: 12px;
   }
 
   .chapter-pagination {
@@ -3833,7 +3905,7 @@ body.book-page-aux-index .reader-article {
 
   .book-home-icon-full {
     display: block;
-    width: 216px;
+    width: var(--reader-logo-width-narrow);
   }
 
   .book-home-icon-compact {

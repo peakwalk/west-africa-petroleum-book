@@ -80,6 +80,7 @@ def _parse_chapter(chapter_path: Path) -> ChapterSemanticModel:
     ignoring_html_table = False
     capturing_html_caption = False
     html_caption_lines: list[str] = []
+    html_table_lines: list[str] = []
     active_fence_lang: str | None = None
     fence_lines: list[str] = []
 
@@ -125,6 +126,7 @@ def _parse_chapter(chapter_path: Path) -> ChapterSemanticModel:
             continue
         next_stripped = next_nonempty_line(index)
         if ignoring_html_table:
+            html_table_lines.append(stripped)
             if "<caption" in lowered:
                 capturing_html_caption = True
             if capturing_html_caption:
@@ -141,6 +143,7 @@ def _parse_chapter(chapter_path: Path) -> ChapterSemanticModel:
                 ignoring_html_table = False
                 capturing_html_caption = False
                 html_caption_lines.clear()
+                html_table_lines.clear()
             continue
         if fence_match:
             flush_paragraph()
@@ -177,6 +180,7 @@ def _parse_chapter(chapter_path: Path) -> ChapterSemanticModel:
         if lowered.startswith("<table"):
             flush_paragraph()
             ignoring_html_table = True
+            html_table_lines = [stripped]
             continue
         if stripped.startswith("<") and stripped.endswith(">"):
             cleaned_html = _strip_html_tags(stripped)

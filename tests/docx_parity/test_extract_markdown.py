@@ -325,6 +325,50 @@ class ExtractMarkdownTests(unittest.TestCase):
             ],
         )
 
+    def test_extracts_formula_notes_as_assessment_paragraphs(self) -> None:
+        tmp_dir = Path(tempfile.mkdtemp())
+        chapter_dir = tmp_dir / "chapters"
+        chapter_dir.mkdir(parents=True, exist_ok=True)
+        chapter_path = chapter_dir / "chapter-08-formula-notes.md"
+        chapter_path.write_text(
+            "# Chapter 8: Formula Blocks\n\n"
+            "## 8.1- *Prospect formulas*\n\n"
+            "Lead-in paragraph.\n\n"
+            '<div class="book-formula" role="img" aria-label="P prospect equals P source rock times P reservoir times P trap">\n'
+            '  <span class="book-formula-line" aria-hidden="true">P(prospect) = P(source rock) x P(reservoir) x P(trap)</span>\n'
+            "</div>\n\n"
+            '<div class="formula-notes" aria-label="Prospect formula notes">\n'
+            '  <p class="formula-note"><span class="formula-note-term">P(prospect):</span> Geological hazards</p>\n'
+            '  <p class="formula-note"><span class="formula-note-term">P(source rock):</span> Maturity of the bedrock and therefore its degree of migration to the reservoir</p>\n'
+            "</div>\n\n"
+            "Closing paragraph.\n",
+            encoding="utf-8",
+        )
+        summary_path = tmp_dir / "SUMMARY.md"
+        summary_path.write_text(
+            "# Summary\n\n"
+            "- [Chapter 8: Formula Blocks](chapters/chapter-08-formula-notes.md)\n",
+            encoding="utf-8",
+        )
+
+        book = extract_markdown_book(summary_path, chapter_dir)
+        chapter = book.chapters[0]
+
+        self.assertEqual(
+            [block.kind for block in chapter.body],
+            ["paragraph", "paragraph", "paragraph", "paragraph", "paragraph"],
+        )
+        self.assertEqual(
+            [block.text for block in chapter.body],
+            [
+                "Lead-in paragraph.",
+                "P(prospect) = P(source rock) x P(reservoir) x P(trap)",
+                "P(prospect): Geological hazards",
+                "P(source rock): Maturity of the bedrock and therefore its degree of migration to the reservoir",
+                "Closing paragraph.",
+            ],
+        )
+
     def test_unescapes_currency_markdown_escapes_in_paragraphs(self) -> None:
         tmp_dir = Path(tempfile.mkdtemp())
         chapter_dir = tmp_dir / "chapters"
