@@ -467,6 +467,14 @@ body.book-outline-empty .reader-outline {
   margin-inline: 0;
 }
 
+.reader-article > h1,
+.reader-article > .reference-index {
+  grid-column: 2;
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+}
+
 .reader-article p {
   max-width: var(--reader-article-body-measure);
   max-width: min(100%, var(--reader-article-body-width));
@@ -659,6 +667,42 @@ body.book-outline-empty .reader-outline {
   max-width: var(--reader-heading-measure);
   width: 100%;
   text-wrap: balance;
+}
+
+.reader-article > h3,
+.reader-article > h4,
+.reader-article > h5,
+.reader-article > h6 {
+  grid-column: 2 / 4;
+  width: auto;
+  max-width: none;
+  justify-self: start;
+}
+
+.reader-article > h3 > a.header.reader-heading-link--indexed,
+.reader-article > h3 > a.header.reader-heading-link--indexed:visited,
+.reader-article > h4 > a.header.reader-heading-link--indexed,
+.reader-article > h4 > a.header.reader-heading-link--indexed:visited,
+.reader-article > h5 > a.header.reader-heading-link--indexed,
+.reader-article > h5 > a.header.reader-heading-link--indexed:visited,
+.reader-article > h6 > a.header.reader-heading-link--indexed,
+.reader-article > h6 > a.header.reader-heading-link--indexed:visited {
+  grid-template-columns: auto minmax(0, var(--reader-article-body-width));
+  width: max-content;
+  max-width: 100%;
+}
+
+.reader-article > h3 > a.header.reader-heading-link--indexed .reader-heading-title,
+.reader-article > h3 > a.header.reader-heading-link--indexed:visited .reader-heading-title,
+.reader-article > h4 > a.header.reader-heading-link--indexed .reader-heading-title,
+.reader-article > h4 > a.header.reader-heading-link--indexed:visited .reader-heading-title,
+.reader-article > h5 > a.header.reader-heading-link--indexed .reader-heading-title,
+.reader-article > h5 > a.header.reader-heading-link--indexed:visited .reader-heading-title,
+.reader-article > h6 > a.header.reader-heading-link--indexed .reader-heading-title,
+.reader-article > h6 > a.header.reader-heading-link--indexed:visited .reader-heading-title {
+  width: var(--reader-article-body-width);
+  max-width: var(--reader-article-body-width);
+  justify-self: stretch;
 }
 
 @media (max-width: 760px) {
@@ -2476,7 +2520,8 @@ body.book-page-aux-index .reader-article {
 
 .reference-index-intro {
   margin: 0;
-  max-width: 60ch;
+  max-width: none;
+  margin-inline: 0;
   font-size: 17px;
   line-height: 1.65;
   color: var(--muted);
@@ -3689,6 +3734,25 @@ body.book-page-aux-index .reader-article {
   .book-sidebar-shell .chapter .header-toggle,
   .book-sidebar-shell .chapter ol.section {
     display: none;
+  }
+}
+
+@media (min-width: 1281px) {
+  body.book-page-cover .reader-layout,
+  body.book-page-aux-index .reader-layout,
+  body.book-page-front-matter-outline-rail .reader-layout {
+    grid-template-columns: minmax(0, 1fr) var(--outline-width);
+  }
+
+  body.book-page-cover .reader-outline,
+  body.book-page-cover .reader-outline[hidden],
+  body.book-page-aux-index .reader-outline,
+  body.book-page-aux-index .reader-outline[hidden],
+  body.book-page-front-matter-outline-rail .reader-outline,
+  body.book-page-front-matter-outline-rail .reader-outline[hidden] {
+    display: block !important;
+    visibility: hidden;
+    pointer-events: none;
   }
 }
 

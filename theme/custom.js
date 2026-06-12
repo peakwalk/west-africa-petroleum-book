@@ -1254,10 +1254,32 @@
     const listOfFiguresPath = "list-of-figures.html";
     const listOfTablesPath = "list-of-tables.html";
     const abbreviationsPath = "abbreviations-acronyms-and-abbreviations.html";
+    const forewordPath = "foreword.html";
+    const generalIntroductionPath = "general-introduction.html";
+    const generalConclusionPath = "general-conclusion.html";
+    const glossaryPath = "glossary.html";
+    const bibliographicalReferencesPath = "bibliographical-references.html";
     const isCoverPage = window.location.pathname.endsWith("/chapters/" + coverPath);
     const isListOfFigures = window.location.pathname.endsWith("/chapters/" + listOfFiguresPath);
     const isListOfTables = window.location.pathname.endsWith("/chapters/" + listOfTablesPath);
     const isAbbreviationsPage = window.location.pathname.endsWith("/chapters/" + abbreviationsPath);
+    const isForewordPage = window.location.pathname.endsWith("/chapters/" + forewordPath);
+    const isGeneralIntroductionPage = window.location.pathname.endsWith("/chapters/" + generalIntroductionPath);
+    const isGeneralConclusionPage = window.location.pathname.endsWith("/chapters/" + generalConclusionPath);
+    const isGlossaryPage = window.location.pathname.endsWith("/chapters/" + glossaryPath);
+    const isBibliographicalReferencesPage = window.location.pathname.endsWith("/chapters/" + bibliographicalReferencesPath);
+    const preserveOutlineRail =
+      isCoverPage ||
+      isListOfFigures ||
+      isListOfTables ||
+      isAbbreviationsPage ||
+      isForewordPage ||
+      isGeneralIntroductionPage ||
+      isGeneralConclusionPage ||
+      isGlossaryPage ||
+      isBibliographicalReferencesPage;
+
+    document.body.classList.toggle("book-page-front-matter-outline-rail", preserveOutlineRail);
 
     if (isCoverPage) {
       document.body.classList.add("book-page-cover");
