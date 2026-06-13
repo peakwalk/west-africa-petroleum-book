@@ -496,6 +496,7 @@ body.book-outline-empty .reader-outline {
 }
 
 .reader-article ul {
+  box-sizing: border-box;
   max-width: var(--reader-article-body-measure);
   max-width: min(100%, var(--reader-article-body-width));
   margin-inline: auto;

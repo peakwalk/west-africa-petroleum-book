@@ -19,6 +19,14 @@ def _rule_block(css: str, selector: str) -> str:
 
 
 class ThemeCustomCssTest(unittest.TestCase):
+    def test_reader_article_unordered_lists_include_padding_within_body_width(self) -> None:
+        css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
+        block = _rule_block(css, ".reader-article ul")
+
+        self.assertIn("box-sizing: border-box;", block)
+        self.assertIn("max-width: min(100%, var(--reader-article-body-width));", block)
+        self.assertIn("margin-inline: auto;", block)
+
     def test_reader_article_ordered_lists_align_with_body_copy(self) -> None:
         css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
         block = _rule_block(css, ".reader-article ol")
