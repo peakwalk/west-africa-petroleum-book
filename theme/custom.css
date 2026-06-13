@@ -2129,6 +2129,19 @@ body.book-outline-empty .reader-outline {
   box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
 }
 
+.chapter-pagination .chapter-nav-card:hover,
+.chapter-pagination .chapter-nav-card:focus-visible,
+.chapter-pagination .chapter-nav-card:hover .chapter-nav-title,
+.chapter-pagination .chapter-nav-card:focus-visible .chapter-nav-title,
+.chapter-pagination .chapter-nav-card:hover .chapter-nav-dek,
+.chapter-pagination .chapter-nav-card:focus-visible .chapter-nav-dek,
+.chapter-pagination .chapter-nav-card:hover .chapter-nav-label,
+.chapter-pagination .chapter-nav-card:focus-visible .chapter-nav-label,
+.chapter-pagination .chapter-nav-card:hover .chapter-nav-arrow,
+.chapter-pagination .chapter-nav-card:focus-visible .chapter-nav-arrow {
+  text-decoration: none;
+}
+
 .chapter-nav-previous {
   grid-template-columns: 44px minmax(0, 1fr) var(--chapter-nav-ornament-column);
 }

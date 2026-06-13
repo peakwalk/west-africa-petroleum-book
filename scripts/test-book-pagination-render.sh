@@ -133,6 +133,21 @@ NO_DEK_TITLE_RULES="$(awk '
   }
 ' theme/custom.css)"
 
+HOVER_RESET_RULES="$(awk '
+  /^\.chapter-pagination \.chapter-nav-card:hover,/ {
+    in_block = 1
+  }
+
+  in_block {
+    block = block $0 ORS
+
+    if ($0 ~ /^\}/) {
+      printf "%s", block
+      exit
+    }
+  }
+' theme/custom.css)"
+
 if ! printf '%s' "$DESKTOP_RULES" | grep -q 'display: grid;'; then
   echo "Expected desktop chapter pagination to use a grid layout in theme/custom.css" >&2
   exit 1
@@ -375,6 +390,31 @@ fi
 
 if ! printf '%s' "$NO_DEK_TITLE_RULES" | grep -q 'margin-top: auto;'; then
   echo "Expected chapter title to fall back to the card bottom when no dek is available in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$HOVER_RESET_RULES" | grep -q '.chapter-nav-card:hover .chapter-nav-title'; then
+  echo "Expected chapter nav hover reset to include the title in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$HOVER_RESET_RULES" | grep -q '.chapter-nav-card:hover .chapter-nav-dek'; then
+  echo "Expected chapter nav hover reset to include the dek in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$HOVER_RESET_RULES" | grep -q '.chapter-nav-card:hover .chapter-nav-label'; then
+  echo "Expected chapter nav hover reset to include the label in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$HOVER_RESET_RULES" | grep -q '.chapter-nav-card:hover .chapter-nav-arrow'; then
+  echo "Expected chapter nav hover reset to include the arrow in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$HOVER_RESET_RULES" | grep -q 'text-decoration: none;'; then
+  echo "Expected chapter nav hover reset to suppress underlines in theme/custom.css" >&2
   exit 1
 fi
 
