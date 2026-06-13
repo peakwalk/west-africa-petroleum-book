@@ -123,6 +123,8 @@ check_exists src/images/figure-001.webp
 check_exists src/images/figure-003-trimmed.png
 check_exists assets/images/west-africa-intelligence-overlay.svg
 check_exists assets/images/upstream-atlas-nav-logo.webp
+check_exists assets/images/prototype-hero-graywhite-left.png
+check_exists assets/images/prototype-hero-graywhite-right.png
 check_exists assets/icons/homepage/icon-research.svg
 check_exists assets/icons/homepage/icon-industry-monitoring.svg
 check_exists assets/icons/homepage/icon-intelligence.svg
@@ -271,11 +273,15 @@ check_exists public/assets/icons/homepage/icon-audience-policy.svg
 check_exists public/assets/icons/homepage/icon-audience-operators.svg
 check_exists public/assets/icons/homepage-sprite.svg
 check_exists public/assets/images/upstream-atlas-nav-logo.webp
+check_exists public/assets/images/prototype-hero-graywhite-left.png
+check_exists public/assets/images/prototype-hero-graywhite-right.png
 check_file_size_at_most public/assets/images/upstream-atlas-icon.png 50000
 check_file_size_at_most public/assets/images/upstream-atlas-wordmark.png 110000
 check_file_size_at_most public/assets/images/upstream-atlas-nav-logo.webp 80000
 check_image_has_no_opaque_white_fringe public/assets/images/upstream-atlas-nav-logo.webp 50
 check_file_size_at_most public/assets/images/prototype-hero.jpg 120000
+check_file_size_at_most public/assets/images/prototype-hero-graywhite-left.png 25000
+check_file_size_at_most public/assets/images/prototype-hero-graywhite-right.png 25000
 check_contains assets/css/landing.css '--page-bg: #f7f8f9;'
 check_contains assets/css/landing.css '--surface-muted: #eef2f4;'
 check_contains assets/css/landing.css '--ink-primary: #0b1f33;'

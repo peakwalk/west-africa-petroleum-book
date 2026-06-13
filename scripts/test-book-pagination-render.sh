@@ -44,7 +44,9 @@ check_contains theme/custom.js 'function syncChapterPaginationHeights()'
 check_contains theme/custom.js 'function installChapterPaginationMeta()'
 check_contains theme/custom.js 'function loadReaderPageMeta()'
 check_contains theme/custom.js 'card.dataset.chapterBadgeType = "number";'
+check_contains theme/custom.js 'window.matchMedia("(min-width: 761px)")'
 check_contains theme/custom.js 'card.style.height = "auto";'
+check_contains theme/custom.js 'card.style.height = "";'
 check_contains theme/custom.js 'card.style.height = maxHeight + "px";'
 
 if ! sed -n '/class="chapter-nav-card chapter-nav-previous"/,/<\/a>/p' theme/index.hbs | tr '\n' ' ' | grep -q 'chapter-nav-badge-shell.*chapter-nav-body'; then
@@ -74,13 +76,33 @@ DESKTOP_RULES="$(awk '
   }
 ' theme/custom.css)"
 
-if ! printf '%s' "$DESKTOP_RULES" | grep -q 'width: 232px;'; then
-  echo "Expected desktop chapter card width to be fixed at 232px in theme/custom.css" >&2
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'display: grid;'; then
+  echo "Expected desktop chapter pagination to use a grid layout in theme/custom.css" >&2
   exit 1
 fi
 
-if ! printf '%s' "$DESKTOP_RULES" | grep -q 'height: 80px;'; then
-  echo "Expected desktop chapter card height to be fixed at 80px in theme/custom.css" >&2
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'width: min(100%, var(--reader-article-body-width));'; then
+  echo "Expected desktop chapter pagination container width to match the reader body width in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'grid-template-columns: repeat(2, minmax(0, 1fr));'; then
+  echo "Expected desktop chapter pagination to split into two equal columns in theme/custom.css" >&2
+  exit 1
+fi
+
+if printf '%s' "$DESKTOP_RULES" | grep -q 'justify-content: space-between;'; then
+  echo "Expected desktop chapter pagination to stop using space-between in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'width: 100%;'; then
+  echo "Expected desktop chapter cards to fill their grid columns in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'max-width: none;'; then
+  echo "Expected desktop chapter cards to remove the 224px cap in theme/custom.css" >&2
   exit 1
 fi
 
@@ -89,13 +111,38 @@ if ! printf '%s' "$DESKTOP_RULES" | grep -q 'margin-top: 24px;'; then
   exit 1
 fi
 
-if ! printf '%s' "$DESKTOP_RULES" | grep -q 'min-height: 80px;'; then
-  echo "Expected desktop chapter card minimum height to remain 80px in theme/custom.css" >&2
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'min-height: 92px;'; then
+  echo "Expected desktop chapter card minimum height to increase to 92px in theme/custom.css" >&2
   exit 1
 fi
 
-if ! printf '%s' "$DESKTOP_RULES" | grep -q 'padding: 10px 12px;'; then
-  echo "Expected desktop chapter card padding to match the compact rounded card sizing in theme/custom.css" >&2
+if printf '%s\n' "$DESKTOP_RULES" | grep -q '^  height: 80px;$'; then
+  echo "Expected desktop chapter cards to stop using the fixed 80px height in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'padding: 12px;'; then
+  echo "Expected desktop chapter card padding to be 12px on all sides in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'border-radius: 12px;'; then
+  echo "Expected desktop chapter card corner radius to be 12px in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'background: var(--reader-table-card-bg);'; then
+  echo "Expected desktop chapter cards to reuse the table/image card background token in theme/custom.css" >&2
+  exit 1
+fi
+
+if printf '%s' "$DESKTOP_RULES" | grep -q 'radial-gradient('; then
+  echo "Expected desktop chapter cards to stop using radial background gradients in theme/custom.css" >&2
+  exit 1
+fi
+
+if printf '%s' "$DESKTOP_RULES" | grep -q 'linear-gradient('; then
+  echo "Expected desktop chapter cards to stop using linear background gradients in theme/custom.css" >&2
   exit 1
 fi
 
@@ -114,8 +161,23 @@ if ! printf '%s' "$DESKTOP_RULES" | grep -q 'gap: 12px;'; then
   exit 1
 fi
 
-if ! printf '%s' "$DESKTOP_RULES" | grep -q 'width: 42px;'; then
-  echo "Expected desktop chapter badge sizing to remain explicit in theme/custom.css" >&2
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'width: 44px;'; then
+  echo "Expected desktop chapter badge width to be 44px in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'height: 44px;'; then
+  echo "Expected desktop chapter badge height to be 44px in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'box-sizing: border-box;'; then
+  echo "Expected desktop chapter badge to use border-box sizing in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'aspect-ratio: 1 / 1;'; then
+  echo "Expected desktop chapter badge to lock a 1:1 aspect ratio in theme/custom.css" >&2
   exit 1
 fi
 
@@ -129,8 +191,123 @@ if ! printf '%s' "$DESKTOP_RULES" | grep -q -- '-webkit-line-clamp: 2;'; then
   exit 1
 fi
 
-if ! printf '%s' "$DESKTOP_RULES" | grep -q 'mask: url("data:image/svg+xml,'; then
-  echo "Expected desktop chapter cards to include the inline SVG rig ornament in theme/custom.css" >&2
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'font-size: 16px;'; then
+  echo "Expected desktop chapter title sizing to increase to 16px in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'font-size: 10px;'; then
+  echo "Expected desktop chapter dek sizing to be 10px in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'prototype-hero-graywhite-left.png'; then
+  echo "Expected desktop previous chapter card to use prototype-hero-graywhite-left.png in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'prototype-hero-graywhite-right.png'; then
+  echo "Expected desktop next chapter card to use prototype-hero-graywhite-right.png in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q -- '--chapter-nav-ornament-column: 116px;'; then
+  echo "Expected desktop chapter cards to reserve a 116px ornament column in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'width: var(--chapter-nav-ornament-width);'; then
+  echo "Expected desktop chapter card overlay width to be driven by a dedicated ornament sizing variable in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q -- '--chapter-nav-ornament-width: 116px;'; then
+  echo "Expected desktop chapter card overlay width token to be 116px in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q -- '--chapter-nav-ornament-height: 80px;'; then
+  echo "Expected desktop chapter card overlay height token to be 80px in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'bottom: 8px;'; then
+  echo "Expected desktop chapter card overlay to anchor 8px above the bottom edge in theme/custom.css" >&2
+  exit 1
+fi
+
+if printf '%s' "$DESKTOP_RULES" | grep -q 'margin-block: auto;'; then
+  echo "Expected desktop chapter card overlay to stop centering vertically once the edge gutter is reserved in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'background-position: right bottom;'; then
+  echo "Expected desktop previous chapter ornament to anchor at the right bottom edge in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'right: 0;'; then
+  echo "Expected desktop previous chapter ornament to sit flush against the right edge in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'background-position: left bottom;'; then
+  echo "Expected desktop next chapter ornament to anchor at the left bottom edge in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'left: 0;'; then
+  echo "Expected desktop next chapter ornament to sit flush against the left edge in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'background-size: contain;'; then
+  echo "Expected desktop chapter cards to render the decorative overlay with contain sizing in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'opacity: 0.3;'; then
+  echo "Expected desktop chapter card decorative overlay opacity to be 0.3 in theme/custom.css" >&2
+  exit 1
+fi
+
+if printf '%s' "$DESKTOP_RULES" | grep -q 'mix-blend-mode:'; then
+  echo "Expected desktop chapter card decorative overlay to rely on precomposed transparency instead of runtime blending in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'grid-template-columns: 44px minmax(0, 1fr) var(--chapter-nav-ornament-column);'; then
+  echo "Expected desktop previous chapter card to reserve a trailing ornament column in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'grid-template-columns: var(--chapter-nav-ornament-column) minmax(0, 1fr) 44px;'; then
+  echo "Expected desktop next chapter card to reserve a leading ornament column in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'grid-column: 2;'; then
+  echo "Expected desktop chapter body to be pinned to the center grid column in theme/custom.css" >&2
+  exit 1
+fi
+
+if printf '%s' "$DESKTOP_RULES" | grep -q 'background-blend-mode:'; then
+  echo "Expected desktop chapter cards to avoid runtime background blending once the overlay asset is precomposed in theme/custom.css" >&2
+  exit 1
+fi
+
+if printf '%s' "$DESKTOP_RULES" | grep -q 'mask-image:'; then
+  echo "Expected desktop chapter cards to avoid CSS masking once the ornament asset has transparent edges in theme/custom.css" >&2
+  exit 1
+fi
+
+if printf '%s' "$DESKTOP_RULES" | grep -q 'filter: grayscale('; then
+  echo "Expected desktop chapter cards to avoid runtime grayscale filtering once the overlay asset is precomposed in theme/custom.css" >&2
+  exit 1
+fi
+
+if printf '%s' "$DESKTOP_RULES" | grep -q 'mix-blend-mode: screen;'; then
+  echo "Expected desktop chapter cards to avoid screen blending for the decorative overlay in theme/custom.css" >&2
   exit 1
 fi
 
@@ -175,6 +352,11 @@ if ! printf '%s' "$NARROW_RULES" | grep -q 'align-items: stretch;'; then
   exit 1
 fi
 
+if ! printf '%s' "$NARROW_RULES" | grep -q 'gap: 12px;'; then
+  echo "Expected narrow-screen chapter pagination gap to be 12px in theme/custom.css" >&2
+  exit 1
+fi
+
 if ! printf '%s' "$NARROW_RULES" | grep -q 'width: 100%;'; then
   echo "Expected stacked narrow-screen chapter cards to span the reader column in theme/custom.css" >&2
   exit 1
@@ -185,17 +367,27 @@ if ! printf '%s' "$NARROW_RULES" | grep -q 'align-self: stretch;'; then
   exit 1
 fi
 
-if ! printf '%s' "$NARROW_RULES" | grep -q 'min-height: 80px;'; then
-  echo "Expected stacked narrow-screen chapter cards to keep the 80px minimum height in theme/custom.css" >&2
+if ! printf '%s' "$NARROW_RULES" | grep -q 'min-height: 92px;'; then
+  echo "Expected stacked narrow-screen chapter cards to use the 92px minimum height in theme/custom.css" >&2
   exit 1
 fi
 
-if ! printf '%s' "$NARROW_RULES" | grep -q 'padding: 0.75rem 0.9rem;'; then
-  echo "Expected stacked narrow-screen chapter card padding to match the redesign in theme/custom.css" >&2
+if ! printf '%s' "$NARROW_RULES" | grep -q 'padding: 12px;'; then
+  echo "Expected stacked narrow-screen chapter card padding to be 12px on all sides in theme/custom.css" >&2
   exit 1
 fi
 
-if ! printf '%s' "$NARROW_RULES" | grep -q 'font-size: 1rem;'; then
+if ! printf '%s' "$NARROW_RULES" | grep -q 'grid-template-columns: 44px minmax(0, 1fr) 104px;'; then
+  echo "Expected narrow-screen previous chapter card to reserve a trailing ornament column in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$NARROW_RULES" | grep -q 'grid-template-columns: 104px minmax(0, 1fr) 44px;'; then
+  echo "Expected narrow-screen next chapter card to reserve a leading ornament column in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$NARROW_RULES" | grep -q 'font-size: 16px;'; then
   echo "Expected stacked narrow-screen chapter title sizing in theme/custom.css" >&2
   exit 1
 fi
@@ -205,13 +397,68 @@ if ! printf '%s' "$NARROW_RULES" | grep -q 'justify-items: end;'; then
   exit 1
 fi
 
+if ! printf '%s' "$NARROW_RULES" | grep -q 'text-align: right;'; then
+  echo "Expected narrow-screen next chapter body text to be right-aligned in theme/custom.css" >&2
+  exit 1
+fi
+
 if ! printf '%s' "$NARROW_RULES" | grep -q 'justify-self: end;'; then
   echo "Expected narrow-screen next chapter label to right-align in theme/custom.css" >&2
   exit 1
 fi
 
+if ! printf '%s' "$NARROW_RULES" | grep -q 'text-align: left;'; then
+  echo "Expected narrow-screen previous chapter body text to remain left-aligned in theme/custom.css" >&2
+  exit 1
+fi
+
 if ! printf '%s' "$NARROW_RULES" | grep -q -- '-webkit-line-clamp: 2;'; then
   echo "Expected narrow-screen chapter card dek copy to clamp to two lines in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$NARROW_RULES" | grep -q 'width: 44px;'; then
+  echo "Expected narrow-screen chapter badge width to be 44px in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$NARROW_RULES" | grep -q 'height: 44px;'; then
+  echo "Expected narrow-screen chapter badge height to be 44px in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$NARROW_RULES" | grep -q 'font-size: 10px;'; then
+  echo "Expected narrow-screen chapter dek sizing to be 10px in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$NARROW_RULES" | grep -q 'width: 104px;'; then
+  echo "Expected narrow-screen chapter ornament width to be 104px in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$NARROW_RULES" | grep -q -- '--chapter-nav-ornament-height: 80px;'; then
+  echo "Expected narrow-screen chapter ornament height token to be 80px in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$NARROW_RULES" | grep -q 'bottom: 8px;'; then
+  echo "Expected narrow-screen chapter ornament to sit 8px above the bottom edge in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$NARROW_RULES" | grep -q 'opacity: 0.3;'; then
+  echo "Expected narrow-screen chapter ornament opacity to be 0.3 in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$NARROW_RULES" | grep -q 'right: 0;'; then
+  echo "Expected narrow-screen previous chapter ornament to sit flush against the right edge in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$NARROW_RULES" | grep -q 'left: 0;'; then
+  echo "Expected narrow-screen next chapter ornament to sit flush against the left edge in theme/custom.css" >&2
   exit 1
 fi
 

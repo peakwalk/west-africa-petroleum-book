@@ -2059,6 +2059,15 @@
       card.style.height = "auto";
     });
 
+    const widePaginationMediaQuery = window.matchMedia("(min-width: 761px)");
+
+    if (!widePaginationMediaQuery.matches) {
+      cards.forEach(function (card) {
+        card.style.height = "";
+      });
+      return;
+    }
+
     const maxHeight = Math.max.apply(
       null,
       cards.map(function (card) {
