@@ -44,6 +44,8 @@ check_contains theme/custom.js 'function syncChapterPaginationHeights()'
 check_contains theme/custom.js 'function installChapterPaginationMeta()'
 check_contains theme/custom.js 'function loadReaderPageMeta()'
 check_contains theme/custom.js 'card.dataset.chapterBadgeType = "number";'
+check_contains theme/custom.js 'card.dataset.chapterNavHasDek = dekText ? "true" : "false";'
+check_contains theme/custom.js 'requestAnimationFrame(syncChapterPaginationHeights);'
 check_contains theme/custom.js 'window.matchMedia("(min-width: 761px)")'
 check_contains theme/custom.js 'card.style.height = "auto";'
 check_contains theme/custom.js 'card.style.height = "";'
@@ -54,8 +56,18 @@ if ! sed -n '/class="chapter-nav-card chapter-nav-previous"/,/<\/a>/p' theme/ind
   exit 1
 fi
 
+if ! sed -n '/class="chapter-nav-card chapter-nav-previous"/,/<\/a>/p' theme/index.hbs | tr '\n' ' ' | grep -q 'data-chapter-nav-has-dek="false"'; then
+  echo "Expected previous chapter card to declare a no-dek initial state in theme/index.hbs" >&2
+  exit 1
+fi
+
 if ! sed -n '/class="chapter-nav-card chapter-nav-next"/,/<\/a>/p' theme/index.hbs | tr '\n' ' ' | grep -q 'chapter-nav-body.*chapter-nav-badge-shell'; then
   echo "Expected next chapter card to render the body before the badge in theme/index.hbs" >&2
+  exit 1
+fi
+
+if ! sed -n '/class="chapter-nav-card chapter-nav-next"/,/<\/a>/p' theme/index.hbs | tr '\n' ' ' | grep -q 'data-chapter-nav-has-dek="false"'; then
+  echo "Expected next chapter card to declare a no-dek initial state in theme/index.hbs" >&2
   exit 1
 fi
 
@@ -70,6 +82,51 @@ DESKTOP_RULES="$(awk '
     if ($0 ~ /^\.chapter-nav-placeholder \{/ ) {
       placeholder = 1
     } else if (placeholder && $0 ~ /^\}/) {
+      printf "%s", block
+      exit
+    }
+  }
+' theme/custom.css)"
+
+BODY_RULES="$(awk '
+  /^\.chapter-nav-body \{/ {
+    in_block = 1
+  }
+
+  in_block {
+    block = block $0 ORS
+
+    if ($0 ~ /^\}/) {
+      printf "%s", block
+      exit
+    }
+  }
+' theme/custom.css)"
+
+DEK_RULES="$(awk '
+  /^\.chapter-nav-dek \{/ {
+    in_block = 1
+  }
+
+  in_block {
+    block = block $0 ORS
+
+    if ($0 ~ /^\}/) {
+      printf "%s", block
+      exit
+    }
+  }
+' theme/custom.css)"
+
+NO_DEK_TITLE_RULES="$(awk '
+  /^\.chapter-nav-card\[data-chapter-nav-has-dek="false"\] \.chapter-nav-title \{/ {
+    in_block = 1
+  }
+
+  in_block {
+    block = block $0 ORS
+
+    if ($0 ~ /^\}/) {
       printf "%s", block
       exit
     }
@@ -288,6 +345,36 @@ fi
 
 if ! printf '%s' "$DESKTOP_RULES" | grep -q 'grid-column: 2;'; then
   echo "Expected desktop chapter body to be pinned to the center grid column in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$BODY_RULES" | grep -q 'display: flex;'; then
+  echo "Expected chapter body to use a column flex layout so text can pin to the bottom edge in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$BODY_RULES" | grep -q 'flex-direction: column;'; then
+  echo "Expected chapter body to stack label, title, and dek vertically in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$BODY_RULES" | grep -q 'align-self: stretch;'; then
+  echo "Expected chapter body to stretch to the card height in theme/custom.css" >&2
+  exit 1
+fi
+
+if printf '%s' "$BODY_RULES" | grep -q 'align-content: center;'; then
+  echo "Expected chapter body to stop vertically centering its text in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$DEK_RULES" | grep -q 'margin-top: auto;'; then
+  echo "Expected chapter dek text to push itself to the card bottom in theme/custom.css" >&2
+  exit 1
+fi
+
+if ! printf '%s' "$NO_DEK_TITLE_RULES" | grep -q 'margin-top: auto;'; then
+  echo "Expected chapter title to fall back to the card bottom when no dek is available in theme/custom.css" >&2
   exit 1
 fi
 

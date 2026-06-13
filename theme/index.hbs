@@ -568,7 +568,7 @@
 
                             <nav class="chapter-pagination" aria-label="Chapter navigation">
                                 {{#if previous}}
-                                <a rel="prev" href="{{ path_to_root }}{{ previous.link }}" class="chapter-nav-card chapter-nav-previous">
+                                <a rel="prev" href="{{ path_to_root }}{{ previous.link }}" class="chapter-nav-card chapter-nav-previous" data-chapter-nav-has-dek="false">
                                     <span class="chapter-nav-badge-shell" aria-hidden="true">
                                         <span class="chapter-nav-badge">
                                             <span class="chapter-nav-arrow">‹</span>
@@ -585,7 +585,7 @@
                                 {{/if}}
 
                                 {{#if next}}
-                                <a rel="next prefetch" href="{{ path_to_root }}{{ next.link }}" class="chapter-nav-card chapter-nav-next">
+                                <a rel="next prefetch" href="{{ path_to_root }}{{ next.link }}" class="chapter-nav-card chapter-nav-next" data-chapter-nav-has-dek="false">
                                     <span class="chapter-nav-body">
                                         <span class="chapter-nav-label">Next chapter</span>
                                         <strong class="chapter-nav-title">{{ next.name }}{{ next.title }}</strong>

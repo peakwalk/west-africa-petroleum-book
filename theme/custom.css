@@ -2195,10 +2195,11 @@ body.book-outline-empty .reader-outline {
 }
 
 .chapter-nav-body {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 4px;
   min-width: 0;
-  align-content: center;
+  align-self: stretch;
 }
 
 .chapter-nav-title {
@@ -2222,9 +2223,14 @@ body.book-outline-empty .reader-outline {
   font-size: 10px;
   line-height: 1.3;
   max-width: none;
+  margin-top: auto;
   text-wrap: pretty;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+}
+
+.chapter-nav-card[data-chapter-nav-has-dek="false"] .chapter-nav-title {
+  margin-top: auto;
 }
 
 .chapter-nav-previous .chapter-nav-body {

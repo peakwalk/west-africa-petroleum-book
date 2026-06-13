@@ -1736,6 +1736,8 @@
       dek.hidden = true;
     }
 
+    card.dataset.chapterNavHasDek = dekText ? "true" : "false";
+
     if (isNextCard && chapterNumber) {
       badge.textContent = chapterNumber;
       card.dataset.chapterBadgeType = "number";
@@ -1762,6 +1764,8 @@
           applyChapterNavMeta(card, pageMetaByKey);
         }
       });
+
+      requestAnimationFrame(syncChapterPaginationHeights);
     });
   }
 
