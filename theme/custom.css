@@ -1850,6 +1850,12 @@ body.book-outline-empty .reader-outline {
   width: min(100%, var(--toolbar-search-width));
   max-width: var(--toolbar-search-width);
   margin-inline: 0;
+  transition: width 180ms ease, max-width 180ms ease;
+}
+
+.toolbar-search-slot.is-focused {
+  width: min(100%, calc(var(--toolbar-search-width) + 28px));
+  max-width: calc(var(--toolbar-search-width) + 28px);
 }
 
 .toolbar-search-slot #mdbook-searchbar-outer {
@@ -1865,7 +1871,7 @@ body.book-outline-empty .reader-outline {
 .toolbar-search-slot #mdbook-searchbar {
   width: 100%;
   min-height: 36px;
-  padding: 8px 14px;
+  padding: 8px 42px 8px 14px;
   border: 1px solid rgba(17, 35, 63, 0.08);
   background: rgba(255, 255, 255, 0.94);
   box-shadow: 0 10px 22px rgba(15, 31, 58, 0.08);
@@ -1880,8 +1886,39 @@ body.book-outline-empty .reader-outline {
   opacity: 1;
 }
 
-.toolbar-search-slot .spinner-wrapper {
-  background-color: transparent;
+#mdbook-searchbar::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+
+.search-clear-button {
+  position: absolute;
+  inset-inline-end: 10px;
+  top: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(17, 35, 63, 0.06);
+  color: rgba(11, 31, 51, 0.72);
+  font-size: 14px;
+  line-height: 1;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.search-clear-button:hover {
+  background: rgba(49, 99, 194, 0.1);
+  color: var(--brand-blue-deep);
+}
+
+.search-clear-button[hidden] {
+  display: none;
 }
 
 .toolbar-main .toolbar-search-slot {
@@ -2025,14 +2062,13 @@ body.book-outline-empty .reader-outline {
   object-fit: contain;
 }
 
-#mdbook-search-overlay-root .searchresults-outer {
-  position: fixed;
-  inset-inline-start: auto;
-  inset-inline-end: calc(16px + var(--toolbar-contact-width) + var(--toolbar-utility-gap));
-  top: calc(var(--menu-bar-height) + 12px);
-  width: min(100vw - 2rem, var(--toolbar-search-width));
-  max-width: calc(100vw - 2rem);
-  max-height: calc(100dvh - var(--menu-bar-height) - 2rem);
+.toolbar-search-slot .searchresults-outer {
+  position: absolute;
+  inset-inline: 0;
+  top: calc(100% + 8px);
+  width: 100%;
+  max-width: none;
+  max-height: min(65vh, 34rem);
   margin: 0;
   overflow-y: auto;
   border: 1px solid rgba(17, 35, 63, 0.08);
@@ -2044,18 +2080,19 @@ body.book-outline-empty .reader-outline {
   z-index: 12;
 }
 
-#mdbook-search-overlay-root .searchresults-header {
+.toolbar-search-slot .searchresults-header {
   padding: 0.95rem 1rem 0.35rem;
   font-size: 14px;
   font-weight: 500;
 }
 
-#mdbook-search-overlay-root ul#mdbook-searchresults {
+.toolbar-search-slot ul#mdbook-searchresults {
   margin: 0;
   padding: 0 1rem 0.85rem;
+  list-style: none;
 }
 
-#mdbook-search-overlay-root ul#mdbook-searchresults li {
+.toolbar-search-slot ul#mdbook-searchresults li {
   margin: 0;
   padding: 0.45rem 0.5rem;
   border-radius: 0.6rem;
@@ -2063,6 +2100,73 @@ body.book-outline-empty .reader-outline {
 
 .searchresults-outer {
   color: var(--searchresults-header-fg);
+}
+
+.search-result-item.focus,
+.search-result-item.is-active {
+  background: rgba(49, 99, 194, 0.08);
+}
+
+.search-result-link {
+  display: grid;
+  gap: 0.35rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.search-result-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.search-result-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.25rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(49, 99, 194, 0.08);
+  color: var(--brand-blue-deep);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.search-result-section {
+  color: rgba(11, 31, 51, 0.58);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.search-result-title {
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.search-result-excerpt {
+  color: rgba(11, 31, 51, 0.68);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.search-empty-state {
+  padding: 0.65rem 0.5rem;
+}
+
+.search-empty-copy {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.search-empty-message {
+  color: rgba(11, 31, 51, 0.68);
+  font-size: 13px;
+  line-height: 1.45;
 }
 
 .chapter-pagination {

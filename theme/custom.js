@@ -1973,28 +1973,260 @@
     const searchToggle = document.getElementById("mdbook-search-toggle");
     const searchbarOuter = document.getElementById("mdbook-searchbar-outer");
     const searchbar = document.getElementById("mdbook-searchbar");
+    const searchClear = document.getElementById("mdbook-search-clear");
     const searchresultsOuter = document.getElementById("mdbook-searchresults-outer");
-    const searchOverlayRoot = document.getElementById("mdbook-search-overlay-root");
+    const searchresultsHeader = document.getElementById("mdbook-searchresults-header");
+    const searchresults = document.getElementById("mdbook-searchresults");
     const toolbarSearchSlot = document.querySelector(".toolbar-search-slot");
     const desktopMediaQuery = window.matchMedia("(min-width: 901px)");
+    const contentRoot = document.querySelector(".reader-article") || document.getElementById("mdbook-content");
+    const highlightMarker = typeof Mark === "function" && contentRoot ? new Mark(contentRoot) : null;
+    const state = {
+      query: searchbar ? searchbar.value : "",
+      focused: false,
+      results: [],
+      activeIndex: -1
+    };
+    let searchRecords = null;
+    let searchRecordsPromise = null;
 
-    if (!searchWrap || !searchToggle || !searchbarOuter || !searchbar || !searchresultsOuter || !searchOverlayRoot || !toolbarSearchSlot) {
+    if (!searchWrap || !searchToggle || !searchbarOuter || !searchbar || !searchClear || !searchresultsOuter || !searchresultsHeader || !searchresults || !toolbarSearchSlot) {
       return;
     }
+
+    window.search = window.search || {};
+    window.search.hasFocus = function () {
+      return state.focused;
+    };
 
     if (searchbarOuter.parentElement !== toolbarSearchSlot) {
       toolbarSearchSlot.appendChild(searchbarOuter);
     }
 
-    if (searchresultsOuter.parentElement !== searchOverlayRoot) {
-      searchOverlayRoot.appendChild(searchresultsOuter);
+    if (searchresultsOuter.parentElement !== toolbarSearchSlot) {
+      toolbarSearchSlot.appendChild(searchresultsOuter);
     }
 
     let wasHidden = searchWrap.classList.contains("hidden");
 
-    function hideSearchResultsOverlay() {
-      searchresultsOuter.classList.add("hidden");
-      searchbar.classList.remove("active");
+    function removeChildren(element) {
+      while (element.firstChild) {
+        element.removeChild(element.firstChild);
+      }
+    }
+
+    function escapeRegExp(value) {
+      return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    function normalizeText(value) {
+      return (value || "").replace(/\s+/g, " ").trim();
+    }
+
+    function getTrimmedQuery() {
+      return state.query.trim();
+    }
+
+    function formatResultCount(count, query) {
+      const noun = count === 1 ? "result" : "results";
+      return count + " " + noun + " for \"" + query + "\"";
+    }
+
+    function buildResultHref(record, query) {
+      const root = typeof path_to_root === "string" ? path_to_root : "";
+      const urlParts = (record.url || "").split("#");
+      const pagePath = urlParts[0] || "";
+      const hash = urlParts[1] ? "#" + urlParts[1] : "";
+      const highlight = query ? "?highlight=" + encodeURIComponent(query) : "";
+      return root + pagePath + highlight + hash;
+    }
+
+    function getSearchResultType(recordUrl, breadcrumbs) {
+      if (recordUrl.indexOf("chapter-") !== -1) {
+        return breadcrumbs.indexOf("»") === -1 ? "chapter" : "section";
+      }
+      if (
+        recordUrl.indexOf("list-of-") !== -1 ||
+        recordUrl.indexOf("glossary") !== -1 ||
+        recordUrl.indexOf("bibliographical") !== -1 ||
+        recordUrl.indexOf("abbreviations") !== -1
+      ) {
+        return "reference";
+      }
+      return "page";
+    }
+
+    function getSearchResultIcon(type) {
+      if (type === "section") {
+        return "Sec";
+      }
+      if (type === "chapter") {
+        return "Ch";
+      }
+      if (type === "reference") {
+        return "Ref";
+      }
+      return "Pg";
+    }
+
+    function splitTextWithMark(text, query) {
+      const parts = [];
+      const trimmedQuery = query.trim();
+      if (!trimmedQuery) {
+        parts.push(text);
+        return parts;
+      }
+
+      const matcher = new RegExp("(" + escapeRegExp(trimmedQuery) + ")", "ig");
+      const fragments = text.split(matcher);
+      for (let index = 0; index < fragments.length; index += 1) {
+        const fragment = fragments[index];
+        if (!fragment) {
+          continue;
+        }
+        parts.push({
+          match: index % 2 === 1,
+          value: fragment
+        });
+      }
+
+      return parts;
+    }
+
+    function appendHighlightedText(container, text, query) {
+      const parts = splitTextWithMark(text, query);
+      for (let index = 0; index < parts.length; index += 1) {
+        const part = parts[index];
+        if (typeof part === "string") {
+          container.appendChild(document.createTextNode(part));
+          continue;
+        }
+        if (part.match) {
+          const mark = document.createElement("mark");
+          mark.textContent = part.value;
+          container.appendChild(mark);
+          continue;
+        }
+        container.appendChild(document.createTextNode(part.value));
+      }
+    }
+
+    function buildExcerpt(body, query) {
+      const text = normalizeText(body);
+      if (!text) {
+        return "";
+      }
+
+      const queryLower = query.toLowerCase();
+      const textLower = text.toLowerCase();
+      const matchIndex = textLower.indexOf(queryLower);
+      if (matchIndex === -1) {
+        return text.length > 180 ? text.slice(0, 177) + "..." : text;
+      }
+
+      const start = Math.max(0, matchIndex - 72);
+      const end = Math.min(text.length, matchIndex + query.length + 120);
+      const prefix = start > 0 ? "..." : "";
+      const suffix = end < text.length ? "..." : "";
+      return prefix + text.slice(start, end).trim() + suffix;
+    }
+
+    function parseSearchRecords() {
+      const docs = (((window.search || {}).index || {}).documentStore || {}).docs || {};
+      const docUrls = (window.search && window.search.doc_urls) || [];
+
+      return Object.keys(docs)
+        .sort(function (left, right) {
+          return Number(left) - Number(right);
+        })
+        .map(function (id) {
+          const doc = docs[id] || {};
+          const title = normalizeText(doc.title);
+          const body = normalizeText(doc.body);
+          const breadcrumbs = normalizeText(doc.breadcrumbs).replace(/\s*»\s*$/, "");
+          const recordUrl = docUrls[Number(id)] || docUrls[id] || "";
+
+          return {
+            id: id,
+            url: recordUrl,
+            title: title,
+            body: body,
+            breadcrumbs: breadcrumbs,
+            type: getSearchResultType(recordUrl, breadcrumbs),
+            searchable: [title, body, breadcrumbs].join(" ").toLowerCase()
+          };
+        });
+    }
+
+    function loadSearchRecords() {
+      if (searchRecords) {
+        return Promise.resolve(searchRecords);
+      }
+
+      if (searchRecordsPromise) {
+        return searchRecordsPromise;
+      }
+
+      if (window.search.index && window.search.index.documentStore) {
+        searchRecords = parseSearchRecords();
+        return Promise.resolve(searchRecords);
+      }
+
+      searchRecordsPromise = new Promise(function (resolve, reject) {
+        let script = document.getElementById("mdbook-search-index");
+
+        function finishLoadingSearchIndex() {
+          searchRecords = parseSearchRecords();
+          resolve(searchRecords);
+        }
+
+        if (script) {
+          script.addEventListener("load", finishLoadingSearchIndex, { once: true });
+          script.addEventListener("error", reject, { once: true });
+          return;
+        }
+
+        script = document.createElement("script");
+        script.id = "mdbook-search-index";
+        script.src = window.path_to_searchindex_js;
+        script.onload = finishLoadingSearchIndex;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      }).finally(function () {
+        searchRecordsPromise = null;
+      });
+
+      return searchRecordsPromise;
+    }
+
+    function filterRecords(query, records) {
+      const queryLower = query.toLowerCase();
+      return records.filter(function (record) {
+        return record.searchable.indexOf(queryLower) !== -1;
+      });
+    }
+
+    function shouldShowResults() {
+      return state.focused && getTrimmedQuery().length > 0;
+    }
+
+    function syncSearchVisualState() {
+      const searchWrapper = searchbar.parentElement;
+      toolbarSearchSlot.classList.toggle("is-focused", state.focused);
+      searchbarOuter.classList.toggle("is-focused", state.focused);
+      if (searchWrapper) {
+        searchWrapper.classList.toggle("is-focused", state.focused);
+      }
+      searchbar.classList.toggle("active", state.focused || getTrimmedQuery().length > 0);
+      searchClear.hidden = state.query.length === 0;
+    }
+
+    function syncResultsVisibility() {
+      const visible = shouldShowResults();
+      searchresultsOuter.classList.toggle("hidden", !visible);
+      searchresultsOuter.hidden = !visible;
+      searchresultsOuter.setAttribute("aria-hidden", visible ? "false" : "true");
+      searchbar.setAttribute("aria-expanded", visible ? "true" : "false");
     }
 
     function syncToolbarSearchSlot() {
@@ -2014,24 +2246,314 @@
       wasHidden = hidden;
     }
 
-    syncToolbarSearchSlot();
+    function renderEmptyState(query) {
+      const item = document.createElement("li");
+      const emptyState = document.createElement("div");
+      const icon = document.createElement("span");
+      const message = document.createElement("span");
 
-    searchbar.addEventListener("input", function () {
-      if (searchbar.value.trim() === "") {
-        hideSearchResultsOverlay();
+      item.className = "search-empty-state";
+      icon.className = "search-result-icon search-result-icon-empty";
+      icon.textContent = "0";
+      message.className = "search-empty-message";
+      message.textContent = "No matches found for \"" + query + "\".";
+
+      emptyState.className = "search-empty-copy";
+      emptyState.appendChild(icon);
+      emptyState.appendChild(message);
+      item.appendChild(emptyState);
+      searchresults.appendChild(item);
+    }
+
+    function syncActiveSearchResultState() {
+      Array.from(searchresults.children).forEach(function (item, index) {
+        const isActive = index === state.activeIndex;
+        item.classList.toggle("focus", isActive);
+        item.classList.toggle("is-active", isActive);
+        item.setAttribute("aria-selected", isActive ? "true" : "false");
+      });
+    }
+
+    function renderResultItem(record, query, index) {
+      const item = document.createElement("li");
+      const link = document.createElement("a");
+      const meta = document.createElement("div");
+      const icon = document.createElement("span");
+      const section = document.createElement("span");
+      const title = document.createElement("span");
+      const excerpt = document.createElement("span");
+
+      item.id = "mdbook-searchresult-" + index;
+      item.className = "search-result-item";
+      item.setAttribute("role", "option");
+      item.setAttribute("aria-selected", index === state.activeIndex ? "true" : "false");
+
+      link.className = "search-result-link";
+      link.href = buildResultHref(record, query);
+
+      meta.className = "search-result-meta";
+      icon.className = "search-result-icon search-result-icon-" + record.type;
+      icon.textContent = getSearchResultIcon(record.type);
+      section.className = "search-result-section";
+      section.textContent = record.breadcrumbs || "Book";
+      title.className = "search-result-title";
+      excerpt.className = "search-result-excerpt";
+
+      appendHighlightedText(title, record.title || record.breadcrumbs || "Untitled", query);
+      appendHighlightedText(excerpt, buildExcerpt(record.body, query), query);
+
+      meta.appendChild(icon);
+      meta.appendChild(section);
+      link.appendChild(meta);
+      link.appendChild(title);
+      if (excerpt.textContent) {
+        link.appendChild(excerpt);
       }
-    });
+      item.appendChild(link);
+      item.addEventListener("mouseenter", function () {
+        state.activeIndex = index;
+        syncActiveSearchResultState();
+      });
+      searchresults.appendChild(item);
+    }
 
-    searchbar.addEventListener("keydown", function (event) {
+    function renderResults() {
+      const query = getTrimmedQuery();
+      removeChildren(searchresults);
+      searchresultsHeader.textContent = query ? formatResultCount(state.results.length, query) : "";
+      searchresults.setAttribute("aria-activedescendant", state.activeIndex >= 0 ? "mdbook-searchresult-" + state.activeIndex : "");
+
+      if (!query) {
+        syncSearchVisualState();
+        syncResultsVisibility();
+        return;
+      }
+
+      if (!state.results.length) {
+        renderEmptyState(query);
+      } else {
+        state.results.forEach(function (record, index) {
+          renderResultItem(record, query, index);
+        });
+      }
+
+      syncActiveSearchResultState();
+      syncSearchVisualState();
+      syncResultsVisibility();
+    }
+
+    function updateResultsForQuery() {
+      const query = getTrimmedQuery();
+      if (!query) {
+        state.results = [];
+        state.activeIndex = -1;
+        renderResults();
+        return;
+      }
+
+      searchbarOuter.classList.add("searching");
+      loadSearchRecords()
+        .then(function (records) {
+          if (query !== getTrimmedQuery()) {
+            return;
+          }
+          state.results = filterRecords(query, records);
+          if (state.activeIndex >= state.results.length) {
+            state.activeIndex = -1;
+          }
+          renderResults();
+        })
+        .catch(function (error) {
+          console.error("Failed to load search index", error);
+          state.results = [];
+          state.activeIndex = -1;
+          renderResults();
+        })
+        .finally(function () {
+          searchbarOuter.classList.remove("searching");
+        });
+    }
+
+    function hideSearchPanel(options) {
+      const hideOptions = options || {};
+      state.focused = false;
+      state.activeIndex = -1;
+      syncSearchVisualState();
+      syncResultsVisibility();
+
+      if (hideOptions.blur) {
+        searchbar.blur();
+      }
+
+      if (hideOptions.collapseMobile && !desktopMediaQuery.matches) {
+        searchWrap.classList.add("hidden");
+        searchToggle.setAttribute("aria-expanded", "false");
+        syncToolbarSearchSlot();
+      }
+    }
+
+    function focusSearchbar(selectText) {
+      if (!desktopMediaQuery.matches) {
+        searchWrap.classList.remove("hidden");
+        searchToggle.setAttribute("aria-expanded", "true");
+        syncToolbarSearchSlot();
+      }
+
+      requestAnimationFrame(function focusToolbarSearchbar() {
+        searchbar.focus();
+        if (selectText) {
+          searchbar.select();
+        }
+      });
+    }
+
+    function applyHighlightFromLocation() {
+      if (!highlightMarker) {
+        return;
+      }
+
+      const highlight = new URL(window.location.href).searchParams.get("highlight");
+      if (!highlight) {
+        return;
+      }
+
+      highlightMarker.unmark({
+        done: function () {
+          highlightMarker.mark(highlight, {
+            separateWordSearch: false,
+            exclude: ["text"]
+          });
+        }
+      });
+    }
+
+    function handleDocumentMouseDown(event) {
+      const target = event.target;
+      if (
+        toolbarSearchSlot.contains(target) ||
+        searchresultsOuter.contains(target) ||
+        searchToggle.contains(target)
+      ) {
+        return;
+      }
+
+      if (state.focused) {
+        hideSearchPanel();
+      }
+    }
+
+    function handleSearchShortcut(event) {
+      const target = event.target;
+      const isEditableTarget = target && (
+        target.isContentEditable ||
+        /^(?:input|select|textarea)$/i.test(target.nodeName)
+      );
+
+      if (
+        event.altKey ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.shiftKey ||
+        (isEditableTarget && target !== searchbar)
+      ) {
+        return;
+      }
+
+      if (!state.focused && (event.key === "/" || event.key === "s")) {
+        event.preventDefault();
+        focusSearchbar(true);
+      }
+    }
+
+    function handleKeyboardResults(event) {
       if (event.key === "Escape") {
         event.preventDefault();
         event.stopPropagation();
-        hideSearchResultsOverlay();
-        searchWrap.classList.add("hidden");
-        searchToggle.setAttribute("aria-expanded", "false");
-        searchToggle.focus();
+        hideSearchPanel({
+          blur: true,
+          collapseMobile: true
+        });
+        if (!desktopMediaQuery.matches) {
+          searchToggle.focus();
+        }
+        return;
       }
+
+      if (!shouldShowResults() || !state.results.length) {
+        return;
+      }
+
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        state.activeIndex = state.activeIndex < state.results.length - 1 ? state.activeIndex + 1 : 0;
+        renderResults();
+        return;
+      }
+
+      if (event.key === "ArrowUp") {
+        event.preventDefault();
+        state.activeIndex = state.activeIndex <= 0 ? state.results.length - 1 : state.activeIndex - 1;
+        renderResults();
+        return;
+      }
+
+      if (event.key === "Enter" && state.activeIndex >= 0 && state.results[state.activeIndex]) {
+        event.preventDefault();
+        window.location.assign(buildResultHref(state.results[state.activeIndex], getTrimmedQuery()));
+      }
+    }
+
+    syncToolbarSearchSlot();
+    syncSearchVisualState();
+    syncResultsVisibility();
+    applyHighlightFromLocation();
+
+    searchbar.addEventListener("focus", function () {
+      state.focused = true;
+      syncSearchVisualState();
+      updateResultsForQuery();
     });
+
+    searchbar.addEventListener("input", function () {
+      state.query = searchbar.value;
+      state.activeIndex = -1;
+      syncSearchVisualState();
+      updateResultsForQuery();
+    });
+
+    searchbar.addEventListener("keydown", function (event) {
+      handleKeyboardResults(event);
+    });
+
+    searchClear.addEventListener("mousedown", function (event) {
+      event.preventDefault();
+    });
+
+    searchClear.addEventListener("click", function () {
+      searchbar.value = "";
+      state.query = "";
+      state.results = [];
+      state.activeIndex = -1;
+      state.focused = true;
+      renderResults();
+      searchbar.focus();
+    });
+
+    searchToggle.addEventListener("click", function () {
+      if (!desktopMediaQuery.matches && !searchWrap.classList.contains("hidden")) {
+        hideSearchPanel({
+          blur: true,
+          collapseMobile: true
+        });
+        searchToggle.focus();
+        return;
+      }
+
+      focusSearchbar(true);
+    });
+
+    document.addEventListener("mousedown", handleDocumentMouseDown);
+    document.addEventListener("keydown", handleSearchShortcut);
 
     const observer = new MutationObserver(function () {
       syncToolbarSearchSlot();

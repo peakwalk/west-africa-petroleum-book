@@ -526,15 +526,13 @@
 
                 {{#if search_enabled}}
                 <div id="mdbook-search-wrapper" class="hidden">
-                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer" role="search">
                         <div class="search-wrapper">
-                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
-                            <div class="spinner-wrapper">
-                                {{fa "solid" "spinner" "fa-spin"}}
-                            </div>
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="mdbook-searchresults-header" aria-autocomplete="list" autocomplete="off" spellcheck="false">
+                            <button id="mdbook-search-clear" class="search-clear-button" type="button" aria-label="Clear search" hidden>&times;</button>
                         </div>
                     </form>
-                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden" hidden>
                         <div id="mdbook-searchresults-header" class="searchresults-header"></div>
                         <ul id="mdbook-searchresults"></ul>
                     </div>
@@ -671,7 +669,6 @@
         {{#if search_js}}
         <script src="{{ resource "elasticlunr.min.js" }}"></script>
         <script src="{{ resource "mark.min.js" }}"></script>
-        <script src="{{ resource "searcher.js" }}"></script>
         {{/if}}
 
         <script src="{{ resource "clipboard.min.js" }}"></script>
