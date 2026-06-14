@@ -388,19 +388,18 @@ determined by the formula:
   </div>
 
   <div class="formula-where formula-where--grid formula-where--prospect" aria-label="Prospect formula definitions">
-    <p class="formula-where-label">with:</p>
     <div class="formula-spec-grid formula-spec-grid--two">
       <article class="formula-spec-item">
-        <p class="formula-spec-copy"><span class="formula-where-term">P(prospect):</span> Geological hazards</p>
+        <p class="formula-spec-copy">Waterproof trap + waterproof cover</p>
       </article>
       <article class="formula-spec-item">
-        <p class="formula-spec-copy"><span class="formula-where-term">P(source rock):</span> Maturity of the bedrock and therefore its degree of migration to the reservoir</p>
+        <p class="formula-spec-copy">Porosity and permeability of reservoir rock</p>
       </article>
       <article class="formula-spec-item">
-        <p class="formula-spec-copy"><span class="formula-where-term">P(reservoir):</span> Porosity and permeability of reservoir rock</p>
+        <p class="formula-spec-copy">Geological hazards</p>
       </article>
       <article class="formula-spec-item">
-        <p class="formula-spec-copy"><span class="formula-where-term">P(trap):</span> Waterproof trap + waterproof cover</p>
+        <p class="formula-spec-copy">Maturity of the bedrock and therefore its degree of migration to the reservoir</p>
       </article>
     </div>
   </div>
@@ -426,7 +425,7 @@ gas (GIIP) in place, is determined as follows:
   </div>
 
 <div class="formula-where formula-where--grid formula-where--volumetric" aria-label="Volumetric assessment formula definitions">
-<p class="formula-where-label">with:</p>
+<p class="formula-where-label">With</p>
 <div class="formula-spec-grid formula-spec-grid--two formula-spec-grid--volumetric">
   <article class="formula-spec-item">
     <p class="formula-spec-copy"><span class="formula-where-term">IBC = Gross Rock Volume:</span> it is determined by taking into account the geometric shape of the reservoir and its thickness</p>
@@ -438,7 +437,7 @@ gas (GIIP) in place, is determined as follows:
     <p class="formula-spec-copy"><span class="formula-where-term">N/G:</span> This is the ratio between the net thickness of the tank and the gross thickness of the tank. It should be noted that the thickness of the deposit does not often have a uniform lithology. It is often interspersed with layers of impermeable clay.</p>
   </article>
   <article class="formula-spec-item">
-    <p class="formula-spec-copy"><span class="formula-where-term">Ø (Phi):</span> Reservoir porosity which is estimated from electrical logs, core measurements and knowledge from similar formations. It is determined as follows:</p>
+    <p class="formula-spec-copy"><span class="formula-where-term">Ø (Phi) =</span> Reservoir porosity which is estimated from electrical logs, core measurements and knowledge from similar formations. It is determined as follows:</p>
     <div class="book-formula book-formula--local" role="img" aria-label="Porosity phi equals pore volume over reservoir volume">
       <span class="book-formula-line" aria-hidden="true">Porosity (Ø) = Pore Volume (Vv)/ Reservoir Volume (V)</span>
     </div>
@@ -475,9 +474,6 @@ gas (GIIP) in place, is determined as follows:
             <span class="book-formula-line" aria-hidden="true">Associated gas in place = STOIIP x GOR</span>
           </div>
         </div>
-        <div class="formula-case-note">
-          <p class="formula-note"><span class="formula-note-term">GOR:</span> called Gas-Oil Ratio is the ratio of gas volume to oil produced</p>
-        </div>
       </section>
       <section class="formula-case" aria-label="Gas case derivation">
         <p class="formula-case-title">For gas</p>
@@ -493,10 +489,12 @@ gas (GIIP) in place, is determined as follows:
             <span class="book-formula-line" aria-hidden="true">Condensate in place = GIIP x CGR</span>
           </div>
         </div>
-        <div class="formula-case-note">
-          <p class="formula-note"><span class="formula-note-term">CGR:</span> called Condensate-Gas Ratio is the ratio of <em>condensate volume</em> to the volume of gas produced</p>
-        </div>
       </section>
+    </div>
+    <div class="formula-case-note formula-case-note--stack">
+      <p class="formula-where-label">with:</p>
+      <p class="formula-note"><span class="formula-note-term">GOR:</span> called Gas-Oil Ratio is the ratio of gas volume to oil produced</p>
+      <p class="formula-note"><span class="formula-note-term">CGR:</span> called Condensate-Gas Ratio is the ratio of <em>condensate volume</em> to the volume of gas produced</p>
     </div>
   </div>
 </section>
@@ -540,7 +538,7 @@ are: the establishment of an oil database and the monitoring and
 technical and financial control of all activities carried out by the
 contractor.
 
-***Oil Data Management***
+- ***Oil Data Management***
 
 The host country must ensure the collection and preservation of all oil
 data acquired during this phase. These oil data constitute a decisive
@@ -583,7 +581,7 @@ storage and preservation and data analysis (Figure 16).
 
 Figure 16: Photos showing the core library of Côte d'Ivoire at the Direction of the PETROCI Analysis and Research Center
 
-***Monitoring and control of activities***
+- ***Monitoring and control of activities***
 
 The regulation of exploration activities includes not only the
 monitoring of the implementation of contractual obligations but also the
