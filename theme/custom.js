@@ -156,7 +156,6 @@
   let readerPageMetaPromise = null;
   let outlineScrollSpyEntries = [];
   let outlineScrollSpyBound = false;
-  let sidebarShellResizeObserver = null;
   let mobileOutlineCollapsed = false;
 
   function normalizeText(text) {
@@ -276,209 +275,6 @@
     return document.getElementById("mdbook-sidebar");
   }
 
-  function syncSidebarShellGeometry() {
-    const sidebar = getSidebarShell();
-    const intro = sidebar ? sidebar.querySelector(".book-sidebar-intro") : null;
-
-    if (!sidebar || !intro) {
-      return;
-    }
-
-    sidebar.style.setProperty("--sidebar-intro-height", intro.offsetHeight + "px");
-  }
-
-  function installSidebarShellGeometry() {
-    const sidebar = getSidebarShell();
-    const intro = sidebar ? sidebar.querySelector(".book-sidebar-intro") : null;
-
-    if (!sidebar || !intro) {
-      return;
-    }
-
-    if (window.ResizeObserver && !sidebarShellResizeObserver) {
-      sidebarShellResizeObserver = new ResizeObserver(function () {
-        syncSidebarShellGeometry();
-      });
-    }
-
-    if (sidebarShellResizeObserver) {
-      sidebarShellResizeObserver.observe(intro);
-    }
-
-    syncSidebarShellGeometry();
-  }
-
-  function parseSidebarSectionHeading(text) {
-    const normalized = normalizeText(text);
-    const partMatch = normalized.match(/^(Part\s+[IVXLC]+)\s*:\s*(.+)$/i);
-
-    if (/^Front Matter$/i.test(normalized)) {
-      return { type: "front-matter", kicker: "", title: "Front Matter" };
-    }
-
-    if (/^Back Matter$/i.test(normalized)) {
-      return { type: "back-matter", kicker: "", title: "Back Matter" };
-    }
-
-    if (partMatch) {
-      return {
-        type: "part",
-        kicker: normalizeText(partMatch[1]),
-        title: normalizeText(partMatch[2]),
-      };
-    }
-
-    return {
-      type: "part",
-      kicker: "",
-      title: normalized,
-    };
-  }
-
-  function parseSidebarRow(text) {
-    const normalized = normalizeText(text);
-    const chapterMatch = normalized.match(/^Chapter\s+(\d+)\s*:\s*(.+)$/i);
-
-    if (!chapterMatch) {
-      return {
-        type: "reference",
-        index: "",
-        title: normalized,
-      };
-    }
-
-    return {
-      type: "chapter",
-      index: String(Number(chapterMatch[1])).padStart(2, "0"),
-      title: normalizeText(chapterMatch[2]),
-    };
-  }
-
-  const sidebarReferenceIconSvgs = {
-    conclusion:
-      '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M7 4.75h7.75L18.5 8.5v10.75a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><path d="M14.5 4.75V8.5h3.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9 12h6M9 15h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg>',
-    glossary:
-      '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M6.5 5.75h8.25a2.5 2.5 0 0 1 2.5 2.5v10.5H9a2.5 2.5 0 0 0-2.5 2.5V5.75Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><path d="M17.25 18.75H9a2.5 2.5 0 0 0-2.5 2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.5 10.25h4.75M9.5 13.25h4.75" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg>',
-    references:
-      '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M4.75 7.25h10.5a2 2 0 0 1 2 2v8.5H6.75a2 2 0 0 0-2 2V7.25Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9 7.25V5.75a1 1 0 0 1 1-1h9.25v11H17.25" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8.5 11h5M8.5 14h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path></svg>',
-  };
-
-  const sidebarSectionIconSvgs = {
-    "front-matter":
-      '<svg viewBox="0 0 24 24" focusable="false" aria-hidden="true"><path d="M5.25 6.25a1.5 1.5 0 0 1 1.5-1.5H11c1.18 0 2.31.31 3.3.9v13.6a5.9 5.9 0 0 0-3.3-.95H6.75a1.5 1.5 0 0 0-1.5 1.5V6.25Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path><path d="M18.75 6.25a1.5 1.5 0 0 0-1.5-1.5H13c-1.18 0-2.31.31-3.3.9v13.6a5.9 5.9 0 0 1 3.3-.95h4.25a1.5 1.5 0 0 1 1.5 1.5V6.25Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 5.75v13.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path></svg>',
-  };
-
-  function getSidebarReferenceIcon(href) {
-    if (!href) {
-      return null;
-    }
-
-    const pathname = new URL(href, window.location.href).pathname.replace(/\/+$/, "");
-
-    if (pathname.endsWith("/chapters/general-conclusion.html")) {
-      return "conclusion";
-    }
-
-    if (pathname.endsWith("/chapters/glossary.html")) {
-      return "glossary";
-    }
-
-    if (pathname.endsWith("/chapters/bibliographical-references.html")) {
-      return "references";
-    }
-
-    return null;
-  }
-
-  function buildSidebarReferenceIcon(iconName) {
-    const icon = document.createElement("span");
-    icon.className = "reader-sidebar-row-icon reader-sidebar-row-icon--" + iconName;
-    icon.setAttribute("aria-hidden", "true");
-    icon.innerHTML = sidebarReferenceIconSvgs[iconName];
-    return icon;
-  }
-
-  function buildSidebarSectionIcon(iconName) {
-    const icon = document.createElement("span");
-    icon.className = "reader-sidebar-section-icon reader-sidebar-section-icon--" + iconName;
-    icon.setAttribute("aria-hidden", "true");
-    icon.innerHTML = sidebarSectionIconSvgs[iconName];
-    return icon;
-  }
-
-  function collectSidebarProjectionGroups(rawChapterList) {
-    const groups = [];
-    let currentGroup = null;
-
-    Array.from(rawChapterList.children).forEach(function (item) {
-      const partTitle = item.classList.contains("part-title")
-        ? item
-        : item.querySelector(".part-title");
-      const sourceLink = item.querySelector("a");
-
-      if (partTitle) {
-        currentGroup = Object.assign({ items: [] }, parseSidebarSectionHeading(partTitle.textContent || ""));
-        groups.push(currentGroup);
-        return;
-      }
-
-      if (!sourceLink) {
-        return;
-      }
-
-      if (!currentGroup) {
-        currentGroup = { type: "front-matter", kicker: "", title: "Front Matter", items: [] };
-        groups.push(currentGroup);
-      }
-
-      currentGroup.items.push({
-        href: sourceLink.href,
-        text: normalizeText(sourceLink.textContent),
-        isActive:
-          sourceLink.classList.contains("active") || sourceLink.classList.contains("current-header"),
-      });
-    });
-
-    return groups.filter(function (group) {
-      return group.items.length > 0;
-    });
-  }
-
-  function buildSidebarProjectionRow(item) {
-    const parsed = parseSidebarRow(item.text);
-    const row = document.createElement("a");
-    const title = document.createElement("span");
-    const referenceIcon = parsed.type === "reference" ? getSidebarReferenceIcon(item.href) : null;
-
-    row.className =
-      "reader-sidebar-row " +
-      (parsed.type === "chapter" ? "reader-sidebar-row--chapter" : "reader-sidebar-row--reference");
-    row.href = item.href;
-
-    if (referenceIcon) {
-      row.classList.add("reader-sidebar-row--with-icon");
-      row.appendChild(buildSidebarReferenceIcon(referenceIcon));
-    }
-
-    if (item.isActive) {
-      row.classList.add("reader-sidebar-row--active");
-      row.setAttribute("aria-current", "page");
-    }
-
-    if (parsed.type === "chapter") {
-      const index = document.createElement("span");
-      index.className = "reader-sidebar-row-index";
-      index.textContent = parsed.index;
-      row.appendChild(index);
-    }
-
-    title.className = "reader-sidebar-row-title";
-    title.textContent = parsed.title;
-    row.appendChild(title);
-    bindSidebarProjectionRowInteraction(row);
-    return row;
-  }
-
   function bindSidebarProjectionRowInteraction(row) {
     if (!row) {
       return;
@@ -505,75 +301,12 @@
         return;
       }
 
-      const rowRect = row.getBoundingClientRect();
-      const containerRect = scrollContainer.getBoundingClientRect();
-
       try {
-        sessionStorage.setItem("sidebar-scroll-offset", String(rowRect.top - containerRect.top));
-        sessionStorage.setItem("reader-sidebar-scroll-offset", String(rowRect.top - containerRect.top));
+        sessionStorage.setItem("reader-sidebar-scroll-top", String(scrollContainer.scrollTop));
       } catch (error) {
-        // Ignore storage failures and let mdBook fall back to its default centering logic.
+        // Ignore storage failures and let navigation continue.
       }
     });
-  }
-
-  function buildSidebarProjectionSection(group) {
-    const section = document.createElement("section");
-    const header = document.createElement("header");
-    const body = document.createElement("div");
-    const title = document.createElement("span");
-    const isActiveGroup = group.items.some(function (item) {
-      return item.isActive;
-    });
-
-    section.className = "reader-sidebar-section reader-sidebar-section--" + group.type;
-
-    if (isActiveGroup) {
-      section.classList.add("reader-sidebar-section--active");
-    }
-
-    header.className = "reader-sidebar-section-header";
-
-    if (group.type === "front-matter") {
-      header.appendChild(buildSidebarSectionIcon("front-matter"));
-    }
-
-    if (group.kicker) {
-      const kicker = document.createElement("span");
-      kicker.className = "reader-sidebar-section-kicker";
-      kicker.textContent = group.kicker;
-      header.appendChild(kicker);
-    }
-
-    title.className = "reader-sidebar-section-title";
-    title.textContent = group.title;
-    header.appendChild(title);
-
-    body.className = "reader-sidebar-section-body";
-    group.items.forEach(function (item) {
-      body.appendChild(buildSidebarProjectionRow(item));
-    });
-
-    section.appendChild(header);
-    section.appendChild(body);
-    return section;
-  }
-
-  function readAndClearSidebarProjectionOffset() {
-    try {
-      const storedProjectionOffset = sessionStorage.getItem("reader-sidebar-scroll-offset");
-
-      if (storedProjectionOffset === null) {
-        return null;
-      }
-
-      sessionStorage.removeItem("reader-sidebar-scroll-offset");
-
-      const parsedOffset = Number.parseFloat(storedProjectionOffset);
-      return Number.isFinite(parsedOffset) ? parsedOffset : null;
-    } catch (error) {
-      return null;
-    }
   }
 
   function hydrateSidebarProjectionRows(projection) {
@@ -584,58 +317,6 @@
     Array.from(projection.querySelectorAll(".reader-sidebar-row")).forEach(function (row) {
       bindSidebarProjectionRowInteraction(row);
     });
-  }
-
-  function installSidebarProjection() {
-    const sidebar = getSidebarShell();
-    const scrollContainer = sidebar ? sidebar.querySelector(".reader-sidebar-scroll") : null;
-    const projection = sidebar ? sidebar.querySelector(".reader-sidebar-projection") : null;
-    const scrollbox = sidebar ? sidebar.querySelector("mdbook-sidebar-scrollbox.sidebar-scrollbox") : null;
-    const rawChapterList = scrollbox ? scrollbox.querySelector(".chapter") : null;
-
-    if (!sidebar || !scrollContainer || !projection || !scrollbox || !rawChapterList) {
-      return;
-    }
-
-    const groups = collectSidebarProjectionGroups(rawChapterList);
-
-    if (!groups.length) {
-      return;
-    }
-
-    const projectionSignature = rawChapterList.innerHTML + "|" + getCurrentBookPageKey();
-    const projectionChanged = projection.dataset.projectionSignature !== projectionSignature;
-
-    if (projectionChanged) {
-      const fragment = document.createDocumentFragment();
-
-      groups.forEach(function (group) {
-        fragment.appendChild(buildSidebarProjectionSection(group));
-      });
-
-      projection.replaceChildren(fragment);
-      projection.dataset.projectionSignature = projectionSignature;
-    }
-
-    hydrateSidebarProjectionRows(projection);
-
-    projection.setAttribute("aria-hidden", "false");
-    scrollbox.setAttribute("aria-hidden", "true");
-    sidebar.classList.add("book-sidebar-shell--projected");
-
-    const activeRow = projection.querySelector(".reader-sidebar-row--active");
-    const storedProjectionOffset = readAndClearSidebarProjectionOffset();
-
-    if (activeRow && storedProjectionOffset !== null) {
-      const rowRect = activeRow.getBoundingClientRect();
-      const containerRect = scrollContainer.getBoundingClientRect();
-      const currentOffset = rowRect.top - containerRect.top;
-      if (Math.abs(currentOffset - storedProjectionOffset) > 0.5) {
-        scrollContainer.scrollTop += currentOffset - storedProjectionOffset;
-      }
-    } else if (projectionChanged && Math.abs(scrollContainer.scrollTop - scrollbox.scrollTop) > 0.5) {
-      scrollContainer.scrollTop = scrollbox.scrollTop;
-    }
   }
 
   function installSidebarDisplayStateSync() {
@@ -2656,10 +2337,11 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     requestAnimationFrame(function () {
+      const projection = document.querySelector("#mdbook-sidebar .reader-sidebar-projection");
+
       applyPageVariants();
       installSidebarDisplayStateSync();
-      installSidebarShellGeometry();
-      installSidebarProjection();
+      hydrateSidebarProjectionRows(projection);
       installHeaderSearchSlot();
       installChapterPaginationMeta();
       installChapterPaginationHeightSync();
@@ -2677,9 +2359,10 @@
 
     if (sidebar) {
       const observer = new MutationObserver(function () {
+        const projection = sidebar.querySelector(".reader-sidebar-projection");
+
         installSidebarDisplayStateSync();
-        installSidebarShellGeometry();
-        installSidebarProjection();
+        hydrateSidebarProjectionRows(projection);
         moveOutline();
         installOutlineReferenceSections().then(syncOutlineRailVisibility);
         installOutlineScrollSpy();

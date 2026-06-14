@@ -860,7 +860,7 @@ check_contains theme/custom.css '.book-sidebar-shell {'
 check_contains theme/custom.css '.book-sidebar-intro {'
 check_not_contains theme/custom.css '.book-sidebar-utility-nav {'
 check_not_contains theme/custom.css '.book-sidebar-utility-link {'
-check_contains theme/custom.css '--sidebar-intro-height:'
+check_not_contains theme/custom.css '--sidebar-intro-height:'
 check_not_contains theme/custom.css '--sidebar-utilities-height:'
 check_contains theme/custom.css '.reader-sidebar-scroll {'
 check_contains theme/custom.css '.reader-sidebar-projection {'
@@ -953,17 +953,17 @@ const expectations = [
   [".reader-sidebar-section--front-matter .reader-sidebar-section-title,", ["color: var(--sidebar-fg);", "font-family: var(--reader-sans);", "font-weight: 650;", "text-transform: none;"]],
   [".reader-sidebar-section--front-matter .reader-sidebar-section-body,", ["gap: 0.3rem;"]],
   [".reader-sidebar-section-body {", ["grid-template-columns: minmax(0, 1fr);", "gap: 0.35rem;", "width: 100%;", "padding-bottom: 0.75rem;", "box-sizing: border-box;"]],
-  [".reader-sidebar-row {", ["grid-template-columns: 2.25rem minmax(0, 1fr);", "gap: 0.625rem;", "width: 100%;", "padding: 0.5rem 1.75rem 0.5rem 0.75rem;", "border-radius: 0.75rem;", "color: var(--sidebar-fg);", "box-sizing: border-box;"]],
+  [".reader-sidebar-row {", ["grid-template-columns: 2.25rem minmax(0, 1fr);", "gap: 0.625rem;", "width: 100%;", "padding: 0.5rem 2rem 0.5rem 0.75rem;", "border-radius: 0.75rem;", "color: var(--sidebar-fg);", "box-sizing: border-box;"]],
   [".reader-sidebar-row-index {", ["color: currentColor;", "font-size: 0.6875rem;", "letter-spacing: 0.14em;"]],
   [".reader-sidebar-row-title {", ["display: block;", "width: 100%;", "font-family: var(--reader-sans);", "font-size: 0.8125rem;", "line-height: 1.45;"]],
-  [".reader-sidebar-row--reference {", ["padding: 0.4rem 1.25rem 0.4rem 0.75rem;", "border-radius: 0.5rem;"]],
-  [".reader-sidebar-section--front-matter .reader-sidebar-row--reference {", ["padding: 0.4rem 1.25rem 0.4rem calc(1.1875rem + 0.625rem);"]],
+  [".reader-sidebar-row--reference {", ["padding: 0.4rem 2rem 0.4rem 0.75rem;", "border-radius: 0.5rem;"]],
+  [".reader-sidebar-section--front-matter .reader-sidebar-row--reference {", ["padding: 0.4rem 2rem 0.4rem calc(1.1875rem + 0.625rem);"]],
   [".reader-sidebar-row--reference.reader-sidebar-row--with-icon {", ["grid-template-columns: 1.375rem minmax(0, 1fr);", "gap: 0.5rem;"]],
   [".reader-sidebar-row--reference .reader-sidebar-row-title {", ["font-size: 0.8125rem;", "line-height: 1.45;"]],
   [".reader-sidebar-row-icon {", ["width: 1.375rem;", "height: 1.375rem;", "border-radius: 999px;"]],
   [".reader-sidebar-row:hover,", ["border-color: rgba(49, 99, 194, 0.12);", "background: rgba(49, 99, 194, 0.06);", "color: var(--sidebar-fg);"]],
-  [".reader-sidebar-row--reference.reader-sidebar-row--active {", ["padding: 0.4rem 1.25rem 0.4rem 0.75rem;"]],
-  [".reader-sidebar-section--front-matter .reader-sidebar-row--reference.reader-sidebar-row--active {", ["padding: 0.4rem 1.25rem 0.4rem calc(1.1875rem + 0.625rem);"]],
+  [".reader-sidebar-row--reference.reader-sidebar-row--active {", ["padding: 0.4rem 2rem 0.4rem 0.75rem;"]],
+  [".reader-sidebar-section--front-matter .reader-sidebar-row--reference.reader-sidebar-row--active {", ["padding: 0.4rem 2rem 0.4rem calc(1.1875rem + 0.625rem);"]],
   [".reader-sidebar-row--active {", ["box-shadow: 0 8px 18px rgba(49, 99, 194, 0.14);"]],
   [".reader-sidebar-row--active:link,", ["color: #ffffff !important;", "-webkit-text-fill-color: #ffffff;"]],
   [".reader-sidebar-row--active .reader-sidebar-row-index,", ["color: #ffffff !important;", "-webkit-text-fill-color: #ffffff;"]],
@@ -1127,7 +1127,7 @@ for (const expected of [
   ".reader-sidebar-row {",
   "grid-template-columns: 2.25rem minmax(0, 1fr);",
   "gap: 0.625rem;",
-  "padding: 0.5rem 1.75rem 0.5rem 0.75rem;",
+  "padding: 0.5rem 2.125rem 0.5rem 0.75rem;",
   "border-radius: 0.75rem;",
   "color: var(--sidebar-fg);",
   ".reader-sidebar-row-index {",
@@ -1138,9 +1138,9 @@ for (const expected of [
   "font-weight: 560;",
   ".reader-sidebar-row--reference {",
   "grid-template-columns: minmax(0, 1fr);",
-  "padding: 0.4rem 1.25rem 0.4rem 0.75rem;",
+  "padding: 0.4rem 2.125rem 0.4rem 0.75rem;",
   ".reader-sidebar-section--front-matter .reader-sidebar-row--reference {",
-  "padding: 0.4rem 1.25rem 0.4rem calc(1.1875rem + 0.625rem);",
+  "padding: 0.4rem 2.125rem 0.4rem calc(1.1875rem + 0.625rem);",
   ".reader-sidebar-row--reference.reader-sidebar-row--with-icon {",
   "grid-template-columns: 1.375rem minmax(0, 1fr);",
   "gap: 0.5rem;",
@@ -1151,9 +1151,9 @@ for (const expected of [
   "width: 1.375rem;",
   "height: 1.375rem;",
   ".reader-sidebar-row--reference.reader-sidebar-row--active {",
-  "padding: 0.4rem 1.25rem 0.4rem 0.75rem;",
+  "padding: 0.4rem 2.125rem 0.4rem 0.75rem;",
   ".reader-sidebar-section--front-matter .reader-sidebar-row--reference.reader-sidebar-row--active {",
-  "padding: 0.4rem 1.25rem 0.4rem calc(1.1875rem + 0.625rem);",
+  "padding: 0.4rem 2.125rem 0.4rem calc(1.1875rem + 0.625rem);",
   ".reader-sidebar-row--active {",
   "box-shadow: 0 8px 18px rgba(49, 99, 194, 0.16);",
   ".reader-sidebar-row--active::after {",
@@ -1292,25 +1292,28 @@ NODE
 # Reader projection contract
 check_contains theme/custom.css '.book-sidebar-shell .chapter li a {'
 check_contains theme/custom.css '.book-sidebar-shell .chapter li.part-title {'
-node -e 'const fs=require("fs");const hbs=fs.readFileSync("theme/index.hbs","utf8");for(const expected of ["function bootstrapSidebarProjection()","projection.dataset.projectionSignature = projectionSignature;","sidebar.classList.add(\"book-sidebar-shell--projected\");","customElements.whenDefined(\"mdbook-sidebar-scrollbox\")"]){if(!hbs.includes(expected)){console.error(`Expected theme/index.hbs to include ${expected}`);process.exit(1);}}const navIndex=hbs.indexOf("<nav id=\"mdbook-sidebar\"");const bootstrapIndex=hbs.indexOf("function bootstrapSidebarProjection()");const pageIndex=hbs.indexOf("<div id=\"mdbook-page-wrapper\"");if(navIndex===-1||bootstrapIndex===-1||pageIndex===-1||!(navIndex < bootstrapIndex && bootstrapIndex < pageIndex)){console.error("Expected sidebar projection bootstrap script to run immediately after the sidebar markup and before the page wrapper renders.");process.exit(1);}'
-node -e 'const fs=require("fs");const hbs=fs.readFileSync("theme/index.hbs","utf8");for(const expected of ["const intro = sidebar.querySelector(\".book-sidebar-intro\");","sidebar.style.setProperty(\"--sidebar-intro-height\", intro.offsetHeight + \"px\");"]){if(!hbs.includes(expected)){console.error(`Expected theme/index.hbs to include ${expected}`);process.exit(1);}}const introHeightIndex=hbs.indexOf("sidebar.style.setProperty(\"--sidebar-intro-height\", intro.offsetHeight + \"px\");");const projectedIndex=hbs.indexOf("sidebar.classList.add(\"book-sidebar-shell--projected\");");if(introHeightIndex===-1||projectedIndex===-1||!(introHeightIndex < projectedIndex)){console.error("Expected inline sidebar geometry sync to happen before projected sidebar activation.");process.exit(1);}'
-node -e 'const fs=require("fs");const hbs=fs.readFileSync("theme/index.hbs","utf8");if(hbs.includes("sessionStorage.removeItem(\"reader-sidebar-scroll-offset\");")){console.error("Expected inline sidebar bootstrap to preserve reader-sidebar-scroll-offset until runtime hydration can reconcile any late raw TOC mutations.");process.exit(1);}'
+check_exists scripts/build_static_reader_sidebar.mjs
+check_contains package.json '"build:static-reader-sidebar": "node scripts/build_static_reader_sidebar.mjs"'
+check_contains package.json 'npm run build:static-reader-sidebar -- book'
+check_contains package.json 'npm run build:static-reader-sidebar -- public/book'
+check_contains scripts/preview.sh 'npm run build:static-reader-sidebar -- "$PUBLIC_DIR/book"'
+node -e 'const fs=require("fs");const hbs=fs.readFileSync("theme/index.hbs","utf8");for(const expected of ["<body class=\"book-layout-booting\">","sessionStorage.getItem(\"reader-sidebar-scroll-top\")","sessionStorage.setItem(\"reader-sidebar-scroll-top\"","document.body.classList.remove(\"book-layout-booting\");"]){if(!hbs.includes(expected)){console.error(`Expected theme/index.hbs to include ${expected}`);process.exit(1);}}for(const forbidden of ["function bootstrapSidebarProjection()","reader-sidebar-scroll-offset","customElements.whenDefined(\"mdbook-sidebar-scrollbox\")"]){if(hbs.includes(forbidden)){console.error(`Expected theme/index.hbs to stop including ${forbidden}`);process.exit(1);}}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const chapterLink=block(".book-sidebar-shell .chapter li a {");for(const expected of ["font-size: 0.875rem;","line-height: 1.4286;"]){if(!chapterLink.includes(expected)){console.error(`Expected .book-sidebar-shell .chapter li a to include ${expected}`);process.exit(1);}}if(chapterLink.includes("font-size: 14px;")||chapterLink.includes("line-height: 20px;")||chapterLink.includes("font-size: 1.4rem;")||chapterLink.includes("line-height: 2rem;")){console.error("Expected .book-sidebar-shell .chapter li a to use repo-owned typography calibrated for the explicit /book root font contract");process.exit(1);}const partTitle=block(".book-sidebar-shell .chapter li.part-title {");if(!partTitle.includes("font-size: 0.75rem;")){console.error("Expected .book-sidebar-shell .chapter li.part-title to include font-size: 0.75rem;");process.exit(1);}if(partTitle.includes("font-size: 12px;")||partTitle.includes("font-size: 1.2rem;")){console.error("Expected .book-sidebar-shell .chapter li.part-title to stop using legacy sizing under the explicit /book root font contract");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const bookTitle=block(".book-sidebar-book-title {");if(!bookTitle.includes("color: var(--sidebar-fg);")){console.error("Expected .book-sidebar-book-title to align with the normal sidebar navigation text color.");process.exit(1);}const frontBackTitle=block(".reader-sidebar-section--front-matter .reader-sidebar-section-title,");if(!frontBackTitle.includes("color: var(--sidebar-fg);")){console.error("Expected Front Matter and Back Matter section titles to align with the normal sidebar navigation text color.");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const sectionHeader=block(".reader-sidebar-section-header {");if(sectionHeader.includes("line-height: 25%;")){console.error("Expected sidebar section headers to stop relying on line-height: 25% for visual alignment; use explicit layout instead.");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const start=css.indexOf(".reader-sidebar-section--front-matter .reader-sidebar-section-body,");if(start===-1){console.error("Expected Front Matter body selector to remain present in theme/custom.css");process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error("Expected closing brace for Front Matter body selector block");process.exit(1);}const frontMatterBody=css.slice(start,end+1);if(frontMatterBody.includes("padding-inline-start:")){console.error("Expected Front Matter body container position to remain unchanged; use row padding instead of container padding.");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const activeRow=block(".reader-sidebar-row--active {");if(activeRow.includes("padding-inline-end:")){console.error("Expected active sidebar rows to preserve the same inline geometry as inactive rows; reserve the indicator gutter in the base row instead of shifting active items.");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const visitedRow=block(".reader-sidebar-row:link,");for(const expected of ["color: var(--sidebar-fg);","-webkit-text-fill-color: var(--sidebar-fg);"]){if(!visitedRow.includes(expected)){console.error(`Expected reader sidebar normal link/visited contract to include ${expected}`);process.exit(1);}}'
-node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");if(!js.includes(`sessionStorage.setItem("sidebar-scroll-offset"`)){console.error("Expected projected sidebar links to persist sidebar-scroll-offset before navigation so mdBook can restore the same vertical viewport.");process.exit(1);}if(!js.includes(`sessionStorage.setItem("reader-sidebar-scroll-offset"`)){console.error("Expected projected sidebar links to persist a projection-owned reader-sidebar-scroll-offset contract before navigation.");process.exit(1);}if(!js.includes(`sessionStorage.getItem("reader-sidebar-scroll-offset"`)){console.error("Expected projected sidebar install to read back the projection-owned reader-sidebar-scroll-offset contract.");process.exit(1);}const start=js.indexOf("function installSidebarProjection() {");const end=js.indexOf("\n\n  function buildOutlineList(",start);if(start===-1||end===-1){console.error("Expected installSidebarProjection block in theme/custom.js");process.exit(1);}const block=js.slice(start,end);if(block.includes("revealActiveSidebarTarget(scrollContainer);")){console.error("Expected installSidebarProjection to stop re-scrolling the visible sidebar shell after mdBook already restored sidebar position.");process.exit(1);}if(!block.includes("scrollContainer.scrollTop = scrollbox.scrollTop;")){console.error("Expected installSidebarProjection to adopt the raw mdBook scrollbox scrollTop before hiding it.");process.exit(1);}if(!block.includes("scrollContainer.scrollTop += currentOffset - storedProjectionOffset;")){console.error("Expected installSidebarProjection to preserve the clicked projection row offset across page navigations before falling back to raw mdBook scroll restoration.");process.exit(1);}'
-node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");if(!js.includes("const storedProjectionOffset = readAndClearSidebarProjectionOffset();")){console.error("Expected installSidebarProjection to always reconcile any pending reader-sidebar-scroll-offset contract during runtime hydration.");process.exit(1);}if(js.includes("const storedProjectionOffset = projectionChanged ? readAndClearSidebarProjectionOffset() : null;")){console.error("Expected installSidebarProjection to stop skipping reader-sidebar-scroll-offset reconciliation when the early bootstrap projection already exists.");process.exit(1);}'
+node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");for(const forbidden of ["function installSidebarProjection()","function readAndClearSidebarProjectionOffset()","sessionStorage.setItem(\"reader-sidebar-scroll-offset\"","sessionStorage.getItem(\"reader-sidebar-scroll-offset\""]){if(js.includes(forbidden)){console.error(`Expected theme/custom.js to stop including ${forbidden}`);process.exit(1);}}'
 node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");const start=js.indexOf("function syncOutlineRailVisibility() {");const end=js.indexOf("\n\n  function syncOutlineActiveState()",start);if(start===-1||end===-1){console.error("Expected syncOutlineRailVisibility() to manage the empty right-rail contract.");process.exit(1);}const block=js.slice(start,end);for(const expected of ["document.querySelector(\"#mdbook-outline-scroll\")","document.querySelector(\".book-outline-body .on-this-page\")","document.querySelector(\".book-outline-figures\")","document.querySelector(\".book-outline-tables\")","document.querySelector(\".book-outline-formulas\")","document.body.classList.toggle(\"book-outline-empty\", !hasVisibleOutlineContent);","outline.hidden = !hasVisibleOutlineContent;"]){if(!block.includes(expected)){console.error(`Expected syncOutlineRailVisibility() to include ${expected}`);process.exit(1);}}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const layout=block("body.book-outline-empty .reader-layout {");if(!layout.includes("grid-template-columns: minmax(0, 1fr);")){console.error("Expected empty outline pages to collapse the reader layout back to a single content column.");process.exit(1);}const rail=block("body.book-outline-empty .reader-outline {");if(!rail.includes("display: none;")){console.error("Expected empty outline pages to hide the desktop right rail entirely.");process.exit(1);}'
 node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");for(const expected of ["function bindSidebarProjectionRowInteraction(","if (row.dataset.readerSidebarBound === \"true\") {","row.dataset.readerSidebarBound = \"true\";","hydrateSidebarProjectionRows(projection);"]){if(!js.includes(expected)){console.error(`Expected theme/custom.js to include ${expected}`);process.exit(1);}}'
-node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");for(const expected of ["function installSidebarDisplayStateSync()","function syncSidebarDisplayState()","if (!sidebarToggle.checked) {","if (sidebar.style.display === \"none\") {","sidebar.style.display = \"\";","sidebar.offsetHeight;","sidebar.setAttribute(\"aria-hidden\", \"false\");","requestAnimationFrame(syncSidebarDisplayState);","installSidebarDisplayStateSync();"]){if(!js.includes(expected)){console.error(`Expected theme/custom.js to include ${expected}`);process.exit(1);}}const applyIndex=js.indexOf("applyPageVariants();");const displayIndex=js.indexOf("installSidebarDisplayStateSync();");const shellIndex=js.indexOf("installSidebarShellGeometry();");if(applyIndex===-1||displayIndex===-1||shellIndex===-1||!(applyIndex<displayIndex&&displayIndex<shellIndex)){console.error("Expected sidebar display-state sync to run after page variants and before sidebar geometry/projection work.");process.exit(1);}'
+node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");for(const expected of ["function installSidebarDisplayStateSync()","function syncSidebarDisplayState()","if (!sidebarToggle.checked) {","if (sidebar.style.display === \"none\") {","sidebar.style.display = \"\";","sidebar.offsetHeight;","sidebar.setAttribute(\"aria-hidden\", \"false\");","requestAnimationFrame(syncSidebarDisplayState);","installSidebarDisplayStateSync();"]){if(!js.includes(expected)){console.error(`Expected theme/custom.js to include ${expected}`);process.exit(1);}}const applyIndex=js.indexOf("applyPageVariants();");const displayIndex=js.indexOf("installSidebarDisplayStateSync();");if(applyIndex===-1||displayIndex===-1||!(applyIndex<displayIndex)){console.error("Expected sidebar display-state sync to run after page variants.");process.exit(1);}'
 check_contains theme/custom.js 'new ResizeObserver'
-check_contains theme/custom.js '--sidebar-intro-height'
+check_not_contains theme/custom.js '--sidebar-intro-height'
 check_contains theme/custom.js 'reader-sidebar-scroll'
 check_not_contains theme/custom.js '--sidebar-utilities-height'
+if false; then
 check_contains theme/custom.js 'reader-sidebar-projection'
 check_contains theme/custom.js 'reader-sidebar-section'
 check_contains theme/custom.js 'reader-sidebar-section-header'
@@ -1330,6 +1333,23 @@ check_not_contains theme/custom.js 'book-sidebar-utility-link--active'
 check_contains theme/custom.js 'function getSidebarReferenceIcon('
 check_contains theme/custom.js 'function buildSidebarReferenceIcon('
 check_contains theme/custom.js 'function installSidebarProjection('
+fi
+check_contains scripts/build_static_reader_sidebar.mjs 'reader-sidebar-projection'
+check_contains scripts/build_static_reader_sidebar.mjs 'reader-sidebar-section'
+check_contains scripts/build_static_reader_sidebar.mjs 'reader-sidebar-section-header'
+check_contains scripts/build_static_reader_sidebar.mjs 'reader-sidebar-section-icon'
+check_contains scripts/build_static_reader_sidebar.mjs 'reader-sidebar-section-body'
+check_contains scripts/build_static_reader_sidebar.mjs 'reader-sidebar-row'
+check_contains scripts/build_static_reader_sidebar.mjs 'reader-sidebar-row-index'
+check_contains scripts/build_static_reader_sidebar.mjs 'reader-sidebar-row-title'
+check_contains scripts/build_static_reader_sidebar.mjs 'reader-sidebar-row--with-icon'
+check_contains scripts/build_static_reader_sidebar.mjs 'reader-sidebar-row-icon'
+check_contains scripts/build_static_reader_sidebar.mjs 'reader-sidebar-row--active'
+check_contains scripts/build_static_reader_sidebar.mjs 'reader-sidebar-section--active'
+check_contains scripts/build_static_reader_sidebar.mjs '"front-matter"'
+check_contains scripts/build_static_reader_sidebar.mjs 'M12 5.75v13.4'
+check_contains scripts/build_static_reader_sidebar.mjs 'book-sidebar-shell--projected'
+check_not_contains theme/custom.js 'book-sidebar-utility-link--active'
 check_contains theme/custom.js 'function collectReferenceCards('
 check_contains theme/custom.js 'function buildReferenceRailParts('
 check_contains theme/custom.js 'function renderReferenceOutlineAnchor('
@@ -1361,6 +1381,9 @@ check_contains theme/custom.css 'overflow-y: auto;'
 check_contains theme/custom.css 'padding-inline-start: calc(24px + var(--reader-left-offset));'
 check_contains theme/custom.css 'padding-inline-end: 24px;'
 check_contains theme/custom.css 'transition: padding-inline-start 180ms ease;'
+check_contains theme/custom.css 'body.book-layout-booting .reader-main,'
+check_contains theme/custom.css 'body.book-layout-booting .book-progress {'
+check_contains theme/custom.css 'transition: none !important;'
 check_contains theme/custom.css '--brand-blue: #3163c2;'
 check_contains theme/custom.css '--brand-blue-deep: #264d97;'
 check_contains theme/custom.css '--brand-gold: #d9b24a;'
@@ -1766,16 +1789,32 @@ check_contains theme/custom.js 'document.getElementById("mdbook-reader-scroll")'
 check_contains theme/custom.js 'chapters/foreword.html'
 check_contains theme/custom.js 'window.location.replace(target.href)'
 check_contains public/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'class="reader-sidebar-projection"'
+check_contains public/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'class="sidebar book-sidebar-shell book-sidebar-shell--projected"'
+check_contains public/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'reader-sidebar-row reader-sidebar-row--chapter reader-sidebar-row--active'
 check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'class="reader-sidebar-projection"'
+check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'class="sidebar book-sidebar-shell book-sidebar-shell--projected"'
 check_not_contains public/book/chapters/glossary.html 'class="book-sidebar-utility-link-icon"'
 check_not_contains public/book/chapters/list-of-figures.html 'class="book-sidebar-utility-link-icon"'
 check_not_contains public/book/index.html 'class="book-shell-grid"'
 check_not_contains public/book/index.html 'class="book-page-surface"'
 check_not_contains public/book/index.html 'class="book-main-column"'
 check_contains public/book/index.html 'class="reader-sidebar-projection"'
+check_contains public/book/index.html 'class="sidebar book-sidebar-shell book-sidebar-shell--projected"'
+check_contains public/book/index.html 'reader-sidebar-row reader-sidebar-row--reference reader-sidebar-row--active'
+check_contains public/book/index.html 'reader-sidebar-row-title">Cover</span>'
 check_not_contains public/book/index.html 'book-outline-shell'
 check_not_contains public/book/index.html 'toolbar-center'
 check_not_contains public/book/index.html 'book-toolbar-actions'
+check_contains theme/custom.css '.book-sidebar-shell {'
+check_contains theme/custom.css 'display: flex;'
+check_contains theme/custom.css 'flex-direction: column;'
+check_contains theme/custom.css '.reader-sidebar-scroll {'
+check_not_contains theme/custom.css 'top: var(--sidebar-intro-height);'
+check_not_contains theme/custom.css '--sidebar-intro-height: 0px;'
+check_not_contains theme/custom.js 'sidebarShellResizeObserver'
+check_not_contains theme/custom.js 'function syncSidebarShellGeometry()'
+check_not_contains theme/custom.js 'function installSidebarShellGeometry()'
+check_not_contains theme/custom.js '"--sidebar-intro-height"'
 
 echo "Site render checks passed."
 check_not_contains theme/custom.css '.reader-sidebar-section-chevron'

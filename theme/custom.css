@@ -70,7 +70,6 @@
   --toolbar-search-width: 420px;
   --toolbar-contact-width: 106px;
   --toolbar-utility-gap: 24px;
-  --sidebar-intro-height: 0px;
   --sidebar-scroll-padding-block: 1.8rem;
   --reader-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --reader-serif: "Literata", Georgia, serif;
@@ -230,6 +229,11 @@ body.book-outline-empty .reader-layout {
   transition: padding-inline-start 180ms ease;
   box-sizing: border-box;
   scroll-padding-top: 16px;
+}
+
+body.book-layout-booting .reader-main,
+body.book-layout-booting .book-progress {
+  transition: none !important;
 }
 
 .reader-main-inner {
@@ -1266,6 +1270,8 @@ body.book-outline-empty .reader-outline {
 
 .book-sidebar-shell {
   --sidebar-fg: #1e293b;
+  display: flex;
+  flex-direction: column;
   top: var(--menu-bar-height);
   width: var(--sidebar-width);
   background: linear-gradient(180deg, rgba(252, 253, 255, 0.985) 0%, rgba(248, 250, 252, 0.96) 100%);
@@ -1274,9 +1280,8 @@ body.book-outline-empty .reader-outline {
 }
 
 .book-sidebar-intro {
-  position: absolute;
-  inset: 0 0 auto 0;
-  z-index: 1;
+  position: relative;
+  flex: 0 0 auto;
   padding: 1.55rem 1.75rem 1.05rem;
   border-bottom: 0;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.995) 0%, rgba(249, 250, 252, 0.98) 100%);
@@ -1312,11 +1317,8 @@ body.book-outline-empty .reader-outline {
 }
 
 .reader-sidebar-scroll {
-  position: absolute;
-  top: var(--sidebar-intro-height);
-  right: 0;
-  bottom: 0;
-  left: 0;
+  position: relative;
+  flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
   padding: var(--sidebar-scroll-padding-block) 1rem 1rem;
@@ -1492,7 +1494,7 @@ body.book-outline-empty .reader-outline {
   align-items: start;
   position: relative;
   width: 100%;
-  padding: 0.5rem 1.75rem 0.5rem 0.75rem;
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
   border: 1px solid transparent;
   border-radius: 0.75rem;
   color: var(--sidebar-fg);
@@ -1533,12 +1535,12 @@ body.book-outline-empty .reader-outline {
 
 .reader-sidebar-row--reference {
   grid-template-columns: minmax(0, 1fr);
-  padding: 0.4rem 1.25rem 0.4rem 0.75rem;
+  padding: 0.4rem 2rem 0.4rem 0.75rem;
   border-radius: 0.5rem;
 }
 
 .reader-sidebar-section--front-matter .reader-sidebar-row--reference {
-  padding: 0.4rem 1.25rem 0.4rem calc(1.1875rem + 0.625rem);
+  padding: 0.4rem 2rem 0.4rem calc(1.1875rem + 0.625rem);
 }
 
 .reader-sidebar-row--reference.reader-sidebar-row--with-icon {
@@ -1597,11 +1599,11 @@ body.book-outline-empty .reader-outline {
 }
 
 .reader-sidebar-row--reference.reader-sidebar-row--active {
-  padding: 0.4rem 1.25rem 0.4rem 0.75rem;
+  padding: 0.4rem 2rem 0.4rem 0.75rem;
 }
 
 .reader-sidebar-section--front-matter .reader-sidebar-row--reference.reader-sidebar-row--active {
-  padding: 0.4rem 1.25rem 0.4rem calc(1.1875rem + 0.625rem);
+  padding: 0.4rem 2rem 0.4rem calc(1.1875rem + 0.625rem);
 }
 
 .reader-sidebar-row--active::after {
@@ -4051,7 +4053,7 @@ body.book-page-aux-index .reader-article {
   .reader-sidebar-row {
     grid-template-columns: 2.25rem minmax(0, 1fr);
     gap: 0.625rem;
-    padding: 0.5rem 1.75rem 0.5rem 0.75rem;
+    padding: 0.5rem 2.125rem 0.5rem 0.75rem;
     border-radius: 0.75rem;
     color: var(--sidebar-fg);
   }
@@ -4068,11 +4070,11 @@ body.book-page-aux-index .reader-article {
 
   .reader-sidebar-row--reference {
     grid-template-columns: minmax(0, 1fr);
-    padding: 0.4rem 1.25rem 0.4rem 0.75rem;
+    padding: 0.4rem 2.125rem 0.4rem 0.75rem;
   }
 
   .reader-sidebar-section--front-matter .reader-sidebar-row--reference {
-    padding: 0.4rem 1.25rem 0.4rem calc(1.1875rem + 0.625rem);
+    padding: 0.4rem 2.125rem 0.4rem calc(1.1875rem + 0.625rem);
   }
 
   .reader-sidebar-row--reference.reader-sidebar-row--with-icon {
@@ -4091,11 +4093,11 @@ body.book-page-aux-index .reader-article {
   }
 
   .reader-sidebar-row--reference.reader-sidebar-row--active {
-    padding: 0.4rem 1.25rem 0.4rem 0.75rem;
+    padding: 0.4rem 2.125rem 0.4rem 0.75rem;
   }
 
   .reader-sidebar-section--front-matter .reader-sidebar-row--reference.reader-sidebar-row--active {
-    padding: 0.4rem 1.25rem 0.4rem calc(1.1875rem + 0.625rem);
+    padding: 0.4rem 2.125rem 0.4rem calc(1.1875rem + 0.625rem);
   }
 
   .reader-sidebar-row--active {
