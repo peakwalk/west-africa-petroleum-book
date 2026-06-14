@@ -7,11 +7,29 @@
 - The repo-specific workflow skill lives at `.agents/skills/mdbook-docx-figure-workflow/SKILL.md`.
 - The repo-local Codex plugin scaffold lives at `plugins/africa-book-workflow/` and is registered in `.agents/plugins/marketplace.json`.
 
+## Documentation Localization
+- `AGENTS.zh_CN.md` is the Simplified Chinese counterpart to this file. Keep it aligned whenever `AGENTS.md` changes.
+- For any new project development Markdown documentation that is not source content, add a matching `.zh_CN.md` file in the same directory. Example: `docs/example.md` should have `docs/example.zh_CN.md`.
+- This applies to agent/developer workflow docs, plans, specs, policies, and build or release notes.
+- This does not apply to book source in `src/chapters/*.md`, generated artifacts, vendored docs, or Markdown files that already include a locale suffix.
+- When updating an existing non-source project doc that has a `.zh_CN.md` counterpart, update both files in the same change.
+
 ## Required Tools
 - Core toolchain: `node`/`npm`, `python3`, `mdbook`.
 - PDF-backed figure rendering also needs `swift` with macOS `PDFKit`.
 - `mdbook` should resolve from `PATH`; on this machine the Homebrew binary is `/opt/homebrew/bin/mdbook`.
 - WebP output from the PDF figure pipeline is optional. `png` is the acceptable fallback when no writable WebP encoder is available.
+
+## OpenSpec and Superpowers Workflow
+- Use Superpowers at the start of non-trivial work. Use its clarification or brainstorming workflow when the request is ambiguous, and its planning and TDD-oriented workflows before editing code, render scripts, tests, or book-generation logic.
+- Use repo-local skills first. `.agents/skills/mdbook-docx-figure-workflow/SKILL.md` is a required reference when work touches chapters, DOCX parity, figures, mdBook output, or generated site assets.
+- Use OpenSpec as the canonical source of truth for durable product, workflow, build, figure-pipeline, and site-generation specifications.
+- Require an OpenSpec change for new user-visible book/site behavior; figure rendering or figure metadata behavior; DOCX parity rules; landing-page generation; plugin behavior; build/test workflows; changes affecting multiple chapters, scripts, or generated outputs; architectural refactors; and workflow policy changes.
+- OpenSpec can usually be skipped for typo fixes, narrow copy edits, one-off chapter parity corrections, updating generated artifacts after an already-specified change, and small test expectation updates that do not change intended behavior.
+- When OpenSpec is required, create or update the proposal, design, tasks, and spec delta before broad implementation. Keep OpenSpec as the durable design record, and do not create a separate Superpowers-only final design document that conflicts with it.
+- If Superpowers brainstorming produces useful design decisions, summarize them into the OpenSpec change. Get human approval for the OpenSpec direction before broad implementation, and keep OpenSpec tasks, specs, and archive state aligned with the final code.
+- Superpowers answers how the agent should work. OpenSpec answers what this repo is supposed to do. If they conflict, follow repo-specific instructions and OpenSpec specs for product behavior, follow Superpowers for execution method, and ask the user when the conflict changes scope or expected behavior.
+- Never claim completion from an OpenSpec update alone; implementation and repo-specific verification are still required. Never claim completion from Superpowers planning alone; tests and checks must support the result.
 
 ## Common Commands
 - `npm run build`
@@ -38,4 +56,5 @@
 - Chapter text edits: run the narrowest useful `check_docx_parity.py` invocation for the touched chapter.
 - Figure pipeline edits: run the relevant `tests/docx_figures/*` cases plus `check_docx_figures.py`.
 - Theme/layout edits: run the targeted CSS/JS tests and `npm run test:site` when the toolchain is available.
+- OpenSpec-backed changes must include the narrowest relevant project checks above plus OpenSpec validation/checks when available in the repo.
 - Do not claim completion from `mdbook build` alone when the change also affects figure generation, landing page scripts, or site assertions.

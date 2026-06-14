@@ -25,5 +25,8 @@
     "test:reader-meta-compat": "sh scripts/test-reader-meta-compat.sh",
     "preview": "./scripts/preview.sh",
     "serve:book": "mdbook serve"
+  },
+  "devDependencies": {
+    "@fission-ai/openspec": "^1.4.1"
   }
 }
