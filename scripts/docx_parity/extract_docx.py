@@ -62,7 +62,6 @@ RESERVOIR_METHOD_MARKERS = (
     "evaluation des options de recuperation",
     "recovery methods (primary, secondary, and tertiary)",
     "types/types of wells",
-    "etc",
     "tank performance prediction",
     "capex, opex, risk",
     "economic evaluation and decisions",

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import html
 import re
 from pathlib import Path
 
@@ -64,7 +65,7 @@ def _looks_like_semantic_callout(text: str) -> bool:
 
 
 def _strip_html_tags(text: str) -> str:
-    return normalize_visible_text(HTML_TAG_RE.sub(" ", text))
+    return normalize_visible_text(html.unescape(HTML_TAG_RE.sub(" ", text)))
 
 
 def _parse_chapter(chapter_path: Path) -> ChapterSemanticModel:
@@ -79,6 +80,7 @@ def _parse_chapter(chapter_path: Path) -> ChapterSemanticModel:
     ignoring_html_table = False
     capturing_html_caption = False
     html_caption_lines: list[str] = []
+    html_table_lines: list[str] = []
     active_fence_lang: str | None = None
     fence_lines: list[str] = []
 
@@ -124,6 +126,7 @@ def _parse_chapter(chapter_path: Path) -> ChapterSemanticModel:
             continue
         next_stripped = next_nonempty_line(index)
         if ignoring_html_table:
+            html_table_lines.append(stripped)
             if "<caption" in lowered:
                 capturing_html_caption = True
             if capturing_html_caption:
@@ -140,6 +143,7 @@ def _parse_chapter(chapter_path: Path) -> ChapterSemanticModel:
                 ignoring_html_table = False
                 capturing_html_caption = False
                 html_caption_lines.clear()
+                html_table_lines.clear()
             continue
         if fence_match:
             flush_paragraph()
@@ -176,11 +180,19 @@ def _parse_chapter(chapter_path: Path) -> ChapterSemanticModel:
         if lowered.startswith("<table"):
             flush_paragraph()
             ignoring_html_table = True
+            html_table_lines = [stripped]
             continue
         if stripped.startswith("<") and stripped.endswith(">"):
             cleaned_html = _strip_html_tags(stripped)
             if "formula" in lowered:
                 flush_paragraph()
+                if "book-formula-bridge" in lowered:
+                    if cleaned_html and body and body[-1].kind == "paragraph":
+                        body[-1] = BodyBlock(
+                            kind="paragraph",
+                            text=normalize_visible_text(f"{body[-1].text} {cleaned_html}"),
+                        )
+                    continue
                 if cleaned_html:
                     kind = "paragraph"
                     text = cleaned_html

@@ -73,7 +73,7 @@ income. Gross income depends on the quantity of crude oil extracted from
 the deposit, the quality of the crude oil and the variation in the price
 of crude oil on the international market. Thus, we have:
 
-<div class="book-formula" role="img" aria-label="Post royalty revenue equals gross revenue minus royalty">
+<div class="book-formula" data-equation-label="4.1" role="img" aria-label="Post royalty revenue equals gross revenue minus royalty">
   <span class="book-formula-line" aria-hidden="true">Post Royalty Revenue = Gross Revenue &minus; Royalty</span>
 </div>
 
@@ -257,15 +257,23 @@ in a concessional system. Oil profit is usually, but not always, taxed.
 
 It is calculated by the following formula:
 
-<div class="book-formula" role="img" aria-label="Oil profit equals revenue post royalty minus recoverable costs">
-  <span class="book-formula-line" aria-hidden="true">Oil Profit = Revenue Post Royalty &minus; Recoverable Costs</span>
-</div>
+<section class="formula-group formula-group--split formula-group--oil-profit" data-equation-label="4.2" aria-label="Oil profit formulas">
+  <div class="formula-split-entry">
+    <div class="book-formula" role="img" aria-label="Oil profit equals revenue post royalty minus recoverable costs">
+      <span class="book-formula-line" aria-hidden="true">Oil Profit = Revenue Post Royalty &minus; Recoverable Costs</span>
+    </div>
+  </div>
 
-<p class="book-formula-bridge">or</p>
+  <div class="formula-split-divider" aria-hidden="true">
+    <span class="book-formula-bridge">or</span>
+  </div>
 
-<div class="book-formula" role="img" aria-label="Oil profit equals gross revenue minus royalty minus recoverable costs">
-  <span class="book-formula-line" aria-hidden="true">Oil Profit = Gross Revenue &minus; Royalty &minus; Recoverable Costs</span>
-</div>
+  <div class="formula-split-entry">
+    <div class="book-formula" role="img" aria-label="Oil profit equals gross revenue minus royalty minus recoverable costs">
+      <span class="book-formula-line" aria-hidden="true">Oil Profit = Gross Revenue &minus; Royalty &minus; Recoverable Costs</span>
+    </div>
+  </div>
+</section>
 
 In the Production Sharing Contracts of Benin and Niger, the share of the
 oil profit accruing to the contractor is no longer taxed.
@@ -284,7 +292,7 @@ must secure their share by other measures, most often by taxation.
 The R-factor can be used as a trigger for both royalty and profit
 sharing. It is determined in different ways:
 
-<section class="formula-panel formula-panel--r-factor" aria-label="R-factor calculation formulas">
+<section class="formula-panel formula-panel--r-factor" data-equation-label="4.3" aria-label="R-factor calculation formulas">
   <div class="book-formula book-formula--panel-row" data-formula-label="a)" role="img" aria-label="a. R factor equals cumulative revenue over cumulative cost">
     <span class="book-formula-line" aria-hidden="true">R-Factor=Cumulative Revenue/Cumulative Cost</span>
   </div>
@@ -481,9 +489,7 @@ State)</td>
 </tr>
 <tr>
 <td style="text-align: center;">Ghana</td>
-<td style="text-align: center;"><blockquote>
-<p>35</p>
-</blockquote></td>
+<td style="text-align: center;"><p>35</p></td>
 </tr>
 <tr>
 <td style="text-align: center;">Ivory Coast</td>
@@ -492,15 +498,11 @@ of the State, conferred ENI-2019 contract)</td>
 </tr>
 <tr>
 <td style="text-align: center;">Nigeria</td>
-<td style="text-align: center;"><blockquote>
-<p>50</p>
-</blockquote></td>
+<td style="text-align: center;"><p>50</p></td>
 </tr>
 <tr>
 <td style="text-align: center;">Senegal</td>
-<td style="text-align: center;"><blockquote>
-<p>30</p>
-</blockquote></td>
+<td style="text-align: center;"><p>30</p></td>
 </tr>
 <tr>
 <td style="text-align: center;">Niger</td>
@@ -542,17 +544,62 @@ operations allows States to:
 The table below summarises the level of participation of States in the
 countries covered by this study.
 
-| Country     | Initial Ownership (%) | Additional participation (%) | Total (%) |
-|:------------|:---------------------:|:----------------------------:|:---------:|
-| Benin       |       10 to 15        |           possible           |    15     |
-| Ghana       |          15           |              5               |    20     |
-| Ivory Coast |          10           |              12              |    22     |
-| Nigeria     |          60           |              \-              |    60     |
-| Senegal     |          10           |              20              |    30     |
-| Niger       |       10 to 20        |              \-              |    20     |
-
-Table 8: State
-participation rate in selected West African countries
+<table>
+<caption><p>Table 8: State
+participation rate in selected West African countries</p></caption>
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 29%" />
+<col style="width: 37%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Country</th>
+<th style="text-align: center;">Initial Ownership (%)</th>
+<th style="text-align: center;">Additional participation (%)</th>
+<th style="text-align: center;">Total (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Benin</td>
+<td style="text-align: center;">10 to 15</td>
+<td style="text-align: center;">possible</td>
+<td style="text-align: center;">15</td>
+</tr>
+<tr>
+<td style="text-align: left;">Ghana</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">20</td>
+</tr>
+<tr>
+<td style="text-align: left;">Ivory Coast</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">22</td>
+</tr>
+<tr>
+<td style="text-align: left;">Nigeria</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">60</td>
+</tr>
+<tr>
+<td style="text-align: left;">Senegal</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">30</td>
+</tr>
+<tr>
+<td style="text-align: left;">Niger</td>
+<td style="text-align: center;">10 to 20</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">20</td>
+</tr>
+</tbody>
+</table>
 
 An analysis of this table shows that only Nigeria has a high initial
 participation rate, which is above average, i.e. higher than that of the

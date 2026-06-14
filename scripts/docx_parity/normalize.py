@@ -16,6 +16,7 @@ DOUBLE_BRACE_RE = re.compile(r"\{\{([^{}]*)\}\}")
 def normalize_visible_text(value: str) -> str:
     unescaped = MARKDOWN_ESCAPE_RE.sub(r"\1", value)
     unescaped = LEADING_SUP_MARKER_RE.sub("", unescaped)
+    unescaped = unescaped.replace("−", "-").replace("–", "-")
     stripped = INLINE_MARKUP_RE.sub("", unescaped)
     collapsed = WHITESPACE_RE.sub(" ", stripped.replace("\u00a0", " "))
     return collapsed.strip()

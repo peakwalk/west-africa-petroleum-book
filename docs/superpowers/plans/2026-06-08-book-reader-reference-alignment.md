@@ -10,6 +10,19 @@
 
 ---
 
+## Design Gap Diagnosis
+
+1. **Shell-product mismatch**
+   - The mock is an editorial reader shell; the undesired implementation state behaves like a styled mdBook document page.
+2. **Navigation exposed too literally**
+   - Raw mdBook hierarchy leaks into the sidebar and outline instead of being projected into a quieter reading-oriented navigation system.
+3. **Opening reading state is under-designed**
+   - The page needs to establish chapter context before large figures dominate the viewport.
+4. **Knowledge objects need one publication language**
+   - Formulas, figures, and tables must read as the same scholarly object family across breakpoints.
+5. **Responsive behavior must transform meaningfully**
+   - Mobile should preserve chapter context and reference navigation, not merely hide desktop chrome.
+
 ## First Principles
 
 1. **Reading is primary.** The reader opens the book to read long-form content; navigation and utilities exist to reduce cognitive load, not compete for attention.
@@ -88,6 +101,23 @@ If product wants a formula block injected into `chapter-01` later, treat that as
 - “On This Page” becomes an inline card inside article flow.
 - Figures and tables keep the same card identity as desktop, not a separate mobile style family.
 - Mobile keeps the academic tone by compressing density, not by flattening objects.
+
+## Priority Execution Checklist
+
+- [ ] Lock the reader-shell contract in `scripts/test-site-render.sh` before relying on manual visual judgement.
+- [ ] Keep `theme/index.hbs` as the only shell template and expose static anchors for any derived mobile chrome.
+- [ ] Re-token and tune `theme/custom.css` so header, rails, typography, and object shells use one approved visual system.
+- [ ] Use `theme/custom.js` only to derive state from mdBook output: mobile chapter context, inline outline placement, and figure/table normalization.
+- [ ] Reduce desktop right-rail noise by shortening or truncating figure/table reference text instead of dumping full captions.
+- [ ] Verify shell and object treatment on the approved acceptance surfaces instead of forcing the mock's literal chapter copy.
+- [ ] Run `npm run build:site` and `npm run test:site` after implementation, then perform wide and narrow visual QA on representative pages.
+
+## Current Remaining Gaps After The Baseline Shell Pass
+
+1. **Desktop right rail is semantically correct but visually too dense**
+   - `Figures` and `Tables` are now derived correctly, but long captions still create a document-index feel instead of a quiet assistive rail.
+2. **The shell still needs a hard distinction between navigational utilities and long-form content**
+   - The left rail should end in an obvious utility block, while the right rail should prefer short reference labels over full prose.
 
 ---
 
@@ -594,6 +624,105 @@ Mobile QA checklist:
 git add theme/index.hbs theme/custom.css theme/custom.js scripts/test-site-render.sh
 git commit -m "feat: align book reader to approved desktop and mobile references"
 ```
+
+### Task 7: Publish A Real Sidebar Utility Action
+
+**Files:**
+- Modify: `theme/index.hbs`
+- Modify: `theme/custom.css`
+- Modify: `scripts/test-site-render.sh`
+
+- [ ] **Step 1: Add failing assertions only if product approves a real utility CTA**
+
+Add checks such as:
+
+```sh
+check_contains public/book/index.html 'class="book-sidebar-utility-link"'
+check_contains theme/index.hbs 'class="book-sidebar-utility-nav"'
+check_contains theme/custom.css '.book-sidebar-utility-link {'
+```
+
+- [ ] **Step 2: Run the render test and verify it fails on the new utility contract**
+
+Run:
+
+```bash
+npm run test:site
+```
+
+Expected: FAIL on the missing approved utility treatment.
+
+- [ ] **Step 3: Only add a CTA when the repository has an approved product-level destination**
+
+- [ ] **Step 4: Style the chosen utility as a distinct action**
+
+Add a dedicated anchor in `theme/index.hbs` below the utility list and style it in `theme/custom.css` as a distinct button instead of another text link.
+
+- [ ] **Step 5: Re-run verification**
+
+Run:
+
+```bash
+npm run build:site
+npm run test:site
+```
+
+Expected: PASS, with the approved utility action rendered in the generated output.
+
+### Task 8: Reduce Right-Rail Reference Noise Without Losing Semantics
+
+**Files:**
+- Modify: `theme/custom.js`
+- Modify: `theme/custom.css`
+- Modify: `scripts/test-site-render.sh`
+
+- [ ] **Step 1: Add failing assertions for reference-link truncation support**
+
+Add checks such as:
+
+```sh
+check_contains theme/custom.js 'function truncateReferenceText('
+check_contains theme/custom.css '.book-outline-link--reference {'
+check_contains theme/custom.css '-webkit-line-clamp: 3;'
+```
+
+- [ ] **Step 2: Run the render test and verify it fails on the new right-rail contract**
+
+Run:
+
+```bash
+npm run test:site
+```
+
+Expected: FAIL on the missing truncation helper or reference-link styling.
+
+- [ ] **Step 3: Shorten derived figure and table text in JS**
+
+Add a small helper that:
+
+- normalizes whitespace
+- truncates long captions to a bounded character count
+- keeps the full text in `title`
+- preserves the target anchor and semantic numbering
+
+- [ ] **Step 4: Style figure/table reference links as quiet assistive entries**
+
+Use a dedicated modifier class so the rail:
+
+- line-clamps long labels
+- keeps a smaller font than the main outline
+- preserves readable spacing between entries
+
+- [ ] **Step 5: Re-run verification**
+
+Run:
+
+```bash
+npm run build:site
+npm run test:site
+```
+
+Expected: PASS, with figures/tables still present in the rail but visually quieter than the heading outline.
 
 ## Risks And Decisions To Make During Execution
 

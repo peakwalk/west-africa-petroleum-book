@@ -8,3 +8,6 @@ temp/
 output/
 __pycache__/
 *.py[cod]
+/.playwright-cli/
+/artifacts/
+/node_modules/

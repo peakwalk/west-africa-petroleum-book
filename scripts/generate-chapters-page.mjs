@@ -56,6 +56,7 @@ function splitSectionHeading(heading) {
 function stripMarkdown(markdown) {
   return markdown
     .replace(/<([a-z0-9-]+)\b[^>]*\bdata-reading-time-ignore\b[^>]*>[\s\S]*?<\/\1>/gi, "")
+    .replace(/<\/?(?:table|thead|tbody|tr|th|td|colgroup|col|caption)\b[^>]*>/gi, " ")
     .replace(/\r/g, "")
     .replace(/^```[\s\S]*?^```$/gm, "")
     .replace(/^#{1,6}\s+/gm, "")

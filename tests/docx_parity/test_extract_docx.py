@@ -360,7 +360,7 @@ class ExtractDocxTests(unittest.TestCase):
             [block.text for block in chapter.body],
             [
                 "Lead-in paragraph.",
-                "Post Royalty Revenue = Gross Revenue – Royalty",
+                "Post Royalty Revenue = Gross Revenue - Royalty",
                 "Table 5 below shows the proportions of royalties adopted in the oil regulations of selected West African countries.",
                 "Table 5: Summary of ad valorem royalty rates applied in selected West African countries",
             ],
@@ -689,6 +689,89 @@ class ExtractDocxTests(unittest.TestCase):
                 "Lead-in paragraph.",
                 "Figure 25: Simplified organizational chart showing the share of the State and the Contractor in the taxation associated with the CPP of Benin",
                 "Body paragraph after figure.",
+            ],
+        )
+
+    def test_chapter_anchor_extraction_preserves_reservoir_method_section_before_figure_cluster(self) -> None:
+        tmp_dir = Path(tempfile.mkdtemp())
+        docx_path = tmp_dir / "fixture-reservoir-method-section.docx"
+        document = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading1"/></w:pPr>
+      <w:r><w:t>Chapter 2: Different Phases of Upstream Oil and the Roles of States</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t>Chapter intro paragraph.</w:t></w:r></w:p>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading2"/></w:pPr>
+      <w:r><w:t>2.3- Development Phase</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t>From discovery to production, it takes an average of three to four years for the development of an oil field.</w:t></w:r></w:p>
+    <w:p><w:r><w:t>The choice of a development model depends on several technical and economic parameters, including the existing facilities or those to be set up, the quality of the crude oil and its market price, etc.</w:t></w:r></w:p>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading3"/></w:pPr>
+      <w:r><w:t>2.3.2- Reservoir Evaluation Methodology</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t>The reservoir assessment is carried out according to the methodology shown in Figure 17 below.</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Geological and reservoir simulation studies provide detailed models of underground reservoirs.</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Excavated material, cores, seismic data, logging, well tests, etc.</w:t></w:r></w:p>
+    <w:p><w:r><w:t>RAW DATA COLLECTION</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Descriptive elements of the reservoir</w:t></w:r></w:p>
+    <w:p><w:r><w:t>PROCESSING AND INTERPRETATION OF THE DATA COLLECTED</w:t></w:r></w:p>
+    <w:p><w:r><w:t>CAPEX, OPEX, Risk</w:t></w:r></w:p>
+    <w:p><w:r><w:t>ECONOMIC EVALUATION AND DECISIONS</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Figure 17: Methodology Tank Evaluation</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Figure 18: Diagram showing a reservoir model (Vilgeir Dalen, StatoilHydro, 2007)</w:t></w:r></w:p>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading3"/></w:pPr>
+      <w:r><w:t>2.3.3- Financing of development activities</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t>Development involves large capital expenditures (CAPEX) in the upstream oil subsector.</w:t></w:r></w:p>
+  </w:body>
+</w:document>
+"""
+        with zipfile.ZipFile(docx_path, "w") as archive:
+            archive.writestr("[Content_Types].xml", CONTENT_TYPES)
+            archive.writestr("_rels/.rels", RELS)
+            archive.writestr("word/document.xml", document)
+            archive.writestr(
+                "word/numbering.xml",
+                (FIXTURE_DIR / "numbering-section-restart.xml").read_text(
+                    encoding="utf-8"
+                ),
+            )
+            archive.writestr(
+                "word/styles.xml",
+                (FIXTURE_DIR / "styles-headings.xml").read_text(encoding="utf-8"),
+            )
+
+        book = extract_docx_chapter_by_anchors(
+            docx_path,
+            chapter_title="Chapter 2: Different Phases of Upstream Oil and the Roles of States",
+            start_anchor="Chapter intro paragraph.",
+        )
+        chapter = book.chapters[0]
+
+        self.assertEqual(
+            [(entry.level, entry.number, entry.title) for entry in chapter.outline],
+            [
+                (2, "2.3-", "Development Phase"),
+                (3, "2.3.2-", "Reservoir Evaluation Methodology"),
+                (3, "2.3.3-", "Financing of development activities"),
+            ],
+        )
+        self.assertEqual(
+            [block.text for block in chapter.body],
+            [
+                "Chapter intro paragraph.",
+                "From discovery to production, it takes an average of three to four years for the development of an oil field.",
+                "The choice of a development model depends on several technical and economic parameters, including the existing facilities or those to be set up, the quality of the crude oil and its market price, etc.",
+                "The reservoir assessment is carried out according to the methodology shown in Figure 17 below.",
+                "Geological and reservoir simulation studies provide detailed models of underground reservoirs.",
+                "Figure 17: Methodology Tank Evaluation",
+                "Figure 18: Diagram showing a reservoir model (Vilgeir Dalen, StatoilHydro, 2007)",
+                "Development involves large capital expenditures (CAPEX) in the upstream oil subsector.",
             ],
         )
 
