@@ -13,4 +13,5 @@
 
 - [x] 3.1 Update `theme/custom.css` so the search slot expands through JS-controlled focus state and the results panel is an absolute dropdown under the input
 - [x] 3.2 Add minimal CSS support for result rows, active state, icon chips, excerpt text, and empty state
-- [x] 3.3 Run `npm run test:site` and fix any regressions until the build and render assertions pass
+- [x] 3.3 Keep a visible search toggle on narrow screens and reveal the toolbar search slot as a header overlay when mobile search opens
+- [x] 3.4 Run `npm run test:site` and fix any regressions until the build and render assertions pass

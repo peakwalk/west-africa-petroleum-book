@@ -33,6 +33,17 @@ The book search box MUST render a clear control inside the input whenever the qu
 - **WHEN** the search input enters or leaves the focused state
 - **THEN** the search shell toggles a stateful class that controls the expanded input width
 
+### Requirement: Mobile search access
+The book search UI MUST remain reachable on narrow screens. At viewport widths that collapse the desktop toolbar, the header MUST keep a visible search toggle, and activating that toggle MUST reveal the toolbar search input without requiring the contact action to remain visible.
+
+#### Scenario: Narrow screens keep a visible search entry point
+- **WHEN** the reader views a `/book/` page on a narrow screen layout
+- **THEN** the sticky header still shows a search toggle button that can open the book search UI
+
+#### Scenario: Mobile toggle reveals the search field
+- **WHEN** the reader activates the mobile search toggle
+- **THEN** the toolbar search slot becomes visible as an overlay beneath the header and receives focus
+
 ### Requirement: Result rendering and highlighting
 The book search box MUST render each result with a type icon, highlighted title text, a visible breadcrumbs label, and a highlighted excerpt. Highlighting MUST split text by a case-insensitive query regex and wrap each match in a `<mark>` element. The results panel MUST also render a result-count header and an empty state with an icon and message when no results match.
 

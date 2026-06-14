@@ -4233,17 +4233,50 @@ body.book-page-aux-index .reader-article {
 
 @media (max-width: 900px) {
   .book-toolbar {
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto 1fr auto;
   }
 
-  .toolbar-main,
   .toolbar-actions {
-    display: none;
+    display: flex;
+  }
+
+  .toolbar-main {
+    display: block;
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    inset-inline: 0;
+    min-height: 0;
+    padding-inline: 1rem;
+    pointer-events: none;
   }
 
   .toolbar-sidebar {
     gap: 1rem;
     padding-inline-end: 0;
+  }
+
+  .toolbar-main .toolbar-search-slot {
+    width: 100%;
+    max-width: none;
+    pointer-events: auto;
+  }
+
+  .toolbar-main .toolbar-search-slot.hidden {
+    display: none !important;
+  }
+
+  .toolbar-actions {
+    min-width: 0;
+    padding-inline-start: 0.75rem;
+    padding-inline-end: 0;
+  }
+
+  #mdbook-menu-bar .book-toolbar .toolbar-actions .toolbar-contact-link {
+    display: none !important;
+  }
+
+  #mdbook-search-toggle {
+    display: inline-flex !important;
   }
 
   .book-home-icon-full {

@@ -829,6 +829,7 @@ check_contains theme/custom.css '.toolbar-search-slot #mdbook-searchbar {'
 check_contains theme/custom.css '#mdbook-searchbar::placeholder {'
 check_contains theme/custom.css '#mdbook-searchbar::-webkit-search-cancel-button {'
 check_contains theme/custom.css '.toolbar-actions .toolbar-contact-link:hover,'
+check_contains theme/custom.css '#mdbook-search-toggle {'
 check_contains theme/custom.css 'position: absolute;'
 check_contains theme/custom.css 'inset-inline: 0;'
 check_contains theme/custom.css 'top: calc(100% + 8px);'
@@ -886,6 +887,7 @@ check_contains theme/index.hbs '<div id="mdbook-search-overlay-root" aria-hidden
 check_contains theme/index.hbs '<div id="mdbook-search-wrapper" class="hidden">'
 check_contains theme/index.hbs '<button id="mdbook-search-clear" class="search-clear-button" type="button" aria-label="Clear search" hidden>&times;</button>'
 check_contains theme/index.hbs '<div class="toolbar-search-slot hidden" aria-hidden="true"></div>'
+check_contains theme/index.hbs '<button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">'
 check_not_contains theme/index.hbs '<script src="{{ resource "searcher.js" }}"></script>'
 check_contains theme/index.hbs 'class="book-sidebar-intro"'
 check_not_contains theme/index.hbs 'Reader Edition'
@@ -1167,10 +1169,17 @@ for (const expected of [
 
 for (const expected of [
   ".book-toolbar {",
-  "grid-template-columns: auto 1fr;",
-  ".toolbar-main,",
+  "grid-template-columns: auto 1fr auto;",
   ".toolbar-actions {",
-  "display: none;",
+  "display: flex;",
+  ".toolbar-main {",
+  "position: absolute;",
+  ".toolbar-main .toolbar-search-slot.hidden {",
+  "display: none !important;",
+  "#mdbook-menu-bar .book-toolbar .toolbar-actions .toolbar-contact-link {",
+  "display: none !important;",
+  "#mdbook-search-toggle {",
+  "display: inline-flex !important;",
   ".toolbar-sidebar {",
   "gap: 1rem;",
   "padding-inline-end: 0;",
@@ -1681,6 +1690,7 @@ check_contains theme/custom.js 'toolbarSearchSlot.classList.toggle("hidden", slo
 check_contains theme/custom.js 'requestAnimationFrame(function focusToolbarSearchbar()'
 check_contains theme/custom.js 'searchbar.focus();'
 check_contains theme/custom.js 'searchbar.select();'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const marker="@media (max-width: 900px) {";const start=css.indexOf(marker);if(start===-1){console.error("Expected mobile toolbar media query.");process.exit(1);}const next=css.indexOf("\n\n@media",start + marker.length);const block=(next===-1?css.slice(start):css.slice(start,next));for(const expected of [".toolbar-actions {","display: flex;","#mdbook-search-toggle {","display: inline-flex !important;",".toolbar-main {","position: absolute;",".toolbar-main .toolbar-search-slot.hidden {","display: none !important;","#mdbook-menu-bar .book-toolbar .toolbar-actions .toolbar-contact-link {","display: none !important;"]){if(!block.includes(expected)){console.error(`Expected mobile search access rule ${expected}`);process.exit(1);}}'
 node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");const start=js.indexOf("item.addEventListener(\"mouseenter\", function () {");if(start===-1){console.error("Expected mouseenter handler for search result items.");process.exit(1);}const end=js.indexOf("      });",start);if(end===-1){console.error("Expected end of mouseenter handler for search result items.");process.exit(1);}const block=js.slice(start,end);if(block.includes("renderResults();")){console.error("Search result mouseenter handler must not re-render the full results list.");process.exit(1);}'
 check_contains theme/custom.js 'function applyPageVariants()'
 node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");const start=js.indexOf("function applyPageVariants() {");const end=js.indexOf("\n\n  function moveOutline()",start);if(start===-1||end===-1){console.error("Expected applyPageVariants() block.");process.exit(1);}const block=js.slice(start,end);for(const expected of ["const forewordPath = \"foreword.html\";","const generalIntroductionPath = \"general-introduction.html\";","const generalConclusionPath = \"general-conclusion.html\";","const glossaryPath = \"glossary.html\";","const bibliographicalReferencesPath = \"bibliographical-references.html\";","const isGeneralConclusionPage = window.location.pathname.endsWith(\"/chapters/\" + generalConclusionPath);","const isGlossaryPage = window.location.pathname.endsWith(\"/chapters/\" + glossaryPath);","const isBibliographicalReferencesPage = window.location.pathname.endsWith(\"/chapters/\" + bibliographicalReferencesPath);","isGeneralConclusionPage ||","isGlossaryPage ||","isBibliographicalReferencesPage;","document.body.classList.toggle(\"book-page-front-matter-outline-rail\", preserveOutlineRail);"]){if(!block.includes(expected)){console.error(`Expected applyPageVariants() to include ${expected}`);process.exit(1);}}'

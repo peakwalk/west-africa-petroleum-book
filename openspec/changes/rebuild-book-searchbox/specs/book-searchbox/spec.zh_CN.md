@@ -33,6 +33,17 @@
 - **WHEN** 搜索输入进入或离开聚焦状态
 - **THEN** 搜索外壳切换一个带状态语义的类来控制扩展后的输入宽度
 
+### Requirement: Mobile search access
+书籍搜索 UI MUST 在窄屏下保持可达。当视口宽度收缩到桌面工具栏折叠的范围时，页头 MUST 仍然保留可见的搜索切换按钮；激活该按钮时 MUST 能显示工具栏搜索输入，而不要求联系入口继续可见。
+
+#### Scenario: Narrow screens keep a visible search entry point
+- **WHEN** 读者在窄屏布局下查看 `/book/` 页面
+- **THEN** 粘性页头仍然显示一个可打开书籍搜索 UI 的搜索切换按钮
+
+#### Scenario: Mobile toggle reveals the search field
+- **WHEN** 读者激活移动端搜索切换按钮
+- **THEN** 工具栏搜索槽以下拉覆盖层形式显示在页头下方，并接收输入焦点
+
 ### Requirement: Result rendering and highlighting
 书籍搜索框 MUST 为每个结果渲染类型图标、高亮标题文本、可见 breadcrumbs 标签和高亮摘录。高亮逻辑 MUST 使用不区分大小写的查询正则拆分文本，并用 `<mark>` 元素包裹每个命中。结果面板 MUST 同时渲染结果计数头部；当没有命中结果时，MUST 渲染带图标和消息的空态。
 
