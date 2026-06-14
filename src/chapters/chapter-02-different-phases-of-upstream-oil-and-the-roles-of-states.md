@@ -390,16 +390,36 @@ determined by the formula:
   <div class="formula-where formula-where--grid formula-where--prospect" aria-label="Prospect formula definitions">
     <div class="formula-spec-grid formula-spec-grid--two">
       <article class="formula-spec-item">
-        <p class="formula-spec-copy">Waterproof trap + waterproof cover</p>
+        <p class="formula-spec-copy">
+          <!-- parity-ignore:start -->
+          <span class="formula-where-term">P(trap):</span>
+          <!-- parity-ignore:end -->
+          Waterproof trap + waterproof cover
+        </p>
       </article>
       <article class="formula-spec-item">
-        <p class="formula-spec-copy">Porosity and permeability of reservoir rock</p>
+        <p class="formula-spec-copy">
+          <!-- parity-ignore:start -->
+          <span class="formula-where-term">P(reservoir):</span>
+          <!-- parity-ignore:end -->
+          Porosity and permeability of reservoir rock
+        </p>
       </article>
       <article class="formula-spec-item">
-        <p class="formula-spec-copy">Geological hazards</p>
+        <p class="formula-spec-copy">
+          <!-- parity-ignore:start -->
+          <span class="formula-where-term">P(prospect):</span>
+          <!-- parity-ignore:end -->
+          Geological hazards
+        </p>
       </article>
       <article class="formula-spec-item">
-        <p class="formula-spec-copy">Maturity of the bedrock and therefore its degree of migration to the reservoir</p>
+        <p class="formula-spec-copy">
+          <!-- parity-ignore:start -->
+          <span class="formula-where-term">P(source rock):</span>
+          <!-- parity-ignore:end -->
+          Maturity of the bedrock and therefore its degree of migration to the reservoir
+        </p>
       </article>
     </div>
   </div>
@@ -491,7 +511,7 @@ gas (GIIP) in place, is determined as follows:
         </div>
       </section>
     </div>
-    <div class="formula-case-note formula-case-note--stack">
+    <div class="formula-case-note">
       <p class="formula-where-label">with:</p>
       <p class="formula-note"><span class="formula-note-term">GOR:</span> called Gas-Oil Ratio is the ratio of gas volume to oil produced</p>
       <p class="formula-note"><span class="formula-note-term">CGR:</span> called Condensate-Gas Ratio is the ratio of <em>condensate volume</em> to the volume of gas produced</p>
