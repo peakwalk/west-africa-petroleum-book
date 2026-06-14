@@ -425,6 +425,12 @@ determined by the formula:
   </div>
 </section>
 
+<!-- parity-ignore:start -->
+<ol class="prospect-evaluation-list prospect-evaluation-list--continued" start="4" type="i">
+  <li><strong>Volumetric assessment of hydrocarbon resources</strong></li>
+</ol>
+<!-- parity-ignore:end -->
+
 ***(iv) Volumetric assessment of hydrocarbon resources***
 
 The evaluation of the hydrocarbon resources contained in the prospect

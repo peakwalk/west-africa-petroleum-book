@@ -512,6 +512,20 @@ body.book-outline-empty .reader-outline {
   list-style-position: inside;
 }
 
+.reader-article > h3[id="222--techniques-for-evaluating-a-prospect"] + p + ol,
+.reader-article > h3[id="222--techniques-for-evaluating-a-prospect"] ~ ol[start="2"],
+.reader-article > h3[id="222--techniques-for-evaluating-a-prospect"] ~ ol[start="3"] {
+  list-style-type: lower-roman;
+}
+
+.reader-article > .prospect-evaluation-list--continued {
+  list-style-type: lower-roman;
+}
+
+.reader-article > .prospect-evaluation-list--continued + p {
+  display: none;
+}
+
 .content h1,
 .content h2,
 .content h3,
