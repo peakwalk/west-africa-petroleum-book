@@ -540,7 +540,7 @@ are: the establishment of an oil database and the monitoring and
 technical and financial control of all activities carried out by the
 contractor.
 
-- ***Oil Data Management***
+***Oil Data Management***
 
 The host country must ensure the collection and preservation of all oil
 data acquired during this phase. These oil data constitute a decisive
@@ -583,7 +583,7 @@ storage and preservation and data analysis (Figure 16).
 
 Figure 16: Photos showing the core library of Côte d'Ivoire at the Direction of the PETROCI Analysis and Research Center
 
-- ***Monitoring and control of activities***
+***Monitoring and control of activities***
 
 The regulation of exploration activities includes not only the
 monitoring of the implementation of contractual obligations but also the
