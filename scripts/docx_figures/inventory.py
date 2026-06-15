@@ -23,7 +23,10 @@ W_NS = {
 }
 PACKAGE_REL_NS = {"pr": "http://schemas.openxmlformats.org/package/2006/relationships"}
 SUMMARY_LINK_RE = re.compile(r"^\s*-\s+\[(?P<title>.+?)\]\((?P<path>.+?)\)\s*$")
-CHAPTER_TITLE_RE = re.compile(r"^Chapter\s+(?P<number>\d+)\s*:", re.IGNORECASE)
+CHAPTER_MARKER_RE = re.compile(
+    r"^(?:Chapter|Chapitre)\s+(?P<number>\d+)(?:\s*:?\s*(?P<title>.*))?$",
+    re.IGNORECASE,
+)
 FIGURE_CAPTION_RE = re.compile(r"Figure\s+(?P<number>\d+)\s*:\s*(?P<tail>.+)", re.IGNORECASE)
 FIGURE_INDEX_RE = re.compile(
     r'href="(?P<html>[^"#]+)#figure-(?P<number>\d+)">(?P<caption>Figure\s+\d+:\s*[^<]+)</a>',
@@ -92,9 +95,10 @@ def _build_chart_drawing_map(archive: ZipFile, chart_parts: list[str]) -> dict[s
     return chart_drawing_map
 
 
-def _chapter_map(summary_path: Path) -> tuple[dict[str, str], dict[int, str]]:
+def _chapter_map(summary_path: Path) -> tuple[dict[str, str], dict[int, str], dict[int, str]]:
     by_title: dict[str, str] = {}
     by_number: dict[int, str] = {}
+    by_number_title: dict[int, str] = {}
     for raw_line in summary_path.read_text(encoding="utf-8").splitlines():
         match = SUMMARY_LINK_RE.match(raw_line)
         if not match:
@@ -105,10 +109,12 @@ def _chapter_map(summary_path: Path) -> tuple[dict[str, str], dict[int, str]]:
             continue
         title = normalize_visible_text(match.group("title"))
         by_title[title] = str(chapter_path)
-        chapter_match = CHAPTER_TITLE_RE.match(title)
+        chapter_match = CHAPTER_MARKER_RE.match(title)
         if chapter_match is not None:
-            by_number[int(chapter_match.group("number"))] = str(chapter_path)
-    return by_title, by_number
+            chapter_number = int(chapter_match.group("number"))
+            by_number[chapter_number] = str(chapter_path)
+            by_number_title[chapter_number] = title
+    return by_title, by_number, by_number_title
 
 
 def _markdown_heading_title(chapter_path: Path) -> str:
@@ -334,7 +340,7 @@ def build_figure_inventory(
     chapters_dir: Path,
     summary_path: Path,
 ) -> list[FigureRecord]:
-    title_to_path, chapter_number_to_path = _chapter_map(summary_path)
+    title_to_path, chapter_number_to_path, chapter_number_to_title = _chapter_map(summary_path)
     (
         figure_number_to_path,
         figure_number_to_caption,
@@ -359,15 +365,14 @@ def build_figure_inventory(
         for index, paragraph in enumerate(document_root.findall(".//w:body/w:p", W_NS)):
             text = _paragraph_text(paragraph)
             style_id = _paragraph_style(paragraph)
-            chapter_match = CHAPTER_TITLE_RE.match(text)
+            chapter_match = CHAPTER_MARKER_RE.match(text)
             if chapter_match is not None:
-                current_chapter_title = text
-                current_chapter_path = title_to_path.get(normalize_visible_text(text), "")
+                chapter_number = int(chapter_match.group("number"))
+                normalized_text = normalize_visible_text(text)
+                current_chapter_title = chapter_number_to_title.get(chapter_number, normalized_text)
+                current_chapter_path = title_to_path.get(normalized_text, "")
                 if not current_chapter_path:
-                    current_chapter_path = chapter_number_to_path.get(
-                        int(chapter_match.group("number")),
-                        "",
-                    )
+                    current_chapter_path = chapter_number_to_path.get(chapter_number, "")
 
             if not current_chapter_title:
                 continue

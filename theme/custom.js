@@ -423,10 +423,11 @@
   function annotateFigureCaptions() {
     const figureVariantClasses = {
       "2": ["figure-card--panel-pair"],
+      "7": ["figure-card--panel-pair"],
     };
 
     const captions = Array.from(document.querySelectorAll(".reader-article p")).filter(function (paragraph) {
-      return /^Figure\s+\d+:/i.test((paragraph.textContent || "").trim());
+      return /^Figure\s+\d+\s*:/i.test((paragraph.textContent || "").trim());
     });
 
     captions.forEach(function (caption) {
@@ -435,7 +436,7 @@
       }
 
       const normalizedCaption = ((caption.textContent || "").trim()).replace(/\s+/g, " ");
-      const match = normalizedCaption.match(/^Figure\s+(\d+):\s*(.*)$/i);
+      const match = normalizedCaption.match(/^Figure\s+(\d+)\s*:\s*(.*)$/i);
 
       if (!match) {
         return;
@@ -520,11 +521,101 @@
   }
 
   function annotateTables() {
+    function getLocalizedTableLabel() {
+      const locale = (document.documentElement.lang || "en").trim().toLowerCase();
+      return locale.startsWith("fr") ? "Tableau" : "Table";
+    }
+
     function parseTableCaption(text) {
       return (text || "")
         .trim()
         .replace(/\s+/g, " ")
-        .match(/^Table\s+(\d+)\s*:\s*(.*)$/i);
+        .match(/^(?:Table|Tableau)\s+(\d+)\s*:\s*(.*)$/i);
+    }
+
+    function normalizeTableCellText(cell) {
+      return normalizeText((cell.textContent || "").replace(/\u00a0/g, " "));
+    }
+
+    function cellLooksHeaderLike(cell) {
+      const text = normalizeTableCellText(cell);
+
+      if (!text) {
+        return true;
+      }
+
+      if (cell.querySelector("b, strong, i, em")) {
+        return true;
+      }
+
+      const lettersOnly = text.replace(/[^A-Za-zÀ-ÿ]/g, "");
+      return lettersOnly && text === text.toUpperCase();
+    }
+
+    function rowLooksLikeHeader(row) {
+      const cells = Array.from(row.cells);
+      let meaningfulCellCount = 0;
+
+      if (!cells.length) {
+        return false;
+      }
+
+      for (const cell of cells) {
+        const text = normalizeTableCellText(cell);
+
+        if (!text) {
+          continue;
+        }
+
+        meaningfulCellCount += 1;
+
+        if (!cellLooksHeaderLike(cell)) {
+          return false;
+        }
+      }
+
+      return meaningfulCellCount > 0;
+    }
+
+    function replaceCellTag(cell, tagName) {
+      const replacement = document.createElement(tagName);
+
+      Array.from(cell.attributes).forEach(function (attribute) {
+        replacement.setAttribute(attribute.name, attribute.value);
+      });
+
+      replacement.innerHTML = cell.innerHTML;
+      return replacement;
+    }
+
+    function normalizeDocxTableStructure(table) {
+      if (!table.classList.contains("t1") || table.tHead) {
+        return;
+      }
+
+      const headerRows = [];
+
+      for (const row of Array.from(table.rows)) {
+        if (!rowLooksLikeHeader(row)) {
+          break;
+        }
+
+        headerRows.push(row);
+      }
+
+      if (!headerRows.length || headerRows.length === table.rows.length) {
+        return;
+      }
+
+      const thead = table.createTHead();
+
+      headerRows.forEach(function (row) {
+        Array.from(row.cells).forEach(function (cell) {
+          row.replaceChild(replaceCellTag(cell, "th"), cell);
+        });
+
+        thead.appendChild(row);
+      });
     }
 
     const tables = Array.from(document.querySelectorAll(".reader-article table")).filter(function (table) {
@@ -570,6 +661,7 @@
         table.parentElement && table.parentElement.classList.contains("table-wrapper")
           ? table.parentElement
           : table;
+      const tableLabel = getLocalizedTableLabel();
       let captionElement = null;
       let captionPosition = "inline";
       let match = null;
@@ -613,6 +705,8 @@
         return;
       }
 
+      normalizeDocxTableStructure(table);
+
       const tableId = "table-" + match[1];
       const captionTextValue = (match[2] || "").trim();
       const tableNotes = collectTableNotes(captionElement, tableBlock, captionPosition);
@@ -633,7 +727,7 @@
       caption.className = "table-caption";
       captionIcon.className = "table-caption-icon";
       captionLabel.className = "table-caption-label";
-      captionLabel.textContent = "Table " + match[1];
+      captionLabel.textContent = tableLabel + " " + match[1];
       captionText.className = "table-caption-text";
       captionText.textContent = captionTextValue;
       caption.appendChild(captionIcon);

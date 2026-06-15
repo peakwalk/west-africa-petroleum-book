@@ -5,9 +5,15 @@ import { fileURLToPath } from "node:url";
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(scriptDir, "..");
-const summaryPath = path.join(rootDir, "src", "SUMMARY.md");
-const bookIndexPath = path.join(rootDir, "public", "book", "index.html");
-const outputPath = path.join(rootDir, "public", "book", "reader-page-meta.json");
+const requestedBookDir = process.argv[2] || path.join("public", "book");
+const requestedSummaryPath = process.argv[3] || path.join("src", "SUMMARY.md");
+const requestedSourceRoot = process.argv[4] || "src";
+
+const bookDir = path.resolve(rootDir, requestedBookDir);
+const summaryPath = path.resolve(rootDir, requestedSummaryPath);
+const sourceRoot = path.resolve(rootDir, requestedSourceRoot);
+const bookIndexPath = path.join(bookDir, "index.html");
+const outputPath = path.join(bookDir, "reader-page-meta.json");
 
 function normalizeText(text) {
   return (text || "").replace(/\s+/g, " ").trim();
@@ -56,18 +62,19 @@ function parseSummary(summarySource) {
 }
 
 function parseChapterTitle(title) {
-  const match = normalizeText(title).match(/^(Chapter\s+\d+)\s*:\s*(.+)$/i);
+  const normalized = normalizeText(title);
+  const match = normalized.match(/^(Chapter|Chapitre)\s+(\d+)\s*:\s*(.+)$/i);
 
   if (!match) {
     return {
       eyebrow: "",
-      title: normalizeText(title),
+      title: normalized,
     };
   }
 
   return {
-    eyebrow: match[1],
-    title: normalizeText(match[2]),
+    eyebrow: `${match[1]} ${match[2]}`,
+    title: normalizeText(match[3]),
   };
 }
 
@@ -149,17 +156,18 @@ function buildPageMeta() {
   const pageMeta = {};
 
   summaryEntries.forEach((entry) => {
-    const absoluteSourcePath = path.join(rootDir, "src", entry.sourcePath);
+    const absoluteSourcePath = path.join(sourceRoot, entry.sourcePath);
     const markdownSource = fs.readFileSync(absoluteSourcePath, "utf8");
     const parsedTitle = parseChapterTitle(entry.title);
     const lede = extractFirstParagraph(markdownSource);
     const pageKey = deriveHtmlPath(entry.sourcePath);
+    const relativeSourcePath = path.relative(rootDir, absoluteSourcePath);
 
     pageMeta[pageKey] = {
       eyebrow: parsedTitle.eyebrow,
       title: parsedTitle.title,
       partLabel: entry.partLabel,
-      updatedAt: getUpdatedAt(path.join("src", entry.sourcePath)),
+      updatedAt: getUpdatedAt(relativeSourcePath),
       lede,
       referenceSections: buildReferenceSections(markdownSource),
     };

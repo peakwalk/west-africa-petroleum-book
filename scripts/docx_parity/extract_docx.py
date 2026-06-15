@@ -18,15 +18,21 @@ W_NS = {
     "w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     "m": "http://schemas.openxmlformats.org/officeDocument/2006/math",
 }
-CHAPTER_TITLE_RE = re.compile(r"^Chapter\s+(?P<number>\d+)\s*:", re.IGNORECASE)
-CAPTION_START_RE = re.compile(r"(Figure|Table)\s+\d+\s*:", re.IGNORECASE)
-BARE_CAPTION_PLACEHOLDER_RE = re.compile(r"^(Figure|Table)\s+\d+\s*:\s*$", re.IGNORECASE)
+CHAPTER_TITLE_RE = re.compile(r"^(?:Chapter|Chapitre)\s+(?P<number>\d+)\s*:", re.IGNORECASE)
+CAPTION_PREFIXES = ("Figure ", "Table ", "Tableau ")
+CAPTION_START_RE = re.compile(r"(Figure|Table|Tableau)\s+\d+\s*:", re.IGNORECASE)
+BARE_CAPTION_PLACEHOLDER_RE = re.compile(
+    r"^(Figure|Table|Tableau)\s+\d+\s*:\s*$",
+    re.IGNORECASE,
+)
 FORMULA_CHAIN_START_RE = re.compile(r"[A-Z][A-Za-z0-9()/' -]{2,80}=")
 TEMPERATURE_AXIS_LABEL_RE = re.compile(
     r"^(?:\d+\s*(?:to|-)\s*)?\d+(?:-\d+)?°C(?:-\d+°C)?$",
     re.IGNORECASE,
 )
-CHAPTER_MARKER_RE = re.compile(r"^Chapter\s+\d+$", re.IGNORECASE)
+CHAPTER_MARKER_RE = re.compile(
+    r"^(?:Chapter|Chapitre)\s+(?P<number>\d+)\s*:?\s*$", re.IGNORECASE
+)
 FLOWCHART_LABEL_MARKERS = (
     "flow chart",
     "gross income:",
@@ -259,6 +265,13 @@ def _chapter_number_from_title(title: str) -> int | None:
     return int(match.group("number"))
 
 
+def _chapter_marker_number(text: str) -> int | None:
+    match = CHAPTER_MARKER_RE.fullmatch(normalize_visible_text(text))
+    if match is None:
+        return None
+    return int(match.group("number"))
+
+
 def _section_prefix(number: str) -> str:
     return normalize_heading_number(number).rstrip("-.")
 
@@ -362,7 +375,7 @@ def _looks_like_short_graphic_label_fragment(text: str) -> bool:
 
 def _looks_like_concatenated_label_cluster(text: str) -> bool:
     normalized = _dedupe_exact_double(text)
-    if normalized.startswith(("Figure ", "Table ")):
+    if normalized.startswith(CAPTION_PREFIXES):
         return False
     if any(punctuation in normalized for punctuation in ".!?;"):
         return False
@@ -482,7 +495,7 @@ def _lookahead_texts(paragraphs: list[ET.Element], start_index: int, limit: int 
 
 
 def _is_caption_candidate(text: str) -> bool:
-    if text.startswith(("Figure ", "Table ")):
+    if text.startswith(CAPTION_PREFIXES):
         return True
 
     spillover_caption = _extract_caption_from_spillover(text)
@@ -642,7 +655,7 @@ def _is_split_chapter_marker(
     paragraphs: list[ET.Element], start_index: int, style_levels: dict[str, int]
 ) -> bool:
     current_text = _paragraph_text(paragraphs[start_index])
-    if CHAPTER_MARKER_RE.fullmatch(current_text) is None:
+    if _chapter_marker_number(current_text) is None:
         return False
 
     for paragraph in paragraphs[start_index + 1 :]:
@@ -662,7 +675,7 @@ def _is_target_split_chapter_marker(
     if chapter_number is None:
         return False
     current_text = _paragraph_text(paragraphs[start_index])
-    if current_text.lower() != f"chapter {chapter_number}".lower():
+    if _chapter_marker_number(current_text) != chapter_number:
         return False
     return _is_split_chapter_marker(paragraphs, start_index, style_levels)
 
@@ -720,7 +733,7 @@ def _normalize_paragraph_body_blocks(text: str) -> list[BodyBlock]:
     if list_cluster is not None:
         return list_cluster
 
-    if deduped.startswith(("Figure ", "Table ")):
+    if deduped.startswith(CAPTION_PREFIXES):
         return [BodyBlock(kind="caption", text=deduped)]
 
     return [
@@ -819,9 +832,10 @@ def extract_docx_book(
     seen_outline = False
     suppress_pre_heading_figure_labels = False
     suppress_reservoir_method_cluster = False
+    pending_split_heading = False
 
     def flush_chapter() -> None:
-        nonlocal current_title, current_outline, current_body, current_source, current_section_prefix, seen_outline, suppress_pre_heading_figure_labels
+        nonlocal current_title, current_outline, current_body, current_source, current_section_prefix, seen_outline, suppress_pre_heading_figure_labels, pending_split_heading
         if not current_title:
             return
         chapters.append(
@@ -839,6 +853,7 @@ def extract_docx_book(
         current_section_prefix = ""
         seen_outline = False
         suppress_pre_heading_figure_labels = False
+        pending_split_heading = False
 
     paragraphs = document_root.findall(".//w:body/w:p", W_NS)
 
@@ -866,6 +881,23 @@ def extract_docx_book(
             wait_for_expected_title = False
             continue
 
+        split_marker_number = _chapter_marker_number(text)
+        if split_marker_number is not None and _is_split_chapter_marker(paragraphs, index, style_levels):
+            if expected_queue and split_marker_number == _chapter_number_from_title(expected_queue[0]):
+                flush_chapter()
+                current_title = expected_queue.pop(0)
+                current_source = f"docx:{len(chapters) + 1}"
+                current_chapter_number = split_marker_number
+                pending_split_heading = True
+                wait_for_expected_title = False
+                continue
+            flush_chapter()
+            current_title = ""
+            current_source = f"docx:{len(chapters) + 1}"
+            current_chapter_number = split_marker_number
+            pending_split_heading = True
+            continue
+
         if wait_for_expected_title and not current_title:
             continue
 
@@ -878,6 +910,15 @@ def extract_docx_book(
         level = _paragraph_level(paragraph, style_levels)
         num_pr = _num_pr(paragraph)
         num_id, ilvl = _extract_num_values(num_pr)
+
+        if pending_split_heading and level == 1:
+            if current_title:
+                pending_split_heading = False
+                continue
+            current_title = text
+            current_source = f"docx:{len(chapters) + 1}"
+            pending_split_heading = False
+            continue
 
         if not current_title and level == 1:
             current_title = text
@@ -977,7 +1018,7 @@ def extract_docx_book(
 
         if num_id is not None:
             kind = "list_item"
-        elif text.startswith("Figure ") or text.startswith("Table "):
+        elif text.startswith(CAPTION_PREFIXES):
             kind = "caption"
             if not seen_outline:
                 suppress_pre_heading_figure_labels = True
@@ -1020,6 +1061,7 @@ def extract_docx_chapter_by_anchors(
     section_level_counters: dict[tuple[str, int, str], int] = {}
     chapter_number = _chapter_number_from_title(chapter_title)
     outline: list[OutlineEntry] = []
+    pending_outline: list[OutlineEntry] = []
     body: list[BodyBlock] = []
     started = False
     in_target_chapter = False
@@ -1062,9 +1104,11 @@ def extract_docx_chapter_by_anchors(
                 continue
 
         if not started:
-            if not _matches_anchor_text(text, start_anchor):
-                continue
-            started = True
+            if _matches_anchor_text(text, start_anchor):
+                started = True
+                if pending_outline:
+                    outline.extend(pending_outline)
+                    pending_outline.clear()
 
         if _matches_anchor_text(text, end_anchor):
             break
@@ -1090,7 +1134,8 @@ def extract_docx_chapter_by_anchors(
         if level is not None and level > 1:
             literal_number, literal_title = split_heading_label(text)
             if literal_number:
-                outline.append(
+                target_outline = outline if started else pending_outline
+                target_outline.append(
                     OutlineEntry(level=level, number=literal_number, title=literal_title)
                 )
                 if level == 2:
@@ -1120,7 +1165,8 @@ def extract_docx_chapter_by_anchors(
                     rendered_number = _render_number(
                         str(level_meta.get("text", "")), num_counters, chapter_number
                     )
-                outline.append(
+                target_outline = outline if started else pending_outline
+                target_outline.append(
                     OutlineEntry(level=level, number=rendered_number, title=text)
                 )
                 if level == 2:
@@ -1128,6 +1174,9 @@ def extract_docx_chapter_by_anchors(
                 seen_outline = True
                 suppress_pre_heading_figure_labels = False
                 continue
+
+        if not started:
+            continue
 
         semantic_callout = _looks_like_semantic_callout(_dedupe_exact_double(text)) or _looks_like_source_credit(text)
         pre_caption_graphic_fragment = _looks_like_pre_caption_graphic_fragment(text)
@@ -1177,7 +1226,7 @@ def extract_docx_chapter_by_anchors(
 
         if num_id is not None:
             kind = "list_item"
-        elif text.startswith("Figure ") or text.startswith("Table "):
+        elif text.startswith(CAPTION_PREFIXES):
             kind = "caption"
             if not seen_outline:
                 suppress_pre_heading_figure_labels = True

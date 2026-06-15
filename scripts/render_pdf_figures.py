@@ -10,6 +10,7 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
+from scripts.edition_config import available_edition_locales, get_edition
 from scripts.docx_figures import build_figure_inventory
 from scripts.docx_figures.pdf_figures import (
     DEFAULT_CAPTION_GAP,
@@ -44,15 +45,28 @@ def find_cwebp_binary() -> Path | None:
     return None
 
 
+def find_sips_binary() -> Path | None:
+    resolved = shutil.which("sips")
+    if resolved:
+        return Path(resolved)
+    candidate = Path("/usr/bin/sips")
+    if candidate.exists():
+        return candidate
+    return None
+
+
 def ensure_lossless_webp_outputs(
     *,
     output_dir: Path,
     figure_numbers: list[int],
     cwebp_binary: Path | None = None,
+    sips_binary: Path | None = None,
 ) -> list[int]:
     binary = cwebp_binary or find_cwebp_binary()
+    sips = sips_binary or find_sips_binary()
     if binary is None:
-        return []
+        if sips is None:
+            return []
 
     rendered: list[int] = []
     for figure_number in figure_numbers:
@@ -62,21 +76,37 @@ def ensure_lossless_webp_outputs(
         webp_path = output_dir / f"figure-{figure_number:03d}.webp"
         if not png_path.exists():
             continue
-        result = subprocess.run(
-            [
-                str(binary),
-                "-quiet",
-                "-lossless",
-                "-z",
-                "9",
-                str(png_path),
-                "-o",
-                str(webp_path),
-            ],
-            capture_output=True,
-            text=True,
-            check=False,
-        )
+        if binary is not None:
+            result = subprocess.run(
+                [
+                    str(binary),
+                    "-quiet",
+                    "-lossless",
+                    "-z",
+                    "9",
+                    str(png_path),
+                    "-o",
+                    str(webp_path),
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+        else:
+            result = subprocess.run(
+                [
+                    str(sips),
+                    "-s",
+                    "format",
+                    "webp",
+                    str(png_path),
+                    "--out",
+                    str(webp_path),
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
         if result.returncode == 0 and webp_path.exists():
             rendered.append(figure_number)
     return rendered
@@ -86,11 +116,12 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Render PDF-derived figure assets for DOCX shape/chart/composite figures."
     )
-    parser.add_argument("--pdf", default=str(DEFAULT_PDF))
-    parser.add_argument("--docx", default=str(DEFAULT_DOCX))
-    parser.add_argument("--summary", default=str(DEFAULT_SUMMARY))
-    parser.add_argument("--chapters-dir", default=str(DEFAULT_CHAPTERS_DIR))
-    parser.add_argument("--output-dir", default=str(DEFAULT_OUTPUT_DIR))
+    parser.add_argument("--edition", choices=available_edition_locales())
+    parser.add_argument("--pdf")
+    parser.add_argument("--docx")
+    parser.add_argument("--summary")
+    parser.add_argument("--chapters-dir")
+    parser.add_argument("--output-dir")
     parser.add_argument(
         "--figures",
         nargs="*",
@@ -108,12 +139,32 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> int:
     args = parse_args()
+    edition = get_edition(args.edition) if args.edition else None
+    pdf_path = Path(args.pdf) if args.pdf else edition.pdf_path if edition else DEFAULT_PDF
+    docx_path = Path(args.docx) if args.docx else edition.docx_path if edition else DEFAULT_DOCX
+    summary_path = (
+        Path(args.summary) if args.summary else edition.summary_path if edition else DEFAULT_SUMMARY
+    )
+    chapters_dir = (
+        Path(args.chapters_dir)
+        if args.chapters_dir
+        else edition.chapter_root
+        if edition
+        else DEFAULT_CHAPTERS_DIR
+    )
+    output_dir = (
+        Path(args.output_dir)
+        if args.output_dir
+        else edition.figure_root
+        if edition
+        else DEFAULT_OUTPUT_DIR
+    )
     requested = list(args.figures or [])
     if not requested:
         inventory = build_figure_inventory(
-            docx_path=Path(args.docx),
-            chapters_dir=Path(args.chapters_dir),
-            summary_path=Path(args.summary),
+            docx_path=docx_path,
+            chapters_dir=chapters_dir,
+            summary_path=summary_path,
         )
         requested = default_pdf_figure_numbers(inventory)
 
@@ -121,10 +172,9 @@ def main() -> int:
         print("No PDF-renderable figures were selected.")
         return 0
 
-    output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     result = render_pdf_figures(
-        pdf_path=Path(args.pdf),
+        pdf_path=pdf_path,
         output_dir=output_dir,
         figure_numbers=requested,
         scale=args.scale,

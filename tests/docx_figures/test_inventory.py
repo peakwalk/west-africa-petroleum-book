@@ -10,6 +10,9 @@ ROOT_DIR = Path(__file__).resolve().parents[2]
 DOCX_PATH = ROOT_DIR / "resources/Exploration and Exploitation of Petroleum Resources in West Africa (Matt Edited).docx"
 SUMMARY_PATH = ROOT_DIR / "src/SUMMARY.md"
 CHAPTERS_DIR = ROOT_DIR / "src/chapters"
+FR_DOCX_PATH = ROOT_DIR / "resources/editions/fr/reference.docx"
+FR_SUMMARY_PATH = ROOT_DIR / "src-fr/SUMMARY.md"
+FR_CHAPTERS_DIR = ROOT_DIR / "src-fr/chapters"
 
 
 class InventoryTest(unittest.TestCase):
@@ -54,6 +57,37 @@ class InventoryTest(unittest.TestCase):
         self.assertIn(inventory[25].kind, {"shape_group", "composite"})
         self.assertEqual(inventory[31].kind, "chart")
         self.assertEqual(inventory[32].kind, "chart")
+
+    def test_french_docx_inventory_covers_figures_1_through_32(self) -> None:
+        inventory = build_figure_inventory(
+            docx_path=FR_DOCX_PATH,
+            chapters_dir=FR_CHAPTERS_DIR,
+            summary_path=FR_SUMMARY_PATH,
+        )
+
+        self.assertEqual([record.number for record in inventory], list(range(1, 33)))
+
+    def test_french_docx_inventory_uses_french_figure_index_chapter_targets(self) -> None:
+        inventory = {
+            record.number: record
+            for record in build_figure_inventory(
+                docx_path=FR_DOCX_PATH,
+                chapters_dir=FR_CHAPTERS_DIR,
+                summary_path=FR_SUMMARY_PATH,
+            )
+        }
+
+        self.assertEqual(
+            inventory[5].chapter_path,
+            str(
+                (
+                    ROOT_DIR
+                    / "src-fr"
+                    / "chapters"
+                    / "chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md"
+                ).resolve()
+            ),
+        )
 
 
 if __name__ == "__main__":

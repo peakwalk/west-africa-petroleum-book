@@ -7,6 +7,7 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
+from scripts.edition_config import available_edition_locales, get_edition
 from scripts.docx_parity import (
     compare_books,
     extract_docx_book,
@@ -25,68 +26,88 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Validate Markdown semantic parity against the reference DOCX."
     )
-    parser.add_argument("--docx", required=True)
-    parser.add_argument("--summary", required=True)
-    parser.add_argument("--chapters-dir", required=True)
+    parser.add_argument("--edition", choices=available_edition_locales())
+    parser.add_argument("--docx")
+    parser.add_argument("--summary")
+    parser.add_argument("--chapters-dir")
     parser.add_argument("--chapter", help="Limit validation to a single Markdown chapter path.")
     parser.add_argument("--json", action="store_true")
     return parser.parse_args()
 
 
+def chapter_anchor(chapter) -> str:
+    source_path = Path(chapter.source_path)
+    if source_path.exists():
+        in_parity_ignore = False
+        seen_title = False
+        lines = source_path.read_text(encoding="utf-8").splitlines()
+        index = 0
+        first_heading_title: str | None = None
+        while index < len(lines):
+            raw_line = lines[index]
+            stripped = raw_line.strip()
+            if not seen_title:
+                if stripped.startswith("# "):
+                    seen_title = True
+                index += 1
+                continue
+            if stripped == "<!-- parity-ignore:start -->":
+                in_parity_ignore = True
+                index += 1
+                continue
+            if stripped == "<!-- parity-ignore:end -->":
+                in_parity_ignore = False
+                index += 1
+                continue
+            if in_parity_ignore or not stripped or stripped.startswith("!["):
+                index += 1
+                continue
+            heading_match = HEADING_RE.match(stripped)
+            if heading_match:
+                _, title = split_heading_label(heading_match.group("content"))
+                if first_heading_title is None:
+                    first_heading_title = title
+                index += 1
+                continue
+            block_lines = [stripped]
+            index += 1
+            while index < len(lines):
+                candidate = lines[index].strip()
+                if (
+                    not candidate
+                    or candidate == "<!-- parity-ignore:start -->"
+                    or candidate == "<!-- parity-ignore:end -->"
+                    or candidate.startswith("![")
+                    or HEADING_RE.match(candidate)
+                ):
+                    break
+                block_lines.append(candidate)
+                index += 1
+            return normalize_visible_text(" ".join(block_lines))
+        if first_heading_title:
+            return first_heading_title
+    if chapter.body:
+        return chapter.body[0].text
+    if chapter.outline:
+        return chapter.outline[0].title
+    return chapter.title
+
+
 def main() -> int:
     args = parse_args()
-    markdown_book = extract_markdown_book(Path(args.summary), Path(args.chapters_dir))
+    edition = get_edition(args.edition) if args.edition else None
+    docx_path = Path(args.docx) if args.docx else edition.docx_path if edition else None
+    summary_path = Path(args.summary) if args.summary else edition.summary_path if edition else None
+    chapters_dir = (
+        Path(args.chapters_dir) if args.chapters_dir else edition.chapter_root if edition else None
+    )
 
-    def chapter_anchor(chapter) -> str:
-        source_path = Path(chapter.source_path)
-        if source_path.exists():
-            in_parity_ignore = False
-            seen_title = False
-            lines = source_path.read_text(encoding="utf-8").splitlines()
-            index = 0
-            while index < len(lines):
-                raw_line = lines[index]
-                stripped = raw_line.strip()
-                if not seen_title:
-                    if stripped.startswith("# "):
-                        seen_title = True
-                    index += 1
-                    continue
-                if stripped == "<!-- parity-ignore:start -->":
-                    in_parity_ignore = True
-                    index += 1
-                    continue
-                if stripped == "<!-- parity-ignore:end -->":
-                    in_parity_ignore = False
-                    index += 1
-                    continue
-                if in_parity_ignore or not stripped or stripped.startswith("!["):
-                    index += 1
-                    continue
-                heading_match = HEADING_RE.match(stripped)
-                if heading_match:
-                    _, title = split_heading_label(heading_match.group("content"))
-                    return title
-                block_lines = [stripped]
-                index += 1
-                while index < len(lines):
-                    candidate = lines[index].strip()
-                    if (
-                        not candidate
-                        or candidate == "<!-- parity-ignore:start -->"
-                        or candidate == "<!-- parity-ignore:end -->"
-                        or candidate.startswith("![")
-                        or HEADING_RE.match(candidate)
-                    ):
-                        break
-                    block_lines.append(candidate)
-                    index += 1
-                return normalize_visible_text(" ".join(block_lines))
-        if chapter.body:
-            return chapter.body[0].text
-        if chapter.outline:
-            return chapter.outline[0].title
-        return chapter.title
+    if docx_path is None or summary_path is None or chapters_dir is None:
+        raise SystemExit(
+            "check_docx_parity requires either --edition or explicit --docx, --summary, and --chapters-dir."
+        )
+
+    markdown_book = extract_markdown_book(summary_path, chapters_dir)
 
     if args.chapter:
         target_path = str(Path(args.chapter).resolve())
@@ -98,7 +119,7 @@ def main() -> int:
             return 1
         markdown_book = type(markdown_book)(chapters=markdown_chapters)
         all_markdown_chapters = extract_markdown_book(
-            Path(args.summary), Path(args.chapters_dir)
+            summary_path, chapters_dir
         )
         target_index = next(
             index
@@ -111,7 +132,7 @@ def main() -> int:
             next_anchor = chapter_anchor(all_markdown_chapters.chapters[target_index + 1])
 
         docx_book = extract_docx_chapter_by_anchors(
-            Path(args.docx),
+            docx_path,
             chapter_title=markdown_chapters[0].title,
             start_anchor=chapter_anchor(markdown_chapters[0]),
             end_anchor=next_anchor,
@@ -129,7 +150,7 @@ def main() -> int:
             if index + 1 < len(markdown_chapters):
                 next_anchor = chapter_anchor(markdown_chapters[index + 1])
             extracted = extract_docx_chapter_by_anchors(
-                Path(args.docx),
+                docx_path,
                 chapter_title=chapter.title,
                 start_anchor=chapter_anchor(chapter),
                 end_anchor=next_anchor,

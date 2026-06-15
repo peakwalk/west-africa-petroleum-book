@@ -59,6 +59,11 @@ check_file_size_at_most() {
 check_image_has_no_opaque_white_fringe() {
   file_path="$1"
   max_pixels="$2"
+
+  if ! command -v magick >/dev/null 2>&1; then
+    return 0
+  fi
+
   fringe_pixels="$(magick "$file_path" -crop 430x110+170+25 +repage -format '%[fx:mean*w*h]' -channel RGBA -fx '(a>0.05 && r>0.92 && g>0.92 && b>0.92)?1:0' info: | cut -d. -f1)"
 
   if [ "$fringe_pixels" -gt "$max_pixels" ]; then
@@ -153,9 +158,8 @@ check_exists scripts/build_reader_page_meta.mjs
 check_contains package.json '"build:index": "node scripts/generate-index-page.mjs"'
 check_contains package.json '"build:legal": "node scripts/generate-legal-pages.mjs"'
 check_contains package.json '"build:reader-meta": "node scripts/build_reader_page_meta.mjs"'
-check_contains package.json '"build:site": "rm -rf public && mkdir -p public && npm run build:index && npm run build:legal && npm run build:chapters'
-check_contains package.json '&& npm run build:reader-meta"'
-check_contains .github/workflows/pages.yml 'run: npm run build:site'
+check_contains package.json '"build:site": "node scripts/build_site.mjs"'
+check_contains .github/workflows/pages.yml 'run: npm run test:site'
 check_not_contains .github/workflows/pages.yml 'cp index.html public/index.html'
 check_contains scripts/generate-index-page.mjs 'renderLandingHead'
 check_contains scripts/generate-index-page.mjs 'renderLandingHeader'
@@ -180,12 +184,12 @@ check_contains public/index.html 'upstream-atlas-favicon.png?v=2'
 check_contains public/index.html 'upstream-atlas-nav-logo.webp'
 check_not_contains public/index.html 'upstream-atlas-nav-logo.png'
 check_contains public/index.html 'upstream-atlas-icon.png'
-check_contains public/index.html 'href="chapters/"'
+check_contains public/index.html 'href="/chapters/"'
 check_contains public/index.html 'class="current-link" href="/">Home</a>'
-check_contains public/index.html 'href="#countries">Countries</a>'
-check_contains public/index.html 'href="#about">About</a>'
-check_contains public/index.html 'href="#resources">Resources</a>'
-check_order public/index.html 'href="#about">About</a>' 'href="#resources">Resources</a>'
+check_contains public/index.html 'href="/#countries">Countries</a>'
+check_contains public/index.html 'href="/#about">About</a>'
+check_contains public/index.html 'href="/#resources">Resources</a>'
+check_order public/index.html 'href="/#about">About</a>' 'href="/#resources">Resources</a>'
 check_contains public/index.html 'class="header-contact-link"'
 check_contains public/index.html 'mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas'
 check_contains public/index.html 'aria-label="Contact Us"'
@@ -346,17 +350,17 @@ check_contains public/chapters/index.html 'class="site-header-inner"'
 check_contains public/chapters/index.html 'upstream-atlas-nav-logo.webp'
 check_not_contains public/chapters/index.html 'upstream-atlas-nav-logo.png'
 check_contains public/chapters/index.html 'upstream-atlas-icon.png'
-check_contains public/chapters/index.html 'class="button button-header" href="../book/">'
+check_contains public/chapters/index.html 'class="button button-header" href="/book/">'
 check_contains public/chapters/index.html '<span class="button-label">Start Reading</span>'
 check_contains public/chapters/index.html '../assets/icons/homepage-sprite.svg#icon-start-reading'
 check_not_contains public/chapters/index.html '../assets/icons/homepage-cropped/icon-start-reading.png'
 check_not_contains public/chapters/index.html '../assets/icons/homepage-cropped/icon-menu.png'
 check_not_contains public/chapters/index.html '../assets/icons/homepage-cropped/icon-close.png'
-check_contains public/chapters/index.html 'class="current-link" href="./">Chapters</a>'
-check_contains public/chapters/index.html 'href="../#countries">Countries</a>'
-check_contains public/chapters/index.html 'href="../#about">About</a>'
-check_contains public/chapters/index.html 'href="../#resources">Resources</a>'
-check_order public/chapters/index.html 'href="../#about">About</a>' 'href="../#resources">Resources</a>'
+check_contains public/chapters/index.html 'class="current-link" href="/chapters/">Chapters</a>'
+check_contains public/chapters/index.html 'href="/#countries">Countries</a>'
+check_contains public/chapters/index.html 'href="/#about">About</a>'
+check_contains public/chapters/index.html 'href="/#resources">Resources</a>'
+check_order public/chapters/index.html 'href="/#about">About</a>' 'href="/#resources">Resources</a>'
 check_contains public/chapters/index.html 'class="header-contact-link"'
 check_contains public/chapters/index.html 'mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas'
 check_not_contains public/chapters/index.html 'class="mobile-nav-contact"'
@@ -385,7 +389,7 @@ check_not_contains public/chapters/index.html 'Open chapter'
 check_not_contains public/chapters/index.html ' entries</p>'
 check_not_contains public/chapters/index.html 'title="Estimated reading time based on'
 check_contains public/chapters/index.html 'General Information on the Oil Industry'
-check_contains public/chapters/index.html '../book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html'
+check_contains public/chapters/index.html '/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html'
 
 check_exists public/terms-of-use.html
 check_exists public/privacy-policy.html
@@ -402,7 +406,7 @@ check_contains public/cookie-policy.html 'Status: Final approved text pending pu
 check_contains public/terms-of-use.html 'href="privacy-policy.html"'
 check_contains public/privacy-policy.html 'href="cookie-policy.html"'
 check_contains public/cookie-policy.html 'href="terms-of-use.html"'
-check_contains public/terms-of-use.html 'href="index.html"'
+check_contains public/terms-of-use.html 'href="/"'
 check_contains public/terms-of-use.html 'upstream-atlas-nav-logo.webp'
 check_contains public/privacy-policy.html 'upstream-atlas-nav-logo.webp'
 check_contains public/cookie-policy.html 'upstream-atlas-nav-logo.webp'
@@ -412,8 +416,8 @@ check_not_contains public/cookie-policy.html 'upstream-atlas-nav-logo.png'
 check_not_contains public/terms-of-use.html 'legal-page-brand-copy'
 check_not_contains public/privacy-policy.html 'legal-page-brand-copy'
 check_not_contains public/cookie-policy.html 'legal-page-brand-copy'
-check_not_contains public/terms-of-use.html 'href="/"'
-check_order public/terms-of-use.html '<a href="index.html#about">About</a>' '<p class="site-footer-heading">Resources</p>'
+check_contains public/terms-of-use.html 'href="/"'
+check_order public/terms-of-use.html '<a href="/#about">About</a>' '<p class="site-footer-heading">Resources</p>'
 
 check_contains public/book/index.html 'id="mdbook-sidebar"'
 check_contains public/book/index.html 'class="light sidebar-visible"'
@@ -447,6 +451,9 @@ check_contains public/book/index.html 'class="book-outline-section book-outline-
 check_contains public/book/index.html 'class="book-outline-section book-outline-tables"'
 check_contains public/book/index.html 'title="Contact Us"'
 check_not_contains public/book/index.html 'title="Git repository"'
+check_contains public/book/index.html 'class="reader-language-switch"'
+check_contains public/book/index.html 'href="/fr/book/?lang=fr"'
+check_contains public/book/index.html 'navigator.languages'
 check_contains public/book/index.html 'class="toolbar-search-slot hidden"'
 check_contains public/book/index.html 'id="mdbook-search-wrapper" class="hidden"'
 check_contains public/book/index.html 'id="mdbook-search-clear"'
@@ -488,6 +495,31 @@ check_not_contains public/book/chapters/chapter-04-comparative-study-of-tax-regi
 check_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'figure-032.webp'
 check_not_contains public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'figure-032.png'
 check_not_contains public/book/chapters/bibliographical-references.html 'TABLE OF CONTENTS'
+check_contains public/book/chapters/foreword.html '/fr/book/chapters/foreword.html?lang=fr'
+
+check_exists public/fr/index.html
+check_exists public/fr/chapters/index.html
+check_exists public/fr/terms-of-use.html
+check_exists public/fr/privacy-policy.html
+check_exists public/fr/cookie-policy.html
+check_exists public/fr/book/index.html
+check_exists public/fr/book/reader-page-meta.json
+check_exists public/fr/assets/images/upstream-atlas-nav-logo.webp
+check_contains public/fr/index.html 'class="site-language-switch"'
+check_contains public/fr/index.html 'href="/?lang=en"'
+check_contains public/fr/index.html '<span class="button-label">Commencer la lecture</span>'
+check_contains public/fr/chapters/index.html 'Bibliothèque des chapitres'
+check_contains public/fr/chapters/index.html 'href="/fr/book/"'
+check_contains public/fr/terms-of-use.html 'Conditions d’utilisation'
+check_contains public/fr/privacy-policy.html 'Politique de confidentialité'
+check_contains public/fr/cookie-policy.html 'Politique relative aux cookies'
+check_contains public/fr/book/index.html 'class="reader-language-switch"'
+check_contains public/fr/book/index.html 'aria-label="Changer de langue"'
+check_contains public/fr/book/index.html 'href="/book/?lang=en"'
+check_contains public/fr/book/chapters/foreword.html '/book/chapters/foreword.html?lang=en'
+check_contains public/fr/book/chapters/list-of-tables.html 'aria-label="Navigation des chapitres"'
+check_contains public/fr/book/chapters/list-of-tables.html '<span class="chapter-nav-label">Chapitre précédent</span>'
+check_contains public/fr/book/chapters/list-of-tables.html '<span class="chapter-nav-label">Chapitre suivant</span>'
 check_contains src/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-002-a.webp'
 check_contains src/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-002-b.webp'
 check_contains src/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-003-map.jpg'
@@ -714,6 +746,29 @@ check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html '<li><strong>For the oil</strong></li>'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html '<li><strong>For gas</strong></li>'
 node -e 'const fs=require("fs");const html=fs.readFileSync("public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html","utf8");const start=html.indexOf("class=\"formula-derivation formula-derivation--volumetric\"");const end=html.indexOf("<p>A lead ranking is performed",start);if(start===-1||end===-1){console.error("Expected chapter 2 formula derivation block bounds");process.exit(1);}const block=html.slice(start,end);const caseCount=(block.match(/<section class=\"formula-case\"/g)||[]).length;if(caseCount!==2){console.error(`Expected 2 formula cases in derivation block but found ${caseCount}`);process.exit(1);}for(const forbidden of ["<pre","language-html","&lt;section","class=&quot;formula-case&quot;"]){if(block.includes(forbidden)){console.error(`Unexpected escaped or code-rendered formula markup: ${forbidden}`);process.exit(1);}}'
+check_contains src-fr/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'data-equation-label="2.1"'
+check_contains src-fr/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'data-equation-label="2.2"'
+check_contains src-fr/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-019.webp'
+check_not_contains src-fr/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-019.svg'
+check_contains src-fr/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md 'data-equation-label="4.1"'
+check_contains src-fr/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md 'data-equation-label="4.2"'
+check_contains src-fr/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md 'data-equation-label="4.3"'
+check_contains src-fr/chapters/glossary.md 'class="book-formula api-density-formula"'
+check_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'class="formula-group formula-group--prospect" data-equation-label="2.1"'
+check_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'class="formula-group formula-group--volumetric" data-equation-label="2.2"'
+check_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-019.webp'
+check_not_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-019.svg'
+check_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'class="formula-case-title">Pour l’huile'
+check_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'class="formula-case-title">Pour le gaz'
+check_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'class="formula-case-connector">Ainsi,'
+node -e 'const fs=require("fs");const html=fs.readFileSync("public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html","utf8");const normalize=(value)=>value.replace(/<[^>]+>/g," ").replace(/&nbsp;/g," ").replace(/\u00a0/g," ").replace(/&minus;/g,"-").replace(/[−–]/g,"-").replace(/&times;/g,"x").replace(/&deg;/g,"°").replace(/\s+/g," ").trim();const text=normalize(html);const labels=[...html.matchAll(/data-equation-label=\"([^\"]+)\"/g)].map((match)=>match[1]);if(labels.join(",")!=="2.1,2.2"){console.error(`Expected French chapter 2 primary equation labels 2.1,2.2 but found ${labels.join(",")}`);process.exit(1);}for(const expected of ["P(prospect) = P(roche mère) x P(réservoir) x P(piège)","VHcP = GRV x N/G x Ø x Shc x 1/FVF","FVF = Volume réservoir/Volume à la surface"]){if(!text.includes(expected)){console.error(`Expected French chapter 2 formula content for: ${expected}`);process.exit(1);}}'
+check_contains public/fr/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html '<div class="book-formula" data-equation-label="4.1"'
+check_contains public/fr/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'class="formula-group formula-group--split formula-group--oil-profit" data-equation-label="4.2"'
+check_contains public/fr/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'class="formula-panel formula-panel--r-factor" data-equation-label="4.3"'
+check_contains public/fr/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html 'class="book-formula-bridge">ou<'
+node -e 'const fs=require("fs");const html=fs.readFileSync("public/fr/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html","utf8");const normalize=(value)=>value.replace(/<[^>]+>/g," ").replace(/&nbsp;/g," ").replace(/\u00a0/g," ").replace(/&minus;/g,"-").replace(/[−–]/g,"-").replace(/&times;/g,"x").replace(/&deg;/g,"°").replace(/\s+/g," ").trim();const text=normalize(html);const labels=[...html.matchAll(/data-equation-label=\"([^\"]+)\"/g)].map((match)=>match[1]);if(labels.join(",")!=="4.1,4.2,4.3"){console.error(`Expected French chapter 4 primary equation labels 4.1,4.2,4.3 but found ${labels.join(",")}`);process.exit(1);}for(const expected of ["Revenu Post Royalty = Revenu brut - Royalty","Pétrole profit = Revenue post Royalty - Coûts récupérables","Facteur-R=Revenu net cumulé/Coûts cumulés"]){if(!text.includes(expected)){console.error(`Expected French chapter 4 formula content for: ${expected}`);process.exit(1);}}'
+check_contains public/fr/book/chapters/glossary.html 'class="book-formula api-density-formula"'
+node -e 'const fs=require("fs");const html=fs.readFileSync("public/fr/book/chapters/glossary.html","utf8");if(!/Densité\s*API\s*=/.test(html)||!/Densité\s*à\s*15°C/.test(html)||!html.includes("141.5")||!html.includes("131.5")||html.includes("API density")){console.error("Expected French glossary formula to use French density terms and decimal points");process.exit(1);}'
 node -e 'const fs=require("fs");const html=fs.readFileSync("public/book/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html","utf8");const normalize=(value)=>value.replace(/<[^>]+>/g," ").replace(/&nbsp;/g," ").replace(/\u00a0/g," ").replace(/&minus;/g,"-").replace(/[−–]/g,"-").replace(/&times;/g,"x").replace(/&deg;/g,"°").replace(/\s+/g," ").trim();const text=normalize(html);const labels=[...html.matchAll(/data-equation-label=\"([^\"]+)\"/g)].map((match)=>match[1]);if(labels.join(",")!=="4.1,4.2,4.3"){console.error(`Expected chapter 4 primary equation labels 4.1,4.2,4.3 but found ${labels.join(",")}`);process.exit(1);}for(const expected of ["Post Royalty Revenue = Gross Revenue - Royalty","Oil Profit = Gross Revenue - Royalty - Recoverable Costs","R-Factor=Cumulative Net Revenue/Cumulative Costs"]){if(!text.includes(expected)){console.error(`Expected chapter 4 formula content for: ${expected}`);process.exit(1);}}if(!/<div class=\"book-formula\" data-equation-label=\"4\.1\"/.test(html)){console.error("Expected post-royalty formula to be promoted to numbered formula 4.1.");process.exit(1);}const splitMatch=html.match(/<section class=\"formula-group formula-group--split formula-group--oil-profit\"[\s\S]*?<\/section>/);if(!splitMatch){console.error("Expected chapter 4 split oil-profit formula group");process.exit(1);}const split=splitMatch[0];const normalizedSplit=normalize(split);if(!/data-equation-label=\"4\.2\"/.test(split)){console.error("Expected oil-profit formula group to be renumbered as 4.2.");process.exit(1);}for(const expected of ["class=\"formula-split-divider\"","class=\"book-formula-bridge\">or<"]){if(!split.includes(expected)){console.error(`Expected split oil-profit structure for: ${expected}`);process.exit(1);}}for(const expected of ["Oil Profit = Revenue Post Royalty - Recoverable Costs","Oil Profit = Gross Revenue - Royalty - Recoverable Costs"]){if(!normalizedSplit.includes(expected)){console.error(`Expected split oil-profit structure for: ${expected}`);process.exit(1);}}const panelMatch=html.match(/<section class=\"formula-panel formula-panel--r-factor\"[\s\S]*?<\/section>/);if(!panelMatch){console.error("Expected chapter 4 grouped R-factor formula panel");process.exit(1);}const panel=panelMatch[0];if(!/data-equation-label=\"4\.3\"/.test(panel)){console.error("Expected grouped R-factor panel to be renumbered as 4.3.");process.exit(1);}for(const label of ["a)","b)","c)","d)"]){if(!panel.includes(`data-formula-label=\"${label}\"`)){console.error(`Expected chapter 4 R-factor label ${label}`);process.exit(1);}}const normalizedPanel=normalize(panel);for(const formula of ["R-Factor=Cumulative Revenue/Cumulative Cost","R-Factor = (Cumulative Revenue - Cumulative Opex) / Cumulative Capex","R-Factor = (Cumulative Revenues - Cumulative Profits) / (Cumulative Investments + Cumulative Opex)","R-Factor=Cumulative Net Revenue/Cumulative Costs"]){if(!normalizedPanel.includes(formula)){console.error(`Expected grouped R-factor panel content for: ${formula}`);process.exit(1);}}for(const forbidden of ["data-equation-label=\"4.4\"","data-equation-label=\"4.5\"","Formula 4.4"]){if(html.includes(forbidden)||text.includes(forbidden)){console.error(`Did not expect extra chapter 4 primary equation label: ${forbidden}`);process.exit(1);}}'
 check_contains public/book/toc.html 'List of Figures'
 check_contains public/book/toc.html 'List of Tables'
@@ -1176,16 +1231,27 @@ for (const expected of [
   "position: absolute;",
   ".toolbar-main .toolbar-search-slot.hidden {",
   "display: none !important;",
+  ".toolbar-actions .reader-language-switch[data-reader-language-switch=\"toolbar\"] {",
+  "display: inline-flex;",
+  "font-size: 0.66rem;",
+  "gap: 0.2rem;",
+  "padding: 0.2rem 0.25rem;",
+  ".toolbar-actions .reader-language-switch[data-reader-language-switch=\"toolbar\"] .reader-language-option {",
+  "min-width: 1.55rem;",
+  "min-height: 1.55rem;",
   "#mdbook-menu-bar .book-toolbar .toolbar-actions .toolbar-contact-link {",
   "display: none !important;",
   "#mdbook-search-toggle {",
   "display: inline-flex !important;",
   ".toolbar-sidebar {",
-  "gap: 1rem;",
+  "gap: 0.625rem;",
   "padding-inline-end: 0;",
+  ".toolbar-actions {",
+  "padding-inline-start: 0.5rem;",
+  "gap: 0.25rem;",
   ".book-home-icon-full {",
   "display: block;",
-  "width: var(--reader-logo-width-narrow);",
+  "width: 118px;",
   ".book-home-icon-compact {",
   "display: none;",
 ]) {
@@ -1294,9 +1360,13 @@ check_contains theme/custom.css '.book-sidebar-shell .chapter li a {'
 check_contains theme/custom.css '.book-sidebar-shell .chapter li.part-title {'
 check_exists scripts/build_static_reader_sidebar.mjs
 check_contains package.json '"build:static-reader-sidebar": "node scripts/build_static_reader_sidebar.mjs"'
-check_contains package.json 'npm run build:static-reader-sidebar -- book'
-check_contains package.json 'npm run build:static-reader-sidebar -- public/book'
-check_contains scripts/preview.sh 'npm run build:static-reader-sidebar -- "$PUBLIC_DIR/book"'
+check_contains scripts/build_site.mjs 'scripts/build_static_reader_sidebar.mjs'
+check_contains scripts/build_site.mjs 'scripts/build_reader_page_meta.mjs'
+check_contains scripts/build_site.mjs 'scripts/localize_reader_shell.mjs'
+check_contains scripts/build_site.mjs 'listSiteEditions().forEach(buildBookEdition);'
+check_contains scripts/preview.sh 'npm run build:site >/dev/null'
+check_contains scripts/preview.sh 'French site:  http://$HOST:$PORT/fr/'
+check_contains scripts/preview.sh 'French book:  http://$HOST:$PORT/fr/book/'
 node -e 'const fs=require("fs");const hbs=fs.readFileSync("theme/index.hbs","utf8");for(const expected of ["<body class=\"book-layout-booting\">","sessionStorage.getItem(\"reader-sidebar-scroll-top\")","sessionStorage.setItem(\"reader-sidebar-scroll-top\"","document.body.classList.remove(\"book-layout-booting\");"]){if(!hbs.includes(expected)){console.error(`Expected theme/index.hbs to include ${expected}`);process.exit(1);}}for(const forbidden of ["function bootstrapSidebarProjection()","reader-sidebar-scroll-offset","customElements.whenDefined(\"mdbook-sidebar-scrollbox\")"]){if(hbs.includes(forbidden)){console.error(`Expected theme/index.hbs to stop including ${forbidden}`);process.exit(1);}}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const chapterLink=block(".book-sidebar-shell .chapter li a {");for(const expected of ["font-size: 0.875rem;","line-height: 1.4286;"]){if(!chapterLink.includes(expected)){console.error(`Expected .book-sidebar-shell .chapter li a to include ${expected}`);process.exit(1);}}if(chapterLink.includes("font-size: 14px;")||chapterLink.includes("line-height: 20px;")||chapterLink.includes("font-size: 1.4rem;")||chapterLink.includes("line-height: 2rem;")){console.error("Expected .book-sidebar-shell .chapter li a to use repo-owned typography calibrated for the explicit /book root font contract");process.exit(1);}const partTitle=block(".book-sidebar-shell .chapter li.part-title {");if(!partTitle.includes("font-size: 0.75rem;")){console.error("Expected .book-sidebar-shell .chapter li.part-title to include font-size: 0.75rem;");process.exit(1);}if(partTitle.includes("font-size: 12px;")||partTitle.includes("font-size: 1.2rem;")){console.error("Expected .book-sidebar-shell .chapter li.part-title to stop using legacy sizing under the explicit /book root font contract");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const bookTitle=block(".book-sidebar-book-title {");if(!bookTitle.includes("color: var(--sidebar-fg);")){console.error("Expected .book-sidebar-book-title to align with the normal sidebar navigation text color.");process.exit(1);}const frontBackTitle=block(".reader-sidebar-section--front-matter .reader-sidebar-section-title,");if(!frontBackTitle.includes("color: var(--sidebar-fg);")){console.error("Expected Front Matter and Back Matter section titles to align with the normal sidebar navigation text color.");process.exit(1);}'

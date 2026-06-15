@@ -1,0 +1,29 @@
+{
+  "title": "Politique relative aux cookies",
+  "description": "Politique relative aux cookies du site public Upstream Atlas.",
+  "statusLine": "Statut : publication du texte final approuvé en attente",
+  "updatedAt": "Dernière mise à jour : 2026-06-02",
+  "noticeTitle": "Document en attente du texte final approuvé",
+  "noticeBody": "Cette page réserve l’URL publique canonique de la politique relative aux cookies du site Upstream Atlas. Le texte juridique final approuvé n’y est pas encore publié.",
+  "statusItems": [
+    "L’URL publique canonique de la politique relative aux cookies est réservée.",
+    "Le texte final approuvé remplacera cet avis sans modifier l’URL de la page.",
+    "Pour obtenir la formulation actuellement approuvée, contactez directement l’équipe Upstream Atlas."
+  ],
+  "sections": [
+    {
+      "heading": "Pourquoi cette page existe",
+      "paragraphs": [
+        "Upstream Atlas prépare une politique relative aux cookies officielle pour cette URL canonique.",
+        "En attendant la validation finale du texte, cette page provisoire stabilise la navigation du pied de page et évite de renvoyer une erreur pour un lien juridique."
+      ]
+    },
+    {
+      "heading": "Étapes suivantes",
+      "paragraphs": [
+        "Une fois la formulation finale approuvée, cette page sera remplacée sur place par le texte officiel de la politique relative aux cookies.",
+        "L’URL restera inchangée afin que la navigation juridique publique demeure stable au fil de l’évolution du site."
+      ]
+    }
+  ]
+}

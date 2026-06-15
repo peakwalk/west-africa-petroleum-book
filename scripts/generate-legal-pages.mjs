@@ -6,16 +6,15 @@ import {
   CONTACT_EMAIL,
   CONTACT_HREF,
   WEBSITE_LEGAL_LINKS,
-  renderBrandLink,
-  resolveShellLinks,
   renderLandingFooter,
   renderLandingHead,
+  renderLandingHeader,
 } from "./shared/landing-shell.mjs";
+import { listSiteEditions, resolveEditionPath } from "./shared/site-editions.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT = path.resolve(__dirname, "..");
-const LEGAL_SRC_DIR = path.join(ROOT, "src", "legal");
 
 const PAGES = [
   { key: "terms", output: WEBSITE_LEGAL_LINKS.terms, source: "terms-of-use.json" },
@@ -70,14 +69,16 @@ ${items.map((item) => `          <li>${escapeHtml(item)}</li>`).join("\n")}
         </ul>`;
 }
 
-function renderLegalNav(currentKey) {
+function renderLegalNav(currentKey, localeStrings) {
   const navItems = [
-    { key: "terms", href: WEBSITE_LEGAL_LINKS.terms, label: "Terms of Use" },
-    { key: "privacy", href: WEBSITE_LEGAL_LINKS.privacy, label: "Privacy Policy" },
-    { key: "cookie", href: WEBSITE_LEGAL_LINKS.cookie, label: "Cookie Policy" },
+    { key: "terms", href: WEBSITE_LEGAL_LINKS.terms, label: localeStrings.legal.links.terms },
+    { key: "privacy", href: WEBSITE_LEGAL_LINKS.privacy, label: localeStrings.legal.links.privacy },
+    { key: "cookie", href: WEBSITE_LEGAL_LINKS.cookie, label: localeStrings.legal.links.cookie },
   ];
 
-  return `      <nav class="legal-page-nav" aria-label="Legal documents">
+  return `      <nav class="legal-page-nav" aria-label="${escapeHtml(
+    localeStrings.legal.documentsAriaLabel
+  )}">
 ${navItems
   .map(({ key, href, label }) => {
     const current = key === currentKey ? ' aria-current="page"' : "";
@@ -87,57 +88,54 @@ ${navItems
       </nav>`;
 }
 
-function renderContactBlock() {
+function renderContactBlock(localeStrings) {
   return `        <section class="legal-section legal-contact-section">
-          <h2>Contact</h2>
-          <p>If you need the current approved legal text for this public website, contact <a href="${escapeHtml(
+          <h2>${escapeHtml(localeStrings.legal.contactHeading)}</h2>
+          <p>${escapeHtml(localeStrings.legal.contactBodyPrefix)} <a href="${escapeHtml(
             CONTACT_HREF
           )}">${escapeHtml(CONTACT_EMAIL)}</a>.</p>
         </section>`;
 }
 
-function renderLegalPage(page, content) {
-  const links = resolveShellLinks("legal");
+function renderLegalPage(page, content, edition) {
+  const localeStrings = edition.localeStrings;
 
   return `<!doctype html>
-<html lang="en">
+<html lang="${edition.locale}">
   <head>
 ${renderLandingHead({
+  currentLegalPage: page.key,
+  currentPage: "legal",
   description: content.description,
+  edition,
   extraStylesheets: ["assets/css/legal.css"],
   title: `${content.title} | Upstream Atlas`,
 })}
   </head>
   <body class="legal-page">
+${renderLandingHeader({ currentLegalPage: page.key, currentPage: "legal", edition })}
     <main class="legal-page-main">
-${renderBrandLink({
-  ariaLabel: "Upstream Atlas home",
-  brandHref: links.brandHref,
-  indent: "      ",
-  imageClass: "legal-page-brand-image",
-  linkClass: "legal-page-brand",
-  width: 200,
-  height: 53,
-})}
       <header class="legal-page-header">
-        <p class="legal-page-kicker">Website legal document</p>
+        <p class="legal-page-kicker">${escapeHtml(localeStrings.legal.pageKicker)}</p>
         <h1>${escapeHtml(content.title)}</h1>
         <p class="legal-page-status-line">${escapeHtml(content.statusLine)}</p>
         <p class="legal-page-updated-at">${escapeHtml(content.updatedAt)}</p>
       </header>
-${renderLegalNav(page.key)}
+${renderLegalNav(page.key, localeStrings)}
       <article class="legal-page-article">
-        <section class="legal-status-panel" aria-label="Publication status">
+        <section class="legal-status-panel" aria-label="${escapeHtml(
+          localeStrings.legal.publicationStatusAriaLabel
+        )}">
           <h2>${escapeHtml(content.noticeTitle)}</h2>
           <p>${escapeHtml(content.noticeBody)}</p>
 ${renderStatusItems(content.statusItems)}
         </section>
 ${renderSections(content.sections)}
-${renderContactBlock()}
+${renderContactBlock(localeStrings)}
       </article>
     </main>
 
-${renderLandingFooter({ currentPage: "legal" })}
+${renderLandingFooter({ currentLegalPage: page.key, currentPage: "legal", edition })}
   </body>
 </html>
 `;
@@ -145,14 +143,17 @@ ${renderLandingFooter({ currentPage: "legal" })}
 
 async function main() {
   await Promise.all(
-    PAGES.map(async (page) => {
-      const sourcePath = path.join(LEGAL_SRC_DIR, page.source);
-      const outputPath = path.join(ROOT, page.output);
-      const raw = await fs.readFile(sourcePath, "utf8");
-      const content = JSON.parse(raw);
-      const html = renderLegalPage(page, content);
-      await fs.writeFile(outputPath, html, "utf8");
-    })
+    listSiteEditions().flatMap((edition) =>
+      PAGES.map(async (page) => {
+        const sourcePath = path.join(ROOT, edition.legalRoot, page.source);
+        const outputPath = resolveEditionPath(edition, page.output);
+        const raw = await fs.readFile(sourcePath, "utf8");
+        const content = JSON.parse(raw);
+        const html = renderLegalPage(page, content, edition);
+        await fs.mkdir(path.dirname(outputPath), { recursive: true });
+        await fs.writeFile(outputPath, html, "utf8");
+      })
+    )
   );
 }
 

@@ -1,0 +1,29 @@
+{
+  "title": "Politique de confidentialité",
+  "description": "Politique de confidentialité du site public Upstream Atlas.",
+  "statusLine": "Statut : publication du texte final approuvé en attente",
+  "updatedAt": "Dernière mise à jour : 2026-06-02",
+  "noticeTitle": "Document en attente du texte final approuvé",
+  "noticeBody": "Cette page réserve l’URL publique canonique de la politique de confidentialité du site Upstream Atlas. Le texte juridique final approuvé n’y est pas encore publié.",
+  "statusItems": [
+    "L’URL publique canonique de la politique de confidentialité est réservée.",
+    "Le texte final approuvé remplacera cet avis sans changer l’URL de la page.",
+    "Pour obtenir la formulation actuellement approuvée, contactez directement l’équipe Upstream Atlas."
+  ],
+  "sections": [
+    {
+      "heading": "Pourquoi cette page existe",
+      "paragraphs": [
+        "Upstream Atlas prépare une politique de confidentialité officielle pour cette URL canonique.",
+        "Jusqu’à la disponibilité du texte approuvé, cette page provisoire maintient une navigation juridique stable et évite de diriger les lecteurs vers une ressource absente."
+      ]
+    },
+    {
+      "heading": "Étapes suivantes",
+      "paragraphs": [
+        "Une fois la formulation finale approuvée, cette page sera mise à jour sur place avec le texte officiel de la politique de confidentialité du site.",
+        "L’URL restera stable afin que le pied de page public et les références externes n’aient pas besoin d’être modifiés."
+      ]
+    }
+  ]
+}

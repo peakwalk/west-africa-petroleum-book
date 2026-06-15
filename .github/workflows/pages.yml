@@ -30,8 +30,8 @@ jobs:
           sudo mv /tmp/mdbook /usr/local/bin/mdbook
           mdbook --version
 
-      - name: Build site
-        run: npm run build:site
+      - name: Validate site
+        run: npm run test:site
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

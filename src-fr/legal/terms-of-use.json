@@ -1,0 +1,29 @@
+{
+  "title": "Conditions d’utilisation",
+  "description": "Conditions d’utilisation du site public Upstream Atlas.",
+  "statusLine": "Statut : publication du texte final approuvé en attente",
+  "updatedAt": "Dernière mise à jour : 2026-06-02",
+  "noticeTitle": "Document en attente du texte final approuvé",
+  "noticeBody": "Cette page existe afin que le site public puisse orienter les lecteurs vers l’URL juridique canonique correcte. Il ne s’agit pas encore du texte final publié des conditions d’utilisation.",
+  "statusItems": [
+    "L’URL publique canonique des conditions d’utilisation du site est réservée.",
+    "Le texte final approuvé remplacera cet avis sans modifier l’URL de la page.",
+    "Pour obtenir la formulation actuellement approuvée, contactez directement l’équipe Upstream Atlas."
+  ],
+  "sections": [
+    {
+      "heading": "Pourquoi cette page existe",
+      "paragraphs": [
+        "Upstream Atlas prépare un document officiel de conditions d’utilisation pour cette URL canonique.",
+        "En attendant la validation finale du texte, cette page provisoire stabilise la navigation juridique et évite d’envoyer les utilisateurs vers une page d’erreur."
+      ]
+    },
+    {
+      "heading": "Étapes suivantes",
+      "paragraphs": [
+        "Une fois la formulation finale approuvée, cette page sera remplacée sur place par le contenu officiel des conditions d’utilisation.",
+        "L’URL restera inchangée afin que les liens de pied de page, les favoris et les résultats de recherche continuent de pointer correctement vers la ressource."
+      ]
+    }
+  ]
+}

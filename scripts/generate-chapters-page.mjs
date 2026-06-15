@@ -7,33 +7,36 @@ import {
   renderLandingHead,
   renderLandingHeader,
 } from "./shared/landing-shell.mjs";
+import { listSiteEditions, resolveEditionPath } from "./shared/site-editions.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT = path.resolve(__dirname, "..");
-const SRC_DIR = path.join(ROOT, "src");
-const SUMMARY_PATH = path.join(SRC_DIR, "SUMMARY.md");
-
-const outputDirArg = process.argv[2] || path.join(ROOT, "chapters");
-const outputDir = path.resolve(ROOT, outputDirArg);
-const outputPath = path.join(outputDir, "index.html");
-
-const GENERIC_DESCRIPTIONS = new Map([
-  ["Book Front Matter", "Opening material and publication framing for the web edition."],
-  ["Foreword", "Context for the book's purpose, scope, and relevance to petroleum resource governance."],
-  ["General Introduction", "Introduces the analytical framework, research objective, and the structure of the book."],
-  ["General Conclusion", "Closing synthesis of the book's findings on petroleum operations, fiscal systems, and governance."],
-  ["Glossary", "Reference definitions for technical, fiscal, and institutional terminology used throughout the book."],
-  ["Bibliographical References", "Academic, policy, and industry sources cited across the book."],
+const DEFAULT_GENERIC_DESCRIPTIONS = new Map([
+  ["cover", "Opening material and publication framing for the web edition."],
+  ["foreword", "Context for the book's purpose, scope, and relevance to petroleum resource governance."],
+  ["general-introduction", "Introduces the analytical framework, research objective, and the structure of the book."],
+  ["general-conclusion", "Closing synthesis of the book's findings on petroleum operations, fiscal systems, and governance."],
+  ["glossary", "Reference definitions for technical, fiscal, and institutional terminology used throughout the book."],
+  ["bibliographical-references", "Academic, policy, and industry sources cited across the book."]
 ]);
 
-const SECTION_TAGS = new Map([
-  ["Front Matter", "Prelude"],
-  ["Part I: General Information on the Oil Industry", "Foundations"],
-  ["Part II: Oil Contracts and Oil Taxation in West Africa", "Fiscal Systems"],
-  ["Part III: Political Stability, Governance and Corruption", "Governance"],
-  ["Back Matter", "Reference"],
-]);
+const SECTION_PRIMARY_TAGS = {
+  en: {
+    "front matter": "Prelude",
+    "part i: general information on the oil industry": "Foundations",
+    "part ii: oil contracts and oil taxation in west africa": "Fiscal Systems",
+    "part iii: political stability, governance and corruption": "Governance",
+    "back matter": "Reference"
+  },
+  fr: {
+    "front matter": "Ouverture",
+    "première partie : généralités sur l’industrie pétrolière": "Fondements",
+    "deuxième partie : contrats pétroliers et fiscalité pétrolière en afrique de l’ouest": "Fiscalité",
+    "troisième partie : stabilité politique, gouvernance et corruption": "Gouvernance",
+    "back matter": "Référence"
+  }
+};
 
 function escapeHtml(value) {
   return String(value)
@@ -45,7 +48,9 @@ function escapeHtml(value) {
 }
 
 function splitSectionHeading(heading) {
-  const match = /^(Part\s+[IVX]+):\s+(.+)$/.exec(heading);
+  const match =
+    /^(Part\s+[IVX]+):\s+(.+)$/.exec(heading) ||
+    /^((?:Première|Deuxième|Troisième)\s+partie)\s*:\s*(.+)$/i.exec(heading);
   if (!match) {
     return { kicker: heading, title: heading };
   }
@@ -96,13 +101,13 @@ function buildEstimateTooltip(minutes, pieces, modeLabel) {
   return `Estimated reading time based on ${detail} and a ${modeLabel}. Actual time varies by reading speed and how closely you study figures, tables, and notes.`;
 }
 
-function estimateReadingTime(markdown, { title, sectionTitle }) {
+function estimateReadingTime(markdown, { locale, title, sectionTitle }) {
   const analysis = analyzeMarkdown(markdown);
   const figureCount = Math.max(analysis.imageCount, analysis.figureCaptionCount);
   const tableCount = analysis.markdownTableCount + analysis.htmlTableCount;
   const subsectionCount = Math.max(0, analysis.headingCount - 1);
 
-  const proseWords = analysis.wordCount.toLocaleString("en-US");
+  const proseWords = analysis.wordCount.toLocaleString(locale === "fr" ? "fr-FR" : "en-US");
   const detailPieces = [`about ${proseWords} words`];
 
   if (tableCount > 0) {
@@ -119,7 +124,7 @@ function estimateReadingTime(markdown, { title, sectionTitle }) {
       Math.round(analysis.wordCount / 210 + figureCount * 0.18 + subsectionCount * 0.08)
     );
     return {
-      label: `${minutes} min read`,
+      label: locale === "fr" ? `${minutes} min de lecture` : `${minutes} min read`,
       tooltip: buildEstimateTooltip(minutes, detailPieces, "front-matter overview pace"),
     };
   }
@@ -131,7 +136,7 @@ function estimateReadingTime(markdown, { title, sectionTitle }) {
       Math.round(analysis.wordCount / 260 + analysis.glossaryEntryCount * 0.1)
     );
     return {
-      label: `${minutes} min read`,
+      label: locale === "fr" ? `${minutes} min de lecture` : `${minutes} min read`,
       tooltip: buildEstimateTooltip(minutes, detailPieces, "browse-and-study glossary pace"),
     };
   }
@@ -143,7 +148,7 @@ function estimateReadingTime(markdown, { title, sectionTitle }) {
       Math.round(analysis.wordCount / 280 + analysis.referenceItemCount * 0.12)
     );
     return {
-      label: `${minutes} min read`,
+      label: locale === "fr" ? `${minutes} min de lecture` : `${minutes} min read`,
       tooltip: buildEstimateTooltip(minutes, detailPieces, "browse-and-study reference pace"),
     };
   }
@@ -159,7 +164,7 @@ function estimateReadingTime(markdown, { title, sectionTitle }) {
   );
 
   return {
-    label: `${minutes} min read`,
+    label: locale === "fr" ? `${minutes} min de lecture` : `${minutes} min read`,
     tooltip: buildEstimateTooltip(minutes, detailPieces, "slower technical-reading pace"),
   };
 }
@@ -190,9 +195,15 @@ function normalizeDescription(value) {
   return normalized.charAt(0).toUpperCase() + normalized.slice(1);
 }
 
-function extractDescription(markdown, title) {
-  if (GENERIC_DESCRIPTIONS.has(title)) {
-    return GENERIC_DESCRIPTIONS.get(title);
+function extractDescription(markdown, title, relativeSourcePath, localeStrings) {
+  const contentKey = path.basename(relativeSourcePath, ".md");
+  const catalogDescriptions = localeStrings.chaptersPage.genericDescriptions || {};
+  if (catalogDescriptions[contentKey]) {
+    return catalogDescriptions[contentKey];
+  }
+
+  if (DEFAULT_GENERIC_DESCRIPTIONS.has(contentKey)) {
+    return DEFAULT_GENERIC_DESCRIPTIONS.get(contentKey);
   }
 
   const body = markdown
@@ -205,7 +216,7 @@ function extractDescription(markdown, title) {
   const paragraphs = body.split(/\n\s*\n/);
 
   for (const paragraph of paragraphs) {
-    const cleaned = stripMarkdown(paragraph);
+    const cleaned = stripMarkdown(paragraph.replace(/<\/?[a-z][^>]*>/gi, " "));
     const wordCount = cleaned.split(/\s+/).filter(Boolean).length;
 
     if (wordCount < 14) {
@@ -218,27 +229,27 @@ function extractDescription(markdown, title) {
   return "Structured exploration of petroleum resource management, fiscal design, and governance in West Africa.";
 }
 
-function deriveTags(sectionTitle, title) {
+function deriveTags(sectionTitle, title, locale) {
   const tags = [];
-  const primaryTag = SECTION_TAGS.get(sectionTitle);
+  const primaryTag = (SECTION_PRIMARY_TAGS[locale] || {})[sectionTitle.toLowerCase()];
   if (primaryTag) {
     tags.push(primaryTag);
   }
 
-  if (/tax|fiscal|royalty|contract/i.test(title)) {
-    tags.push("Taxation");
-  } else if (/governance|political|corruption/i.test(title)) {
-    tags.push("Policy");
-  } else if (/country|west africa/i.test(title)) {
-    tags.push("Regional Analysis");
-  } else if (/glossary/i.test(title)) {
-    tags.push("Terminology");
-  } else if (/references/i.test(title)) {
-    tags.push("Sources");
-  } else if (/introduction|foreword/i.test(title)) {
-    tags.push("Context");
+  if (/tax|fiscal|royalty|contract|contrat|fiscalité/i.test(title)) {
+    tags.push(locale === "fr" ? "Fiscalité" : "Taxation");
+  } else if (/governance|political|corruption|gouvernance|politique/i.test(title)) {
+    tags.push(locale === "fr" ? "Politique" : "Policy");
+  } else if (/country|west africa|afrique de l’ouest|afrique de l'ouest|pays/i.test(title)) {
+    tags.push(locale === "fr" ? "Analyse régionale" : "Regional Analysis");
+  } else if (/glossary|glossaire/i.test(title)) {
+    tags.push(locale === "fr" ? "Terminologie" : "Terminology");
+  } else if (/references|références/i.test(title)) {
+    tags.push(locale === "fr" ? "Sources" : "Sources");
+  } else if (/introduction|foreword|avant-propos/i.test(title)) {
+    tags.push(locale === "fr" ? "Contexte" : "Context");
   } else {
-    tags.push("Reading");
+    tags.push(locale === "fr" ? "Lecture" : "Reading");
   }
 
   return tags.slice(0, 2);
@@ -247,17 +258,18 @@ function deriveTags(sectionTitle, title) {
 function parseSummary(summary) {
   const sections = [];
   let currentSection = null;
+  let skippedBookHeading = false;
 
   for (const line of summary.split(/\r?\n/)) {
     const sectionMatch = /^#\s+(.+)$/.exec(line.trim());
     if (sectionMatch) {
-      const heading = sectionMatch[1];
-
-      if (heading === "Summary") {
+      if (!skippedBookHeading) {
+        skippedBookHeading = true;
         currentSection = null;
         continue;
       }
 
+      const heading = sectionMatch[1];
       currentSection = { title: heading, items: [] };
       sections.push(currentSection);
       continue;
@@ -279,23 +291,33 @@ function parseSummary(summary) {
   return sections.filter((section) => section.items.length > 0);
 }
 
-function getCardLabel(title, sectionTitle) {
-  const chapterMatch = /^(Chapter\s+\d+):\s*(.+)$/.exec(title);
+function getCardLabel(title, sectionTitle, locale) {
+  const chapterMatch = /^(?:Chapter|Chapitre)\s+(\d+)\s*:\s*(.+)$/i.exec(title);
   if (chapterMatch) {
     return {
-      number: chapterMatch[1],
+      number: locale === "fr" ? `Chapitre ${chapterMatch[1]}` : `Chapter ${chapterMatch[1]}`,
       heading: chapterMatch[2],
     };
   }
 
   return {
-    number: sectionTitle === "Front Matter" ? "Prelude" : "Reference",
+    number:
+      sectionTitle.toLowerCase() === "front matter"
+        ? locale === "fr"
+          ? "Ouverture"
+          : "Prelude"
+        : locale === "fr"
+          ? "Référence"
+          : "Reference",
     heading: title,
   };
 }
 
-async function buildChapterData() {
-  const summary = await fs.readFile(SUMMARY_PATH, "utf8");
+async function buildChapterData(edition) {
+  const srcDir = path.join(ROOT, edition.sourceRoot);
+  const summaryPath = path.join(ROOT, edition.summaryPath);
+  const baseBookHref = edition.routePrefix ? `/${edition.routePrefix}/book/` : "/book/";
+  const summary = await fs.readFile(summaryPath, "utf8");
   const sections = parseSummary(summary);
 
   const enrichedSections = [];
@@ -304,19 +326,28 @@ async function buildChapterData() {
     const items = [];
 
     for (const item of section.items) {
-      const sourcePath = path.join(SRC_DIR, item.relativeSourcePath);
+      const sourcePath = path.join(srcDir, item.relativeSourcePath);
       const markdown = await fs.readFile(sourcePath, "utf8");
-      const card = getCardLabel(item.title, section.title);
-      const bookHref = `../book/${item.relativeSourcePath.replace(/\.md$/, ".html")}`;
+      const card = getCardLabel(item.title, section.title, edition.locale);
+      const bookHref = `${baseBookHref}${item.relativeSourcePath.replace(/\.md$/, ".html")}`;
 
       items.push({
         sectionTitle: section.title,
         title: card.heading,
         number: card.number,
         href: bookHref,
-        description: extractDescription(markdown, item.title),
-        readingTime: estimateReadingTime(markdown, { title: item.title, sectionTitle: section.title }),
-        tags: deriveTags(section.title, item.title),
+        description: extractDescription(
+          markdown,
+          item.title,
+          item.relativeSourcePath,
+          edition.localeStrings
+        ),
+        readingTime: estimateReadingTime(markdown, {
+          locale: edition.locale,
+          title: item.title,
+          sectionTitle: section.title
+        }),
+        tags: deriveTags(section.title, item.title, edition.locale),
       });
     }
 
@@ -405,35 +436,33 @@ function renderSection(section) {
   `;
 }
 
-function renderAdditionalResources() {
+function renderAdditionalResources(edition) {
   const resources = [
     {
-      title: "Glossary of Terms",
-      href: "../book/chapters/glossary.html",
-      description: "Technical and fiscal terminology used throughout the book.",
+      key: "glossary",
+      href: `${edition.routePrefix ? `/${edition.routePrefix}` : ""}/book/chapters/glossary.html`,
     },
     {
-      title: "References & Citations",
-      href: "../book/chapters/bibliographical-references.html",
-      description: "Academic, policy, and industry sources cited across the study.",
+      key: "references",
+      href: `${edition.routePrefix ? `/${edition.routePrefix}` : ""}/book/chapters/bibliographical-references.html`,
     },
     {
-      title: "General Conclusion",
-      href: "../book/chapters/general-conclusion.html",
-      description: "Closing synthesis of the book's findings on petroleum operations and governance.",
+      key: "conclusion",
+      href: `${edition.routePrefix ? `/${edition.routePrefix}` : ""}/book/chapters/general-conclusion.html`,
     },
   ];
+  const copy = edition.localeStrings.chaptersPage.additionalResources;
 
   return `
       <section class="additional-resources">
-        <h3>Additional Resources</h3>
+        <h3>${escapeHtml(edition.localeStrings.chaptersPage.additionalResourcesHeading)}</h3>
         <div class="additional-resources-grid">
           ${resources
             .map(
               (resource) => `
                 <a class="additional-resource-card" href="${escapeHtml(resource.href)}">
-                  <div class="additional-resource-title">${escapeHtml(resource.title)}</div>
-                  <p>${escapeHtml(resource.description)}</p>
+                  <div class="additional-resource-title">${escapeHtml(copy[resource.key].title)}</div>
+                  <p>${escapeHtml(copy[resource.key].description)}</p>
                 </a>
               `
             )
@@ -443,27 +472,29 @@ function renderAdditionalResources() {
   `;
 }
 
-function renderPage(sections) {
+function renderPage(sections, edition) {
+  const localeStrings = edition.localeStrings;
   return `<!doctype html>
-<html lang="en">
+<html lang="${edition.locale}">
   <head>
 ${renderLandingHead({
   basePath: "../",
-  description:
-    "Browse the chapter library for Exploration and Exploitation of Petroleum Resources in West Africa.",
+  currentPage: "chapters",
+  description: localeStrings.meta.chaptersDescription,
+  edition,
   extraStylesheets: ["assets/css/chapters.css"],
-  title: "Chapter Library | Exploration and Exploitation of Petroleum Resources in West Africa",
+  title: localeStrings.meta.chaptersTitle,
 })}
   </head>
   <body class="landing-shell chapters-shell">
-${renderLandingHeader({ currentPage: "chapters", logoBasePath: "../" })}
+${renderLandingHeader({ currentPage: "chapters", edition, logoBasePath: "../" })}
 
     <main class="chapters-main">
       <section class="chapters-hero">
-        <p class="eyebrow">Chapter Library</p>
-        <h1>Browse the book by part, chapter, and reference section.</h1>
+        <p class="eyebrow">${escapeHtml(localeStrings.chaptersPage.eyebrow)}</p>
+        <h1>${escapeHtml(localeStrings.chaptersPage.heroTitle)}</h1>
         <p class="chapters-intro">
-          A structured entry point into West Africa petroleum resource management, from upstream operations and fiscal design to governance, country analysis, and reference material.
+          ${escapeHtml(localeStrings.chaptersPage.intro)}
         </p>
       </section>
 
@@ -471,19 +502,25 @@ ${renderLandingHeader({ currentPage: "chapters", logoBasePath: "../" })}
         ${sections.map(renderSection).join("\n")}
       </div>
 
-      ${renderAdditionalResources()}
+      ${renderAdditionalResources(edition)}
     </main>
 
-${renderLandingFooter({ currentPage: "chapters", logoBasePath: "../" })}
+${renderLandingFooter({ currentPage: "chapters", edition, logoBasePath: "../" })}
   </body>
 </html>
 `;
 }
 
 async function main() {
-  const sections = await buildChapterData();
-  await fs.mkdir(outputDir, { recursive: true });
-  await fs.writeFile(outputPath, renderPage(sections), "utf8");
+  await Promise.all(
+    listSiteEditions().map(async (edition) => {
+      const outputDir = resolveEditionPath(edition, "chapters");
+      const outputPath = path.join(outputDir, "index.html");
+      const sections = await buildChapterData(edition);
+      await fs.mkdir(outputDir, { recursive: true });
+      await fs.writeFile(outputPath, renderPage(sections, edition), "utf8");
+    })
+  );
 }
 
 main().catch((error) => {

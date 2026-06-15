@@ -282,6 +282,47 @@ class ExtractMarkdownTests(unittest.TestCase):
             ],
         )
 
+    def test_extracts_french_html_table_caption_while_ignoring_table_cells(self) -> None:
+        tmp_dir = Path(tempfile.mkdtemp())
+        chapter_dir = tmp_dir / "chapters"
+        chapter_dir.mkdir(parents=True, exist_ok=True)
+        chapter_path = chapter_dir / "chapter-07-french-html-table-caption.md"
+        chapter_path.write_text(
+            "# Chapitre 7 : Mesure\n\n"
+            "## 7.1- *Comptage*\n\n"
+            "Paragraphe d’introduction.\n\n"
+            "<table>\n"
+            "<caption><p>Tableau 4:\n"
+            "Calcul des pertes financières qui résulteraient d’une erreur de mesure\n"
+            "de 0,4 %</p></caption>\n"
+            "<tr><td>Bénin</td><td>1</td></tr>\n"
+            "</table>\n\n"
+            "Paragraphe de clôture.\n",
+            encoding="utf-8",
+        )
+        summary_path = tmp_dir / "SUMMARY.md"
+        summary_path.write_text(
+            "# Summary\n\n"
+            "- [Chapitre 7 : Mesure](chapters/chapter-07-french-html-table-caption.md)\n",
+            encoding="utf-8",
+        )
+
+        book = extract_markdown_book(summary_path, chapter_dir)
+        chapter = book.chapters[0]
+
+        self.assertEqual(
+            [block.kind for block in chapter.body],
+            ["paragraph", "caption", "paragraph"],
+        )
+        self.assertEqual(
+            [block.text for block in chapter.body],
+            [
+                "Paragraphe d’introduction.",
+                "Tableau 4: Calcul des pertes financières qui résulteraient d’une erreur de mesure de 0,4 %",
+                "Paragraphe de clôture.",
+            ],
+        )
+
     def test_normalizes_html_formula_blocks_and_ignores_formula_bridge(self) -> None:
         tmp_dir = Path(tempfile.mkdtemp())
         chapter_dir = tmp_dir / "chapters"

@@ -120,6 +120,53 @@ img {
   gap: 0.75rem;
 }
 
+.site-language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.55rem;
+  border: 1px solid rgba(49, 99, 194, 0.18);
+  border-radius: 999px;
+  background: rgba(49, 99, 194, 0.05);
+  color: var(--text-muted);
+  font-family: "Manrope", "Inter", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.site-language-label {
+  color: rgba(11, 31, 51, 0.52);
+}
+
+.site-language-option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  min-height: 2rem;
+  padding: 0 0.5rem;
+  border-radius: 999px;
+}
+
+.site-language-option.is-current {
+  background: rgba(49, 99, 194, 0.12);
+  color: var(--brand-blue-deep);
+}
+
+a.site-language-option {
+  color: var(--brand-blue-deep);
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+a.site-language-option:hover,
+a.site-language-option:focus-visible {
+  background: rgba(49, 99, 194, 0.12);
+  color: var(--brand-blue);
+  transform: translateY(-1px);
+}
+
 .header-contact-link {
   position: relative;
   display: inline-flex;
@@ -255,6 +302,13 @@ img {
 .mobile-nav-panel a:focus-visible {
   background: rgba(49, 99, 194, 0.08);
   color: var(--brand-blue);
+}
+
+.mobile-nav-panel .site-language-switch {
+  justify-content: space-between;
+  margin-top: 0.15rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.8rem;
 }
 
 .mobile-nav-contact {
@@ -1286,6 +1340,10 @@ img {
     justify-self: end;
   }
 
+  .site-language-switch {
+    padding-inline: 0.5rem;
+  }
+
   .hero-layout,
   .feature-grid,
   .reference-evidence-grid,
@@ -1330,6 +1388,10 @@ img {
     width: 2.75rem;
     height: 2.75rem;
   }
+
+  .site-language-label {
+    display: none;
+  }
 }
 
 @media (max-width: 640px) {
@@ -1357,6 +1419,11 @@ img {
   .button,
   .button-header {
     width: 100%;
+  }
+
+  .site-language-switch {
+    width: 100%;
+    justify-content: center;
   }
 
   .hero-proof {
@@ -1428,5 +1495,9 @@ img {
     gap: 0.45rem;
     min-width: 6.35rem;
     padding: 0.7rem 0.95rem;
+  }
+
+  .site-language-option {
+    min-width: 1.85rem;
   }
 }

@@ -10,6 +10,7 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
+from scripts.edition_config import available_edition_locales, get_edition
 from scripts.docx_figures import (
     FigureCoverageDiff,
     FigureObjectStats,
@@ -35,10 +36,11 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Check Markdown and asset coverage for DOCX figure inventory."
     )
-    parser.add_argument("--docx", default=str(DEFAULT_DOCX))
-    parser.add_argument("--summary", default=str(DEFAULT_SUMMARY))
-    parser.add_argument("--chapters-dir", default=str(DEFAULT_CHAPTERS_DIR))
-    parser.add_argument("--manifest", default=str(DEFAULT_MANIFEST))
+    parser.add_argument("--edition", choices=available_edition_locales())
+    parser.add_argument("--docx")
+    parser.add_argument("--summary")
+    parser.add_argument("--chapters-dir")
+    parser.add_argument("--manifest")
     parser.add_argument("--json", action="store_true")
     return parser.parse_args()
 
@@ -179,22 +181,40 @@ def _coverage_diffs(
 
 def main() -> int:
     args = parse_args()
-    manifest_path = Path(args.manifest)
+    edition = get_edition(args.edition) if args.edition else None
+    docx_path = Path(args.docx) if args.docx else edition.docx_path if edition else DEFAULT_DOCX
+    summary_path = (
+        Path(args.summary) if args.summary else edition.summary_path if edition else DEFAULT_SUMMARY
+    )
+    chapters_dir = (
+        Path(args.chapters_dir)
+        if args.chapters_dir
+        else edition.chapter_root
+        if edition
+        else DEFAULT_CHAPTERS_DIR
+    )
+    manifest_path = (
+        Path(args.manifest)
+        if args.manifest
+        else edition.figure_manifest_path
+        if edition
+        else DEFAULT_MANIFEST
+    )
     if manifest_path.exists():
         records = _load_manifest(manifest_path)
     else:
         records = build_figure_inventory(
-            docx_path=Path(args.docx),
-            chapters_dir=Path(args.chapters_dir),
-            summary_path=Path(args.summary),
+            docx_path=docx_path,
+            chapters_dir=chapters_dir,
+            summary_path=summary_path,
         )
 
-    chapter_paths = _chapter_paths(Path(args.summary))
+    chapter_paths = _chapter_paths(summary_path)
     markdown_refs = _markdown_image_refs(chapter_paths)
     diffs = _coverage_diffs(
         records=records,
         markdown_refs=markdown_refs,
-        images_root=Path(args.chapters_dir).parent / "images",
+        images_root=chapters_dir.parent / "images",
     )
     if diffs:
         print(

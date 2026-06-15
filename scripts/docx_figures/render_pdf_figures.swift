@@ -137,8 +137,15 @@ func parseArguments() throws -> Config {
 }
 
 func bestPlacement(document: PDFDocument, figureNumber: Int) -> CaptionPlacement? {
-    let needle = "Figure \(figureNumber):"
-    let selections = document.findString(needle, withOptions: .caseInsensitive)
+    let needles = [
+        "Figure \(figureNumber):",
+        "Figure \(figureNumber) :",
+        "Figure \(figureNumber)\u{00A0}:",
+        "Figure \(figureNumber)\u{202F}:",
+    ]
+    let selections = needles.flatMap { needle in
+        document.findString(needle, withOptions: .caseInsensitive)
+    }
     let placements = selections.compactMap { selection -> CaptionPlacement? in
         guard let page = selection.pages.first else { return nil }
         let bounds = selection.bounds(for: page)

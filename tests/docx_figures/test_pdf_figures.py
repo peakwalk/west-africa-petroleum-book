@@ -231,6 +231,60 @@ class PdfFiguresTest(unittest.TestCase):
             self.assertEqual(created, [24])
             self.assertTrue((output_dir / "figure-024.webp").exists())
 
+    def test_ensure_lossless_webp_outputs_falls_back_to_sips_when_cwebp_is_missing(self) -> None:
+        png_bytes = (
+            b"\x89PNG\r\n\x1a\n"
+            b"\x00\x00\x00\rIHDR"
+            b"\x00\x00\x00\x01\x00\x00\x00\x01\x08\x06\x00\x00\x00"
+            b"\x1f\x15\xc4\x89"
+            b"\x00\x00\x00\rIDATx\x9cc````\xf8\x0f\x00\x01\x04\x01\x00"
+            b"\x18\xdd\x8d\xb4"
+            b"\x00\x00\x00\x00IEND\xaeB`\x82"
+        )
+        with tempfile.TemporaryDirectory() as tmpdir:
+            output_dir = Path(tmpdir)
+            png_path = output_dir / "figure-024.png"
+            png_path.write_bytes(png_bytes)
+
+            sips = output_dir / "fake-sips"
+            sips.write_text(
+                "#!/bin/sh\n"
+                "in=\"\"\n"
+                "out=\"\"\n"
+                "while [ \"$#\" -gt 0 ]; do\n"
+                "  case \"$1\" in\n"
+                "    --out)\n"
+                "      shift\n"
+                "      out=\"$1\"\n"
+                "      ;;\n"
+                "    -s)\n"
+                "      shift\n"
+                "      shift\n"
+                "      ;;\n"
+                "    *)\n"
+                "      in=\"$1\"\n"
+                "      ;;\n"
+                "  esac\n"
+                "  shift\n"
+                "done\n"
+                "cp \"$in\" \"$out\"\n",
+                encoding="utf-8",
+            )
+            sips.chmod(0o755)
+
+            with mock.patch("scripts.render_pdf_figures.find_cwebp_binary", return_value=None):
+                with mock.patch(
+                    "scripts.render_pdf_figures.find_sips_binary",
+                    return_value=sips,
+                ):
+                    created = ensure_lossless_webp_outputs(
+                        output_dir=output_dir,
+                        figure_numbers=[24],
+                    )
+
+            self.assertEqual(created, [24])
+            self.assertTrue((output_dir / "figure-024.webp").exists())
+
 
 if __name__ == "__main__":
     unittest.main()

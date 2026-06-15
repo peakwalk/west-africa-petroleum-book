@@ -13,30 +13,19 @@ require_command() {
   fi
 }
 
-require_command mdbook
 require_command python3
 
 cd "$ROOT_DIR"
 
-rm -rf "$PUBLIC_DIR"
-mkdir -p "$PUBLIC_DIR"
-
-npm run build:index >/dev/null
-npm run build:chapters >/dev/null
-cp "$ROOT_DIR/index.html" "$PUBLIC_DIR/index.html"
-cp -R "$ROOT_DIR/assets" "$PUBLIC_DIR/assets"
-cp -R "$ROOT_DIR/chapters" "$PUBLIC_DIR/chapters"
-
-mdbook build --dest-dir "$PUBLIC_DIR/book"
-npm run build:book-js -- "$PUBLIC_DIR/book" >/dev/null
-npm run build:static-reader-sidebar -- "$PUBLIC_DIR/book" >/dev/null
-npm run build:reader-meta >/dev/null
+npm run build:site >/dev/null
 
 cat <<EOF
 
 Preview site is ready:
   Landing page: http://$HOST:$PORT/
   mdBook:       http://$HOST:$PORT/book/
+  French site:  http://$HOST:$PORT/fr/
+  French book:  http://$HOST:$PORT/fr/book/
 
 Press Ctrl+C to stop the server.
 

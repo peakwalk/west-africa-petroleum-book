@@ -105,6 +105,14 @@ class ThemeCustomCssTest(unittest.TestCase):
         self.assertIn("figure-card--panel-pair", css)
         self.assertIn("figure-card--panel-pair", js)
 
+    def test_figure_annotation_accepts_french_caption_spacing_and_panel_pair_variants(self) -> None:
+        js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
+
+        self.assertIn(r'/^Figure\s+\d+\s*:/i', js)
+        self.assertIn(r'/^Figure\s+(\d+)\s*:\s*(.*)$/i', js)
+        self.assertIn('"2": ["figure-card--panel-pair"]', js)
+        self.assertIn('"7": ["figure-card--panel-pair"]', js)
+
     def test_table_layout_uses_card_container(self) -> None:
         css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
         js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
@@ -187,6 +195,69 @@ class ThemeCustomCssTest(unittest.TestCase):
         self.assertIn("tableCard.appendChild(caption);", js)
         self.assertIn("tableCard.appendChild(tableShell);", js)
         self.assertIn("tableCard.appendChild(notesGroup);", js)
+        self.assertRegex(css, r"\.content th p \{[^}]*color:\s*inherit;")
+
+    def test_table_annotation_supports_french_tableau_captions_and_docx_tables(self) -> None:
+        js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("Tableau", js)
+        self.assertIn("function getLocalizedTableLabel()", js)
+        self.assertIn('document.documentElement.lang || "en"', js)
+        self.assertIn("function normalizeDocxTableStructure(table)", js)
+        self.assertIn('table.classList.contains("t1")', js)
+        self.assertIn("table.createTHead()", js)
+
+    def test_mobile_reader_keeps_language_switch_in_toolbar_before_search(self) -> None:
+        css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
+        sidebar_switch_block = _rule_block(css, '.reader-language-switch[data-reader-language-switch="sidebar"]')
+
+        self.assertIn("display: none;", sidebar_switch_block)
+        self.assertRegex(
+            css,
+            re.compile(
+                r"@media \(max-width: 900px\) \{.*?"
+                r"\.toolbar-actions \{\s*min-width: 0;\s*padding-inline-start: 0\.5rem;\s*padding-inline-end: 0;\s*gap: 0\.25rem;\s*\}.*?"
+                r'\.toolbar-actions \.reader-language-switch\[data-reader-language-switch="toolbar"\] \{.*?display: inline-flex;.*?\}.*?'
+                r'#mdbook-search-toggle \{\s*display: inline-flex !important;\s*\}',
+                re.DOTALL,
+            ),
+        )
+
+    def test_mobile_reader_compacts_logo_and_toolbar_switch(self) -> None:
+        css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
+
+        self.assertRegex(
+            css,
+            re.compile(
+                r"@media \(max-width: 900px\) \{.*?"
+                r"\.toolbar-sidebar \{\s*gap: 0\.625rem;\s*padding-inline-end: 0;\s*\}.*?"
+                r'\.toolbar-actions \.reader-language-switch\[data-reader-language-switch="toolbar"\] \{\s*display: inline-flex;\s*flex-shrink: 0;\s*font-size: 0\.66rem;\s*gap: 0\.2rem;\s*padding: 0\.2rem 0\.25rem;\s*\}.*?'
+                r'\.toolbar-actions \.reader-language-switch\[data-reader-language-switch="toolbar"\] \.reader-language-option \{\s*min-width: 1\.55rem;\s*min-height: 1\.55rem;\s*padding: 0 0\.35rem;\s*\}.*?'
+                r"\.book-home-icon-full \{\s*display: block;\s*width: 118px;\s*\}",
+                re.DOTALL,
+            ),
+        )
+
+    def test_mobile_reader_scales_logo_width_across_narrow_breakpoints(self) -> None:
+        css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
+
+        self.assertRegex(
+            css,
+            re.compile(
+                r"@media \(min-width: 375px\) and \(max-width: 413px\) \{.*?"
+                r"\.book-home-icon-full \{\s*width: 160px;\s*\}",
+                re.DOTALL,
+            ),
+        )
+
+        self.assertRegex(
+            css,
+            re.compile(
+                r"@media \(min-width: 414px\) and \(max-width: 900px\) \{.*?"
+                r"\.book-home-icon-full \{\s*width: var\(--reader-logo-width-narrow\);\s*\}",
+                re.DOTALL,
+            ),
+        )
 
     def test_table_formula_cards_use_compact_padding_without_excess_chrome(self) -> None:
         css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")

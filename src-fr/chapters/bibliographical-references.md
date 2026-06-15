@@ -1,0 +1,53 @@
+# Références bibliographiques
+
+- AIE (2023): Rapport mondial sur les investissements énergétiques
+- Alfred Kjemperud (2007): Petroleum contracts: fiscal régime – Taxation, The bridge Group AS
+- Anne-Charlotte ARMYNOT DU CHATELET, Alban LIEGEARD (2016) : Les marchés pétroliers et gaziers mondiaux et la sécurité d’approvisionnement, in Panorama énergies-climat N°11 5p
+- Banque mondiale (2023-2024) : Indicateurs mondiaux de gouvernance
+- Bruce S. Hart (2000): 3-D Seismic Interpretation: A Primer for Geologists, McGill University, Montreal, Quebec; SEPM Short Course N°48 123p
+- Bruno Carton (2000) : Le pétrole en Afrique, la violence faite aux peuples. Groupe de Recherche pour une Stratégie économique alternative. 246 p
+- Claire Kupper & Margaux Vaghi (2014) : Cartographie du pétrole en afrique de l’ouest, Groupe de Recherche et d’Information sur la Paix et la sécurité (GRIP) 20 p.
+- CNUCED (2023) : Rapport sur l'investissement dans le monde
+- Commission de la CEDEAO (2019) : Politique de Développement du Secteur des Hydrocarbures de la CEDEAO (PDSHC)
+- Dankwa Kankam et Ishmael Ackah (2014): The Optimal Petroleum Fiscal Regime for Ghana: An Analysis of Available Alternatives, International Journal of Energy Economics and Policy Vol. 4, No. 3, 2014, pp.400-410
+- Dossou Rodrigue AKOHOU (2008) : Exploitation pétrolière en mer et Droit International : Aspects juridiques et environnementaux pour les Etats côtiers du Golfe de Guinée, Division des affaires maritimes et du droit de la mer bureau des affaires juridiques, nations unies, new york
+- Energy Institute (2024): Statistical Review of World Energy 2024, 73ème edition, 72 p
+- FMI (2023) : Transparence budgétaire et rapports par pays
+- Ezekiel Adesina, Ben Asante, Natalia Camba, Fisoye Delano, Richard Donohoe et al (2017) : Comprendre les options du gaz naturel et du GNL, Département Américain de l’Energie, 248 p.
+- Farouk Al-Kasim (2007) Resource Management, Petroteam Stavanger
+- Gunnar Søiland (2000): Resource management aspects. Field Development, Concept selection, technical flexibility, Norwegian Petroleum Directorate
+- Gunnar V. Søiland (2020): Pre-license preparation Assessing the petroleum volume, Norwegian Petroleum Directorate
+- Gunnar V. Søiland (2021) Petroleum Value Chain and Decision Gate, Norwegian Petroleum Directorate
+- Ibrahima BA (2022) : Rapport de collecte des données et analyse diagnostique des législations pétrolières dans les Etats membres de la CEDEAO, Rapport final ; CEDEAO
+- Kojo Asante, Abdul-Gafaru Abdulai and Giles Mohan (2021): The ‘new’ institutional politics of Ghana’s hydrocarbon governance, ESID Working Paper No. 169 35 p
+- Kanga Konan (2015) : Etude pour l’élaboration d’un programme régional de facilitation et l’approvisionnement en produits pétroliers de l’espace CEDEAO- Rapport final, Commission de la CEDEAO, 120 p
+- Jean-Pierre Favennec, Philippe Copinschi (1999) : L’amont pétrolier en Afrique de l’Ouest : État des lieux, hal-02437351 21p
+- Jianjie Niu, Qi Liu, Jing Lv, Bo Peng (2020): Review on microbial enhanced oil recovery: Mechanisms, modeling and field trials, Journal of Petroleum Science and Engineering, 11 p.
+- Michael E. Brownfield and Ronald R. Charpentier (…): Geology and Total Petroleum Systems of the Gulf of Guinea Province of West Africa, U.S. Geological Survey Bulletin 2207-C, 39 p.
+- M. K. Appenteng, et Al (2013): Physicochemical characterization of the Jubilee crude oil, Elixir Appl. Chem. 54 (2013) 12513-12517
+- NNPC (2022) : Rapport annuel
+- NRGI (2022) : Indice de gouvernance des ressources
+- OCDE (2022) : Rapport sur la corruption d'agents publics étrangers
+- Pierre-Réné BAUQUIS, Emmanuelle BAUQUIS (2005) : Comprendre l’avenir Pétrole et Gaz naturel, 2ème édition
+- Petroleum Commission (2016): Overview: Ghana’s Oil and Gas Fiscal Regime
+- Pwc (2017): Tax Guide for Petroleum Operations in Ghana, November
+- REPUBLIQUE DE COTE D’IVOIRE (1993) : Contrat Type De Partage De Production d’hydrocarbures
+- REPUBLIQUE DE COTE D’IVOIRE (2012) : Ordonnance N°2012-369 du 18 avril 2012 modifiant la loi N°96-669 du 29 août 1996 portant Code Pétrolier
+- REPUBLIQUE DE COTE D’IVOIRE (1996) : loi N°96-669 du 29 août 1996 portant Code Pétrolier
+- REPUBLIQUE DE COTE D’IVOIRE (2019) : Contrat de Partage de Production d'Hydrocarbures Bloc Cl-705
+- Republic of Ghana (2018): Petroleum (Exploration and Production) (General) Regulations, L.I. 2359
+- Republic of Ghana (2016): Petroleum Exploration and Production Act, Act 919
+- Republic of Ghana (2016): Petroleum (Exploration and Production) (Measurement) Regulations, L.I.2246
+- Republic of Ghana (2016), GNPC (2000) Model Petroleum Agreement of Ghana
+- République du Sénégal (2012): Contrat de Recherche et de Partage de Production d’Hydrocarbures, Cayar Offshore profond
+- République du Sénégal (2019) : Loi n°2019‐03 du 1er février 2019 portant Code pétrolier
+- République du Sénégal (2020) : Décret n°2020‐2061 du 27 octobre 2020 fixant les modalités d’application de la loi n°2019‐03 du 1er février 2019 portant Code pétrolier
+- République du Bénin (2019): Loi n°2019-06 du 15 novembre 2019 portant Code pétrolier
+- République du Bénin (2020): Décret N°2020-501 du 14 octobre 2020 fixant les modalités d’application de la Loi n°2019-06 du 15 novembre 2019 portant Code pétrolier
+- République du Niger (2017) : Loi N°2017-63 du 04 août 2017 portant Code Pétrolier
+- République du Niger (2018) : Décret N°2018-659 du 25 septembre 2018 fixant les modalités d’application de la Loi N°2017-63 du 04 août 2017 portant Code Pétrolier
+- Sachs et Warner (1995) : Abondance des ressources naturelles et croissance économique
+- Suzanne AMELINA (2006) : Bénin - Le demi-verre de pétrole
+- Tarek Ahmed (2010): Reservoir engineering handbook, 4ème édition
+- Transparency International (2024) : Indice de perception de la corruption
+- Wahab L and Diji CJ (2017): Comparative Analysis of Nigeria Petroleum Fiscal Systems Using Royalty and Tax Optimization Models to Drive Investments, Centre for Petroleum, Energy Economics and Law, University of Ibadan, Nigeria, 14 p.

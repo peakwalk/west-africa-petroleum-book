@@ -1,3 +1,5 @@
+import { getPeerSiteEdition } from "./site-editions.mjs";
+
 function escapeHtml(value) {
   return String(value)
     .replace(/&/g, "&amp;")
@@ -15,6 +17,124 @@ function resolveHomepageIconSpriteHref(basePath, iconName) {
   return resolveAssetPath(basePath, `assets/icons/homepage-sprite.svg#${iconName}`);
 }
 
+function editionBaseHref(edition) {
+  return edition.routePrefix ? `/${edition.routePrefix}/` : "/";
+}
+
+function buildPageHref(edition, currentPage, currentLegalPage = null, fragment = "") {
+  const baseHref = editionBaseHref(edition);
+
+  if (currentPage === "chapters") {
+    return `${baseHref}chapters/${fragment}`;
+  }
+
+  if (currentPage === "legal") {
+    return `${baseHref}${WEBSITE_LEGAL_LINKS[currentLegalPage || "terms"]}${fragment}`;
+  }
+
+  return `${baseHref}${fragment}`;
+}
+
+function buildLanguageSwitchHref(edition, currentPage, currentLegalPage = null) {
+  const href = buildPageHref(edition, currentPage, currentLegalPage);
+  const separator = href.includes("?") ? "&" : "?";
+  return `${href}${separator}lang=${edition.locale}`;
+}
+
+function renderEditionNeutralRedirectScript(targetHref) {
+  return `    <script>
+      (function () {
+        const params = new URLSearchParams(window.location.search);
+        const explicit = params.get("lang");
+        const storageKey = "upstream-atlas-edition";
+
+        if (explicit === "en" || explicit === "fr") {
+          try {
+            window.localStorage.setItem(storageKey, explicit);
+          } catch (error) {
+            // Ignore storage failures and keep the explicit route.
+          }
+          return;
+        }
+
+        let preferredEdition = "";
+        try {
+          preferredEdition = window.localStorage.getItem(storageKey) || "";
+        } catch (error) {
+          preferredEdition = "";
+        }
+
+        if (preferredEdition === "en") {
+          return;
+        }
+
+        if (preferredEdition === "fr") {
+          window.location.replace(${JSON.stringify(targetHref)});
+          return;
+        }
+
+        const browserLanguages = []
+          .concat(window.navigator.languages || [])
+          .concat(window.navigator.language || [])
+          .filter(Boolean)
+          .map((value) => String(value).toLowerCase());
+
+        if (browserLanguages.some((value) => value.startsWith("fr"))) {
+          window.location.replace(${JSON.stringify(targetHref)});
+        }
+      })();
+    </script>`;
+}
+
+function renderSpriteIcon({ className, href }) {
+  return `<svg class="${escapeHtml(className)}" aria-hidden="true" focusable="false"><use href="${escapeHtml(href)}"></use></svg>`;
+}
+
+function renderHeaderContactLink(localeStrings) {
+  return `        <a
+          class="header-contact-link"
+          href="${escapeHtml(CONTACT_HREF)}"
+          aria-label="${escapeHtml(localeStrings.buttons.contact)}"
+          data-tooltip="${escapeHtml(localeStrings.buttons.contact)}"
+        >
+          <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+            <path d="M4 7.5h16v9H4z"></path>
+            <path d="m4.75 8 7.25 6 7.25-6"></path>
+          </svg>
+        </a>`;
+}
+
+function renderLanguageSwitch({ edition, currentPage, currentLegalPage = null, localeStrings }) {
+  const peerEdition = getPeerSiteEdition(edition.locale);
+  if (!peerEdition) {
+    return "";
+  }
+
+  const peerHref = buildLanguageSwitchHref(peerEdition, currentPage, currentLegalPage);
+  const options = localeStrings.languageSwitch.options;
+  const orderedLocales = ["en", "fr"];
+  const renderedOptions = orderedLocales
+    .map((locale) => {
+      const label = options[locale];
+      if (locale === edition.locale) {
+        return `<span class="site-language-option is-current" aria-current="page">${escapeHtml(
+          label
+        )}</span>`;
+      }
+
+      return `<a class="site-language-option" href="${escapeHtml(peerHref)}" lang="${escapeHtml(
+        locale
+      )}" hreflang="${escapeHtml(locale)}">${escapeHtml(label)}</a>`;
+    })
+    .join("\n          ");
+
+  return `        <nav class="site-language-switch" aria-label="${escapeHtml(
+    localeStrings.languageSwitch.ariaLabel
+  )}">
+          ${renderedOptions}
+        </nav>`;
+}
+
 export const CONTACT_HREF = "mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas";
 export const CONTACT_EMAIL = "matt@operatorassetexchange.com";
 export const WEBSITE_LEGAL_LINKS = {
@@ -22,57 +142,38 @@ export const WEBSITE_LEGAL_LINKS = {
   privacy: "privacy-policy.html",
   terms: "terms-of-use.html",
 };
+
 const ICON_LOGO_PATH = "assets/images/upstream-atlas-icon.png";
 const NAV_LOGO_PATH = "assets/images/upstream-atlas-nav-logo.webp";
 
-export function resolveShellLinks(currentPage) {
-  if (currentPage === "chapters") {
-    return {
-      aboutHref: "../#about",
-      brandHref: "../",
-      chaptersHref: "./",
-      countriesHref: "../#countries",
-      ctaHref: "../book/",
-      homeHref: "../",
-      cookieHref: `../${WEBSITE_LEGAL_LINKS.cookie}`,
-      privacyHref: `../${WEBSITE_LEGAL_LINKS.privacy}`,
-      resourcesHref: "../#resources",
-      termsHref: `../${WEBSITE_LEGAL_LINKS.terms}`,
-    };
-  }
-
-  if (currentPage === "legal") {
-    return {
-      aboutHref: "index.html#about",
-      brandHref: "index.html",
-      chaptersHref: "chapters/",
-      countriesHref: "index.html#countries",
-      ctaHref: "book/",
-      homeHref: "index.html",
-      cookieHref: WEBSITE_LEGAL_LINKS.cookie,
-      privacyHref: WEBSITE_LEGAL_LINKS.privacy,
-      resourcesHref: "index.html#resources",
-      termsHref: WEBSITE_LEGAL_LINKS.terms,
-    };
-  }
+export function resolveShellLinks(currentPage, edition, currentLegalPage = null) {
+  const baseHref = editionBaseHref(edition);
 
   return {
-    aboutHref: "#about",
-    brandHref: "/",
-    chaptersHref: "chapters/",
-    countriesHref: "#countries",
-    ctaHref: "book/",
-    homeHref: "/",
-    cookieHref: WEBSITE_LEGAL_LINKS.cookie,
-    privacyHref: WEBSITE_LEGAL_LINKS.privacy,
-    resourcesHref: "#resources",
-    termsHref: WEBSITE_LEGAL_LINKS.terms,
+    aboutHref: `${baseHref}#about`,
+    brandHref: baseHref,
+    chaptersHref: `${baseHref}chapters/`,
+    countriesHref: `${baseHref}#countries`,
+    ctaHref: `${baseHref}book/`,
+    homeHref: baseHref,
+    cookieHref: `${baseHref}${WEBSITE_LEGAL_LINKS.cookie}`,
+    privacyHref: `${baseHref}${WEBSITE_LEGAL_LINKS.privacy}`,
+    resourcesHref: `${baseHref}#resources`,
+    termsHref: `${baseHref}${WEBSITE_LEGAL_LINKS.terms}`,
+    peerHref: buildLanguageSwitchHref(
+      getPeerSiteEdition(edition.locale),
+      currentPage,
+      currentLegalPage
+    ),
   };
 }
 
 export function renderLandingHead({
   basePath = "",
+  currentLegalPage = null,
+  currentPage = "home",
   description,
+  edition,
   extraStylesheets = [],
   title,
 }) {
@@ -81,6 +182,7 @@ export function renderLandingHead({
   );
   const faviconHref = resolveAssetPath(basePath, "assets/images/upstream-atlas-favicon.png?v=2");
   const scriptHref = resolveAssetPath(basePath, "assets/js/ga.js");
+  const peerEdition = getPeerSiteEdition(edition.locale);
 
   return `    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -96,32 +198,23 @@ export function renderLandingHead({
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap"
     >
 ${stylesheetHrefs
-  .map(
-    (href) => `    <link rel="stylesheet" href="${escapeHtml(href)}">`
-  )
+  .map((href) => `    <link rel="stylesheet" href="${escapeHtml(href)}">`)
   .join("\n")}
     <link rel="icon" href="${escapeHtml(faviconHref)}" type="image/png" sizes="32x32">
     <link rel="shortcut icon" href="${escapeHtml(faviconHref)}" type="image/png">
     <link rel="apple-touch-icon" href="${escapeHtml(faviconHref)}">
-    <script src="${escapeHtml(scriptHref)}" defer></script>`;
-}
-
-function renderHeaderContactLink() {
-  return `        <a
-          class="header-contact-link"
-          href="${escapeHtml(CONTACT_HREF)}"
-          aria-label="Contact Us"
-          data-tooltip="Contact Us"
-        >
-          <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
-            <path d="M4 7.5h16v9H4z"></path>
-            <path d="m4.75 8 7.25 6 7.25-6"></path>
-          </svg>
-        </a>`;
-}
-
-function renderSpriteIcon({ className, href }) {
-  return `<svg class="${escapeHtml(className)}" aria-hidden="true" focusable="false"><use href="${escapeHtml(href)}"></use></svg>`;
+    <link rel="alternate" hreflang="${escapeHtml(edition.locale)}" href="${escapeHtml(
+      buildPageHref(edition, currentPage, currentLegalPage)
+    )}">
+    <link rel="alternate" hreflang="${escapeHtml(peerEdition.locale)}" href="${escapeHtml(
+      buildPageHref(peerEdition, currentPage, currentLegalPage)
+    )}">
+    <script src="${escapeHtml(scriptHref)}" defer></script>
+${
+  edition.locale === "en" && currentPage === "home"
+    ? renderEditionNeutralRedirectScript(buildPageHref(peerEdition, "home"))
+    : ""
+}`;
 }
 
 export function renderBrandLink({
@@ -146,10 +239,15 @@ export function renderBrandLink({
     .join("\n");
 }
 
-function renderResponsiveBrandLink({ brandHref, indent = "", logoBasePath = "" } = {}) {
+function renderResponsiveBrandLink({
+  ariaLabel,
+  brandHref,
+  indent = "",
+  logoBasePath = "",
+} = {}) {
   const fullLogoSrc = resolveAssetPath(logoBasePath, NAV_LOGO_PATH);
   const compactLogoSrc = resolveAssetPath(logoBasePath, ICON_LOGO_PATH);
-  const markup = `<a class="brand-mark" href="${escapeHtml(brandHref)}" aria-label="Upstream Atlas">
+  const markup = `<a class="brand-mark" href="${escapeHtml(brandHref)}" aria-label="${escapeHtml(ariaLabel)}">
   <img class="brand-mark-image brand-mark-image-full" src="${escapeHtml(fullLogoSrc)}" alt="" width="208" height="55">
   <img class="brand-mark-image brand-mark-image-compact" src="${escapeHtml(compactLogoSrc)}" alt="" width="48" height="48">
 </a>`;
@@ -160,20 +258,27 @@ function renderResponsiveBrandLink({ brandHref, indent = "", logoBasePath = "" }
     .join("\n");
 }
 
-function renderFooterBrand(logoBasePath, brandHref) {
+function renderFooterBrand(brandHref, logoBasePath, ariaLabel) {
   return `${renderBrandLink({
-  brandHref,
-  indent: "        ",
-  imageClass: "footer-brand-image",
-  linkClass: "footer-brand",
-  logoBasePath,
-  width: 196,
-  height: 52,
-})}`;
+    ariaLabel,
+    brandHref,
+    indent: "        ",
+    imageClass: "footer-brand-image",
+    linkClass: "footer-brand",
+    logoBasePath,
+    width: 196,
+    height: 52,
+  })}`;
 }
 
-export function renderLandingHeader({ currentPage = "home", logoBasePath = "" } = {}) {
-  const links = resolveShellLinks(currentPage);
+export function renderLandingHeader({
+  currentLegalPage = null,
+  currentPage = "home",
+  edition,
+  logoBasePath = "",
+} = {}) {
+  const links = resolveShellLinks(currentPage, edition, currentLegalPage);
+  const localeStrings = edition.localeStrings;
   const startReadingIconHref = resolveHomepageIconSpriteHref(logoBasePath, "icon-start-reading");
   const menuIconHref = resolveHomepageIconSpriteHref(logoBasePath, "icon-menu");
   const closeIconHref = resolveHomepageIconSpriteHref(logoBasePath, "icon-close");
@@ -182,35 +287,50 @@ export function renderLandingHeader({ currentPage = "home", logoBasePath = "" } 
 
   return `    <header class="site-header">
       <div class="site-header-inner">
-${renderResponsiveBrandLink({ brandHref: links.brandHref, indent: "        ", logoBasePath })}
+${renderResponsiveBrandLink({
+  ariaLabel: localeStrings.legal.homeAriaLabel,
+  brandHref: links.brandHref,
+  indent: "        ",
+  logoBasePath,
+})}
         <nav class="primary-nav" aria-label="Primary navigation">
-          <a${homeClass} href="${escapeHtml(links.homeHref)}">Home</a>
-          <a href="${escapeHtml(links.countriesHref)}">Countries</a>
-          <a${chaptersClass} href="${escapeHtml(links.chaptersHref)}">Chapters</a>
-          <a href="${escapeHtml(links.aboutHref)}">About</a>
-          <a href="${escapeHtml(links.resourcesHref)}">Resources</a>
+          <a${homeClass} href="${escapeHtml(links.homeHref)}">${escapeHtml(localeStrings.nav.home)}</a>
+          <a href="${escapeHtml(links.countriesHref)}">${escapeHtml(localeStrings.nav.countries)}</a>
+          <a${chaptersClass} href="${escapeHtml(links.chaptersHref)}">${escapeHtml(
+            localeStrings.nav.chapters
+          )}</a>
+          <a href="${escapeHtml(links.aboutHref)}">${escapeHtml(localeStrings.nav.about)}</a>
+          <a href="${escapeHtml(links.resourcesHref)}">${escapeHtml(
+            localeStrings.nav.resources
+          )}</a>
         </nav>
         <div class="header-actions">
-${renderHeaderContactLink()}
+${renderLanguageSwitch({ currentLegalPage, currentPage, edition, localeStrings })}
+${renderHeaderContactLink(localeStrings)}
           <a class="button button-header" href="${escapeHtml(links.ctaHref)}">
             ${renderSpriteIcon({ className: "button-icon ua-icon ua-icon--sm", href: startReadingIconHref })}
-            <span class="button-label">Start Reading</span>
+            <span class="button-label">${escapeHtml(localeStrings.buttons.startReading)}</span>
           </a>
           <details class="mobile-nav-menu">
             <summary class="mobile-nav-toggle">
               ${renderSpriteIcon({ className: "mobile-nav-icon mobile-nav-icon-menu ua-icon ua-icon--sm", href: menuIconHref })}
               ${renderSpriteIcon({ className: "mobile-nav-icon mobile-nav-icon-close ua-icon ua-icon--sm", href: closeIconHref })}
-              <span class="button-label">Menu</span>
+              <span class="button-label">${escapeHtml(localeStrings.buttons.menu)}</span>
             </summary>
             <nav class="mobile-nav-panel" aria-label="Mobile navigation">
-              <a${homeClass} href="${escapeHtml(links.homeHref)}">Home</a>
-              <a href="${escapeHtml(links.countriesHref)}">Countries</a>
-              <a${chaptersClass} href="${escapeHtml(links.chaptersHref)}">Chapters</a>
-              <a href="${escapeHtml(links.aboutHref)}">About</a>
-              <a href="${escapeHtml(links.resourcesHref)}">Resources</a>
+              <a${homeClass} href="${escapeHtml(links.homeHref)}">${escapeHtml(localeStrings.nav.home)}</a>
+              <a href="${escapeHtml(links.countriesHref)}">${escapeHtml(localeStrings.nav.countries)}</a>
+              <a${chaptersClass} href="${escapeHtml(links.chaptersHref)}">${escapeHtml(
+                localeStrings.nav.chapters
+              )}</a>
+              <a href="${escapeHtml(links.aboutHref)}">${escapeHtml(localeStrings.nav.about)}</a>
+              <a href="${escapeHtml(links.resourcesHref)}">${escapeHtml(
+                localeStrings.nav.resources
+              )}</a>
+${renderLanguageSwitch({ currentLegalPage, currentPage, edition, localeStrings })}
               <a class="button button-header mobile-nav-cta" href="${escapeHtml(links.ctaHref)}">
                 ${renderSpriteIcon({ className: "button-icon ua-icon ua-icon--sm", href: startReadingIconHref })}
-                <span class="button-label">Start Reading</span>
+                <span class="button-label">${escapeHtml(localeStrings.buttons.startReading)}</span>
               </a>
             </nav>
           </details>
@@ -219,48 +339,60 @@ ${renderHeaderContactLink()}
     </header>`;
 }
 
-export function renderLandingFooter({ currentPage = "home", logoBasePath = "" } = {}) {
-  const links = resolveShellLinks(currentPage);
+export function renderLandingFooter({
+  currentLegalPage = null,
+  currentPage = "home",
+  edition,
+  logoBasePath = "",
+} = {}) {
+  const links = resolveShellLinks(currentPage, edition, currentLegalPage);
+  const localeStrings = edition.localeStrings;
+  const legalLinks = localeStrings.legal.links;
+  const footerStrings = localeStrings.footer;
 
   return `    <footer class="site-footer site-footer-detailed">
       <div class="site-footer-inner">
         <section class="site-footer-column site-footer-column-brand" aria-label="Upstream Atlas">
-${renderFooterBrand(logoBasePath, links.brandHref)}
+${renderFooterBrand(links.brandHref, logoBasePath, localeStrings.legal.homeAriaLabel)}
           <p class="site-footer-intro">
-            Practical insights into the technical, commercial, fiscal, regulatory, and governance aspects of the West African oil and gas industry.
+            ${escapeHtml(footerStrings.intro)}
           </p>
         </section>
-        <section class="site-footer-column" aria-label="Explore">
-          <p class="site-footer-heading">Explore</p>
+        <section class="site-footer-column" aria-label="${escapeHtml(footerStrings.exploreHeading)}">
+          <p class="site-footer-heading">${escapeHtml(footerStrings.exploreHeading)}</p>
           <div class="site-footer-column-links">
-            <a href="${escapeHtml(links.homeHref)}">Home</a>
-            <a href="${escapeHtml(links.aboutHref)}">About</a>
-            <a href="${escapeHtml(links.countriesHref)}">Countries</a>
-            <a href="${escapeHtml(links.chaptersHref)}">Book Contents</a>
-            <a href="${escapeHtml(CONTACT_HREF)}">Contact</a>
+            <a href="${escapeHtml(links.homeHref)}">${escapeHtml(localeStrings.nav.home)}</a>
+            <a href="${escapeHtml(links.aboutHref)}">${escapeHtml(localeStrings.nav.about)}</a>
+            <a href="${escapeHtml(links.countriesHref)}">${escapeHtml(localeStrings.nav.countries)}</a>
+            <a href="${escapeHtml(links.chaptersHref)}">${escapeHtml(footerStrings.bookContents)}</a>
+            <a href="${escapeHtml(CONTACT_HREF)}">${escapeHtml(footerStrings.contact)}</a>
           </div>
         </section>
-        <section class="site-footer-column" aria-label="Resources">
-          <p class="site-footer-heading">Resources</p>
+        <section class="site-footer-column" aria-label="${escapeHtml(footerStrings.resourcesHeading)}">
+          <p class="site-footer-heading">${escapeHtml(footerStrings.resourcesHeading)}</p>
           <div class="site-footer-column-links">
-            <span class="site-footer-future-item">Latest Updates <small>Coming soon</small></span>
-            <span class="site-footer-future-item">Industry News <small>Coming soon</small></span>
-            <a href="${escapeHtml(links.termsHref)}">Terms of Use</a>
-            <a href="${escapeHtml(links.privacyHref)}">Privacy Policy</a>
-            <a href="${escapeHtml(links.cookieHref)}">Cookie Policy</a>
+            <span class="site-footer-future-item">${escapeHtml(footerStrings.latestUpdates)} <small>${escapeHtml(
+    footerStrings.comingSoon
+  )}</small></span>
+            <span class="site-footer-future-item">${escapeHtml(footerStrings.industryNews)} <small>${escapeHtml(
+    footerStrings.comingSoon
+  )}</small></span>
+            <a href="${escapeHtml(links.termsHref)}">${escapeHtml(legalLinks.terms)}</a>
+            <a href="${escapeHtml(links.privacyHref)}">${escapeHtml(legalLinks.privacy)}</a>
+            <a href="${escapeHtml(links.cookieHref)}">${escapeHtml(legalLinks.cookie)}</a>
           </div>
         </section>
-        <section class="site-footer-column" aria-label="Contact Us">
-          <p class="site-footer-heading">Contact Us</p>
+        <section class="site-footer-column" aria-label="${escapeHtml(footerStrings.contactHeading)}">
+          <p class="site-footer-heading">${escapeHtml(footerStrings.contactHeading)}</p>
           <div class="site-footer-contact-list">
-            <span class="site-footer-contact-label">Email</span>
+            <span class="site-footer-contact-label">${escapeHtml(footerStrings.email)}</span>
             <a class="site-footer-email" href="${escapeHtml(CONTACT_HREF)}">${escapeHtml(CONTACT_EMAIL)}</a>
           </div>
         </section>
       </div>
       <div class="site-footer-bottom">
-        <p>© 2026 Upstream Atlas. All Rights Reserved.</p>
-        <p>West Africa Oil &amp; Gas Intelligence</p>
+        <p>${escapeHtml(footerStrings.copyright)}</p>
+        <p>${escapeHtml(footerStrings.tagline)}</p>
       </div>
     </footer>`;
 }

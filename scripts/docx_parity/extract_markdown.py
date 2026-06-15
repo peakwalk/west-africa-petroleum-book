@@ -15,6 +15,7 @@ FENCE_RE = re.compile(r"^```(?:\s*(?P<lang>[A-Za-z0-9_+-]+))?\s*$")
 PARITY_IGNORE_START = "<!-- parity-ignore:start -->"
 PARITY_IGNORE_END = "<!-- parity-ignore:end -->"
 FIGURE_LABEL_MAX_WORDS = 6
+CAPTION_PREFIXES = ("Figure ", "Table ", "Tableau ")
 
 
 def _summary_entries(summary_path: Path) -> list[tuple[str, Path]]:
@@ -92,7 +93,7 @@ def _parse_chapter(chapter_path: Path) -> ChapterSemanticModel:
         paragraph_lines.clear()
         if not text:
             return
-        kind = "caption" if text.startswith("Figure ") or text.startswith("Table ") else "paragraph"
+        kind = "caption" if text.startswith(CAPTION_PREFIXES) else "paragraph"
         body.append(BodyBlock(kind=kind, text=text))
         if kind == "caption":
             suppress_figure_labels = text.startswith("Figure ")
@@ -155,7 +156,7 @@ def _parse_chapter(chapter_path: Path) -> ChapterSemanticModel:
             continue
         if (
             paragraph_lines
-            and (paragraph_lines[0].startswith("Figure ") or paragraph_lines[0].startswith("Table "))
+            and paragraph_lines[0].startswith(CAPTION_PREFIXES)
             and not stripped.startswith(("#", ">", "!["))
             and not LIST_ITEM_RE.match(stripped)
         ):
@@ -248,7 +249,7 @@ def _parse_chapter(chapter_path: Path) -> ChapterSemanticModel:
             and not _looks_like_semantic_callout(stripped)
             and (
             suppress_figure_labels
-            or next_stripped.startswith(("![", "Figure ", "Table "))
+            or next_stripped.startswith(("![", *CAPTION_PREFIXES))
             )
         ):
             continue
@@ -259,7 +260,7 @@ def _parse_chapter(chapter_path: Path) -> ChapterSemanticModel:
             and not _looks_like_semantic_callout(stripped)
         ):
             continue
-        if stripped.startswith("Figure ") or stripped.startswith("Table "):
+        if stripped.startswith(CAPTION_PREFIXES):
             suppress_pre_heading_figure_labels = not seen_outline
             suppress_figure_labels = True
         elif suppress_figure_labels:

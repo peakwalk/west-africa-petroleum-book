@@ -7,35 +7,42 @@ import {
   renderLandingHead,
   renderLandingHeader,
 } from "./shared/landing-shell.mjs";
+import { listSiteEditions, resolveEditionPath } from "./shared/site-editions.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT = path.resolve(__dirname, "..");
-const MAIN_CONTENT_PATH = path.join(ROOT, "src", "index-main.html");
-const OUTPUT_PATH = path.join(ROOT, "index.html");
 
 async function main() {
-  const mainContent = await fs.readFile(MAIN_CONTENT_PATH, "utf8");
-  const html = `<!doctype html>
-<html lang="en">
+  await Promise.all(
+    listSiteEditions().map(async (edition) => {
+      const mainContentPath = path.join(ROOT, edition.sourceRoot, "index-main.html");
+      const outputPath = resolveEditionPath(edition, "index.html");
+      const mainContent = await fs.readFile(mainContentPath, "utf8");
+      const html = `<!doctype html>
+<html lang="${edition.locale}">
   <head>
 ${renderLandingHead({
-  description:
-    "A professional online edition of Exploration and Exploitation of Petroleum Resources in West Africa.",
-  title: "Exploration and Exploitation of Petroleum Resources in West Africa",
+  currentPage: "home",
+  description: edition.localeStrings.meta.homeDescription,
+  edition,
+  title: edition.localeStrings.meta.homeTitle,
 })}
   </head>
   <body class="landing-shell">
-${renderLandingHeader({ currentPage: "home" })}
+${renderLandingHeader({ currentPage: "home", edition })}
 
 ${mainContent.trim()}
 
-${renderLandingFooter({ currentPage: "home" })}
+${renderLandingFooter({ currentPage: "home", edition })}
   </body>
 </html>
 `;
 
-  await fs.writeFile(OUTPUT_PATH, html, "utf8");
+      await fs.mkdir(path.dirname(outputPath), { recursive: true });
+      await fs.writeFile(outputPath, html, "utf8");
+    })
+  );
 }
 
 main().catch((error) => {

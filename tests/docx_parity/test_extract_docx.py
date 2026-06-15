@@ -366,6 +366,55 @@ class ExtractDocxTests(unittest.TestCase):
             ],
         )
 
+    def test_recognizes_french_tableau_captions_as_caption_blocks(self) -> None:
+        tmp_dir = Path(tempfile.mkdtemp())
+        docx_path = tmp_dir / "fixture-french-table-caption.docx"
+        document = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading1"/></w:pPr>
+      <w:r><w:t>Chapitre 4 : Étude comparée des régimes fiscaux dans certains pays de l’Afrique de l’Ouest</w:t></w:r>
+    </w:p>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading2"/></w:pPr>
+      <w:r><w:t>4.2- Principaux éléments fiscaux appliqués dans certains pays de l’Afrique de l’Ouest</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t>Le tableau ci-dessous résume les mécanismes observés.</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Tableau 6: Mécanismes de partage du pétrole profit dans certains pays de l’Afrique de l’Ouest</w:t></w:r></w:p>
+  </w:body>
+</w:document>
+"""
+        with zipfile.ZipFile(docx_path, "w") as archive:
+            archive.writestr("[Content_Types].xml", CONTENT_TYPES)
+            archive.writestr("_rels/.rels", RELS)
+            archive.writestr("word/document.xml", document)
+            archive.writestr(
+                "word/numbering.xml",
+                (FIXTURE_DIR / "numbering-section-restart.xml").read_text(
+                    encoding="utf-8"
+                ),
+            )
+            archive.writestr(
+                "word/styles.xml",
+                (FIXTURE_DIR / "styles-headings.xml").read_text(encoding="utf-8"),
+            )
+
+        book = extract_docx_book(docx_path)
+        chapter = book.chapters[0]
+
+        self.assertEqual(
+            [block.kind for block in chapter.body],
+            ["paragraph", "caption"],
+        )
+        self.assertEqual(
+            [block.text for block in chapter.body],
+            [
+                "Le tableau ci-dessous résume les mécanismes observés.",
+                "Tableau 6: Mécanismes de partage du pétrole profit dans certains pays de l’Afrique de l’Ouest",
+            ],
+        )
+
     def test_ignores_short_graphic_labels_when_caption_follows(self) -> None:
         tmp_dir = Path(tempfile.mkdtemp())
         docx_path = tmp_dir / "fixture-short-graphic-labels.docx"
@@ -525,6 +574,65 @@ class ExtractDocxTests(unittest.TestCase):
                 "Lead-in paragraph.",
                 "Figure 25: Simplified organizational chart showing the share of the State and the Contractor in the taxation associated with the CPP of Benin",
                 "Body paragraph after figure.",
+            ],
+        )
+
+    def test_chapter_anchor_extraction_keeps_preceding_section_heading_when_anchor_starts_in_first_body_paragraph(self) -> None:
+        tmp_dir = Path(tempfile.mkdtemp())
+        docx_path = tmp_dir / "fixture-anchor-starts-in-body-paragraph.docx"
+        document = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading1"/></w:pPr>
+      <w:r><w:t>Chapter 6: West Africa Country Analysis</w:t></w:r>
+    </w:p>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading2"/></w:pPr>
+      <w:r><w:t>6.1- Nigeria</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t>Nigeria intro paragraph.</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Nigeria follow-up paragraph.</w:t></w:r></w:p>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading2"/></w:pPr>
+      <w:r><w:t>6.2- Ghana</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t>Ghana intro paragraph.</w:t></w:r></w:p>
+  </w:body>
+</w:document>
+"""
+        with zipfile.ZipFile(docx_path, "w") as archive:
+            archive.writestr("[Content_Types].xml", CONTENT_TYPES)
+            archive.writestr("_rels/.rels", RELS)
+            archive.writestr("word/document.xml", document)
+            archive.writestr(
+                "word/numbering.xml",
+                (FIXTURE_DIR / "numbering-section-restart.xml").read_text(
+                    encoding="utf-8"
+                ),
+            )
+            archive.writestr(
+                "word/styles.xml",
+                (FIXTURE_DIR / "styles-headings.xml").read_text(encoding="utf-8"),
+            )
+
+        book = extract_docx_chapter_by_anchors(
+            docx_path,
+            chapter_title="Chapter 6: West Africa Country Analysis",
+            start_anchor="Nigeria intro paragraph.",
+        )
+        chapter = book.chapters[0]
+
+        self.assertEqual(
+            [(entry.number, entry.title) for entry in chapter.outline],
+            [("6.1-", "Nigeria"), ("6.2-", "Ghana")],
+        )
+        self.assertEqual(
+            [block.text for block in chapter.body],
+            [
+                "Nigeria intro paragraph.",
+                "Nigeria follow-up paragraph.",
+                "Ghana intro paragraph.",
             ],
         )
 
@@ -1022,6 +1130,113 @@ class ExtractDocxTests(unittest.TestCase):
                 "Figure 4: Synthetic diagram showing the different oil cuts",
             ],
         )
+
+    def test_chapter_anchor_extraction_stops_at_french_split_chapter_marker(self) -> None:
+        tmp_dir = Path(tempfile.mkdtemp())
+        docx_path = tmp_dir / "fixture-french-split-chapter-marker.docx"
+        document = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:p><w:r><w:t>Chapitre 1</w:t></w:r></w:p>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading1"/></w:pPr>
+      <w:r><w:t>CHAINE DES VALEURS DU SECTEUR DES HYDROCARBURES</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t>Introduction du chapitre un.</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Figure 4: Schéma synthétique montrant les différentes coupes pétrolières</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Chapitre 2</w:t></w:r></w:p>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading1"/></w:pPr>
+      <w:r><w:t>DIFFERENTES PHASES DE L’AMONT PETROLIER ET ROLES DES ETATS</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t>Introduction du chapitre deux.</w:t></w:r></w:p>
+  </w:body>
+</w:document>
+"""
+        with zipfile.ZipFile(docx_path, "w") as archive:
+            archive.writestr("[Content_Types].xml", CONTENT_TYPES)
+            archive.writestr("_rels/.rels", RELS)
+            archive.writestr("word/document.xml", document)
+            archive.writestr(
+                "word/numbering.xml",
+                (FIXTURE_DIR / "numbering-section-restart.xml").read_text(
+                    encoding="utf-8"
+                ),
+            )
+            archive.writestr(
+                "word/styles.xml",
+                (FIXTURE_DIR / "styles-headings.xml").read_text(encoding="utf-8"),
+            )
+
+        book = extract_docx_chapter_by_anchors(
+            docx_path,
+            chapter_title="Chapitre 1 : Chaîne des valeurs du secteur des hydrocarbures",
+            start_anchor="Introduction du chapitre un.",
+            end_anchor="Introduction du chapitre deux.",
+        )
+        chapter = book.chapters[0]
+
+        self.assertEqual(
+            [block.text for block in chapter.body],
+            [
+                "Introduction du chapitre un.",
+                "Figure 4: Schéma synthétique montrant les différentes coupes pétrolières",
+            ],
+        )
+
+    def test_extract_docx_book_splits_french_split_chapter_markers(self) -> None:
+        tmp_dir = Path(tempfile.mkdtemp())
+        docx_path = tmp_dir / "fixture-french-book-split.docx"
+        document = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:p><w:r><w:t>Chapitre 1</w:t></w:r></w:p>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading1"/></w:pPr>
+      <w:r><w:t>CHAINE DES VALEURS DU SECTEUR DES HYDROCARBURES</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t>Introduction du chapitre un.</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Chapitre 2</w:t></w:r></w:p>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading1"/></w:pPr>
+      <w:r><w:t>DIFFERENTES PHASES DE L’AMONT PETROLIER ET ROLES DES ETATS</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t>Introduction du chapitre deux.</w:t></w:r></w:p>
+  </w:body>
+</w:document>
+"""
+        with zipfile.ZipFile(docx_path, "w") as archive:
+            archive.writestr("[Content_Types].xml", CONTENT_TYPES)
+            archive.writestr("_rels/.rels", RELS)
+            archive.writestr("word/document.xml", document)
+            archive.writestr(
+                "word/numbering.xml",
+                (FIXTURE_DIR / "numbering-section-restart.xml").read_text(
+                    encoding="utf-8"
+                ),
+            )
+            archive.writestr(
+                "word/styles.xml",
+                (FIXTURE_DIR / "styles-headings.xml").read_text(encoding="utf-8"),
+            )
+
+        book = extract_docx_book(
+            docx_path,
+            expected_titles=[
+                "Chapitre 1 : Chaîne des valeurs du secteur des hydrocarbures",
+                "Chapitre 2 : Différentes phases de l’amont pétrolier et rôles des États",
+            ],
+        )
+
+        self.assertEqual(
+            [chapter.title for chapter in book.chapters],
+            [
+                "Chapitre 1 : Chaîne des valeurs du secteur des hydrocarbures",
+                "Chapitre 2 : Différentes phases de l’amont pétrolier et rôles des États",
+            ],
+        )
+        self.assertEqual(book.chapters[0].body[0].text, "Introduction du chapitre un.")
+        self.assertEqual(book.chapters[1].body[0].text, "Introduction du chapitre deux.")
 
     def test_chapter_anchor_extraction_matches_literal_heading_titles_for_start_and_end(self) -> None:
         tmp_dir = Path(tempfile.mkdtemp())

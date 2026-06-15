@@ -18,23 +18,71 @@
     <link rel="icon" href="assets/images/upstream-atlas-favicon.png?v=2" type="image/png" sizes="32x32">
     <link rel="shortcut icon" href="assets/images/upstream-atlas-favicon.png?v=2" type="image/png">
     <link rel="apple-touch-icon" href="assets/images/upstream-atlas-favicon.png?v=2">
+    <link rel="alternate" hreflang="en" href="/">
+    <link rel="alternate" hreflang="fr" href="/fr/">
     <script src="assets/js/ga.js" defer></script>
+    <script>
+      (function () {
+        const params = new URLSearchParams(window.location.search);
+        const explicit = params.get("lang");
+        const storageKey = "upstream-atlas-edition";
+
+        if (explicit === "en" || explicit === "fr") {
+          try {
+            window.localStorage.setItem(storageKey, explicit);
+          } catch (error) {
+            // Ignore storage failures and keep the explicit route.
+          }
+          return;
+        }
+
+        let preferredEdition = "";
+        try {
+          preferredEdition = window.localStorage.getItem(storageKey) || "";
+        } catch (error) {
+          preferredEdition = "";
+        }
+
+        if (preferredEdition === "en") {
+          return;
+        }
+
+        if (preferredEdition === "fr") {
+          window.location.replace("/fr/");
+          return;
+        }
+
+        const browserLanguages = []
+          .concat(window.navigator.languages || [])
+          .concat(window.navigator.language || [])
+          .filter(Boolean)
+          .map((value) => String(value).toLowerCase());
+
+        if (browserLanguages.some((value) => value.startsWith("fr"))) {
+          window.location.replace("/fr/");
+        }
+      })();
+    </script>
   </head>
   <body class="landing-shell">
     <header class="site-header">
       <div class="site-header-inner">
-        <a class="brand-mark" href="/" aria-label="Upstream Atlas">
+        <a class="brand-mark" href="/" aria-label="Upstream Atlas home">
           <img class="brand-mark-image brand-mark-image-full" src="assets/images/upstream-atlas-nav-logo.webp" alt="" width="208" height="55">
           <img class="brand-mark-image brand-mark-image-compact" src="assets/images/upstream-atlas-icon.png" alt="" width="48" height="48">
         </a>
         <nav class="primary-nav" aria-label="Primary navigation">
           <a class="current-link" href="/">Home</a>
-          <a href="#countries">Countries</a>
-          <a href="chapters/">Chapters</a>
-          <a href="#about">About</a>
-          <a href="#resources">Resources</a>
+          <a href="/#countries">Countries</a>
+          <a href="/chapters/">Chapters</a>
+          <a href="/#about">About</a>
+          <a href="/#resources">Resources</a>
         </nav>
         <div class="header-actions">
+        <nav class="site-language-switch" aria-label="Switch language">
+          <span class="site-language-option is-current" aria-current="page">EN</span>
+          <a class="site-language-option" href="/fr/?lang=fr" lang="fr" hreflang="fr">FR</a>
+        </nav>
         <a
           class="header-contact-link"
           href="mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas"
@@ -46,7 +94,7 @@
             <path d="m4.75 8 7.25 6 7.25-6"></path>
           </svg>
         </a>
-          <a class="button button-header" href="book/">
+          <a class="button button-header" href="/book/">
             <svg class="button-icon ua-icon ua-icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/homepage-sprite.svg#icon-start-reading"></use></svg>
             <span class="button-label">Start Reading</span>
           </a>
@@ -58,11 +106,15 @@
             </summary>
             <nav class="mobile-nav-panel" aria-label="Mobile navigation">
               <a class="current-link" href="/">Home</a>
-              <a href="#countries">Countries</a>
-              <a href="chapters/">Chapters</a>
-              <a href="#about">About</a>
-              <a href="#resources">Resources</a>
-              <a class="button button-header mobile-nav-cta" href="book/">
+              <a href="/#countries">Countries</a>
+              <a href="/chapters/">Chapters</a>
+              <a href="/#about">About</a>
+              <a href="/#resources">Resources</a>
+        <nav class="site-language-switch" aria-label="Switch language">
+          <span class="site-language-option is-current" aria-current="page">EN</span>
+          <a class="site-language-option" href="/fr/?lang=fr" lang="fr" hreflang="fr">FR</a>
+        </nav>
+              <a class="button button-header mobile-nav-cta" href="/book/">
                 <svg class="button-icon ua-icon ua-icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/homepage-sprite.svg#icon-start-reading"></use></svg>
                 <span class="button-label">Start Reading</span>
               </a>
@@ -719,7 +771,7 @@
     <footer class="site-footer site-footer-detailed">
       <div class="site-footer-inner">
         <section class="site-footer-column site-footer-column-brand" aria-label="Upstream Atlas">
-        <a class="footer-brand" href="/" aria-label="Upstream Atlas">
+        <a class="footer-brand" href="/" aria-label="Upstream Atlas home">
           <img class="footer-brand-image" src="assets/images/upstream-atlas-nav-logo.webp" alt="" width="196" height="52">
         </a>
           <p class="site-footer-intro">
@@ -730,9 +782,9 @@
           <p class="site-footer-heading">Explore</p>
           <div class="site-footer-column-links">
             <a href="/">Home</a>
-            <a href="#about">About</a>
-            <a href="#countries">Countries</a>
-            <a href="chapters/">Book Contents</a>
+            <a href="/#about">About</a>
+            <a href="/#countries">Countries</a>
+            <a href="/chapters/">Book Contents</a>
             <a href="mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas">Contact</a>
           </div>
         </section>
@@ -741,9 +793,9 @@
           <div class="site-footer-column-links">
             <span class="site-footer-future-item">Latest Updates <small>Coming soon</small></span>
             <span class="site-footer-future-item">Industry News <small>Coming soon</small></span>
-            <a href="terms-of-use.html">Terms of Use</a>
-            <a href="privacy-policy.html">Privacy Policy</a>
-            <a href="cookie-policy.html">Cookie Policy</a>
+            <a href="/terms-of-use.html">Terms of Use</a>
+            <a href="/privacy-policy.html">Privacy Policy</a>
+            <a href="/cookie-policy.html">Cookie Policy</a>
           </div>
         </section>
         <section class="site-footer-column" aria-label="Contact Us">

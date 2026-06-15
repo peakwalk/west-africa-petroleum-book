@@ -76,6 +76,9 @@ function escapeHtml(value) {
 function parseSidebarSectionHeading(text) {
   const normalized = normalizeText(text);
   const partMatch = normalized.match(/^(Part\s+[IVXLC]+)\s*:\s*(.+)$/i);
+  const frenchPartMatch = normalized.match(
+    /^((?:Première|Deuxième|Troisième)\s+partie)\s*:\s*(.+)$/i
+  );
 
   if (/^Front Matter$/i.test(normalized)) {
     return { type: "front-matter", kicker: "", title: "Front Matter" };
@@ -93,6 +96,14 @@ function parseSidebarSectionHeading(text) {
     };
   }
 
+  if (frenchPartMatch) {
+    return {
+      type: "part",
+      kicker: normalizeText(frenchPartMatch[1]),
+      title: normalizeText(frenchPartMatch[2]),
+    };
+  }
+
   return {
     type: "part",
     kicker: "",
@@ -102,7 +113,7 @@ function parseSidebarSectionHeading(text) {
 
 function parseSidebarRow(text) {
   const normalized = normalizeText(text);
-  const chapterMatch = normalized.match(/^Chapter\s+(\d+)\s*:\s*(.+)$/i);
+  const chapterMatch = normalized.match(/^(Chapter|Chapitre)\s+(\d+)\s*:\s*(.+)$/i);
 
   if (!chapterMatch) {
     return {
@@ -114,8 +125,8 @@ function parseSidebarRow(text) {
 
   return {
     type: "chapter",
-    index: String(Number(chapterMatch[1])).padStart(2, "0"),
-    title: normalizeText(chapterMatch[2]),
+    index: String(Number(chapterMatch[2])).padStart(2, "0"),
+    title: normalizeText(chapterMatch[3]),
   };
 }
 

@@ -1,0 +1,94 @@
+{
+  "locale": "fr",
+  "languageName": "Français",
+  "meta": {
+    "homeTitle": "Exploration et exploitation des ressources pétrolières en Afrique de l’Ouest",
+    "homeDescription": "Une édition en ligne en français de l’ouvrage Exploration et exploitation des ressources pétrolières en Afrique de l’Ouest.",
+    "chaptersTitle": "Bibliothèque des chapitres | Exploration et exploitation des ressources pétrolières en Afrique de l’Ouest",
+    "chaptersDescription": "Parcourez les parties, chapitres et sections de référence de l’édition française."
+  },
+  "nav": {
+    "home": "Accueil",
+    "countries": "Pays",
+    "chapters": "Chapitres",
+    "about": "À propos",
+    "resources": "Ressources"
+  },
+  "buttons": {
+    "startReading": "Commencer la lecture",
+    "menu": "Menu",
+    "contact": "Nous contacter"
+  },
+  "languageSwitch": {
+    "ariaLabel": "Changer de langue",
+    "label": "Langue",
+    "options": {
+      "en": "EN",
+      "fr": "FR"
+    }
+  },
+  "footer": {
+    "intro": "Des repères pratiques sur les dimensions techniques, commerciales, fiscales, réglementaires et de gouvernance de l’industrie pétrolière et gazière ouest-africaine.",
+    "exploreHeading": "Explorer",
+    "resourcesHeading": "Ressources",
+    "contactHeading": "Nous contacter",
+    "bookContents": "Sommaire du livre",
+    "contact": "Contact",
+    "latestUpdates": "Dernières mises à jour",
+    "industryNews": "Actualités du secteur",
+    "comingSoon": "Bientôt disponible",
+    "email": "E-mail",
+    "copyright": "© 2026 Upstream Atlas. Tous droits réservés.",
+    "tagline": "Intelligence pétrolière et gazière ouest-africaine"
+  },
+  "legal": {
+    "homeAriaLabel": "Accueil Upstream Atlas",
+    "pageKicker": "Document juridique du site",
+    "documentsAriaLabel": "Documents juridiques",
+    "publicationStatusAriaLabel": "État de publication",
+    "contactHeading": "Contact",
+    "contactBodyPrefix": "Pour obtenir la version juridique approuvée pour ce site public, contactez",
+    "links": {
+      "terms": "Conditions d’utilisation",
+      "privacy": "Politique de confidentialité",
+      "cookie": "Politique relative aux cookies"
+    }
+  },
+  "chaptersPage": {
+    "eyebrow": "Bibliothèque des chapitres",
+    "heroTitle": "Parcourez le livre par partie, chapitre et section de référence.",
+    "intro": "Un point d’entrée structuré vers la gestion des ressources pétrolières ouest-africaines, de l’amont et de la fiscalité à la gouvernance, à l’analyse pays et aux références.",
+    "genericDescriptions": {
+      "cover": "Page de couverture et cadrage de l’édition web française.",
+      "list-of-figures": "Liste structurée des figures de l’ouvrage et de leurs thèmes.",
+      "list-of-tables": "Liste structurée des tableaux et des comparaisons du livre.",
+      "abbreviations-acronyms-and-abbreviations": "Abréviations, sigles et acronymes utilisés dans l’ouvrage.",
+      "foreword": "Contexte, portée et justification de l’ouvrage sur les ressources pétrolières ouest-africaines.",
+      "general-introduction": "Présentation de l’objectif analytique, du cadre d’étude et de la structure générale du livre.",
+      "chapter-01-value-chain-of-the-hydrocarbon-sector": "Panorama de la chaîne de valeur des hydrocarbures, des ressources au marché final.",
+      "chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states": "Vue d’ensemble des étapes de l’amont pétrolier et des responsabilités publiques associées.",
+      "chapter-03-tax-regimes-in-the-petroleum-sector": "Synthèse des mécanismes fiscaux et économiques utilisés dans le secteur pétrolier.",
+      "chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries": "Comparaison des régimes fiscaux pétroliers appliqués dans plusieurs pays ouest-africains.",
+      "chapter-05-key-socio-political-determinants-of-oil-sector-performance": "Analyse des facteurs politiques, institutionnels et de gouvernance qui influencent la performance du secteur pétrolier.",
+      "chapter-06-west-africa-in-depth-country-analysis": "Lecture pays par pays des dynamiques pétrolières, des risques et des conditions d’investissement en Afrique de l’Ouest.",
+      "general-conclusion": "Synthèse finale des constats sur les opérations pétrolières, la gouvernance et les leviers d’action.",
+      "glossary": "Définitions de référence pour les notions techniques, fiscales et institutionnelles du livre.",
+      "bibliographical-references": "Références académiques, réglementaires et professionnelles mobilisées dans l’étude."
+    },
+    "additionalResourcesHeading": "Ressources complémentaires",
+    "additionalResources": {
+      "glossary": {
+        "title": "Glossaire",
+        "description": "Terminologie technique et fiscale utilisée dans l’ouvrage."
+      },
+      "references": {
+        "title": "Références bibliographiques",
+        "description": "Sources académiques, institutionnelles et sectorielles citées dans l’étude."
+      },
+      "conclusion": {
+        "title": "Conclusion générale",
+        "description": "Synthèse finale des constats sur les opérations pétrolières et la gouvernance."
+      }
+    }
+  }
+}
