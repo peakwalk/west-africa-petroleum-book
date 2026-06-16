@@ -215,8 +215,8 @@ class ThemeCustomCssTest(unittest.TestCase):
         self.assertRegex(
             css,
             re.compile(
-                r"@media \(max-width: 900px\) \{.*?"
-                r"\.toolbar-actions \{\s*min-width: 0;\s*padding-inline-start: 0\.5rem;\s*padding-inline-end: 0;\s*gap: 0\.25rem;\s*\}.*?"
+                r"@media \(max-width: 1023px\) \{.*?"
+                r"\.toolbar-actions \{\s*min-width: 0;\s*padding-inline-start: 0\.5rem;\s*padding-inline-end: 0;\s*gap: 0\.5rem;\s*\}.*?"
                 r'\.toolbar-actions \.reader-language-switch\[data-reader-language-switch="toolbar"\] \{.*?display: inline-flex;.*?\}.*?'
                 r'#mdbook-search-toggle \{\s*display: inline-flex !important;\s*\}',
                 re.DOTALL,
@@ -225,39 +225,74 @@ class ThemeCustomCssTest(unittest.TestCase):
 
     def test_mobile_reader_compacts_logo_and_toolbar_switch(self) -> None:
         css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
+        marker = "@media (max-width: 1023px) {"
+        start = css.index(marker)
+        next_marker = css.index("\n\n@media", start + len(marker))
+        block = css[start:next_marker]
 
-        self.assertRegex(
-            css,
-            re.compile(
-                r"@media \(max-width: 900px\) \{.*?"
-                r"\.toolbar-sidebar \{\s*gap: 0\.625rem;\s*padding-inline-end: 0;\s*\}.*?"
-                r'\.toolbar-actions \.reader-language-switch\[data-reader-language-switch="toolbar"\] \{\s*display: inline-flex;\s*flex-shrink: 0;\s*font-size: 0\.66rem;\s*gap: 0\.2rem;\s*padding: 0\.2rem 0\.25rem;\s*\}.*?'
-                r'\.toolbar-actions \.reader-language-switch\[data-reader-language-switch="toolbar"\] \.reader-language-option \{\s*min-width: 1\.55rem;\s*min-height: 1\.55rem;\s*padding: 0 0\.35rem;\s*\}.*?'
-                r"\.book-home-icon-full \{\s*display: block;\s*width: 118px;\s*\}",
-                re.DOTALL,
-            ),
-        )
+        for expected in [
+            ".toolbar-sidebar {",
+            "gap: 0.625rem;",
+            "padding-inline-end: 0;",
+            '.toolbar-actions .reader-language-switch[data-reader-language-switch="toolbar"] {',
+            "display: inline-flex;",
+            "flex-shrink: 0;",
+            "order: 1;",
+            "font-size: 0.66rem;",
+            "gap: 0.2rem;",
+            "padding: 0.2rem 0.25rem;",
+            '.toolbar-actions .reader-language-switch[data-reader-language-switch="toolbar"] .reader-language-option {',
+            "min-width: 1.55rem;",
+            "min-height: 1.55rem;",
+            "padding: 0 0.35rem;",
+            ".book-home-link {",
+            "width: 44px;",
+            "height: 44px;",
+            "flex: 0 0 44px;",
+            "justify-content: center;",
+            ".book-home-icon-full {",
+            "display: none;",
+            ".book-home-icon-compact {",
+            "display: block;",
+            "width: 32px;",
+            "height: 32px;",
+        ]:
+            self.assertIn(expected, block)
 
-    def test_mobile_reader_scales_logo_width_across_narrow_breakpoints(self) -> None:
+    def test_reader_tablet_logo_uses_narrow_toolbar_with_full_mark(self) -> None:
         css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
+        marker = "@media (min-width: 768px) and (max-width: 1023px) {"
+        start = css.index(marker)
+        next_marker = css.index("\n\n@media", start + len(marker))
+        block = css[start:next_marker]
 
-        self.assertRegex(
-            css,
-            re.compile(
-                r"@media \(min-width: 375px\) and \(max-width: 413px\) \{.*?"
-                r"\.book-home-icon-full \{\s*width: 160px;\s*\}",
-                re.DOTALL,
-            ),
-        )
+        for expected in [
+            ".book-home-link {",
+            "width: auto;",
+            "height: 44px;",
+            "flex: 0 0 auto;",
+            ".book-home-icon-full {",
+            "display: block;",
+            "width: auto;",
+            "height: 36px;",
+            ".book-home-icon-compact {",
+            "display: none;",
+        ]:
+            self.assertIn(expected, block)
 
-        self.assertRegex(
-            css,
-            re.compile(
-                r"@media \(min-width: 414px\) and \(max-width: 900px\) \{.*?"
-                r"\.book-home-icon-full \{\s*width: var\(--reader-logo-width-narrow\);\s*\}",
-                re.DOTALL,
-            ),
-        )
+    def test_reader_desktop_logo_uses_fixed_height_full_mark(self) -> None:
+        css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
+        marker = "@media (min-width: 1024px) {"
+        start = css.rindex(marker)
+        next_marker = css.index("\n\n@media", start + len(marker))
+        block = css[start:next_marker]
+
+        for expected in [
+            ".book-home-icon-full {",
+            "width: auto;",
+            "height: 36px;",
+        ]:
+            self.assertIn(expected, block)
 
     def test_table_formula_cards_use_compact_padding_without_excess_chrome(self) -> None:
         css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")

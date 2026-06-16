@@ -319,6 +319,12 @@ check_contains assets/css/landing.css '.mobile-nav-toggle .mobile-nav-icon-close
 check_contains assets/css/landing.css '.header-actions {'
 check_contains assets/css/landing.css '.header-contact-link::after {'
 check_contains assets/css/landing.css '.mobile-nav-contact {'
+node -e 'const fs=require("fs");const css=fs.readFileSync("assets/css/landing.css","utf8");const compactLogoRule=/@media \(max-width: 767px\) \{[\s\S]*?\.brand-mark-image-full \{[^}]*display: none;[^}]*\}[\s\S]*?\.brand-mark-image-compact \{[^}]*display: block;[^}]*\}/;if(!compactLogoRule.test(css)){console.error("Expected landing header to switch to the compact logo below 768px.");process.exit(1);}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("assets/css/landing.css","utf8");const start=css.indexOf("@media (max-width: 767px) {");const end=css.indexOf("@media (max-width: 640px) {", start);if(start===-1||end===-1){console.error("Expected narrow landing header media blocks in assets/css/landing.css.");process.exit(1);}const block=css.slice(start,end);for(const expected of [".site-header .brand-mark {","min-width: 2.75rem;","min-height: 2.75rem;","justify-content: center;",".site-header .brand-mark-image-compact {","width: 2rem;"]){if(!block.includes(expected)){console.error("Expected narrow landing header logo CSS to include "+expected);process.exit(1);}}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("assets/css/landing.css","utf8");const start=css.indexOf("@media (max-width: 767px) {");const end=css.indexOf("@media (max-width: 640px) {", start);if(start===-1||end===-1){console.error("Expected narrow landing header media blocks in assets/css/landing.css.");process.exit(1);}const block=css.slice(start,end);for(const expected of [".site-header .header-actions > .site-language-switch {","min-height: 2.75rem;","gap: 0;","padding: 0 0.125rem;","background: transparent;","border-color: transparent;","isolation: isolate;",".site-header .header-actions > .site-language-switch::before {","inset: 0.1875rem 0;","content: \"\";",".site-header .header-actions > .site-language-switch .site-language-option {","min-width: 2.75rem;","min-height: 2.75rem;","padding: 0 0.4rem;","font-size: 0.78rem;",".site-header .header-actions > .site-language-switch .site-language-option.is-current::before,",".site-header .header-actions > .site-language-switch a.site-language-option:hover::before,","inset: 0.25rem 0.16rem;",".site-header .header-actions > .header-contact-link::before {","inset: 0.1875rem 0.2rem;",".site-header .header-actions > .header-contact-link > svg {","width: 1rem;","height: 1rem;",".site-header .header-actions > .mobile-nav-menu .mobile-nav-toggle {","gap: 0.35rem;","padding: 0 0.75rem;","font-size: 0.82rem;",".site-header .header-actions > .mobile-nav-menu .mobile-nav-toggle::before {"]){if(!block.includes(expected)){console.error("Expected narrow landing header CSS to include "+expected);process.exit(1);}}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("assets/css/landing.css","utf8");const marker="@media (min-width: 768px) and (max-width: 1023px) {";const start=css.indexOf(marker);if(start===-1){console.error("Expected landing tablet header logo media block in assets/css/landing.css.");process.exit(1);}const next=css.indexOf("\n\n@media",start + marker.length);const block=(next===-1?css.slice(start):css.slice(start,next));for(const expected of [".site-header .brand-mark {","width: auto;","height: 44px;","flex: 0 0 auto;",".site-header .brand-mark-image-full {","width: auto;","height: 36px;",".site-header .brand-mark-image-compact {","display: none;"]){if(!block.includes(expected)){console.error("Expected landing tablet header logo CSS to include "+expected);process.exit(1);}}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("assets/css/landing.css","utf8");const marker="@media (min-width: 1024px) {";const start=css.indexOf(marker);if(start===-1){console.error("Expected landing desktop header media block in assets/css/landing.css.");process.exit(1);}const next=css.indexOf("\n\n@media",start + marker.length);const block=(next===-1?css.slice(start):css.slice(start,next));for(const expected of [".site-header .brand-mark-image-full {","width: auto;","height: 36px;"]){if(!block.includes(expected)){console.error("Expected landing desktop header CSS to include "+expected);process.exit(1);}}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("assets/css/landing.css","utf8");const compactStart=css.indexOf("@media (max-width: 360px) {");if(compactStart===-1){console.error("Expected extra-narrow landing header media block in assets/css/landing.css.");process.exit(1);}const compactBlock=css.slice(compactStart);for(const removed of ["min-width: 1.85rem;","width: 2.5rem;"]){if(compactBlock.includes(removed)){console.error("Expected extra-narrow landing header to keep the compact logo touch target while avoiding oversized visual overrides: "+removed);process.exit(1);}}'
 check_contains assets/css/landing.css '.ua-icon {'
 check_contains assets/css/landing.css '.ua-icon-image {'
 check_contains assets/css/landing.css '.ua-icon--feature {'
@@ -365,6 +371,7 @@ check_contains public/chapters/index.html 'class="header-contact-link"'
 check_contains public/chapters/index.html 'mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas'
 check_not_contains public/chapters/index.html 'class="mobile-nav-contact"'
 check_not_contains public/chapters/index.html '>Contact Us</a>'
+node -e 'const fs=require("fs");for(const file of ["public/index.html","public/chapters/index.html","public/fr/index.html","public/fr/chapters/index.html"]){const html=fs.readFileSync(file,"utf8");if(/<nav class="mobile-nav-panel"[\s\S]*?class="site-language-switch"/.test(html)){console.error(`Expected ${file} to remove the language switch from the mobile navigation panel.`);process.exit(1);}}'
 check_not_contains public/index.html '<path d="M5 4.75A1.75 1.75 0 0 1 6.75 3h8.5A1.75 1.75 0 0 1 17 4.75v14.5A1.75 1.75 0 0 1 15.25 21h-8.5A1.75 1.75 0 0 1 5 19.25Z'
 check_contains public/chapters/index.html 'class="site-footer site-footer-detailed"'
 check_contains public/chapters/index.html 'Terms of Use'
@@ -874,7 +881,7 @@ check_contains theme/custom.css 'width: 24px;'
 check_contains theme/custom.css 'height: 24px;'
 check_contains theme/custom.css '.book-cover-entry {'
 check_not_contains theme/custom.css 'body.book-page-aux-index .chapter-pagination {'
-check_contains theme/custom.css '@media (max-width: 900px) {'
+check_contains theme/custom.css '@media (max-width: 1023px) {'
 check_not_contains theme/custom.css '.book-home-label {'
 check_contains theme/custom.css '.toolbar-search-slot {'
 check_contains theme/custom.css '.toolbar-search-slot.hidden {'
@@ -1134,7 +1141,7 @@ function slice(startMarker, endMarker) {
 }
 
 const mobileDrawer = slice("@media (max-width: 1080px) {", "@media (max-width: 760px) {");
-const narrowHeader = slice("@media (max-width: 900px) {", "@media (min-width: 768px) {");
+const narrowHeader = slice("@media (max-width: 1023px) {", "@media (min-width: 768px) and (max-width: 1023px) {");
 
 for (const expected of [
   "--sidebar-width: min(100vw, 40rem);",
@@ -1289,8 +1296,8 @@ for (const expected of [
   "display: none;",
   ".book-home-icon-compact {",
   "display: block;",
-  "width: 24px;",
-  "height: 24px;",
+  "width: 32px;",
+  "height: 32px;",
 ]) {
   if (!narrowHeader.includes(expected)) {
     console.error(`Expected narrow-header CSS to include ${expected}`);
@@ -1302,23 +1309,51 @@ NODE
 node - <<'NODE'
 const fs = require("fs");
 const css = fs.readFileSync("theme/custom.css", "utf8");
-const marker = "@media (min-width: 768px) and (max-width: 900px) {";
+const marker = "@media (min-width: 768px) and (max-width: 1023px) {";
 const start = css.indexOf(marker);
 if (start === -1) {
-  console.error("Expected tablet-specific toolbar media query.");
+  console.error("Expected tablet-specific toolbar logo media query.");
+  process.exit(1);
+}
+const next = css.indexOf("\n\n@media", start + marker.length);
+const block = (next === -1 ? css.slice(start) : css.slice(start, next));
+for (const expected of [
+  ".book-home-link {",
+  "width: auto;",
+  "height: 44px;",
+  "flex: 0 0 auto;",
+  ".book-home-icon-full {",
+  "display: block;",
+  "width: auto;",
+  "height: 36px;",
+  ".book-home-icon-compact {",
+  "display: none;",
+]) {
+  if (!block.includes(expected)) {
+    console.error(`Expected tablet toolbar logo CSS to include ${expected}`);
+    process.exit(1);
+  }
+}
+NODE
+
+node - <<'NODE'
+const fs = require("fs");
+const css = fs.readFileSync("theme/custom.css", "utf8");
+const marker = "@media (min-width: 1024px) {";
+const start = css.lastIndexOf(marker);
+if (start === -1) {
+  console.error("Expected desktop-specific toolbar media query.");
   process.exit(1);
 }
 const next = css.indexOf("\n\n@media", start + marker.length);
 const block = (next === -1 ? css.slice(start) : css.slice(start, next));
 for (const expected of [
   ".book-home-icon-full {",
-  "display: block;",
-  "width: var(--reader-logo-width-narrow);",
-  ".book-home-icon-compact {",
-  "display: none;",
+  "width: auto;",
+  "height: 36px;",
 ]) {
   if (!block.includes(expected)) {
-    console.error(`Expected tablet toolbar CSS to include ${expected}`);
+    console.error(`Expected desktop toolbar CSS to include ${expected}`);
     process.exit(1);
   }
 }
@@ -1396,7 +1431,7 @@ node - <<'NODE'
 const fs = require("fs");
 const css = fs.readFileSync("theme/custom.css", "utf8");
 const mobileReaderStart = css.lastIndexOf("@media (max-width: 760px) {");
-const mobileReaderEnd = css.indexOf("@media (max-width: 900px) {", mobileReaderStart);
+const mobileReaderEnd = css.indexOf("@media (max-width: 1023px) {", mobileReaderStart);
 if (mobileReaderStart === -1 || mobileReaderEnd === -1) {
   console.error("Expected narrow reader layout media query block in theme/custom.css");
   process.exit(1);
@@ -1845,7 +1880,7 @@ check_contains theme/custom.js 'toolbarSearchSlot.classList.toggle("hidden", slo
 check_contains theme/custom.js 'requestAnimationFrame(function focusToolbarSearchbar()'
 check_contains theme/custom.js 'searchbar.focus();'
 check_contains theme/custom.js 'searchbar.select();'
-node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const marker="@media (max-width: 900px) {";const start=css.indexOf(marker);if(start===-1){console.error("Expected mobile toolbar media query.");process.exit(1);}const next=css.indexOf("\n\n@media",start + marker.length);const block=(next===-1?css.slice(start):css.slice(start,next));for(const expected of [".toolbar-actions {","display: flex;","#mdbook-search-toggle {","display: inline-flex !important;","order: 3;",".toolbar-main {","position: absolute;",".toolbar-main .toolbar-search-slot.hidden {","display: none !important;","#mdbook-menu-bar .book-toolbar .toolbar-actions .toolbar-contact-link {","display: inline-flex !important;","order: 2;",".toolbar-actions .reader-language-switch[data-reader-language-switch=\"toolbar\"] {","order: 1;",".toolbar-actions .toolbar-contact-link .toolbar-link-label {","display: none;"]){if(!block.includes(expected)){console.error(`Expected mobile search access rule ${expected}`);process.exit(1);}}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const marker="@media (max-width: 1023px) {";const start=css.indexOf(marker);if(start===-1){console.error("Expected mobile toolbar media query.");process.exit(1);}const next=css.indexOf("\n\n@media",start + marker.length);const block=(next===-1?css.slice(start):css.slice(start,next));for(const expected of [".toolbar-actions {","display: flex;","#mdbook-search-toggle {","display: inline-flex !important;","order: 3;",".toolbar-main {","position: absolute;",".toolbar-main .toolbar-search-slot.hidden {","display: none !important;","#mdbook-menu-bar .book-toolbar .toolbar-actions .toolbar-contact-link {","display: inline-flex !important;","order: 2;",".toolbar-actions .reader-language-switch[data-reader-language-switch=\"toolbar\"] {","order: 1;",".toolbar-actions .toolbar-contact-link .toolbar-link-label {","display: none;"]){if(!block.includes(expected)){console.error(`Expected mobile search access rule ${expected}`);process.exit(1);}}'
 node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");const start=js.indexOf("item.addEventListener(\"mouseenter\", function () {");if(start===-1){console.error("Expected mouseenter handler for search result items.");process.exit(1);}const end=js.indexOf("      });",start);if(end===-1){console.error("Expected end of mouseenter handler for search result items.");process.exit(1);}const block=js.slice(start,end);if(block.includes("renderResults();")){console.error("Search result mouseenter handler must not re-render the full results list.");process.exit(1);}'
 check_contains theme/custom.js 'function applyPageVariants()'
 node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");const start=js.indexOf("function applyPageVariants() {");const end=js.indexOf("\n\n  function moveOutline()",start);if(start===-1||end===-1){console.error("Expected applyPageVariants() block.");process.exit(1);}const block=js.slice(start,end);for(const expected of ["const forewordPath = \"foreword.html\";","const generalIntroductionPath = \"general-introduction.html\";","const generalConclusionPath = \"general-conclusion.html\";","const glossaryPath = \"glossary.html\";","const bibliographicalReferencesPath = \"bibliographical-references.html\";","const isGeneralConclusionPage = window.location.pathname.endsWith(\"/chapters/\" + generalConclusionPath);","const isGlossaryPage = window.location.pathname.endsWith(\"/chapters/\" + glossaryPath);","const isBibliographicalReferencesPage = window.location.pathname.endsWith(\"/chapters/\" + bibliographicalReferencesPath);","isGeneralConclusionPage ||","isGlossaryPage ||","isBibliographicalReferencesPage;","document.body.classList.toggle(\"book-page-front-matter-outline-rail\", preserveOutlineRail);"]){if(!block.includes(expected)){console.error(`Expected applyPageVariants() to include ${expected}`);process.exit(1);}}'

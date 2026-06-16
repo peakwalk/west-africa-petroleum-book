@@ -327,7 +327,6 @@ ${renderHeaderContactLink(localeStrings)}
               <a href="${escapeHtml(links.resourcesHref)}">${escapeHtml(
                 localeStrings.nav.resources
               )}</a>
-${renderLanguageSwitch({ currentLegalPage, currentPage, edition, localeStrings })}
               <a class="button button-header mobile-nav-cta" href="${escapeHtml(links.ctaHref)}">
                 ${renderSpriteIcon({ className: "button-icon ua-icon ua-icon--sm", href: startReadingIconHref })}
                 <span class="button-label">${escapeHtml(localeStrings.buttons.startReading)}</span>
