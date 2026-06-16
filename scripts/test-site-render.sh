@@ -432,6 +432,8 @@ check_contains public/book/index.html 'class="toolbar-line-icon toolbar-line-ico
 check_not_contains public/book/index.html 'M0 96C0 78.3 14.3 64 32 64H416'
 check_contains public/book/index.html 'class="icon-button toolbar-link toolbar-contact-link"'
 check_contains public/book/index.html 'class="toolbar-line-icon toolbar-line-icon-mail"'
+check_contains public/book/index.html 'class="toolbar-line-icon toolbar-line-icon-search"'
+check_not_contains public/book/index.html 'M416 208c0 45.9-14.9 88.3-40 122.7'
 check_contains public/book/index.html 'href="mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas"'
 check_contains public/book/index.html 'upstream-atlas-nav-logo.webp'
 check_not_contains public/book/index.html 'upstream-atlas-nav-logo.png'
@@ -453,6 +455,8 @@ check_contains public/book/index.html 'title="Contact Us"'
 check_not_contains public/book/index.html 'title="Git repository"'
 check_contains public/book/index.html 'class="reader-language-switch"'
 check_contains public/book/index.html 'href="/fr/book/?lang=fr"'
+check_order public/book/index.html 'data-reader-language-switch="toolbar"' 'class="icon-button toolbar-link toolbar-contact-link"'
+check_order public/book/index.html 'class="icon-button toolbar-link toolbar-contact-link"' 'id="mdbook-search-toggle"'
 check_contains public/book/index.html 'navigator.languages'
 check_contains public/book/index.html 'class="toolbar-search-slot hidden"'
 check_contains public/book/index.html 'id="mdbook-search-wrapper" class="hidden"'
@@ -1233,30 +1237,88 @@ for (const expected of [
   "display: none !important;",
   ".toolbar-actions .reader-language-switch[data-reader-language-switch=\"toolbar\"] {",
   "display: inline-flex;",
+  "order: 1;",
   "font-size: 0.66rem;",
   "gap: 0.2rem;",
   "padding: 0.2rem 0.25rem;",
   ".toolbar-actions .reader-language-switch[data-reader-language-switch=\"toolbar\"] .reader-language-option {",
   "min-width: 1.55rem;",
   "min-height: 1.55rem;",
+  "a.reader-language-option {",
+  "position: relative;",
+  "a.reader-language-option::before {",
+  "content: \"\";",
+  "width: 44px;",
+  "height: 44px;",
   "#mdbook-menu-bar .book-toolbar .toolbar-actions .toolbar-contact-link {",
-  "display: none !important;",
+  "display: inline-flex !important;",
+  "order: 2;",
+  "width: 44px !important;",
+  "height: 44px !important;",
+  "padding: 0 !important;",
+  "gap: 0;",
+  ".toolbar-actions .toolbar-contact-link .toolbar-link-label {",
+  "display: none;",
   "#mdbook-search-toggle {",
   "display: inline-flex !important;",
+  "order: 3;",
+  "width: 44px !important;",
+  "height: 44px !important;",
+  "flex: 0 0 44px !important;",
+  "#mdbook-menu-bar .book-toolbar #mdbook-sidebar-toggle {",
+  "position: relative;",
+  "width: 28px;",
+  "height: 28px;",
+  "flex: 0 0 28px;",
+  "#mdbook-menu-bar .book-toolbar #mdbook-sidebar-toggle::before {",
+  "content: \"\";",
+  "width: 44px;",
+  "height: 44px;",
   ".toolbar-sidebar {",
   "gap: 0.625rem;",
   "padding-inline-end: 0;",
   ".toolbar-actions {",
   "padding-inline-start: 0.5rem;",
-  "gap: 0.25rem;",
+  "gap: 0.5rem;",
+  ".book-home-link {",
+  "width: 44px;",
+  "height: 44px;",
+  "flex: 0 0 44px;",
+  "justify-content: center;",
   ".book-home-icon-full {",
-  "display: block;",
-  "width: 118px;",
-  ".book-home-icon-compact {",
   "display: none;",
+  ".book-home-icon-compact {",
+  "display: block;",
+  "width: 24px;",
+  "height: 24px;",
 ]) {
   if (!narrowHeader.includes(expected)) {
     console.error(`Expected narrow-header CSS to include ${expected}`);
+    process.exit(1);
+  }
+}
+NODE
+
+node - <<'NODE'
+const fs = require("fs");
+const css = fs.readFileSync("theme/custom.css", "utf8");
+const marker = "@media (min-width: 768px) and (max-width: 900px) {";
+const start = css.indexOf(marker);
+if (start === -1) {
+  console.error("Expected tablet-specific toolbar media query.");
+  process.exit(1);
+}
+const next = css.indexOf("\n\n@media", start + marker.length);
+const block = (next === -1 ? css.slice(start) : css.slice(start, next));
+for (const expected of [
+  ".book-home-icon-full {",
+  "display: block;",
+  "width: var(--reader-logo-width-narrow);",
+  ".book-home-icon-compact {",
+  "display: none;",
+]) {
+  if (!block.includes(expected)) {
+    console.error(`Expected tablet toolbar CSS to include ${expected}`);
     process.exit(1);
   }
 }
@@ -1783,7 +1845,7 @@ check_contains theme/custom.js 'toolbarSearchSlot.classList.toggle("hidden", slo
 check_contains theme/custom.js 'requestAnimationFrame(function focusToolbarSearchbar()'
 check_contains theme/custom.js 'searchbar.focus();'
 check_contains theme/custom.js 'searchbar.select();'
-node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const marker="@media (max-width: 900px) {";const start=css.indexOf(marker);if(start===-1){console.error("Expected mobile toolbar media query.");process.exit(1);}const next=css.indexOf("\n\n@media",start + marker.length);const block=(next===-1?css.slice(start):css.slice(start,next));for(const expected of [".toolbar-actions {","display: flex;","#mdbook-search-toggle {","display: inline-flex !important;",".toolbar-main {","position: absolute;",".toolbar-main .toolbar-search-slot.hidden {","display: none !important;","#mdbook-menu-bar .book-toolbar .toolbar-actions .toolbar-contact-link {","display: none !important;"]){if(!block.includes(expected)){console.error(`Expected mobile search access rule ${expected}`);process.exit(1);}}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const marker="@media (max-width: 900px) {";const start=css.indexOf(marker);if(start===-1){console.error("Expected mobile toolbar media query.");process.exit(1);}const next=css.indexOf("\n\n@media",start + marker.length);const block=(next===-1?css.slice(start):css.slice(start,next));for(const expected of [".toolbar-actions {","display: flex;","#mdbook-search-toggle {","display: inline-flex !important;","order: 3;",".toolbar-main {","position: absolute;",".toolbar-main .toolbar-search-slot.hidden {","display: none !important;","#mdbook-menu-bar .book-toolbar .toolbar-actions .toolbar-contact-link {","display: inline-flex !important;","order: 2;",".toolbar-actions .reader-language-switch[data-reader-language-switch=\"toolbar\"] {","order: 1;",".toolbar-actions .toolbar-contact-link .toolbar-link-label {","display: none;"]){if(!block.includes(expected)){console.error(`Expected mobile search access rule ${expected}`);process.exit(1);}}'
 node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");const start=js.indexOf("item.addEventListener(\"mouseenter\", function () {");if(start===-1){console.error("Expected mouseenter handler for search result items.");process.exit(1);}const end=js.indexOf("      });",start);if(end===-1){console.error("Expected end of mouseenter handler for search result items.");process.exit(1);}const block=js.slice(start,end);if(block.includes("renderResults();")){console.error("Search result mouseenter handler must not re-render the full results list.");process.exit(1);}'
 check_contains theme/custom.js 'function applyPageVariants()'
 node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");const start=js.indexOf("function applyPageVariants() {");const end=js.indexOf("\n\n  function moveOutline()",start);if(start===-1||end===-1){console.error("Expected applyPageVariants() block.");process.exit(1);}const block=js.slice(start,end);for(const expected of ["const forewordPath = \"foreword.html\";","const generalIntroductionPath = \"general-introduction.html\";","const generalConclusionPath = \"general-conclusion.html\";","const glossaryPath = \"glossary.html\";","const bibliographicalReferencesPath = \"bibliographical-references.html\";","const isGeneralConclusionPage = window.location.pathname.endsWith(\"/chapters/\" + generalConclusionPath);","const isGlossaryPage = window.location.pathname.endsWith(\"/chapters/\" + glossaryPath);","const isBibliographicalReferencesPage = window.location.pathname.endsWith(\"/chapters/\" + bibliographicalReferencesPath);","isGeneralConclusionPage ||","isGlossaryPage ||","isBibliographicalReferencesPage;","document.body.classList.toggle(\"book-page-front-matter-outline-rail\", preserveOutlineRail);"]){if(!block.includes(expected)){console.error(`Expected applyPageVariants() to include ${expected}`);process.exit(1);}}'

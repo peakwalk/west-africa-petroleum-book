@@ -221,11 +221,6 @@
                         {{/if}}
 
                         <div class="toolbar-actions">
-                            {{#if search_enabled}}
-                            <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
-                                {{fa "solid" "magnifying-glass"}}
-                            </button>
-                            {{/if}}
                             <a class="icon-button toolbar-link toolbar-contact-link" href="mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas" title="Contact Us" aria-label="Contact Us">
                                 <span class="toolbar-line-icon toolbar-line-icon-mail" aria-hidden="true">
                                     <svg viewBox="0 0 24 24" focusable="false">
@@ -235,6 +230,16 @@
                                 </span>
                                 <span class="toolbar-link-label">Contact</span>
                             </a>
+                            {{#if search_enabled}}
+                            <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                                <span class="toolbar-line-icon toolbar-line-icon-search" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" focusable="false">
+                                        <circle cx="10.25" cy="10.25" r="5.75"></circle>
+                                        <path d="M14.5 14.5 19.25 19.25"></path>
+                                    </svg>
+                                </span>
+                            </button>
+                            {{/if}}
                         </div>
                     </div>
                 </header>
