@@ -180,6 +180,7 @@ check_contains public/index.html 'class="landing-shell"'
 check_contains public/index.html 'class="hero-panel"'
 check_contains public/index.html 'class="chapter-preview-card"'
 check_contains public/index.html 'class="site-header-inner"'
+check_contains public/index.html 'assets/css/landing.css?v=20260616'
 check_contains public/index.html 'upstream-atlas-favicon.png?v=2'
 check_contains public/index.html 'upstream-atlas-nav-logo.webp'
 check_not_contains public/index.html 'upstream-atlas-nav-logo.png'
@@ -516,6 +517,7 @@ check_exists public/fr/cookie-policy.html
 check_exists public/fr/book/index.html
 check_exists public/fr/book/reader-page-meta.json
 check_exists public/fr/assets/images/upstream-atlas-nav-logo.webp
+check_contains public/fr/index.html 'assets/css/landing.css?v=20260616'
 check_contains public/fr/index.html 'class="site-language-switch"'
 check_contains public/fr/index.html 'href="/?lang=en"'
 check_contains public/fr/index.html '<span class="button-label">Commencer la lecture</span>'

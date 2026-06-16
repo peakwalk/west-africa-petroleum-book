@@ -13,6 +13,11 @@ function resolveAssetPath(basePath, relativePath) {
   return `${basePath}${relativePath}`;
 }
 
+function appendAssetVersion(relativePath, version) {
+  const separator = relativePath.includes("?") ? "&" : "?";
+  return `${relativePath}${separator}v=${version}`;
+}
+
 function resolveHomepageIconSpriteHref(basePath, iconName) {
   return resolveAssetPath(basePath, `assets/icons/homepage-sprite.svg#${iconName}`);
 }
@@ -145,6 +150,7 @@ export const WEBSITE_LEGAL_LINKS = {
 
 const ICON_LOGO_PATH = "assets/images/upstream-atlas-icon.png";
 const NAV_LOGO_PATH = "assets/images/upstream-atlas-nav-logo.webp";
+const LANDING_CSS_VERSION = "20260616";
 
 export function resolveShellLinks(currentPage, edition, currentLegalPage = null) {
   const baseHref = editionBaseHref(edition);
@@ -177,9 +183,10 @@ export function renderLandingHead({
   extraStylesheets = [],
   title,
 }) {
-  const stylesheetHrefs = ["assets/css/landing.css", ...extraStylesheets].map((href) =>
-    resolveAssetPath(basePath, href)
-  );
+  const stylesheetHrefs = [
+    appendAssetVersion("assets/css/landing.css", LANDING_CSS_VERSION),
+    ...extraStylesheets,
+  ].map((href) => resolveAssetPath(basePath, href));
   const faviconHref = resolveAssetPath(basePath, "assets/images/upstream-atlas-favicon.png?v=2");
   const scriptHref = resolveAssetPath(basePath, "assets/js/ga.js");
   const peerEdition = getPeerSiteEdition(edition.locale);
