@@ -8,8 +8,8 @@ from scripts.docx_figures.vector_media import render_vector_blip_png
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 DOCX_PATH = ROOT_DIR / "resources/Exploration and Exploitation of Petroleum Resources in West Africa (Matt Edited).docx"
-SUMMARY_PATH = ROOT_DIR / "src/SUMMARY.md"
-CHAPTERS_DIR = ROOT_DIR / "src/chapters"
+SUMMARY_PATH = ROOT_DIR / "editions/en/content/SUMMARY.md"
+CHAPTERS_DIR = ROOT_DIR / "editions/en/content/chapters"
 
 
 class VectorMediaTest(unittest.TestCase):

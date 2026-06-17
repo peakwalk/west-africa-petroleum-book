@@ -6,17 +6,21 @@ from pathlib import Path
 
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
-EN_IMAGES = ROOT_DIR / "src" / "images"
-FR_IMAGES = ROOT_DIR / "src-fr" / "images"
+EN_IMAGES = ROOT_DIR / "editions" / "en" / "content" / "images"
+FR_IMAGES = ROOT_DIR / "editions" / "fr" / "content" / "images"
 FR_CHAPTER_02 = (
     ROOT_DIR
-    / "src-fr"
+    / "editions"
+    / "fr"
+    / "content"
     / "chapters"
     / "chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md"
 )
 FR_CHAPTER_03 = (
     ROOT_DIR
-    / "src-fr"
+    / "editions"
+    / "fr"
+    / "content"
     / "chapters"
     / "chapter-03-tax-regimes-in-the-petroleum-sector.md"
 )
@@ -34,10 +38,7 @@ class FrenchFigureAssetsTest(unittest.TestCase):
 
         self.assertIn("![Figure 022](../images/figure-022.webp)", chapter_03)
         self.assertNotIn("![Figure 022](../images/figure-022.svg)", chapter_03)
-        self.assertNotEqual(
-            _md5(FR_IMAGES / "figure-022.webp"),
-            _md5(EN_IMAGES / "figure-022.webp"),
-        )
+        self.assertFalse((EN_IMAGES / "figure-022.webp").exists())
 
         self.assertIn("REGIME FISCAL", figure_026)
         self.assertNotIn("FISCAL REGIME", figure_026)
@@ -67,7 +68,6 @@ class FrenchFigureAssetsTest(unittest.TestCase):
             "figure-008.png",
             "figure-009.png",
             "figure-019.webp",
-            "figure-022.webp",
         ]:
             with self.subTest(name=name):
                 self.assertNotEqual(_md5(FR_IMAGES / name), _md5(EN_IMAGES / name))
@@ -77,8 +77,16 @@ class FrenchFigureAssetsTest(unittest.TestCase):
 
     def test_french_tree_drops_unused_bootstrap_companion_assets(self) -> None:
         for name in [
+            "figure-004.webp",
+            "figure-006.webp",
+            "figure-008.webp",
+            "figure-009.jpg",
+            "figure-009.webp",
+            "figure-016.webp",
             "figure-017.jpg",
             "figure-017.svg",
+            "figure-018.jpg",
+            "figure-022.svg",
             "figure-023.svg",
             "figure-026.png",
             "figure-030.png",

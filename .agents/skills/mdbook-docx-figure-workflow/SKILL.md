@@ -6,20 +6,20 @@ description: Use when modifying the Africa Book mdBook project, especially chapt
 # mdBook DOCX Figure Workflow
 
 ## Overview
-This repo publishes an mdBook plus generated landing pages. Source edits belong in `src/chapters`, `theme`, `scripts`, and `src/images`. `public/` is generated output.
+This repo publishes an mdBook plus generated landing pages. Source edits belong in `editions/<locale>/content/`, `theme`, `scripts`, and edition-local image roots such as `editions/en/content/images` or `editions/fr/content/images`. `public/` is generated output.
 
 ## When to Use
 - A figure looks correct in the PDF but wrong in HTML
 - A chapter has a caption without the right image reference
-- A change touches `src/chapters/*.md`, `theme/custom.*`, `src/images/*`, or `scripts/*`
+- A change touches `editions/<locale>/content/chapters/*.md`, `theme/custom.*`, `editions/<locale>/content/images/*`, or `scripts/*`
 - You need to choose between the DOCX renderers and the PDF figure pipeline
 - You need to run the right build or validation commands for a release-facing change
 
 ## Workflow
 1. Choose the source layer.
-   - Content: `src/chapters/*.md`, `src/SUMMARY.md`
+   - Content: `editions/<locale>/content/chapters/*.md`, `editions/<locale>/content/SUMMARY.md`
    - Styles/behavior: `theme/custom.css`, `theme/custom.js`
-   - Figure generation: `scripts/docx_figures/*`, `src/images/*`
+   - Figure generation: `scripts/docx_figures/*`, `editions/<locale>/content/images/*`
    - Never hand-edit `public/*`
 2. Pick the figure pipeline.
    - If a figure is `shape_group`, `chart`, or `composite`, or the DOCX-derived asset drifts from the PDF, use `npm run render:pdf-figures -- --figures N`.
@@ -27,7 +27,7 @@ This repo publishes an mdBook plus generated landing pages. Source edits belong 
    - Current known PDF-backed figures: `17`, `23-32`
 3. Sync references and metadata.
    - Update chapter markdown to point at the published asset
-   - Rebuild the manifest with `python3 scripts/build_docx_figure_manifest.py`
+   - Rebuild the manifest with `python3 scripts/build_docx_figure_manifest.py --edition <locale>`
    - If an asset path or format changed, update `scripts/test-site-render.sh`
 4. Verify the smallest sufficient surface.
    - Figure changes: `python3 scripts/check_docx_figures.py ...` plus relevant `tests/docx_figures/*`

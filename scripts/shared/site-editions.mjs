@@ -9,11 +9,29 @@ const REGISTRY_PATH = path.join(ROOT, "config", "editions.json");
 
 const registry = JSON.parse(readFileSync(REGISTRY_PATH, "utf8"));
 
+function deriveEditionPaths(editionRoot) {
+  return {
+    bookConfigPath: path.join(editionRoot, "book.toml"),
+    siteRoot: path.join(editionRoot, "site"),
+    landingMainPath: path.join(editionRoot, "site", "index-main.html"),
+    legalRoot: path.join(editionRoot, "site", "legal"),
+    localeCatalog: path.join(editionRoot, "locale.json"),
+    sourceRoot: path.join(editionRoot, "content"),
+    summaryPath: path.join(editionRoot, "content", "SUMMARY.md"),
+    chapterRoot: path.join(editionRoot, "content", "chapters"),
+    figureRoot: path.join(editionRoot, "content", "images"),
+    figureManifestPath: path.join(editionRoot, "content", "images", "figure-manifest.json"),
+  };
+}
+
 const editions = registry.editions.map((edition) => {
-  const catalogPath = path.join(ROOT, edition.localeCatalog);
+  const derivedPaths = deriveEditionPaths(edition.editionRoot);
+  const catalogPath = path.join(ROOT, derivedPaths.localeCatalog);
   const localeStrings = JSON.parse(readFileSync(catalogPath, "utf8"));
   return {
     ...edition,
+    ...derivedPaths,
+    bookRoot: edition.editionRoot,
     localeStrings,
     outputRoot: edition.routePrefix ? path.join(ROOT, edition.routePrefix) : ROOT,
   };
@@ -31,6 +49,10 @@ export function getPeerSiteEdition(locale) {
   return editions.find((edition) => edition.locale !== locale) || null;
 }
 
-export function resolveEditionPath(edition, relativePath = "") {
-  return path.join(edition.outputRoot, relativePath);
+export function resolveEditionPath(edition, relativePath = "", outputRoot = ROOT) {
+  const resolvedOutputRoot = path.resolve(outputRoot);
+  const editionOutputRoot = edition.routePrefix
+    ? path.join(resolvedOutputRoot, edition.routePrefix)
+    : resolvedOutputRoot;
+  return path.join(editionOutputRoot, relativePath);
 }

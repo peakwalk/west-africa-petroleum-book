@@ -121,6 +121,32 @@ class BookEditionBuildTests(unittest.TestCase):
         self.assertIn("Édition de référence Upstream Atlas", french_book_index)
         self.assertIn("Commencer la lecture", french_book_index)
 
+    def test_english_book_cover_uses_english_cover_asset(self) -> None:
+        english_book_index = (ROOT_DIR / "public" / "book" / "index.html").read_text(
+            encoding="utf-8"
+        )
+        english_cover = (
+            ROOT_DIR / "public" / "book" / "chapters" / "cover.html"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn('src="images/figure-000.webp"', english_book_index)
+        self.assertNotIn('src="images/figure-001.webp"', english_book_index)
+        self.assertIn('src="../images/figure-000.webp"', english_cover)
+        self.assertNotIn('src="../images/figure-001.webp"', english_cover)
+
+    def test_french_book_cover_uses_french_cover_asset(self) -> None:
+        french_book_index = (ROOT_DIR / "public" / "fr" / "book" / "index.html").read_text(
+            encoding="utf-8"
+        )
+        french_cover = (
+            ROOT_DIR / "public" / "fr" / "book" / "chapters" / "cover.html"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn('src="images/figure-000.webp"', french_book_index)
+        self.assertNotIn('src="images/figure-001.webp"', french_book_index)
+        self.assertIn('src="../images/figure-000.webp"', french_cover)
+        self.assertNotIn('src="../images/figure-001.webp"', french_cover)
+
     def test_french_front_matter_and_chapter_titles_use_french_copy(self) -> None:
         french_figures = (
             ROOT_DIR / "public" / "fr" / "book" / "chapters" / "list-of-figures.html"
@@ -480,32 +506,32 @@ class BookEditionBuildTests(unittest.TestCase):
     def test_french_source_tree_no_longer_relies_on_english_placeholder_body_copy(self) -> None:
         chapter_one = (
             ROOT_DIR
-            / "src-fr"
+            / "editions/fr/content"
             / "chapters"
             / "chapter-01-value-chain-of-the-hydrocarbon-sector.md"
         ).read_text(encoding="utf-8")
         chapter_two = (
             ROOT_DIR
-            / "src-fr"
+            / "editions/fr/content"
             / "chapters"
             / "chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md"
         ).read_text(encoding="utf-8")
         chapter_three = (
             ROOT_DIR
-            / "src-fr"
+            / "editions/fr/content"
             / "chapters"
             / "chapter-03-tax-regimes-in-the-petroleum-sector.md"
         ).read_text(encoding="utf-8")
         chapter_four = (
             ROOT_DIR
-            / "src-fr"
+            / "editions/fr/content"
             / "chapters"
             / "chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md"
         ).read_text(encoding="utf-8")
         conclusion = (
-            ROOT_DIR / "src-fr" / "chapters" / "general-conclusion.md"
+            ROOT_DIR / "editions/fr/content" / "chapters" / "general-conclusion.md"
         ).read_text(encoding="utf-8")
-        glossary = (ROOT_DIR / "src-fr" / "chapters" / "glossary.md").read_text(
+        glossary = (ROOT_DIR / "editions/fr/content" / "chapters" / "glossary.md").read_text(
             encoding="utf-8"
         )
 
@@ -519,13 +545,13 @@ class BookEditionBuildTests(unittest.TestCase):
     def test_french_source_tree_uses_docx_body_without_cross_chapter_spillover_or_ocr_noise(self) -> None:
         chapter_one = (
             ROOT_DIR
-            / "src-fr"
+            / "editions/fr/content"
             / "chapters"
             / "chapter-01-value-chain-of-the-hydrocarbon-sector.md"
         ).read_text(encoding="utf-8")
         chapter_three = (
             ROOT_DIR
-            / "src-fr"
+            / "editions/fr/content"
             / "chapters"
             / "chapter-03-tax-regimes-in-the-petroleum-sector.md"
         ).read_text(encoding="utf-8")

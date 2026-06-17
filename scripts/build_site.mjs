@@ -64,17 +64,7 @@ function runNodeScript(relativeScriptPath, args = []) {
 }
 
 function copyIntoPublic() {
-  copyPathSync(path.join(rootDir, "index.html"), path.join(publicDir, "index.html"));
-  copyPathSync(path.join(rootDir, "terms-of-use.html"), path.join(publicDir, "terms-of-use.html"));
-  copyPathSync(path.join(rootDir, "privacy-policy.html"), path.join(publicDir, "privacy-policy.html"));
-  copyPathSync(path.join(rootDir, "cookie-policy.html"), path.join(publicDir, "cookie-policy.html"));
-  copyPathSync(path.join(rootDir, "chapters"), path.join(publicDir, "chapters"));
   copyPathSync(path.join(rootDir, "assets"), path.join(publicDir, "assets"));
-
-  if (fs.existsSync(path.join(rootDir, "fr"))) {
-    copyPathSync(path.join(rootDir, "fr"), path.join(publicDir, "fr"));
-  }
-
   fs.mkdirSync(path.join(publicDir, "fr"), { recursive: true });
   copyPathSync(path.join(rootDir, "assets"), path.join(publicDir, "fr", "assets"));
 }
@@ -103,9 +93,9 @@ function main() {
   fs.rmSync(publicDir, { recursive: true, force: true });
   fs.mkdirSync(publicDir, { recursive: true });
 
-  runNodeScript("scripts/generate-index-page.mjs");
-  runNodeScript("scripts/generate-legal-pages.mjs");
-  runNodeScript("scripts/generate-chapters-page.mjs");
+  runNodeScript("scripts/generate-index-page.mjs", ["--output-root", publicDir]);
+  runNodeScript("scripts/generate-legal-pages.mjs", ["--output-root", publicDir]);
+  runNodeScript("scripts/generate-chapters-page.mjs", ["--output-root", publicDir]);
   copyIntoPublic();
 
   listSiteEditions().forEach(buildBookEdition);

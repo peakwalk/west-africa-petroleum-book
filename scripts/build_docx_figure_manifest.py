@@ -16,9 +16,9 @@ from scripts.docx_figures import build_figure_inventory
 DEFAULT_DOCX = Path(
     "resources/Exploration and Exploitation of Petroleum Resources in West Africa (Matt Edited).docx"
 )
-DEFAULT_SUMMARY = Path("src/SUMMARY.md")
-DEFAULT_CHAPTERS_DIR = Path("src/chapters")
-DEFAULT_OUTPUT = Path("src/images/figure-manifest.json")
+DEFAULT_SUMMARY = Path("editions/en/content/SUMMARY.md")
+DEFAULT_CHAPTERS_DIR = Path("editions/en/content/chapters")
+DEFAULT_OUTPUT = Path("editions/en/content/images/figure-manifest.json")
 
 
 def parse_args() -> argparse.Namespace:

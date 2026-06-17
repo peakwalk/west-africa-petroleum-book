@@ -32,7 +32,7 @@ class CompareBooksTests(unittest.TestCase):
             chapters=[
                 ChapterSemanticModel(
                     source_path=(
-                        "src/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md"
+                        "editions/en/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md"
                     ),
                     title="Chapter 1: Value Chain of the Hydrocarbon Sector",
                     outline=[

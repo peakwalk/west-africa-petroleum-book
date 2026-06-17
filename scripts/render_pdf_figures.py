@@ -29,9 +29,9 @@ DEFAULT_DOCX = Path(
 DEFAULT_PDF = Path(
     "resources/Exploration and Exploitation of Petroleum Resources in West Africa (Matt Edited).pdf"
 )
-DEFAULT_SUMMARY = Path("src/SUMMARY.md")
-DEFAULT_CHAPTERS_DIR = Path("src/chapters")
-DEFAULT_OUTPUT_DIR = Path("src/images")
+DEFAULT_SUMMARY = Path("editions/en/content/SUMMARY.md")
+DEFAULT_CHAPTERS_DIR = Path("editions/en/content/chapters")
+DEFAULT_OUTPUT_DIR = Path("editions/en/content/images")
 LOSSLESS_WEBP_FIGURES = {17, 19, 21, 22, 23, 24, 25, 27, 28, 29, 31, 32}
 
 

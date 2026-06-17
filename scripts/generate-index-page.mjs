@@ -12,12 +12,17 @@ import { listSiteEditions, resolveEditionPath } from "./shared/site-editions.mjs
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT = path.resolve(__dirname, "..");
+const outputRootArgIndex = process.argv.indexOf("--output-root");
+const outputRoot =
+  outputRootArgIndex >= 0 && process.argv[outputRootArgIndex + 1]
+    ? path.resolve(ROOT, process.argv[outputRootArgIndex + 1])
+    : ROOT;
 
 async function main() {
   await Promise.all(
     listSiteEditions().map(async (edition) => {
-      const mainContentPath = path.join(ROOT, edition.sourceRoot, "index-main.html");
-      const outputPath = resolveEditionPath(edition, "index.html");
+      const mainContentPath = path.join(ROOT, edition.landingMainPath);
+      const outputPath = resolveEditionPath(edition, "index.html", outputRoot);
       const mainContent = await fs.readFile(mainContentPath, "utf8");
       const html = `<!doctype html>
 <html lang="${edition.locale}">

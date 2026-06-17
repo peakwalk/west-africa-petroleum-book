@@ -21,8 +21,8 @@ from scripts.docx_figures import build_figure_inventory
 DEFAULT_DOCX = Path(
     "resources/Exploration and Exploitation of Petroleum Resources in West Africa (Matt Edited).docx"
 )
-DEFAULT_SUMMARY = Path("src/SUMMARY.md")
-DEFAULT_CHAPTERS_DIR = Path("src/chapters")
+DEFAULT_SUMMARY = Path("editions/en/content/SUMMARY.md")
+DEFAULT_CHAPTERS_DIR = Path("editions/en/content/chapters")
 
 PARAGRAPH_RE = re.compile(r"(<w:p(?:\s[^>]*)?>.*?</w:p>)", re.DOTALL)
 TEXT_NODE_RE = re.compile(

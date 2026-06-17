@@ -15,6 +15,11 @@ import { listSiteEditions, resolveEditionPath } from "./shared/site-editions.mjs
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT = path.resolve(__dirname, "..");
+const outputRootArgIndex = process.argv.indexOf("--output-root");
+const outputRoot =
+  outputRootArgIndex >= 0 && process.argv[outputRootArgIndex + 1]
+    ? path.resolve(ROOT, process.argv[outputRootArgIndex + 1])
+    : ROOT;
 
 const PAGES = [
   { key: "terms", output: WEBSITE_LEGAL_LINKS.terms, source: "terms-of-use.json" },
@@ -146,7 +151,7 @@ async function main() {
     listSiteEditions().flatMap((edition) =>
       PAGES.map(async (page) => {
         const sourcePath = path.join(ROOT, edition.legalRoot, page.source);
-        const outputPath = resolveEditionPath(edition, page.output);
+        const outputPath = resolveEditionPath(edition, page.output, outputRoot);
         const raw = await fs.readFile(sourcePath, "utf8");
         const content = JSON.parse(raw);
         const html = renderLegalPage(page, content, edition);

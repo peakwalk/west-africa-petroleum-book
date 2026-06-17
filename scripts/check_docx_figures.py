@@ -24,9 +24,9 @@ from scripts.docx_parity.normalize import normalize_visible_text
 DEFAULT_DOCX = Path(
     "resources/Exploration and Exploitation of Petroleum Resources in West Africa (Matt Edited).docx"
 )
-DEFAULT_SUMMARY = Path("src/SUMMARY.md")
-DEFAULT_CHAPTERS_DIR = Path("src/chapters")
-DEFAULT_MANIFEST = Path("src/images/figure-manifest.json")
+DEFAULT_SUMMARY = Path("editions/en/content/SUMMARY.md")
+DEFAULT_CHAPTERS_DIR = Path("editions/en/content/chapters")
+DEFAULT_MANIFEST = Path("editions/en/content/images/figure-manifest.json")
 SUMMARY_LINK_RE = re.compile(r"^\s*-\s+\[(?P<title>.+?)\]\((?P<path>.+?)\)\s*$")
 MARKDOWN_IMAGE_RE = re.compile(r"!\[[^\]]*\]\((?P<path>[^)]+)\)")
 FIGURE_PATH_RE = re.compile(r"figure-(?P<number>\d+)", re.IGNORECASE)
@@ -172,7 +172,7 @@ def _coverage_diffs(
                 figure_number=record.number,
                 chapter_path=record.chapter_path or record.chapter_title,
                 diff_type="manifest.no_asset_candidates",
-                detail="No existing files under src/images match this figure number prefix.",
+                detail="No existing files under the edition image root match this figure number prefix.",
             )
         )
 

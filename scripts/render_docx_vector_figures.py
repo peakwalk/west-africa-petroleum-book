@@ -15,9 +15,9 @@ from scripts.docx_figures.vector_media import render_vector_blip_png
 DEFAULT_DOCX = Path(
     "resources/Exploration and Exploitation of Petroleum Resources in West Africa (Matt Edited).docx"
 )
-DEFAULT_SUMMARY = Path("src/SUMMARY.md")
-DEFAULT_CHAPTERS_DIR = Path("src/chapters")
-DEFAULT_OUTPUT_DIR = Path("src/images")
+DEFAULT_SUMMARY = Path("editions/en/content/SUMMARY.md")
+DEFAULT_CHAPTERS_DIR = Path("editions/en/content/chapters")
+DEFAULT_OUTPUT_DIR = Path("editions/en/content/images")
 
 
 def parse_args() -> argparse.Namespace:

@@ -7,7 +7,7 @@ def compare_books(docx_book: BookSemanticModel, markdown_book: BookSemanticModel
     if len(docx_book.chapters) != len(markdown_book.chapters):
         diffs.append(
             ParityDiff(
-                chapter_path="src/SUMMARY.md",
+                chapter_path="editions/en/content/SUMMARY.md",
                 diff_type="outline.chapter_count_mismatch",
                 docx_value=str(len(docx_book.chapters)),
                 markdown_value=str(len(markdown_book.chapters)),

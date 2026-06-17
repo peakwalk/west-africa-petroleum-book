@@ -20,10 +20,11 @@ from scripts.render_pdf_figures import (
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 PDF_PATH = ROOT_DIR / "resources/Exploration and Exploitation of Petroleum Resources in West Africa (Matt Edited).pdf"
+FR_PDF_PATH = ROOT_DIR / "resources/editions/fr/reference.pdf"
 RENDER_SCRIPT = ROOT_DIR / "scripts/render_pdf_figures.py"
 CHAPTER_02_PATH = (
     ROOT_DIR
-    / "src/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md"
+    / "editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md"
 )
 
 
@@ -34,23 +35,57 @@ def _png_dimensions(path: Path) -> tuple[int, int]:
     return struct.unpack(">II", data[16:24])
 
 
+def _render_pdf_figure_assets(
+    *,
+    pdf_path: Path,
+    figure_number: int,
+) -> tuple[bytes, bytes]:
+    with tempfile.TemporaryDirectory() as tmpdir:
+        output_dir = Path(tmpdir)
+        result = subprocess.run(
+            [
+                sys.executable,
+                str(RENDER_SCRIPT),
+                "--pdf",
+                str(pdf_path),
+                "--figures",
+                str(figure_number),
+                "--output-dir",
+                str(output_dir),
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+            cwd=str(ROOT_DIR),
+        )
+
+        if result.returncode != 0:
+            raise AssertionError(f"stdout:\n{result.stdout}\nstderr:\n{result.stderr}")
+
+        png_path = output_dir / f"figure-{figure_number:03d}.png"
+        webp_path = output_dir / f"figure-{figure_number:03d}.webp"
+        if not png_path.exists() or not webp_path.exists():
+            raise AssertionError(f"Missing rendered assets for Figure {figure_number}.\nstdout:\n{result.stdout}")
+        return png_path.read_bytes(), webp_path.read_bytes()
+
+
 class PdfFiguresTest(unittest.TestCase):
     def test_chapter_2_uses_pdf_asset_for_figure_17(self) -> None:
         chapter_text = CHAPTER_02_PATH.read_text(encoding="utf-8")
 
         self.assertIn("![Figure 017](../images/figure-017.webp)", chapter_text)
-        self.assertTrue((ROOT_DIR / "src/images/figure-017.webp").exists())
+        self.assertTrue((ROOT_DIR / "editions/en/content/images/figure-017.webp").exists())
 
     def test_chapter_2_uses_pdf_asset_for_figure_19(self) -> None:
         chapter_text = CHAPTER_02_PATH.read_text(encoding="utf-8")
 
         self.assertIn("![Figure 019](../images/figure-019.webp)", chapter_text)
-        self.assertTrue((ROOT_DIR / "src/images/figure-019.webp").exists())
+        self.assertTrue((ROOT_DIR / "editions/en/content/images/figure-019.webp").exists())
 
     def test_chapter_4_uses_webp_assets_for_selected_pdf_figures(self) -> None:
         chapter_text = (
             ROOT_DIR
-            / "src/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md"
+            / "editions/en/content/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md"
         ).read_text(encoding="utf-8")
 
         self.assertIn("![Figure 025](../images/figure-025.webp)", chapter_text)
@@ -60,29 +95,29 @@ class PdfFiguresTest(unittest.TestCase):
         self.assertIn("![Figure 024](../images/figure-024.webp)", chapter_text)
         self.assertIn("![Figure 031](../images/figure-031.webp)", chapter_text)
         self.assertIn("![Figure 032](../images/figure-032.webp)", chapter_text)
-        self.assertTrue((ROOT_DIR / "src/images/figure-025.webp").exists())
-        self.assertTrue((ROOT_DIR / "src/images/figure-027.webp").exists())
-        self.assertTrue((ROOT_DIR / "src/images/figure-028.webp").exists())
-        self.assertTrue((ROOT_DIR / "src/images/figure-029.webp").exists())
-        self.assertTrue((ROOT_DIR / "src/images/figure-024.webp").exists())
-        self.assertTrue((ROOT_DIR / "src/images/figure-031.webp").exists())
-        self.assertTrue((ROOT_DIR / "src/images/figure-032.webp").exists())
+        self.assertTrue((ROOT_DIR / "editions/en/content/images/figure-025.webp").exists())
+        self.assertTrue((ROOT_DIR / "editions/en/content/images/figure-027.webp").exists())
+        self.assertTrue((ROOT_DIR / "editions/en/content/images/figure-028.webp").exists())
+        self.assertTrue((ROOT_DIR / "editions/en/content/images/figure-029.webp").exists())
+        self.assertTrue((ROOT_DIR / "editions/en/content/images/figure-024.webp").exists())
+        self.assertTrue((ROOT_DIR / "editions/en/content/images/figure-031.webp").exists())
+        self.assertTrue((ROOT_DIR / "editions/en/content/images/figure-032.webp").exists())
 
     def test_chapter_3_uses_published_assets_for_selected_figures(self) -> None:
         chapter_text = (
             ROOT_DIR
-            / "src/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md"
+            / "editions/en/content/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md"
         ).read_text(encoding="utf-8")
 
         self.assertIn("![Figure 021](../images/figure-021.webp)", chapter_text)
         self.assertIn("![Figure 022](../images/figure-022.svg)", chapter_text)
         self.assertIn("![Figure 023](../images/figure-023.webp)", chapter_text)
-        self.assertTrue((ROOT_DIR / "src/images/figure-021.webp").exists())
-        self.assertTrue((ROOT_DIR / "src/images/figure-022.svg").exists())
-        self.assertTrue((ROOT_DIR / "src/images/figure-023.webp").exists())
+        self.assertTrue((ROOT_DIR / "editions/en/content/images/figure-021.webp").exists())
+        self.assertTrue((ROOT_DIR / "editions/en/content/images/figure-022.svg").exists())
+        self.assertTrue((ROOT_DIR / "editions/en/content/images/figure-023.webp").exists())
 
     def test_figure_22_source_asset_is_high_resolution_png(self) -> None:
-        output_path = ROOT_DIR / "src/images/figure-022.png"
+        output_path = ROOT_DIR / "editions/en/content/images/figure-022.png"
 
         self.assertTrue(output_path.exists())
 
@@ -92,7 +127,7 @@ class PdfFiguresTest(unittest.TestCase):
         self.assertGreater(output_path.stat().st_size, 500_000)
 
     def test_figure_22_svg_uses_english_labels(self) -> None:
-        svg_text = (ROOT_DIR / "src/images/figure-022.svg").read_text(encoding="utf-8")
+        svg_text = (ROOT_DIR / "editions/en/content/images/figure-022.svg").read_text(encoding="utf-8")
 
         self.assertIn("GOVERNMENT SHARE", svg_text)
         self.assertIn("CONTRACTOR SHARE", svg_text)
@@ -101,6 +136,39 @@ class PdfFiguresTest(unittest.TestCase):
         self.assertNotIn("PART DU GOUVERNEMENT", svg_text)
         self.assertNotIn("PART DU CONTRACTANT", svg_text)
         self.assertNotIn("COUTS RECUPERABLES", svg_text)
+
+    def test_figure_32_english_raster_assets_match_pdf_render(self) -> None:
+        png_bytes, webp_bytes = _render_pdf_figure_assets(pdf_path=PDF_PATH, figure_number=32)
+
+        self.assertEqual(
+            (ROOT_DIR / "editions/en/content/images/figure-032.png").read_bytes(),
+            png_bytes,
+        )
+        self.assertEqual(
+            (ROOT_DIR / "editions/en/content/images/figure-032.webp").read_bytes(),
+            webp_bytes,
+        )
+
+    def test_figure_32_french_raster_assets_match_pdf_render(self) -> None:
+        png_bytes, webp_bytes = _render_pdf_figure_assets(pdf_path=FR_PDF_PATH, figure_number=32)
+
+        self.assertEqual(
+            (ROOT_DIR / "editions/fr/content/images/figure-032.png").read_bytes(),
+            png_bytes,
+        )
+        self.assertEqual(
+            (ROOT_DIR / "editions/fr/content/images/figure-032.webp").read_bytes(),
+            webp_bytes,
+        )
+
+    def test_french_figure_32_raster_assets_do_not_duplicate_figure_31(self) -> None:
+        png_031 = ROOT_DIR / "editions/fr/content/images/figure-031.png"
+        png_032 = ROOT_DIR / "editions/fr/content/images/figure-032.png"
+        webp_031 = ROOT_DIR / "editions/fr/content/images/figure-031.webp"
+        webp_032 = ROOT_DIR / "editions/fr/content/images/figure-032.webp"
+
+        self.assertNotEqual(png_031.read_bytes(), png_032.read_bytes())
+        self.assertNotEqual(webp_031.read_bytes(), webp_032.read_bytes())
 
     def test_build_search_windows_separates_multiple_figures_on_the_same_page(self) -> None:
         placements = [
@@ -176,6 +244,41 @@ class PdfFiguresTest(unittest.TestCase):
             self.assertGreater(width, 1500)
             self.assertGreater(height, 1000)
             self.assertGreater(output_path.stat().st_size, 100_000)
+
+    def test_render_pdf_figure_5_preserves_the_full_french_layout_bounds(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            output_dir = Path(tmpdir)
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(RENDER_SCRIPT),
+                    "--pdf",
+                    str(FR_PDF_PATH),
+                    "--figures",
+                    "5",
+                    "--output-dir",
+                    str(output_dir),
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+                cwd=str(ROOT_DIR),
+            )
+
+            self.assertEqual(
+                result.returncode,
+                0,
+                msg=f"stdout:\n{result.stdout}\nstderr:\n{result.stderr}",
+            )
+
+            output_path = output_dir / "figure-005.png"
+            self.assertTrue(output_path.exists(), msg=result.stdout)
+
+            width, height = _png_dimensions(output_path)
+            self.assertGreater(width, 3175)
+            self.assertGreater(height, 2100)
+            self.assertLess(height, 2400)
+            self.assertLess(width / height, 1.6)
 
     def test_find_cwebp_binary_uses_homebrew_fallback(self) -> None:
         with mock.patch("scripts.render_pdf_figures.shutil.which", return_value=None):

@@ -12,6 +12,11 @@ import { listSiteEditions, resolveEditionPath } from "./shared/site-editions.mjs
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT = path.resolve(__dirname, "..");
+const outputRootArgIndex = process.argv.indexOf("--output-root");
+const outputRoot =
+  outputRootArgIndex >= 0 && process.argv[outputRootArgIndex + 1]
+    ? path.resolve(ROOT, process.argv[outputRootArgIndex + 1])
+    : ROOT;
 const DEFAULT_GENERIC_DESCRIPTIONS = new Map([
   ["cover", "Opening material and publication framing for the web edition."],
   ["foreword", "Context for the book's purpose, scope, and relevance to petroleum resource governance."],
@@ -514,7 +519,7 @@ ${renderLandingFooter({ currentPage: "chapters", edition, logoBasePath: "../" })
 async function main() {
   await Promise.all(
     listSiteEditions().map(async (edition) => {
-      const outputDir = resolveEditionPath(edition, "chapters");
+      const outputDir = resolveEditionPath(edition, "chapters", outputRoot);
       const outputPath = path.join(outputDir, "index.html");
       const sections = await buildChapterData(edition);
       await fs.mkdir(outputDir, { recursive: true });

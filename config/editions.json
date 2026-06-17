@@ -2,36 +2,22 @@
   "editions": [
     {
       "locale": "en",
-      "bookRoot": ".",
+      "editionRoot": "editions/en",
       "routePrefix": "",
-      "sourceRoot": "src",
-      "summaryPath": "src/SUMMARY.md",
-      "chapterRoot": "src/chapters",
-      "legalRoot": "src/legal",
-      "figureRoot": "src/images",
-      "figureManifestPath": "src/images/figure-manifest.json",
       "figureTextReplacementMapPath": "scripts/docx_figures/figure_text_englishization_map.json",
       "manuscripts": {
         "docx": "resources/editions/en/reference.docx",
         "pdf": "resources/editions/en/reference.pdf"
-      },
-      "localeCatalog": "config/locales/en.json"
+      }
     },
     {
       "locale": "fr",
-      "bookRoot": "books/fr",
+      "editionRoot": "editions/fr",
       "routePrefix": "fr",
-      "sourceRoot": "src-fr",
-      "summaryPath": "src-fr/SUMMARY.md",
-      "chapterRoot": "src-fr/chapters",
-      "legalRoot": "src-fr/legal",
-      "figureRoot": "src-fr/images",
-      "figureManifestPath": "src-fr/images/figure-manifest.json",
       "manuscripts": {
         "docx": "resources/editions/fr/reference.docx",
         "pdf": "resources/editions/fr/reference.pdf"
-      },
-      "localeCatalog": "config/locales/fr.json"
+      }
     }
   ]
 }

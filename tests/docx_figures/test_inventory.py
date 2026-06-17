@@ -8,11 +8,11 @@ from scripts.docx_figures.model import FigureObjectStats
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 DOCX_PATH = ROOT_DIR / "resources/Exploration and Exploitation of Petroleum Resources in West Africa (Matt Edited).docx"
-SUMMARY_PATH = ROOT_DIR / "src/SUMMARY.md"
-CHAPTERS_DIR = ROOT_DIR / "src/chapters"
+SUMMARY_PATH = ROOT_DIR / "editions/en/content/SUMMARY.md"
+CHAPTERS_DIR = ROOT_DIR / "editions/en/content/chapters"
 FR_DOCX_PATH = ROOT_DIR / "resources/editions/fr/reference.docx"
-FR_SUMMARY_PATH = ROOT_DIR / "src-fr/SUMMARY.md"
-FR_CHAPTERS_DIR = ROOT_DIR / "src-fr/chapters"
+FR_SUMMARY_PATH = ROOT_DIR / "editions/fr/content/SUMMARY.md"
+FR_CHAPTERS_DIR = ROOT_DIR / "editions/fr/content/chapters"
 
 
 class InventoryTest(unittest.TestCase):
@@ -58,6 +58,19 @@ class InventoryTest(unittest.TestCase):
         self.assertEqual(inventory[31].kind, "chart")
         self.assertEqual(inventory[32].kind, "chart")
 
+    def test_english_docx_inventory_uses_canonical_figure_one_asset_names(self) -> None:
+        inventory = {
+            record.number: record
+            for record in build_figure_inventory(
+                docx_path=DOCX_PATH,
+                chapters_dir=CHAPTERS_DIR,
+                summary_path=SUMMARY_PATH,
+            )
+        }
+
+        self.assertEqual(inventory[1].published_assets, ["figure-001.png", "figure-001.webp"])
+        self.assertEqual(inventory[2].published_assets, ["figure-002-a.webp", "figure-002-b.webp"])
+
     def test_french_docx_inventory_covers_figures_1_through_32(self) -> None:
         inventory = build_figure_inventory(
             docx_path=FR_DOCX_PATH,
@@ -82,7 +95,7 @@ class InventoryTest(unittest.TestCase):
             str(
                 (
                     ROOT_DIR
-                    / "src-fr"
+                    / "editions/fr/content"
                     / "chapters"
                     / "chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md"
                 ).resolve()

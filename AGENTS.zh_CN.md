@@ -1,9 +1,9 @@
 # Africa Book 代理说明
 
 ## 仓库结构
-- 书稿源文件位于 `src/chapters/*.md`、`src/SUMMARY.md` 和 `book.toml`。
+- 书稿源文件位于 `editions/<locale>/content/` 下，英文版在 `editions/en/content/`，法文版在 `editions/fr/content/`。
 - 落地页由 `scripts/generate-*.mjs` 生成；`public/` 是构建产物，不能直接编辑。
-- 图表元数据位于 `src/images/figure-manifest.json`；修改图表资源或章节引用后，应重新生成该文件。
+- 图表元数据位于各版本根目录下的 `editions/<locale>/content/images/figure-manifest.json`；修改图表资源或章节引用后，应重新生成对应版本的 manifest。
 - 仓库专用工作流技能位于 `.agents/skills/mdbook-docx-figure-workflow/SKILL.md`。
 - 仓库本地 Codex 插件脚手架位于 `plugins/africa-book-workflow/`，并注册在 `.agents/plugins/marketplace.json`。
 
@@ -11,7 +11,7 @@
 - `AGENTS.zh_CN.md` 是本文件的简体中文对应版本。每次修改 `AGENTS.md` 时，都要保持两者同步。
 - 后续新增任何非源码类项目开发 Markdown 文档时，都要在同目录添加对应的 `.zh_CN.md` 文件。例如：`docs/example.md` 应对应 `docs/example.zh_CN.md`。
 - 该规则适用于代理/开发者工作流文档、计划、规格、政策，以及构建或发布说明。
-- 该规则不适用于 `src/chapters/*.md` 中的书稿源文件、生成产物、第三方文档，或文件名已经包含语言区域后缀的 Markdown 文件。
+- 该规则不适用于 `editions/<locale>/content/chapters/*.md` 中的书稿源文件、生成产物、第三方文档，或文件名已经包含语言区域后缀的 Markdown 文件。
 - 修改已有的非源码项目文档时，如果它已经有 `.zh_CN.md` 对应文件，应在同一次变更中同步更新两份文件。
 
 ## 必需工具
@@ -37,10 +37,14 @@
 - `npm run test:site`
 - `npm run check:docx-parity`
 - `npm run check:docx-figures`
-- `npm run render:pdf-figures -- --figures 17 23 24`
-- `npm run render:docx-chart-figures -- --figures 24 31 32`
-- `npm run render:docx-shape-figures -- --figures 23 25 26 27 28 29 30`
-- `npm run render:docx-vector-figures -- --figures 22`
+- `npm run render:pdf-figures -- --edition en --figures 17 23 24`
+- `npm run render:pdf-figures -- --edition fr --figures 17 23 24`
+- `npm run render:docx-chart-figures -- --edition en --figures 24 31 32`
+- `npm run render:docx-chart-figures -- --edition fr --figures 24 31 32`
+- `npm run render:docx-shape-figures -- --edition en --figures 23 25 26 27 28 29 30`
+- `npm run render:docx-shape-figures -- --edition fr --figures 23 25 26 27 28 29 30`
+- `npm run render:docx-vector-figures -- --edition en --figures 22`
+- `npm run render:docx-vector-figures -- --edition fr --figures 22`
 
 ## 图表工作流
 - 当 HTML 布局相对 PDF 漂移时，`shape_group`、`chart` 和 `composite` 图表优先使用 PDF 流水线。
@@ -48,8 +52,8 @@
 - 只有当原生 DOCX 提取已经稳定，或明确要求时，才使用 DOCX 渲染器。
 - 修改图表资源、图表引用或渲染脚本后：
   1. 重新渲染目标图表。
-  2. 运行 `python3 scripts/build_docx_figure_manifest.py`。
-  3. 运行 `python3 scripts/check_docx_figures.py --docx "resources/Exploration and Exploitation of Petroleum Resources in West Africa (Matt Edited).docx" --summary src/SUMMARY.md --chapters-dir src/chapters --manifest src/images/figure-manifest.json`。
+  2. 运行 `python3 scripts/build_docx_figure_manifest.py --edition <locale>`。
+  3. 运行 `python3 scripts/check_docx_figures.py --edition <locale>`。
   4. 让 `scripts/test-site-render.sh` 的期望与发布资源路径和格式保持一致。
 
 ## 验证期望

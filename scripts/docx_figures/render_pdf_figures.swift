@@ -275,21 +275,51 @@ func findContentBounds(
         }
     }
 
-    guard let band = bands.max(by: { lhs, rhs in
-        if lhs.score == rhs.score {
-            return (lhs.end - lhs.start) < (rhs.end - rhs.start)
-        }
-        return lhs.score < rhs.score
-    }) else {
+    guard !bands.isEmpty else {
         return nil
+    }
+    let bridgeGapRows = maxGapRows * 4
+    var dominantIndex = 0
+    for index in 1..<bands.count {
+        let candidate = bands[index]
+        let current = bands[dominantIndex]
+        if candidate.score > current.score || (
+            candidate.score == current.score
+            && (candidate.end - candidate.start) > (current.end - current.start)
+        ) {
+            dominantIndex = index
+        }
+    }
+
+    var contentStart = bands[dominantIndex].start
+    var contentEnd = bands[dominantIndex].end
+
+    var previousIndex = dominantIndex - 1
+    while previousIndex >= 0 {
+        let previousBand = bands[previousIndex]
+        if contentStart - previousBand.end > bridgeGapRows {
+            break
+        }
+        contentStart = previousBand.start
+        previousIndex -= 1
+    }
+
+    var nextIndex = dominantIndex + 1
+    while nextIndex < bands.count {
+        let nextBand = bands[nextIndex]
+        if nextBand.start - contentEnd > bridgeGapRows {
+            break
+        }
+        contentEnd = nextBand.end
+        nextIndex += 1
     }
 
     var found = false
     var left = maxX
     var right = minX
-    var top = band.end
-    var bottom = band.start
-    for py in band.start...band.end {
+    var top = contentEnd
+    var bottom = contentStart
+    for py in contentStart...contentEnd {
         let row = data + py * bytesPerRow
         for px in minX...maxX {
             let offset = px * 4

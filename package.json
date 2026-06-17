@@ -4,7 +4,7 @@
   "private": true,
   "description": "Landing page and mdBook edition for Exploration and Exploitation of Petroleum Resources in West Africa.",
   "scripts": {
-    "build": "npm run build:index && npm run build:legal && mdbook build && npm run build:book-js -- book && npm run build:static-reader-sidebar -- book && npm run build:chapters",
+    "build": "npm run build:site",
     "build:index": "node scripts/generate-index-page.mjs",
     "build:legal": "node scripts/generate-legal-pages.mjs",
     "build:book-js": "node scripts/strip_mdbook_onunload.mjs",
@@ -33,7 +33,7 @@
     "test:book-unload": "sh scripts/test-book-unload-policy.sh",
     "test:reader-meta-compat": "sh scripts/test-reader-meta-compat.sh",
     "preview": "./scripts/preview.sh",
-    "serve:book": "mdbook serve"
+    "serve:book": "mdbook serve editions/en"
   },
   "devDependencies": {
     "@fission-ai/openspec": "^1.4.1"
