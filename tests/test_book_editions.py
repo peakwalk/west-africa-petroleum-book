@@ -231,7 +231,8 @@ class BookEditionBuildTests(unittest.TestCase):
             / "chapter-01-value-chain-of-the-hydrocarbon-sector.html"
         ).read_text(encoding="utf-8")
 
-        self.assertIn('src="../images/figure-004.png"', french_chapter_one)
+        self.assertIn('src="../images/figure-004.webp"', french_chapter_one)
+        self.assertNotIn('src="../images/figure-004.png"', french_chapter_one)
         self.assertNotIn('src="../images/figure-004-oil-cuts-transparent.webp"', french_chapter_one)
 
     def test_french_chapter_two_and_three_use_french_figure_asset_targets(self) -> None:
@@ -252,19 +253,60 @@ class BookEditionBuildTests(unittest.TestCase):
             / "chapter-03-tax-regimes-in-the-petroleum-sector.html"
         ).read_text(encoding="utf-8")
 
-        self.assertIn('src="../images/figure-005.png"', french_chapter_two)
-        self.assertIn('src="../images/figure-006.png"', french_chapter_two)
-        self.assertIn('src="../images/figure-008.png"', french_chapter_two)
-        self.assertIn('src="../images/figure-009.png"', french_chapter_two)
+        self.assertIn('src="../images/figure-005.webp"', french_chapter_two)
+        self.assertIn('src="../images/figure-006.webp"', french_chapter_two)
+        self.assertIn('src="../images/figure-008.webp"', french_chapter_two)
+        self.assertIn('src="../images/figure-009.webp"', french_chapter_two)
         self.assertIn('src="../images/figure-019.webp"', french_chapter_two)
         self.assertNotIn('src="../images/figure-005-upstream-phases-transparent.webp"', french_chapter_two)
         self.assertNotIn('src="../images/figure-006-block-assignment-transparent.webp"', french_chapter_two)
-        self.assertNotIn('src="../images/figure-008.webp"', french_chapter_two)
+        self.assertNotIn('src="../images/figure-005.png"', french_chapter_two)
+        self.assertNotIn('src="../images/figure-006.png"', french_chapter_two)
+        self.assertNotIn('src="../images/figure-008.png"', french_chapter_two)
+        self.assertNotIn('src="../images/figure-009.png"', french_chapter_two)
         self.assertNotIn('src="../images/figure-009.jpg"', french_chapter_two)
         self.assertNotIn('src="../images/figure-019.svg"', french_chapter_two)
 
         self.assertIn('src="../images/figure-022.webp"', french_chapter_three)
         self.assertNotIn('src="../images/figure-022.svg"', french_chapter_three)
+
+    def test_english_chapter_two_figure_nine_uses_full_webp_asset(self) -> None:
+        english_chapter_two = (
+            ROOT_DIR
+            / "public"
+            / "book"
+            / "chapters"
+            / "chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn('src="../images/figure-009.webp"', english_chapter_two)
+        self.assertNotIn('src="../images/figure-009.png"', english_chapter_two)
+        self.assertNotIn('src="../images/figure-009.jpg"', english_chapter_two)
+
+    def test_english_chapter_two_figure_ten_uses_full_webp_asset(self) -> None:
+        english_chapter_two = (
+            ROOT_DIR
+            / "public"
+            / "book"
+            / "chapters"
+            / "chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn('src="../images/figure-010.webp"', english_chapter_two)
+        self.assertNotIn('src="../images/figure-010.png"', english_chapter_two)
+
+    def test_french_chapter_two_figure_ten_uses_full_webp_asset(self) -> None:
+        french_chapter_two = (
+            ROOT_DIR
+            / "public"
+            / "fr"
+            / "book"
+            / "chapters"
+            / "chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn('src="../images/figure-010.webp"', french_chapter_two)
+        self.assertNotIn('src="../images/figure-010.png"', french_chapter_two)
 
     def test_french_body_chapters_do_not_leak_english_placeholder_copy(self) -> None:
         chapter_four = (

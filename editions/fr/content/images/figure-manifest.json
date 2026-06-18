@@ -28,9 +28,9 @@
     "caption": "Figure 2: a et b Carte montrant le bassin MSGBC et Carte montrant les bassins de la partie nord du Golfe de Guinée dans l’Afrique de l’Ouest",
     "chapter_title": "Chapitre 1 : Chaîne des valeurs du secteur des hydrocarbures",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md",
-    "caption_paragraph_index": 402,
+    "caption_paragraph_index": 403,
     "object_paragraph_start": 372,
-    "object_paragraph_end": 404,
+    "object_paragraph_end": 405,
     "kind": "composite",
     "objects": {
       "blip_targets": [
@@ -47,8 +47,7 @@
     },
     "published_assets": [
       "figure-002-a.webp",
-      "figure-002-b.webp",
-      "figure-002.png"
+      "figure-002-b.webp"
     ]
   },
   {
@@ -56,9 +55,9 @@
     "caption": "Figure 3: Carte montrant les bassins sédimentaires du Mali et du Niger",
     "chapter_title": "Chapitre 1 : Chaîne des valeurs du secteur des hydrocarbures",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md",
-    "caption_paragraph_index": 405,
-    "object_paragraph_start": 403,
-    "object_paragraph_end": 405,
+    "caption_paragraph_index": 406,
+    "object_paragraph_start": 404,
+    "object_paragraph_end": 406,
     "kind": "bitmap",
     "objects": {
       "blip_targets": [
@@ -72,8 +71,7 @@
       "wps_shape_count": 0
     },
     "published_assets": [
-      "figure-003.jpg",
-      "figure-003.png"
+      "figure-003.webp"
     ]
   },
   {
@@ -81,9 +79,9 @@
     "caption": "Figure 4: Schéma synthétique montrant les différentes coupes pétrolièresFigure 4: Schéma synthétique montrant les différentes coupes pétrolièresChauffé dans un four à 300 degrés CChauffé dans un four à 300 degrés C",
     "chapter_title": "Chapitre 1 : Chaîne des valeurs du secteur des hydrocarbures",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md",
-    "caption_paragraph_index": 512,
-    "object_paragraph_start": 492,
-    "object_paragraph_end": 530,
+    "caption_paragraph_index": 513,
+    "object_paragraph_start": 493,
+    "object_paragraph_end": 531,
     "kind": "shape_group",
     "objects": {
       "blip_targets": [
@@ -97,7 +95,7 @@
       "wps_shape_count": 44
     },
     "published_assets": [
-      "figure-004.png"
+      "figure-004.webp"
     ]
   },
   {
@@ -105,9 +103,9 @@
     "caption": "Figure 5: Différentes phases de l'amont pétrolierFigure 5: Différentes phases de l'amont pétrolier",
     "chapter_title": "Chapitre 2 : Différentes phases de l’amont pétrolier et rôles des États",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 550,
-    "object_paragraph_start": 550,
-    "object_paragraph_end": 573,
+    "caption_paragraph_index": 551,
+    "object_paragraph_start": 551,
+    "object_paragraph_end": 574,
     "kind": "shape_group",
     "objects": {
       "blip_targets": [],
@@ -119,7 +117,7 @@
       "wps_shape_count": 27
     },
     "published_assets": [
-      "figure-005.png"
+      "figure-005.webp"
     ]
   },
   {
@@ -127,9 +125,9 @@
     "caption": "Figure 6: Processus d'attribution de bloc pétrolier au CPI pour l'exploration et l'exploitation pétrolièresFigure 6: Processus d'attribution de bloc pétrolier au CPI pour l'exploration et l'exploitation pétrolières",
     "chapter_title": "Chapitre 2 : Différentes phases de l’amont pétrolier et rôles des États",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 615,
-    "object_paragraph_start": 614,
-    "object_paragraph_end": 627,
+    "caption_paragraph_index": 616,
+    "object_paragraph_start": 615,
+    "object_paragraph_end": 628,
     "kind": "shape_group",
     "objects": {
       "blip_targets": [],
@@ -141,7 +139,7 @@
       "wps_shape_count": 16
     },
     "published_assets": [
-      "figure-006.png"
+      "figure-006.webp"
     ]
   },
   {
@@ -149,9 +147,9 @@
     "caption": "Figure 7: Acquisition gravimétrique (a) montrant les anomalies dans le bassin sédimentaire Côtier du Bénin (CGG 2013) et aéromagnétique (b) permettant de caractériser le socle et les formations sédimentaires",
     "chapter_title": "Chapitre 2 : Différentes phases de l’amont pétrolier et rôles des États",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 654,
-    "object_paragraph_start": 651,
-    "object_paragraph_end": 655,
+    "caption_paragraph_index": 655,
+    "object_paragraph_start": 652,
+    "object_paragraph_end": 656,
     "kind": "composite",
     "objects": {
       "blip_targets": [
@@ -167,7 +165,6 @@
     },
     "published_assets": [
       "figure-007-b.webp",
-      "figure-007.png",
       "figure-007.webp"
     ]
   },
@@ -176,9 +173,9 @@
     "caption": "Figure 8: Principe d'acquisition 3D (a) et cube sismique (b)",
     "chapter_title": "Chapitre 2 : Différentes phases de l’amont pétrolier et rôles des États",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 662,
-    "object_paragraph_start": 657,
-    "object_paragraph_end": 667,
+    "caption_paragraph_index": 667,
+    "object_paragraph_start": 658,
+    "object_paragraph_end": 672,
     "kind": "composite",
     "objects": {
       "blip_targets": [
@@ -194,7 +191,7 @@
       "wps_shape_count": 17
     },
     "published_assets": [
-      "figure-008.png"
+      "figure-008.webp"
     ]
   },
   {
@@ -202,9 +199,9 @@
     "caption": "Figure 9: Anomalies d'amplitude sismique montrant des Brightspots et Flatspots",
     "chapter_title": "Chapitre 2 : Différentes phases de l’amont pétrolier et rôles des États",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 668,
-    "object_paragraph_start": 663,
-    "object_paragraph_end": 669,
+    "caption_paragraph_index": 673,
+    "object_paragraph_start": 668,
+    "object_paragraph_end": 674,
     "kind": "shape_group",
     "objects": {
       "blip_targets": [
@@ -218,7 +215,7 @@
       "wps_shape_count": 10
     },
     "published_assets": [
-      "figure-009.png"
+      "figure-009.webp"
     ]
   },
   {
@@ -226,9 +223,9 @@
     "caption": "Figure 10: Electromagnétisme couplé avec la sismique réflexion montrant le contraste de résistivité au niveau des pièges mis en évidence par la sismique",
     "chapter_title": "Chapitre 2 : Différentes phases de l’amont pétrolier et rôles des États",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 675,
-    "object_paragraph_start": 671,
-    "object_paragraph_end": 677,
+    "caption_paragraph_index": 680,
+    "object_paragraph_start": 676,
+    "object_paragraph_end": 682,
     "kind": "shape_group",
     "objects": {
       "blip_targets": [
@@ -250,9 +247,9 @@
     "caption": "Figure 11: Coupe géologique montrant l'étendue stratigraphique d’un système pétrolier fictif (Magoon et Dow, 1994, modifié par Schlumberger)",
     "chapter_title": "Chapitre 2 : Différentes phases de l’amont pétrolier et rôles des États",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 688,
-    "object_paragraph_start": 686,
-    "object_paragraph_end": 691,
+    "caption_paragraph_index": 693,
+    "object_paragraph_start": 691,
+    "object_paragraph_end": 697,
     "kind": "multi_photo",
     "objects": {
       "blip_targets": [
@@ -267,7 +264,6 @@
       "wps_shape_count": 0
     },
     "published_assets": [
-      "figure-011.png",
       "figure-011.webp"
     ]
   },
@@ -276,9 +272,9 @@
     "caption": "Figure 12: Coupe géosismique montrant les systèmes pétroliers dans le Bassin sédimentaire côtier du Bénin, Kerr McGee, 2003",
     "chapter_title": "Chapitre 2 : Différentes phases de l’amont pétrolier et rôles des États",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 692,
-    "object_paragraph_start": 689,
-    "object_paragraph_end": 693,
+    "caption_paragraph_index": 698,
+    "object_paragraph_start": 694,
+    "object_paragraph_end": 699,
     "kind": "bitmap",
     "objects": {
       "blip_targets": [
@@ -292,7 +288,6 @@
       "wps_shape_count": 0
     },
     "published_assets": [
-      "figure-012.png",
       "figure-012.webp"
     ]
   },
@@ -301,9 +296,9 @@
     "caption": "Figure 13: Interprétation sismique montrant un piège structural (anticlinal)",
     "chapter_title": "Chapitre 2 : Différentes phases de l’amont pétrolier et rôles des États",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 701,
-    "object_paragraph_start": 698,
-    "object_paragraph_end": 702,
+    "caption_paragraph_index": 707,
+    "object_paragraph_start": 704,
+    "object_paragraph_end": 708,
     "kind": "composite",
     "objects": {
       "blip_targets": [
@@ -318,7 +313,6 @@
       "wps_shape_count": 1
     },
     "published_assets": [
-      "figure-013.png",
       "figure-013.webp"
     ]
   },
@@ -327,9 +321,9 @@
     "caption": "Figure 14: Quelques types de pièges",
     "chapter_title": "Chapitre 2 : Différentes phases de l’amont pétrolier et rôles des États",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 703,
-    "object_paragraph_start": 702,
-    "object_paragraph_end": 705,
+    "caption_paragraph_index": 709,
+    "object_paragraph_start": 708,
+    "object_paragraph_end": 711,
     "kind": "multi_photo",
     "objects": {
       "blip_targets": [
@@ -344,7 +338,6 @@
       "wps_shape_count": 0
     },
     "published_assets": [
-      "figure-014.png",
       "figure-014.webp"
     ]
   },
@@ -353,9 +346,9 @@
     "caption": "Figure 15: Carte de profondeur montrant le toit d'un réservoir",
     "chapter_title": "Chapitre 2 : Différentes phases de l’amont pétrolier et rôles des États",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 706,
-    "object_paragraph_start": 704,
-    "object_paragraph_end": 708,
+    "caption_paragraph_index": 712,
+    "object_paragraph_start": 710,
+    "object_paragraph_end": 714,
     "kind": "bitmap",
     "objects": {
       "blip_targets": [
@@ -369,7 +362,6 @@
       "wps_shape_count": 0
     },
     "published_assets": [
-      "figure-015.png",
       "figure-015.webp"
     ]
   },
@@ -378,9 +370,9 @@
     "caption": "Figure 16: Photos montrant la carothèque de la Côte d’Ivoire à la Direction du Centre d’Analyses et de Recherche de la PETROCI",
     "chapter_title": "Chapitre 2 : Différentes phases de l’amont pétrolier et rôles des États",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 785,
-    "object_paragraph_start": 784,
-    "object_paragraph_end": 794,
+    "caption_paragraph_index": 791,
+    "object_paragraph_start": 790,
+    "object_paragraph_end": 800,
     "kind": "composite",
     "objects": {
       "blip_targets": [
@@ -395,9 +387,8 @@
       "wps_shape_count": 4
     },
     "published_assets": [
-      "figure-016-a.jpg",
-      "figure-016-b.jpg",
-      "figure-016.png"
+      "figure-016-a.webp",
+      "figure-016-b.webp"
     ]
   },
   {
@@ -405,9 +396,9 @@
     "caption": "Figure 17: Méthodologie d’évaluation du réservoir",
     "chapter_title": "Chapitre 2 : Différentes phases de l’amont pétrolier et rôles des États",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 856,
-    "object_paragraph_start": 821,
-    "object_paragraph_end": 861,
+    "caption_paragraph_index": 862,
+    "object_paragraph_start": 827,
+    "object_paragraph_end": 867,
     "kind": "shape_group",
     "objects": {
       "blip_targets": [
@@ -421,7 +412,6 @@
       "wps_shape_count": 25
     },
     "published_assets": [
-      "figure-017.png",
       "figure-017.webp"
     ]
   },
@@ -430,9 +420,9 @@
     "caption": "Figure 18: Schéma montrant une modélisation d'un réservoir (Vilgeir Dalen, StatoilHydro, 2007)",
     "chapter_title": "Chapitre 2 : Différentes phases de l’amont pétrolier et rôles des États",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 862,
-    "object_paragraph_start": 857,
-    "object_paragraph_end": 862,
+    "caption_paragraph_index": 868,
+    "object_paragraph_start": 863,
+    "object_paragraph_end": 868,
     "kind": "bitmap",
     "objects": {
       "blip_targets": [
@@ -454,9 +444,9 @@
     "caption": "Figure 19: Profil de production d’un gisement pétrolier montrant le cycle de vie d’un champ pétrolier",
     "chapter_title": "Chapitre 2 : Différentes phases de l’amont pétrolier et rôles des États",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 907,
-    "object_paragraph_start": 905,
-    "object_paragraph_end": 907,
+    "caption_paragraph_index": 913,
+    "object_paragraph_start": 911,
+    "object_paragraph_end": 913,
     "kind": "chart",
     "objects": {
       "blip_targets": [],
@@ -472,7 +462,6 @@
       "wps_shape_count": 0
     },
     "published_assets": [
-      "figure-019.png",
       "figure-019.webp"
     ]
   },
@@ -481,9 +470,9 @@
     "caption": "Figure 20: Flux de trésorerie au cours des différentes phases des activités de l’amont pétroliers (Dr. Alfred Kjemperud, 2007)",
     "chapter_title": "Chapitre 2 : Différentes phases de l’amont pétrolier et rôles des États",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 979,
-    "object_paragraph_start": 977,
-    "object_paragraph_end": 1022,
+    "caption_paragraph_index": 985,
+    "object_paragraph_start": 983,
+    "object_paragraph_end": 1028,
     "kind": "bitmap",
     "objects": {
       "blip_targets": [
@@ -497,7 +486,6 @@
       "wps_shape_count": 0
     },
     "published_assets": [
-      "figure-020.png",
       "figure-020.webp"
     ]
   },
@@ -506,9 +494,9 @@
     "caption": "Figure 21: Valeur économique des ressources en hydrocarbures",
     "chapter_title": "Chapitre 3 : Régimes fiscaux dans le secteur pétrolier",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md",
-    "caption_paragraph_index": 1086,
-    "object_paragraph_start": 1086,
-    "object_paragraph_end": 1101,
+    "caption_paragraph_index": 1092,
+    "object_paragraph_start": 1092,
+    "object_paragraph_end": 1107,
     "kind": "shape_group",
     "objects": {
       "blip_targets": [],
@@ -520,7 +508,6 @@
       "wps_shape_count": 9
     },
     "published_assets": [
-      "figure-021.png",
       "figure-021.webp"
     ]
   },
@@ -529,9 +516,9 @@
     "caption": "Figure 22: Répartition des revenus issus de la production (After Johnson,1995)Figure 22: Répartition des revenus issus de la production (After Johnson,1995)REPARTITION DES REVENUSREPARTITION DES REVENUS",
     "chapter_title": "Chapitre 3 : Régimes fiscaux dans le secteur pétrolier",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md",
-    "caption_paragraph_index": 1108,
-    "object_paragraph_start": 1107,
-    "object_paragraph_end": 1117,
+    "caption_paragraph_index": 1114,
+    "object_paragraph_start": 1113,
+    "object_paragraph_end": 1123,
     "kind": "shape_group",
     "objects": {
       "blip_targets": [
@@ -545,7 +532,6 @@
       "wps_shape_count": 2
     },
     "published_assets": [
-      "figure-022.png",
       "figure-022.webp"
     ]
   },
@@ -554,9 +540,9 @@
     "caption": "Figure 23: Classification des régimes fiscauxFigure 23: Classification des régimes fiscauxREGIMES FISCAUX PETROLIERSSYSTEMES CONCESSIONNAIRESSYSTEMES CONTRACTUELSContrats de ServiceContrats de Partage de ProductionContrats de service purContrats de Service à RisqueNorvège,USA, UK, Pakistan, Nigeria, Côte d’IvoireTunisie…AngolaIndonésie Côte d’IvoireNigeriaNigerCamerounBéninSénégal…REGIMES FISCAUX PETROLIERSSYSTEMES CONCESSIONNAIRESSYSTEMES CONTRACTUELSContrats de ServiceContrats de Partage de ProductionContrats de service purContrats de Service à RisqueNorvège,USA, UK, Pakistan, Nigeria, Côte d’IvoireTunisie…AngolaIndonésie Côte d’IvoireNigeriaNigerCamerounBéninSénégal…",
     "chapter_title": "Chapitre 3 : Régimes fiscaux dans le secteur pétrolier",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md",
-    "caption_paragraph_index": 1132,
-    "object_paragraph_start": 1125,
-    "object_paragraph_end": 1145,
+    "caption_paragraph_index": 1138,
+    "object_paragraph_start": 1131,
+    "object_paragraph_end": 1151,
     "kind": "shape_group",
     "objects": {
       "blip_targets": [],
@@ -568,7 +554,6 @@
       "wps_shape_count": 24
     },
     "published_assets": [
-      "figure-023.png",
       "figure-023.webp"
     ]
   },
@@ -577,9 +562,9 @@
     "caption": "Figure 24: Graphe montrant les Cost stop appliqués dans certains pays de l’Afrique de l’Ouest",
     "chapter_title": "Chapitre 4 : Étude comparée des régimes fiscaux dans certains pays de l’Afrique de l’Ouest",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md",
-    "caption_paragraph_index": 1288,
-    "object_paragraph_start": 1276,
-    "object_paragraph_end": 1290,
+    "caption_paragraph_index": 1294,
+    "object_paragraph_start": 1282,
+    "object_paragraph_end": 1296,
     "kind": "chart",
     "objects": {
       "blip_targets": [],
@@ -595,7 +580,6 @@
       "wps_shape_count": 1
     },
     "published_assets": [
-      "figure-024.png",
       "figure-024.webp"
     ]
   },
@@ -604,9 +588,9 @@
     "caption": "Figure 25: Organigramme simplifié montrant la part de l’Etat et du Contractant dans la fiscalité associée au CPP du Bénin",
     "chapter_title": "Chapitre 4 : Étude comparée des régimes fiscaux dans certains pays de l’Afrique de l’Ouest",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md",
-    "caption_paragraph_index": 1418,
-    "object_paragraph_start": 1374,
-    "object_paragraph_end": 1442,
+    "caption_paragraph_index": 1424,
+    "object_paragraph_start": 1380,
+    "object_paragraph_end": 1448,
     "kind": "shape_group",
     "objects": {
       "blip_targets": [],
@@ -618,7 +602,6 @@
       "wps_shape_count": 71
     },
     "published_assets": [
-      "figure-025.png",
       "figure-025.webp"
     ]
   },
@@ -627,9 +610,9 @@
     "caption": "Figure 26: Organigramme simplifié montrant la part de l’Etat et du Contractant dans la fiscalité utilisée dans modèle de contrat du Ghana",
     "chapter_title": "Chapitre 4 : Étude comparée des régimes fiscaux dans certains pays de l’Afrique de l’Ouest",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md",
-    "caption_paragraph_index": 1443,
-    "object_paragraph_start": 1419,
-    "object_paragraph_end": 1468,
+    "caption_paragraph_index": 1449,
+    "object_paragraph_start": 1425,
+    "object_paragraph_end": 1474,
     "kind": "shape_group",
     "objects": {
       "blip_targets": [],
@@ -649,9 +632,9 @@
     "caption": "Figure 27: Organigramme simplifié montrant la part de l’Etat et du contractant issue de la fiscalité associée au CPP de la Côte d’Ivoire",
     "chapter_title": "Chapitre 4 : Étude comparée des régimes fiscaux dans certains pays de l’Afrique de l’Ouest",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md",
-    "caption_paragraph_index": 1469,
-    "object_paragraph_start": 1444,
-    "object_paragraph_end": 1500,
+    "caption_paragraph_index": 1475,
+    "object_paragraph_start": 1450,
+    "object_paragraph_end": 1506,
     "kind": "shape_group",
     "objects": {
       "blip_targets": [],
@@ -663,7 +646,6 @@
       "wps_shape_count": 61
     },
     "published_assets": [
-      "figure-027.png",
       "figure-027.webp"
     ]
   },
@@ -672,9 +654,9 @@
     "caption": "Figure 28: Organigramme simplifié montrant la part de l’Etat et du Contractant dans la fiscalité associée au CPP du Nigeria",
     "chapter_title": "Chapitre 4 : Étude comparée des régimes fiscaux dans certains pays de l’Afrique de l’Ouest",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md",
-    "caption_paragraph_index": 1501,
-    "object_paragraph_start": 1470,
-    "object_paragraph_end": 1530,
+    "caption_paragraph_index": 1507,
+    "object_paragraph_start": 1476,
+    "object_paragraph_end": 1536,
     "kind": "shape_group",
     "objects": {
       "blip_targets": [],
@@ -686,7 +668,6 @@
       "wps_shape_count": 67
     },
     "published_assets": [
-      "figure-028.png",
       "figure-028.webp"
     ]
   },
@@ -695,9 +676,9 @@
     "caption": "Figure 29: Organigramme simplifié montrant la part de l’Etat et du Contractant issue de la fiscalité associée au CPP du Sénégal",
     "chapter_title": "Chapitre 4 : Étude comparée des régimes fiscaux dans certains pays de l’Afrique de l’Ouest",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md",
-    "caption_paragraph_index": 1531,
-    "object_paragraph_start": 1502,
-    "object_paragraph_end": 1559,
+    "caption_paragraph_index": 1537,
+    "object_paragraph_start": 1508,
+    "object_paragraph_end": 1565,
     "kind": "shape_group",
     "objects": {
       "blip_targets": [],
@@ -709,7 +690,6 @@
       "wps_shape_count": 66
     },
     "published_assets": [
-      "figure-029.png",
       "figure-029.webp"
     ]
   },
@@ -718,9 +698,9 @@
     "caption": "Figure 30: Diagramme simplifié montrant la part de l’Etat et du Contractant issue de la fiscalité associée au CPP du Niger",
     "chapter_title": "Chapitre 4 : Étude comparée des régimes fiscaux dans certains pays de l’Afrique de l’Ouest",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md",
-    "caption_paragraph_index": 1560,
-    "object_paragraph_start": 1532,
-    "object_paragraph_end": 1563,
+    "caption_paragraph_index": 1566,
+    "object_paragraph_start": 1538,
+    "object_paragraph_end": 1569,
     "kind": "shape_group",
     "objects": {
       "blip_targets": [],
@@ -740,9 +720,9 @@
     "caption": "Figure 31: Graphe montrant la part du bénéfice net revenant au CPI et aux Etats selon le régime fiscal applicable dans ces Etats",
     "chapter_title": "Chapitre 4 : Étude comparée des régimes fiscaux dans certains pays de l’Afrique de l’Ouest",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md",
-    "caption_paragraph_index": 1572,
-    "object_paragraph_start": 1570,
-    "object_paragraph_end": 1573,
+    "caption_paragraph_index": 1578,
+    "object_paragraph_start": 1576,
+    "object_paragraph_end": 1579,
     "kind": "chart",
     "objects": {
       "blip_targets": [],
@@ -757,7 +737,6 @@
       "wps_shape_count": 0
     },
     "published_assets": [
-      "figure-031.png",
       "figure-031.webp"
     ]
   },
@@ -766,9 +745,9 @@
     "caption": "Figure 32: Graphe montrant la répartition du flux de trésorerie entre l’Etat et le contractant en considérant 100 barils de pétrole extraits",
     "chapter_title": "Chapitre 4 : Étude comparée des régimes fiscaux dans certains pays de l’Afrique de l’Ouest",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/fr/content/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md",
-    "caption_paragraph_index": 1574,
-    "object_paragraph_start": 1573,
-    "object_paragraph_end": 1575,
+    "caption_paragraph_index": 1580,
+    "object_paragraph_start": 1579,
+    "object_paragraph_end": 1581,
     "kind": "chart",
     "objects": {
       "blip_targets": [],
@@ -782,7 +761,6 @@
       "wps_shape_count": 0
     },
     "published_assets": [
-      "figure-032.png",
       "figure-032.webp"
     ]
   }

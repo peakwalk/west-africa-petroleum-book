@@ -102,14 +102,15 @@ check_order() {
 check_exists scripts/generate-index-page.mjs
 check_exists scripts/generate-legal-pages.mjs
 check_exists scripts/shared/landing-shell.mjs
-check_exists editions/en/content/images/figure-001.png
+check_exists editions/en/source/images/figure-000.png
 check_exists editions/en/content/images/figure-001.webp
-check_exists editions/en/content/images/figure-003.jpg
+check_exists editions/en/content/images/figure-003.webp
 check_exists editions/en/content/images/figure-004.webp
 check_exists editions/en/content/images/figure-005.webp
 check_exists editions/en/content/images/figure-006.webp
 check_exists editions/en/content/images/figure-007.webp
 check_exists editions/en/content/images/figure-008.webp
+check_exists editions/en/content/images/figure-009.webp
 check_exists editions/en/content/images/figure-010.webp
 check_exists editions/en/content/images/figure-011.webp
 check_exists editions/en/content/images/figure-012.webp
@@ -125,8 +126,14 @@ check_exists editions/en/content/images/figure-022.svg
 check_exists editions/en/content/images/figure-023.webp
 check_exists editions/en/content/images/figure-026.svg
 check_exists editions/en/content/images/figure-030.svg
+check_exists editions/fr/source/images/figure-000.png
 check_exists editions/fr/content/images/figure-001.webp
-check_exists editions/fr/content/images/figure-003.jpg
+check_exists editions/fr/content/images/figure-003.webp
+check_exists editions/fr/content/images/figure-004.webp
+check_exists editions/fr/content/images/figure-005.webp
+check_exists editions/fr/content/images/figure-006.webp
+check_exists editions/fr/content/images/figure-008.webp
+check_exists editions/fr/content/images/figure-009.webp
 check_exists editions/fr/content/images/figure-010.webp
 check_exists editions/fr/content/images/figure-011.webp
 check_exists editions/fr/content/images/figure-012.webp
@@ -135,17 +142,26 @@ check_exists editions/fr/content/images/figure-014.webp
 check_exists editions/fr/content/images/figure-015.webp
 check_exists editions/fr/content/images/figure-018.webp
 check_not_exists editions/en/content/images/figures.zip
+check_not_exists editions/en/content/images/figure-000.png
 check_not_exists editions/en/content/images/figure-003-trimmed.png
 check_not_exists editions/en/content/images/figure-003-trimmed.webp
+check_not_exists editions/en/content/images/figure-007-b.webp
 check_not_exists editions/fr/content/images/figure-003-trimmed.png
 check_not_exists editions/fr/content/images/figure-003-trimmed.webp
-for file in figure-005.jpg figure-010.jpg figure-024.svg figure-025.svg figure-027.svg figure-028.svg figure-029.svg figure-031.svg figure-032.svg; do
+check_not_exists editions/fr/content/images/figure-000.png
+for file in figure-001.png figure-003.png figure-004.png figure-006.png figure-007.png figure-008.png figure-009.png figure-010.png figure-011.png figure-012.png figure-013.png figure-014.png figure-015.png figure-016.png figure-017.png figure-019.png figure-020.png figure-021.png figure-022.png figure-023.png figure-024.png figure-025.png figure-026.png figure-027.png figure-028.png figure-029.png figure-030.png figure-031.png figure-032.png; do
   check_not_exists "editions/en/content/images/$file"
 done
-for file in figure-009.webp figure-016.webp figure-017.jpg figure-017.svg figure-018.jpg figure-019.svg figure-022.webp figure-023.svg; do
+for file in figure-002.png figure-003.png figure-004.png figure-005.png figure-006.png figure-007.png figure-008.png figure-009.png figure-010.png figure-011.png figure-012.png figure-013.png figure-014.png figure-015.png figure-016.png figure-017.png figure-019.png figure-020.png figure-021.png figure-022.png figure-023.png figure-024.png figure-025.png figure-027.png figure-028.png figure-029.png figure-031.png figure-032.png; do
+  check_not_exists "editions/fr/content/images/$file"
+done
+for file in figure-003.jpg figure-005.jpg figure-009.jpg figure-010.jpg figure-016-a.jpg figure-016-b.jpg figure-024.svg figure-025.svg figure-027.svg figure-028.svg figure-029.svg figure-031.svg figure-032.svg; do
   check_not_exists "editions/en/content/images/$file"
 done
-for file in figure-002.webp figure-004.webp figure-005.jpg figure-006.webp figure-008.webp figure-009.jpg figure-009.webp figure-010.jpg figure-016.webp figure-018.jpg figure-022.svg figure-024.svg figure-025.svg figure-027.svg figure-028.svg figure-029.svg figure-031.svg figure-032.svg; do
+for file in figure-016.webp figure-017.jpg figure-017.svg figure-018.jpg figure-019.svg figure-022.webp figure-023.svg; do
+  check_not_exists "editions/en/content/images/$file"
+done
+for file in figure-002.webp figure-003.jpg figure-005.jpg figure-009.jpg figure-010.jpg figure-016-a.jpg figure-016-b.jpg figure-016.webp figure-018.jpg figure-022.svg figure-024.svg figure-025.svg figure-027.svg figure-028.svg figure-029.svg figure-031.svg figure-032.svg; do
   check_not_exists "editions/fr/content/images/$file"
 done
 check_exists editions/en/content/images/figure-024.webp
@@ -158,8 +174,8 @@ check_exists editions/en/content/images/figure-032.webp
 check_exists editions/en/content/images/figure-000.webp
 check_exists assets/images/west-africa-intelligence-overlay.svg
 check_exists assets/images/upstream-atlas-nav-logo.webp
-check_exists assets/images/prototype-hero-graywhite-left.png
-check_exists assets/images/prototype-hero-graywhite-right.png
+check_exists assets/images/prototype-hero-graywhite-left.webp
+check_exists assets/images/prototype-hero-graywhite-right.webp
 check_exists assets/icons/homepage/icon-research.svg
 check_exists assets/icons/homepage/icon-industry-monitoring.svg
 check_exists assets/icons/homepage/icon-intelligence.svg
@@ -170,16 +186,16 @@ check_exists assets/icons/homepage/icon-production.svg
 check_exists assets/icons/homepage/icon-exploration.svg
 check_exists assets/icons/homepage/icon-fiscal.svg
 check_exists assets/icons/homepage/icon-regulation.svg
-check_exists assets/icons/homepage-cropped/icon-research.png
-check_exists assets/icons/homepage-cropped/icon-industry-monitoring.png
-check_exists assets/icons/homepage-cropped/icon-intelligence.png
-check_exists assets/icons/homepage-cropped/icon-production.png
-check_exists assets/icons/homepage-cropped/icon-exploration.png
-check_exists assets/icons/homepage-cropped/icon-fiscal.png
-check_exists assets/icons/homepage-cropped/icon-regulation.png
-check_exists assets/icons/homepage-cropped/icon-audience-research.png
-check_exists assets/icons/homepage-cropped/icon-audience-policy.png
-check_exists assets/icons/homepage-cropped/icon-audience-operators.png
+check_exists assets/icons/homepage-cropped/icon-research.webp
+check_exists assets/icons/homepage-cropped/icon-industry-monitoring.webp
+check_exists assets/icons/homepage-cropped/icon-intelligence.webp
+check_exists assets/icons/homepage-cropped/icon-production.webp
+check_exists assets/icons/homepage-cropped/icon-exploration.webp
+check_exists assets/icons/homepage-cropped/icon-fiscal.webp
+check_exists assets/icons/homepage-cropped/icon-regulation.webp
+check_exists assets/icons/homepage-cropped/icon-audience-research.webp
+check_exists assets/icons/homepage-cropped/icon-audience-policy.webp
+check_exists assets/icons/homepage-cropped/icon-audience-operators.webp
 check_exists assets/icons/homepage/icon-audience-research.svg
 check_exists assets/icons/homepage/icon-audience-policy.svg
 check_exists assets/icons/homepage/icon-audience-operators.svg
@@ -238,19 +254,29 @@ check_contains public/index.html 'In build'
 check_contains public/index.html 'Platform Intelligence'
 check_contains public/index.html 'Coming Soon'
 check_contains public/index.html 'class="feature-card-icon ua-icon-image ua-icon-image--feature"'
-check_contains public/index.html 'assets/icons/homepage-cropped/icon-research.png'
-check_contains public/index.html 'assets/icons/homepage-cropped/icon-industry-monitoring.png'
-check_contains public/index.html 'assets/icons/homepage-cropped/icon-intelligence.png'
+check_contains public/index.html 'assets/icons/homepage-cropped/icon-research.webp'
+check_contains public/index.html 'assets/icons/homepage-cropped/icon-industry-monitoring.webp'
+check_contains public/index.html 'assets/icons/homepage-cropped/icon-intelligence.webp'
 check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-start-reading'
 check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-menu'
 check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-close'
-check_contains public/index.html 'assets/icons/homepage-cropped/icon-production.png'
-check_contains public/index.html 'assets/icons/homepage-cropped/icon-exploration.png'
-check_contains public/index.html 'assets/icons/homepage-cropped/icon-fiscal.png'
-check_contains public/index.html 'assets/icons/homepage-cropped/icon-regulation.png'
-check_contains public/index.html 'assets/icons/homepage-cropped/icon-audience-research.png'
-check_contains public/index.html 'assets/icons/homepage-cropped/icon-audience-policy.png'
-check_contains public/index.html 'assets/icons/homepage-cropped/icon-audience-operators.png'
+check_contains public/index.html 'assets/icons/homepage-cropped/icon-production.webp'
+check_contains public/index.html 'assets/icons/homepage-cropped/icon-exploration.webp'
+check_contains public/index.html 'assets/icons/homepage-cropped/icon-fiscal.webp'
+check_contains public/index.html 'assets/icons/homepage-cropped/icon-regulation.webp'
+check_contains public/index.html 'assets/icons/homepage-cropped/icon-audience-research.webp'
+check_contains public/index.html 'assets/icons/homepage-cropped/icon-audience-policy.webp'
+check_contains public/index.html 'assets/icons/homepage-cropped/icon-audience-operators.webp'
+check_not_contains public/index.html 'assets/icons/homepage-cropped/icon-research.png'
+check_not_contains public/index.html 'assets/icons/homepage-cropped/icon-industry-monitoring.png'
+check_not_contains public/index.html 'assets/icons/homepage-cropped/icon-intelligence.png'
+check_not_contains public/index.html 'assets/icons/homepage-cropped/icon-production.png'
+check_not_contains public/index.html 'assets/icons/homepage-cropped/icon-exploration.png'
+check_not_contains public/index.html 'assets/icons/homepage-cropped/icon-fiscal.png'
+check_not_contains public/index.html 'assets/icons/homepage-cropped/icon-regulation.png'
+check_not_contains public/index.html 'assets/icons/homepage-cropped/icon-audience-research.png'
+check_not_contains public/index.html 'assets/icons/homepage-cropped/icon-audience-policy.png'
+check_not_contains public/index.html 'assets/icons/homepage-cropped/icon-audience-operators.png'
 check_not_contains public/index.html 'assets/icons/homepage-cropped/icon-start-reading.png'
 check_not_contains public/index.html 'assets/icons/homepage-cropped/icon-menu.png'
 check_not_contains public/index.html 'assets/icons/homepage-cropped/icon-close.png'
@@ -295,30 +321,30 @@ check_exists public/assets/icons/homepage/icon-production.svg
 check_exists public/assets/icons/homepage/icon-exploration.svg
 check_exists public/assets/icons/homepage/icon-fiscal.svg
 check_exists public/assets/icons/homepage/icon-regulation.svg
-check_exists public/assets/icons/homepage-cropped/icon-research.png
-check_exists public/assets/icons/homepage-cropped/icon-industry-monitoring.png
-check_exists public/assets/icons/homepage-cropped/icon-intelligence.png
-check_exists public/assets/icons/homepage-cropped/icon-production.png
-check_exists public/assets/icons/homepage-cropped/icon-exploration.png
-check_exists public/assets/icons/homepage-cropped/icon-fiscal.png
-check_exists public/assets/icons/homepage-cropped/icon-regulation.png
-check_exists public/assets/icons/homepage-cropped/icon-audience-research.png
-check_exists public/assets/icons/homepage-cropped/icon-audience-policy.png
-check_exists public/assets/icons/homepage-cropped/icon-audience-operators.png
+check_exists public/assets/icons/homepage-cropped/icon-research.webp
+check_exists public/assets/icons/homepage-cropped/icon-industry-monitoring.webp
+check_exists public/assets/icons/homepage-cropped/icon-intelligence.webp
+check_exists public/assets/icons/homepage-cropped/icon-production.webp
+check_exists public/assets/icons/homepage-cropped/icon-exploration.webp
+check_exists public/assets/icons/homepage-cropped/icon-fiscal.webp
+check_exists public/assets/icons/homepage-cropped/icon-regulation.webp
+check_exists public/assets/icons/homepage-cropped/icon-audience-research.webp
+check_exists public/assets/icons/homepage-cropped/icon-audience-policy.webp
+check_exists public/assets/icons/homepage-cropped/icon-audience-operators.webp
 check_exists public/assets/icons/homepage/icon-audience-research.svg
 check_exists public/assets/icons/homepage/icon-audience-policy.svg
 check_exists public/assets/icons/homepage/icon-audience-operators.svg
 check_exists public/assets/icons/homepage-sprite.svg
 check_exists public/assets/images/upstream-atlas-nav-logo.webp
-check_exists public/assets/images/prototype-hero-graywhite-left.png
-check_exists public/assets/images/prototype-hero-graywhite-right.png
+check_exists public/assets/images/prototype-hero-graywhite-left.webp
+check_exists public/assets/images/prototype-hero-graywhite-right.webp
 check_file_size_at_most public/assets/images/upstream-atlas-icon.png 50000
 check_file_size_at_most public/assets/images/upstream-atlas-wordmark.png 110000
 check_file_size_at_most public/assets/images/upstream-atlas-nav-logo.webp 80000
 check_image_has_no_opaque_white_fringe public/assets/images/upstream-atlas-nav-logo.webp 50
 check_file_size_at_most public/assets/images/prototype-hero.jpg 120000
-check_file_size_at_most public/assets/images/prototype-hero-graywhite-left.png 25000
-check_file_size_at_most public/assets/images/prototype-hero-graywhite-right.png 25000
+check_file_size_at_most public/assets/images/prototype-hero-graywhite-left.webp 25000
+check_file_size_at_most public/assets/images/prototype-hero-graywhite-right.webp 25000
 check_contains assets/css/landing.css '--page-bg: #f7f8f9;'
 check_contains assets/css/landing.css '--surface-muted: #eef2f4;'
 check_contains assets/css/landing.css '--ink-primary: #0b1f33;'
@@ -553,6 +579,26 @@ check_contains public/fr/index.html 'assets/css/landing.css?v=20260616'
 check_contains public/fr/index.html 'class="site-language-switch"'
 check_contains public/fr/index.html 'href="/?lang=en"'
 check_contains public/fr/index.html '<span class="button-label">Commencer la lecture</span>'
+check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-research.webp'
+check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-industry-monitoring.webp'
+check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-intelligence.webp'
+check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-production.webp'
+check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-exploration.webp'
+check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-fiscal.webp'
+check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-regulation.webp'
+check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-audience-research.webp'
+check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-audience-policy.webp'
+check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-audience-operators.webp'
+check_not_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-research.png'
+check_not_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-industry-monitoring.png'
+check_not_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-intelligence.png'
+check_not_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-production.png'
+check_not_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-exploration.png'
+check_not_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-fiscal.png'
+check_not_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-regulation.png'
+check_not_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-audience-research.png'
+check_not_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-audience-policy.png'
+check_not_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-audience-operators.png'
 check_contains public/fr/chapters/index.html 'Bibliothèque des chapitres'
 check_contains public/fr/chapters/index.html 'href="/fr/book/"'
 check_contains public/fr/terms-of-use.html 'Conditions d’utilisation'
@@ -568,10 +614,11 @@ check_contains public/fr/book/chapters/list-of-tables.html '<span class="chapter
 check_contains editions/en/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-002-a.webp'
 check_contains editions/en/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-002-b.webp'
 check_contains editions/en/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-001.webp'
-check_contains editions/en/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-003.jpg'
+check_contains editions/en/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-003.webp'
 check_contains editions/en/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-004.webp'
 check_not_contains editions/en/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-002.png'
 check_not_contains editions/en/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-001-chain.webp'
+check_not_contains editions/en/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-003.jpg'
 check_not_contains editions/en/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-003.png'
 check_not_contains editions/en/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-003-trimmed.png'
 check_not_contains editions/en/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-004.png'
@@ -582,18 +629,18 @@ check_not_contains editions/en/content/chapters/chapter-01-value-chain-of-the-hy
 check_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-005.webp'
 check_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-006.webp'
 check_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-007.webp'
-check_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-007-b.webp'
+check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-007-b.webp'
 check_order editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-006.webp' 'figure-007.webp'
 check_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-008.webp'
-check_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-009.jpg'
+check_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-009.webp'
 check_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-010.webp'
 check_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-011.webp'
 check_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-012.webp'
 check_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-013.webp'
 check_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-014.webp'
 check_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-015.webp'
-check_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-016-a.jpg'
-check_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-016-b.jpg'
+check_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-016-a.webp'
+check_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-016-b.webp'
 check_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-017.webp'
 check_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-018.webp'
 check_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-019.webp'
@@ -611,19 +658,23 @@ check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-u
 check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-007.png'
 check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-008.png'
 check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-009.png'
+check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-009.jpg'
+check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-010.png'
 check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-011.png'
 check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-012.png'
 check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-013.png'
 check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-014.png'
 check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-015.png'
 check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-016.png'
+check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-016-a.jpg'
+check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-016-b.jpg'
 check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-017.png'
 check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-017.svg'
 check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-019.png'
 check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-019.svg'
 check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-020.png'
 check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'Multiple qv streamers'
-check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md '![Figure 009](../images/figure-009.webp)'
+check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md '![Figure 009](../images/figure-009.png)'
 check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'Authorization to operate'
 check_not_contains editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'Exploration Authorization'
 check_contains editions/en/content/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md 'figure-021.webp'
@@ -689,13 +740,14 @@ check_contains public/book/chapters/front-matter.html 'window.location.replace(t
 check_contains public/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'figure-002-a.webp'
 check_contains public/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'figure-002-b.webp'
 check_contains public/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'figure-001.webp'
-check_contains public/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'figure-003.jpg'
+check_contains public/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'figure-003.webp'
 check_contains public/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'figure-004.webp'
 check_contains public/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html '30.031<sup>1</sup>'
 check_contains public/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html '<p><sup>1</sup> Data Ministries</p>'
 check_contains public/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html '<p><sup>2</sup> RPS Energy Report, 2006</p>'
 check_not_contains public/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'figure-002.png'
 check_not_contains public/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'figure-001-chain.webp'
+check_not_contains public/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'figure-003.jpg'
 check_not_contains public/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'figure-003.png'
 check_not_contains public/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'figure-003-trimmed.png'
 check_not_contains public/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'figure-004.png'
@@ -706,23 +758,25 @@ check_not_contains public/book/chapters/chapter-01-value-chain-of-the-hydrocarbo
 check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-005.webp'
 check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-006.webp'
 check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-007.webp'
-check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-007-b.webp'
+check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-007-b.webp'
 check_order public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-006.webp' 'figure-007.webp'
 check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-008.webp'
-check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-009.jpg'
+check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-009.webp'
 check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-010.webp'
 check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-011.webp'
 check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-012.webp'
 check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-013.webp'
 check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-014.webp'
 check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-015.webp'
-check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-016-a.jpg'
-check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-016-b.jpg'
+check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-016-a.webp'
+check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-016-b.webp'
 check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-018.webp'
 check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-019.webp'
 check_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-020.webp'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-005-upstream-phases-transparent.webp'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-006-block-assignment-transparent.webp'
+check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-009.png'
+check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-010.png'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-010-em.webp'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-011-system.webp'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-012-geoseismic.webp'
@@ -735,18 +789,20 @@ check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-006.png'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-007.png'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-008.png'
-check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-009.png'
+check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-009.jpg'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-011.png'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-012.png'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-013.png'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-014.png'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-015.png'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-016.png'
+check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-016-a.jpg'
+check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-016-b.jpg'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-019.png'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-019.svg'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-020.png'
 check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html '<p>Multiple qv streamers</p>'
-check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-009.webp'
+check_not_contains public/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-009.png'
 check_contains public/book/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.html 'figure-021.webp'
 check_not_contains public/book/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.html 'figure-021.png'
 check_contains public/book/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.html 'figure-022.svg'
@@ -831,22 +887,38 @@ node -e 'const fs=require("fs");const html=fs.readFileSync("public/book/chapters
 check_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'data-equation-label="2.1"'
 check_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'data-equation-label="2.2"'
 check_contains editions/fr/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-001.webp'
-check_contains editions/fr/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-003.jpg'
+check_contains editions/fr/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-003.webp'
 check_not_contains editions/fr/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-001-chain.webp'
+check_not_contains editions/fr/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-003.jpg'
 check_not_contains editions/fr/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-003-map.jpg'
+check_contains editions/fr/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-004.webp'
+check_not_contains editions/fr/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md 'figure-004.png'
+check_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-005.webp'
+check_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-006.webp'
+check_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-008.webp'
+check_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-009.webp'
 check_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-010.webp'
 check_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-011.webp'
 check_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-012.webp'
 check_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-013.webp'
 check_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-014.webp'
 check_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-015.webp'
+check_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-016-a.webp'
+check_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-016-b.webp'
 check_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-018.webp'
 check_not_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-010-em.webp'
+check_not_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-005.png'
+check_not_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-006.png'
+check_not_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-008.png'
+check_not_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-009.png'
+check_not_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-010.png'
 check_not_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-011-system.webp'
 check_not_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-012-geoseismic.webp'
 check_not_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-013-anticline.webp'
 check_not_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-014-traps.webp'
 check_not_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-015-depth-map.webp'
+check_not_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-016-a.jpg'
+check_not_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-016-b.jpg'
 check_not_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-018-model.webp'
 check_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-019.webp'
 check_not_contains editions/fr/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md 'figure-019.svg'
@@ -857,22 +929,38 @@ check_contains editions/fr/content/chapters/glossary.md 'class="book-formula api
 check_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'class="formula-group formula-group--prospect" data-equation-label="2.1"'
 check_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'class="formula-group formula-group--volumetric" data-equation-label="2.2"'
 check_contains public/fr/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'figure-001.webp'
-check_contains public/fr/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'figure-003.jpg'
+check_contains public/fr/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'figure-003.webp'
 check_not_contains public/fr/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'figure-001-chain.webp'
+check_not_contains public/fr/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'figure-003.jpg'
 check_not_contains public/fr/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'figure-003-map.jpg'
+check_contains public/fr/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'figure-004.webp'
+check_not_contains public/fr/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html 'figure-004.png'
+check_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-005.webp'
+check_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-006.webp'
+check_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-008.webp'
+check_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-009.webp'
 check_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-010.webp'
 check_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-011.webp'
 check_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-012.webp'
 check_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-013.webp'
 check_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-014.webp'
 check_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-015.webp'
+check_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-016-a.webp'
+check_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-016-b.webp'
 check_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-018.webp'
 check_not_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-010-em.webp'
+check_not_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-005.png'
+check_not_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-006.png'
+check_not_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-008.png'
+check_not_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-009.png'
+check_not_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-010.png'
 check_not_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-011-system.webp'
 check_not_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-012-geoseismic.webp'
 check_not_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-013-anticline.webp'
 check_not_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-014-traps.webp'
 check_not_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-015-depth-map.webp'
+check_not_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-016-a.jpg'
+check_not_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-016-b.jpg'
 check_not_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-018-model.webp'
 check_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-019.webp'
 check_not_contains public/fr/book/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html 'figure-019.svg'

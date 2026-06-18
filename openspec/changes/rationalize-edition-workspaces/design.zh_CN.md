@@ -45,6 +45,8 @@ editions/
     site/
       index-main.html
       legal/
+    source/
+      images/
     content/
       SUMMARY.md
       chapters/
@@ -56,6 +58,8 @@ editions/
     site/
       index-main.html
       legal/
+    source/
+      images/
     content/
       SUMMARY.md
       chapters/
@@ -64,6 +68,7 @@ editions/
 ```
 
 这样每个 edition 都有一个清晰的归属边界。凡是随语言变化而变化的文件，都必须位于对应 edition 根目录之下；共享资源、theme、脚本和 manuscript alias 继续保留在顶层共享区域。
+需要保留但不参与发布的原始图片或备份文件应放在 `source/images/` 下；实际发布给书和站点使用的图片资源以及 `figure-manifest.json` 继续保留在 `content/images/` 下。
 
 备选方案：
 - 保留 `src/` 与 `src-fr/` 的拆分，仅新增 `books/en` 和 `site/en`。否决，因为这仍会保留多套路径约定，并且继续把英文根目录作为结构特例。

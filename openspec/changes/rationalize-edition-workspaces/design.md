@@ -45,6 +45,8 @@ editions/
     site/
       index-main.html
       legal/
+    source/
+      images/
     content/
       SUMMARY.md
       chapters/
@@ -56,6 +58,8 @@ editions/
     site/
       index-main.html
       legal/
+    source/
+      images/
     content/
       SUMMARY.md
       chapters/
@@ -64,6 +68,7 @@ editions/
 ```
 
 This gives every edition one discoverable ownership boundary. Any file that differs by locale lives below that edition root. Shared assets, theme files, scripts, and manuscript aliases remain top-level shared resources.
+Retained raw or backup images that are not part of the published book should live under `source/images/`, while published book assets and `figure-manifest.json` remain under `content/images/`.
 
 Alternative considered:
 - Keep the current `src/` and `src-fr/` split while only adding `books/en` and `site/en`. Rejected because it preserves multiple path conventions for locale-owned inputs and leaves root-level English as a structural exception.

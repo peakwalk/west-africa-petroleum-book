@@ -20,7 +20,6 @@
       "wps_shape_count": 0
     },
     "published_assets": [
-      "figure-001.png",
       "figure-001.webp"
     ]
   },
@@ -35,8 +34,8 @@
     "kind": "composite",
     "objects": {
       "blip_targets": [
-        "word/media/image3.wmf",
-        "word/media/image30.wmf",
+        "word/media/image3.emf",
+        "word/media/image30.emf",
         "word/media/image4.png",
         "word/media/image5.jpeg"
       ],
@@ -73,8 +72,7 @@
       "wps_shape_count": 0
     },
     "published_assets": [
-      "figure-003.jpg",
-      "figure-003.png"
+      "figure-003.webp"
     ]
   },
   {
@@ -99,7 +97,6 @@
       "wps_shape_count": 42
     },
     "published_assets": [
-      "figure-004.png",
       "figure-004.webp"
     ]
   },
@@ -118,7 +115,7 @@
       "drawing_targets": [],
       "anchor_count": 27,
       "inline_count": 0,
-      "vshape_count": 18,
+      "vshape_count": 23,
       "wps_shape_count": 27
     },
     "published_assets": [
@@ -144,7 +141,6 @@
       "wps_shape_count": 16
     },
     "published_assets": [
-      "figure-006.png",
       "figure-006.webp"
     ]
   },
@@ -171,8 +167,6 @@
       "wps_shape_count": 1
     },
     "published_assets": [
-      "figure-007-b.webp",
-      "figure-007.png",
       "figure-007.webp"
     ]
   },
@@ -200,7 +194,6 @@
       "wps_shape_count": 17
     },
     "published_assets": [
-      "figure-008.png",
       "figure-008.webp"
     ]
   },
@@ -225,8 +218,7 @@
       "wps_shape_count": 10
     },
     "published_assets": [
-      "figure-009.jpg",
-      "figure-009.png"
+      "figure-009.webp"
     ]
   },
   {
@@ -246,7 +238,7 @@
       "drawing_targets": [],
       "anchor_count": 5,
       "inline_count": 1,
-      "vshape_count": 6,
+      "vshape_count": 8,
       "wps_shape_count": 12
     },
     "published_assets": [
@@ -275,7 +267,6 @@
       "wps_shape_count": 0
     },
     "published_assets": [
-      "figure-011.png",
       "figure-011.webp"
     ]
   },
@@ -300,7 +291,6 @@
       "wps_shape_count": 0
     },
     "published_assets": [
-      "figure-012.png",
       "figure-012.webp"
     ]
   },
@@ -322,11 +312,10 @@
       "drawing_targets": [],
       "anchor_count": 1,
       "inline_count": 2,
-      "vshape_count": 0,
+      "vshape_count": 1,
       "wps_shape_count": 1
     },
     "published_assets": [
-      "figure-013.png",
       "figure-013.webp"
     ]
   },
@@ -352,7 +341,6 @@
       "wps_shape_count": 0
     },
     "published_assets": [
-      "figure-014.png",
       "figure-014.webp"
     ]
   },
@@ -377,7 +365,6 @@
       "wps_shape_count": 0
     },
     "published_assets": [
-      "figure-015.png",
       "figure-015.webp"
     ]
   },
@@ -405,9 +392,8 @@
       "wps_shape_count": 4
     },
     "published_assets": [
-      "figure-016-a.jpg",
-      "figure-016-b.jpg",
-      "figure-016.png"
+      "figure-016-a.webp",
+      "figure-016-b.webp"
     ]
   },
   {
@@ -431,7 +417,6 @@
       "wps_shape_count": 25
     },
     "published_assets": [
-      "figure-017.png",
       "figure-017.webp"
     ]
   },
@@ -482,7 +467,6 @@
       "wps_shape_count": 0
     },
     "published_assets": [
-      "figure-019.png",
       "figure-019.webp"
     ]
   },
@@ -507,7 +491,6 @@
       "wps_shape_count": 0
     },
     "published_assets": [
-      "figure-020.png",
       "figure-020.webp"
     ]
   },
@@ -526,11 +509,10 @@
       "drawing_targets": [],
       "anchor_count": 3,
       "inline_count": 0,
-      "vshape_count": 4,
+      "vshape_count": 5,
       "wps_shape_count": 9
     },
     "published_assets": [
-      "figure-021.png",
       "figure-021.webp"
     ]
   },
@@ -556,7 +538,6 @@
       "wps_shape_count": 2
     },
     "published_assets": [
-      "figure-022.png",
       "figure-022.svg"
     ]
   },
@@ -579,7 +560,6 @@
       "wps_shape_count": 24
     },
     "published_assets": [
-      "figure-023.png",
       "figure-023.webp"
     ]
   },
@@ -606,7 +586,6 @@
       "wps_shape_count": 1
     },
     "published_assets": [
-      "figure-024.png",
       "figure-024.webp"
     ]
   },
@@ -629,7 +608,6 @@
       "wps_shape_count": 71
     },
     "published_assets": [
-      "figure-025.png",
       "figure-025.webp"
     ]
   },
@@ -652,7 +630,6 @@
       "wps_shape_count": 62
     },
     "published_assets": [
-      "figure-026.png",
       "figure-026.svg"
     ]
   },
@@ -675,7 +652,6 @@
       "wps_shape_count": 61
     },
     "published_assets": [
-      "figure-027.png",
       "figure-027.webp"
     ]
   },
@@ -698,7 +674,6 @@
       "wps_shape_count": 67
     },
     "published_assets": [
-      "figure-028.png",
       "figure-028.webp"
     ]
   },
@@ -721,7 +696,6 @@
       "wps_shape_count": 66
     },
     "published_assets": [
-      "figure-029.png",
       "figure-029.webp"
     ]
   },
@@ -744,7 +718,6 @@
       "wps_shape_count": 33
     },
     "published_assets": [
-      "figure-030.png",
       "figure-030.svg"
     ]
   },
@@ -770,7 +743,6 @@
       "wps_shape_count": 0
     },
     "published_assets": [
-      "figure-031.png",
       "figure-031.webp"
     ]
   },
@@ -795,7 +767,6 @@
       "wps_shape_count": 0
     },
     "published_assets": [
-      "figure-032.png",
       "figure-032.webp"
     ]
   }

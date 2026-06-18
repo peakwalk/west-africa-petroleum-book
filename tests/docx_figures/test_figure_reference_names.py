@@ -8,6 +8,8 @@ from pathlib import Path
 ROOT_DIR = Path(__file__).resolve().parents[2]
 EN_IMAGES = ROOT_DIR / "editions" / "en" / "content" / "images"
 FR_IMAGES = ROOT_DIR / "editions" / "fr" / "content" / "images"
+EN_SOURCE_IMAGES = ROOT_DIR / "editions" / "en" / "source" / "images"
+FR_SOURCE_IMAGES = ROOT_DIR / "editions" / "fr" / "source" / "images"
 
 EN_CHAPTER_01 = (
     ROOT_DIR
@@ -72,19 +74,22 @@ class FigureReferenceNamesTest(unittest.TestCase):
         chapter_02 = EN_CHAPTER_02.read_text(encoding="utf-8")
 
         for expected in [
-            "figure-003.jpg",
+            "figure-003.webp",
             "figure-004.webp",
             "figure-005.webp",
             "figure-006.webp",
+            "figure-009.webp",
             "figure-010.webp",
             "figure-011.webp",
             "figure-012.webp",
             "figure-013.webp",
             "figure-014.webp",
             "figure-015.webp",
+            "figure-016-a.webp",
+            "figure-016-b.webp",
             "figure-018.webp",
         ]:
-            source = chapter_01 if expected in {"figure-003.jpg", "figure-004.webp"} else chapter_02
+            source = chapter_01 if expected in {"figure-003.webp", "figure-004.webp"} else chapter_02
             with self.subTest(expected=expected):
                 self.assertIn(expected, source)
 
@@ -110,16 +115,27 @@ class FigureReferenceNamesTest(unittest.TestCase):
 
         for expected in [
             "figure-001.webp",
-            "figure-003.jpg",
+            "figure-003.webp",
+            "figure-004.webp",
+            "figure-005.webp",
+            "figure-006.webp",
+            "figure-008.webp",
+            "figure-009.webp",
             "figure-010.webp",
             "figure-011.webp",
             "figure-012.webp",
             "figure-013.webp",
             "figure-014.webp",
             "figure-015.webp",
+            "figure-016-a.webp",
+            "figure-016-b.webp",
             "figure-018.webp",
         ]:
-            source = chapter_01 if expected in {"figure-001.webp", "figure-003.jpg"} else chapter_02
+            source = (
+                chapter_01
+                if expected in {"figure-001.webp", "figure-003.webp", "figure-004.webp"}
+                else chapter_02
+            )
             with self.subTest(expected=expected):
                 self.assertIn(expected, source)
 
@@ -140,13 +156,20 @@ class FigureReferenceNamesTest(unittest.TestCase):
     def test_trimmed_and_zip_residual_assets_are_absent(self) -> None:
         expected_absent = [
             EN_IMAGES / "figures.zip",
+            EN_IMAGES / "figure-000.png",
             EN_IMAGES / "figure-003-trimmed.png",
             EN_IMAGES / "figure-003-trimmed.webp",
+            FR_IMAGES / "figure-000.png",
             FR_IMAGES / "figure-003-trimmed.png",
             FR_IMAGES / "figure-003-trimmed.webp",
+            EN_IMAGES / "figure-003.jpg",
             EN_IMAGES / "figure-005.jpg",
-            EN_IMAGES / "figure-009.webp",
+            EN_IMAGES / "figure-009.png",
+            EN_IMAGES / "figure-009.jpg",
+            EN_IMAGES / "figure-010.png",
             EN_IMAGES / "figure-010.jpg",
+            EN_IMAGES / "figure-016-a.jpg",
+            EN_IMAGES / "figure-016-b.jpg",
             EN_IMAGES / "figure-016.webp",
             EN_IMAGES / "figure-017.jpg",
             EN_IMAGES / "figure-017.svg",
@@ -154,6 +177,7 @@ class FigureReferenceNamesTest(unittest.TestCase):
             EN_IMAGES / "figure-019.svg",
             EN_IMAGES / "figure-022.webp",
             EN_IMAGES / "figure-023.svg",
+            EN_IMAGES / "figure-007-b.webp",
             EN_IMAGES / "figure-024.svg",
             EN_IMAGES / "figure-025.svg",
             EN_IMAGES / "figure-027.svg",
@@ -162,13 +186,18 @@ class FigureReferenceNamesTest(unittest.TestCase):
             EN_IMAGES / "figure-031.svg",
             EN_IMAGES / "figure-032.svg",
             FR_IMAGES / "figure-002.webp",
-            FR_IMAGES / "figure-004.webp",
+            FR_IMAGES / "figure-003.jpg",
+            FR_IMAGES / "figure-004.png",
             FR_IMAGES / "figure-005.jpg",
-            FR_IMAGES / "figure-006.webp",
-            FR_IMAGES / "figure-008.webp",
+            FR_IMAGES / "figure-005.png",
+            FR_IMAGES / "figure-006.png",
+            FR_IMAGES / "figure-008.png",
+            FR_IMAGES / "figure-009.png",
             FR_IMAGES / "figure-009.jpg",
-            FR_IMAGES / "figure-009.webp",
+            FR_IMAGES / "figure-010.png",
             FR_IMAGES / "figure-010.jpg",
+            FR_IMAGES / "figure-016-a.jpg",
+            FR_IMAGES / "figure-016-b.jpg",
             FR_IMAGES / "figure-016.webp",
             FR_IMAGES / "figure-018.jpg",
             FR_IMAGES / "figure-022.svg",
@@ -185,66 +214,13 @@ class FigureReferenceNamesTest(unittest.TestCase):
             with self.subTest(path=path.name):
                 self.assertFalse(path.exists(), f"Expected residual asset to be deleted: {path}")
 
-    def test_only_expected_source_pngs_remain_unreferenced(self) -> None:
-        expected_en = [
-            "figure-000.png",
-            "figure-001.png",
-            "figure-003.png",
-            "figure-004.png",
-            "figure-006.png",
-            "figure-007.png",
-            "figure-008.png",
-            "figure-009.png",
-            "figure-011.png",
-            "figure-012.png",
-            "figure-013.png",
-            "figure-014.png",
-            "figure-015.png",
-            "figure-016.png",
-            "figure-017.png",
-            "figure-019.png",
-            "figure-020.png",
-            "figure-021.png",
-            "figure-022.png",
-            "figure-023.png",
-            "figure-024.png",
-            "figure-025.png",
-            "figure-026.png",
-            "figure-027.png",
-            "figure-028.png",
-            "figure-029.png",
-            "figure-030.png",
-            "figure-031.png",
-            "figure-032.png",
-        ]
-        expected_fr = [
-            "figure-000.png",
-            "figure-002.png",
-            "figure-003.png",
-            "figure-007.png",
-            "figure-011.png",
-            "figure-012.png",
-            "figure-013.png",
-            "figure-014.png",
-            "figure-015.png",
-            "figure-016.png",
-            "figure-017.png",
-            "figure-019.png",
-            "figure-020.png",
-            "figure-021.png",
-            "figure-022.png",
-            "figure-023.png",
-            "figure-024.png",
-            "figure-025.png",
-            "figure-027.png",
-            "figure-028.png",
-            "figure-029.png",
-            "figure-031.png",
-            "figure-032.png",
-        ]
+    def test_cover_source_pngs_live_outside_published_images(self) -> None:
+        self.assertTrue((EN_SOURCE_IMAGES / "figure-000.png").exists())
+        self.assertTrue((FR_SOURCE_IMAGES / "figure-000.png").exists())
 
-        self.assertEqual(_unreferenced_asset_names("en"), expected_en)
-        self.assertEqual(_unreferenced_asset_names("fr"), expected_fr)
+    def test_no_unreferenced_assets_remain_in_published_image_roots(self) -> None:
+        self.assertEqual(_unreferenced_asset_names("en"), [])
+        self.assertEqual(_unreferenced_asset_names("fr"), [])
 
 
 if __name__ == "__main__":

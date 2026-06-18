@@ -158,7 +158,7 @@ Figure 2: a and b Map
 showing the MSGBC Basin and Map showing the basins of the northern part
 of the Gulf of Guinea in West Africa
 
-![Figure 003](../images/figure-003.jpg)
+![Figure 003](../images/figure-003.webp)
 
 Figure 3: Map showing the sedimentary basins of Mali and Niger
 

@@ -273,13 +273,13 @@ if ! printf '%s' "$DESKTOP_RULES" | grep -q 'font-size: 10px;'; then
   exit 1
 fi
 
-if ! printf '%s' "$DESKTOP_RULES" | grep -q 'prototype-hero-graywhite-left.png'; then
-  echo "Expected desktop previous chapter card to use prototype-hero-graywhite-left.png in theme/custom.css" >&2
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'prototype-hero-graywhite-left.webp'; then
+  echo "Expected desktop previous chapter card to use prototype-hero-graywhite-left.webp in theme/custom.css" >&2
   exit 1
 fi
 
-if ! printf '%s' "$DESKTOP_RULES" | grep -q 'prototype-hero-graywhite-right.png'; then
-  echo "Expected desktop next chapter card to use prototype-hero-graywhite-right.png in theme/custom.css" >&2
+if ! printf '%s' "$DESKTOP_RULES" | grep -q 'prototype-hero-graywhite-right.webp'; then
+  echo "Expected desktop next chapter card to use prototype-hero-graywhite-right.webp in theme/custom.css" >&2
   exit 1
 fi
 

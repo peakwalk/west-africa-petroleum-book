@@ -2,7 +2,7 @@
 
 L’Amont pétrolier regroupe cinq (05) catégories d’activités ou phases qui se succèdent (figure 5) : Pré-licence, Exploration, Développement, Production et Abandon.
 
-![Figure 005 : Différentes phases de l’amont pétrolier](../images/figure-005.png)
+![Figure 005 : Différentes phases de l’amont pétrolier](../images/figure-005.webp)
 
 Figure 5: Différentes phases de l'amont pétrolier
 
@@ -58,7 +58,7 @@ Les différentes étapes de l’attribution des blocs pétroliers sont (Figure 6
 
 Les négociations pétrolières nécessitent de la part du Gouvernement une bonne préparation et du professionnalisme. Elle est menée par une équipe pluridisciplinaire qui doit comporter sans que cela ne soit pas limitatif des acteurs ayant une bonne connaissance des contrats pétroliers et des techniques de négociation ainsi que de techniciens avertis du secteur. Cette équipe peut être composé de juristes, économistes pétroliers, géoscientistes ...
 
-![Figure 006 : Processus d'attribution de bloc pétrolier au CPI pour l'exploration et l'exploitation pétrolières](../images/figure-006.png)
+![Figure 006 : Processus d'attribution de bloc pétrolier au CPI pour l'exploration et l'exploitation pétrolières](../images/figure-006.webp)
 
 Figure 6: Processus d'attribution de bloc pétrolier au CPI pour l'exploration et l'exploitation pétrolières
 
@@ -108,11 +108,11 @@ Figure 7 : Acquisition gravimétrique (a) montrant les anomalies dans le bassin 
 
 La sismique réflexion, méthode la plus couramment utilisée avant le forage exploratoire. Le principe d’acquisition de la sismique consiste à envoyer des ondes sonores dans le sol qui sont réfléchies par les différentes surfaces rocheuses. Le temps mis par les ondes pour venir en surface et pour être enregistrées par des géophones (lorsque l’opération se déroule sur la terre ferme) ou hydrophones (lorsque l’opération se déroule en mer) indique la profondeur des roches traversées (figure 8a, b). La sismique peut être réalisée en deux dimension 2D et depuis plus d’un demi-siècle en trois dimension 3D et même et quatre dimension 4D. La sismique renseigne aussi sur la nature la nature des roches à par partir de l’analyse des différentes vitesses de transmission notées au niveau des différentes types de roches. L’analyse et interprétation des données sismiques permettent aussi l’identification de pièges d’hydrocarbures et des Indicateurs Directs d’Hydrocarbures (DHI) tels que les Bright Spots, Flat Spots et Gas chimneys etc. qui conditionnent le positionnement des puits d’exploration (Figure 9).
 
-![Figure 008](../images/figure-008.png)
+![Figure 008](../images/figure-008.webp)
 
 Figure 8: Principe d'acquisition 3D (a) et cube sismique (b)
 
-![Figure 009](../images/figure-009.png)
+![Figure 009](../images/figure-009.webp)
 
 Figure 9: Anomalies d'amplitude sismique montrant des Brightspots et Flatspots
 
@@ -332,9 +332,9 @@ Ils sont donc tenus de croire aux bilans et évaluations ainsi qu’aux décisio
 
 C’est pourquoi, il est nécessaire que les Etats créent des centres de stockage et de conservation adéquats ainsi que des laboratoires de contrôle de qualité et d’analyse des données pétrolières acquises qui au même titre que les ressources pétrolières constituent des patrimoines de l’Etat. A cet effet, il est indispensable pour les Etats de se doter d’une véritable politique de contrôle et de gestion de leurs données pétrolières. Certains pays de l’Afrique de l’Ouest en sont conscients et développent une bonne stratégie de conservation, d’analyse et de gestion des données. La Côte d’Ivoire et le Nigeria constituent un bel exemple de la mise en place d’un centre de stockage et de conservation adéquate et d’analyse des données (figure 16).
 
-![Figure 016a](../images/figure-016-a.jpg)
+![Figure 016a](../images/figure-016-a.webp)
 
-![Figure 016b](../images/figure-016-b.jpg)
+![Figure 016b](../images/figure-016-b.webp)
 
 Figure 16: Photos montrant la carothèque de la Côte d’Ivoire à la Direction du Centre d’Analyses et de Recherche de la PETROCI
 

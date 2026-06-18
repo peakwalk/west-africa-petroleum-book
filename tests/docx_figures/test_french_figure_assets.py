@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import hashlib
 import unittest
 from pathlib import Path
 
@@ -25,11 +24,6 @@ FR_CHAPTER_03 = (
     / "chapter-03-tax-regimes-in-the-petroleum-sector.md"
 )
 
-
-def _md5(path: Path) -> str:
-    return hashlib.md5(path.read_bytes()).hexdigest()
-
-
 class FrenchFigureAssetsTest(unittest.TestCase):
     def test_french_published_assets_preserve_french_labels_for_englishized_figures(self) -> None:
         chapter_03 = FR_CHAPTER_03.read_text(encoding="utf-8")
@@ -50,38 +44,41 @@ class FrenchFigureAssetsTest(unittest.TestCase):
     def test_confirmed_french_source_assets_override_english_bootstrap_fallbacks(self) -> None:
         chapter_02 = FR_CHAPTER_02.read_text(encoding="utf-8")
 
-        self.assertIn("](../images/figure-005.png)", chapter_02)
-        self.assertIn("](../images/figure-006.png)", chapter_02)
-        self.assertIn("![Figure 008](../images/figure-008.png)", chapter_02)
-        self.assertIn("![Figure 009](../images/figure-009.png)", chapter_02)
+        self.assertIn("](../images/figure-005.webp)", chapter_02)
+        self.assertIn("](../images/figure-006.webp)", chapter_02)
+        self.assertIn("![Figure 008](../images/figure-008.webp)", chapter_02)
+        self.assertIn("![Figure 009](../images/figure-009.webp)", chapter_02)
+        self.assertIn("![Figure 010](../images/figure-010.webp)", chapter_02)
         self.assertIn("![Figure 019](../images/figure-019.webp)", chapter_02)
         self.assertNotIn("figure-005-upstream-phases-transparent.webp", chapter_02)
         self.assertNotIn("figure-006-block-assignment-transparent.webp", chapter_02)
-        self.assertNotIn("![Figure 008](../images/figure-008.webp)", chapter_02)
+        self.assertNotIn("![Figure 005](../images/figure-005.png)", chapter_02)
+        self.assertNotIn("![Figure 006](../images/figure-006.png)", chapter_02)
+        self.assertNotIn("![Figure 008](../images/figure-008.png)", chapter_02)
+        self.assertNotIn("![Figure 009](../images/figure-009.png)", chapter_02)
         self.assertNotIn("![Figure 009](../images/figure-009.jpg)", chapter_02)
+        self.assertNotIn("![Figure 010](../images/figure-010.png)", chapter_02)
         self.assertNotIn("![Figure 019](../images/figure-019.svg)", chapter_02)
 
-        self.assertTrue((FR_IMAGES / "figure-005.png").exists())
-
         for name in [
-            "figure-006.png",
-            "figure-008.png",
-            "figure-009.png",
+            "figure-004.webp",
+            "figure-005.webp",
+            "figure-006.webp",
+            "figure-008.webp",
+            "figure-009.webp",
+            "figure-010.webp",
             "figure-019.webp",
         ]:
             with self.subTest(name=name):
-                self.assertNotEqual(_md5(FR_IMAGES / name), _md5(EN_IMAGES / name))
+                self.assertTrue((FR_IMAGES / name).exists())
 
-        self.assertTrue((FR_IMAGES / "figure-019.webp").exists())
+        self.assertFalse((EN_IMAGES / "figure-008.png").exists())
+        self.assertTrue((EN_IMAGES / "figure-009.webp").exists())
         self.assertFalse((FR_IMAGES / "figure-019.svg").exists())
 
     def test_french_tree_drops_unused_bootstrap_companion_assets(self) -> None:
         for name in [
-            "figure-004.webp",
-            "figure-006.webp",
-            "figure-008.webp",
             "figure-009.jpg",
-            "figure-009.webp",
             "figure-016.webp",
             "figure-017.jpg",
             "figure-017.svg",

@@ -30,8 +30,12 @@ CHAPTER_02_PATH = (
 
 def _png_dimensions(path: Path) -> tuple[int, int]:
     data = path.read_bytes()
+    return _png_dimensions_from_bytes(data)
+
+
+def _png_dimensions_from_bytes(data: bytes) -> tuple[int, int]:
     if not data.startswith(b"\x89PNG\r\n\x1a\n"):
-        raise AssertionError(f"{path} is not a PNG file")
+        raise AssertionError("Expected PNG bytes")
     return struct.unpack(">II", data[16:24])
 
 
@@ -116,15 +120,8 @@ class PdfFiguresTest(unittest.TestCase):
         self.assertTrue((ROOT_DIR / "editions/en/content/images/figure-022.svg").exists())
         self.assertTrue((ROOT_DIR / "editions/en/content/images/figure-023.webp").exists())
 
-    def test_figure_22_source_asset_is_high_resolution_png(self) -> None:
-        output_path = ROOT_DIR / "editions/en/content/images/figure-022.png"
-
-        self.assertTrue(output_path.exists())
-
-        width, height = _png_dimensions(output_path)
-        self.assertGreater(width, 2400)
-        self.assertGreater(height, 1400)
-        self.assertGreater(output_path.stat().st_size, 500_000)
+    def test_figure_22_source_png_is_not_committed(self) -> None:
+        self.assertFalse((ROOT_DIR / "editions/en/content/images/figure-022.png").exists())
 
     def test_figure_22_svg_uses_english_labels(self) -> None:
         svg_text = (ROOT_DIR / "editions/en/content/images/figure-022.svg").read_text(encoding="utf-8")
@@ -137,37 +134,30 @@ class PdfFiguresTest(unittest.TestCase):
         self.assertNotIn("PART DU CONTRACTANT", svg_text)
         self.assertNotIn("COUTS RECUPERABLES", svg_text)
 
-    def test_figure_32_english_raster_assets_match_pdf_render(self) -> None:
-        png_bytes, webp_bytes = _render_pdf_figure_assets(pdf_path=PDF_PATH, figure_number=32)
+    def test_figure_32_english_webp_asset_matches_pdf_render(self) -> None:
+        _, webp_bytes = _render_pdf_figure_assets(pdf_path=PDF_PATH, figure_number=32)
 
-        self.assertEqual(
-            (ROOT_DIR / "editions/en/content/images/figure-032.png").read_bytes(),
-            png_bytes,
-        )
+        self.assertFalse((ROOT_DIR / "editions/en/content/images/figure-032.png").exists())
         self.assertEqual(
             (ROOT_DIR / "editions/en/content/images/figure-032.webp").read_bytes(),
             webp_bytes,
         )
 
-    def test_figure_32_french_raster_assets_match_pdf_render(self) -> None:
-        png_bytes, webp_bytes = _render_pdf_figure_assets(pdf_path=FR_PDF_PATH, figure_number=32)
+    def test_figure_32_french_webp_asset_matches_pdf_render(self) -> None:
+        _, webp_bytes = _render_pdf_figure_assets(pdf_path=FR_PDF_PATH, figure_number=32)
 
-        self.assertEqual(
-            (ROOT_DIR / "editions/fr/content/images/figure-032.png").read_bytes(),
-            png_bytes,
-        )
+        self.assertFalse((ROOT_DIR / "editions/fr/content/images/figure-032.png").exists())
         self.assertEqual(
             (ROOT_DIR / "editions/fr/content/images/figure-032.webp").read_bytes(),
             webp_bytes,
         )
 
-    def test_french_figure_32_raster_assets_do_not_duplicate_figure_31(self) -> None:
-        png_031 = ROOT_DIR / "editions/fr/content/images/figure-031.png"
-        png_032 = ROOT_DIR / "editions/fr/content/images/figure-032.png"
+    def test_french_figure_32_webp_asset_does_not_duplicate_figure_31(self) -> None:
         webp_031 = ROOT_DIR / "editions/fr/content/images/figure-031.webp"
         webp_032 = ROOT_DIR / "editions/fr/content/images/figure-032.webp"
 
-        self.assertNotEqual(png_031.read_bytes(), png_032.read_bytes())
+        self.assertFalse((ROOT_DIR / "editions/fr/content/images/figure-031.png").exists())
+        self.assertFalse((ROOT_DIR / "editions/fr/content/images/figure-032.png").exists())
         self.assertNotEqual(webp_031.read_bytes(), webp_032.read_bytes())
 
     def test_build_search_windows_separates_multiple_figures_on_the_same_page(self) -> None:

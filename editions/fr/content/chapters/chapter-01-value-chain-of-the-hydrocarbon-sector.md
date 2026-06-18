@@ -163,7 +163,7 @@ D’autres pays sont encore en phase d’exploration et pourront faire de décou
 
 Figure 2: a et b Carte montrant le bassin MSGBC et Carte montrant les bassins de la partie nord du Golfe de Guinée dans l’Afrique de l’Ouest
 
-![Figure 003](../images/figure-003.jpg)
+![Figure 003](../images/figure-003.webp)
 
 Figure 3: Carte montrant les bassins sédimentaires du Mali et du Niger
 
@@ -356,6 +356,6 @@ La nécessité d’une réorganisation de l’ensemble de la chaine des valeurs 
 - la création de centres de formation spécialisés aux métiers du pétrole ;
 - le développement d’une coopération saine entre les Etats en matière de partage d’expérience.
 
-![Figure 004 : Schéma synthétique montrant les différentes coupes pétrolières](../images/figure-004.png)
+![Figure 004 : Schéma synthétique montrant les différentes coupes pétrolières](../images/figure-004.webp)
 
 Figure 4: Schéma synthétique montrant les différentes coupes pétrolières

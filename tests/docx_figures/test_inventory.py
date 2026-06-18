@@ -68,7 +68,7 @@ class InventoryTest(unittest.TestCase):
             )
         }
 
-        self.assertEqual(inventory[1].published_assets, ["figure-001.png", "figure-001.webp"])
+        self.assertEqual(inventory[1].published_assets, ["figure-001.webp"])
         self.assertEqual(inventory[2].published_assets, ["figure-002-a.webp", "figure-002-b.webp"])
 
     def test_french_docx_inventory_covers_figures_1_through_32(self) -> None:

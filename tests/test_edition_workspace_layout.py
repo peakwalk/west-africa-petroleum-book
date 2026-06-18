@@ -21,11 +21,15 @@ class EditionWorkspaceLayoutTests(unittest.TestCase):
             self.assertTrue((edition_root / "locale.json").exists())
             self.assertTrue((edition_root / "site").is_dir())
             self.assertTrue((edition_root / "site" / "legal").is_dir())
+            self.assertTrue((edition_root / "source").is_dir())
+            self.assertTrue((edition_root / "source" / "images").is_dir())
             self.assertTrue((edition_root / "content").is_dir())
             self.assertTrue((edition_root / "content" / "chapters").is_dir())
             self.assertTrue((edition_root / "content" / "images").is_dir())
             self.assertTrue((edition_root / "content" / "SUMMARY.md").exists())
             self.assertTrue((edition_root / "content" / "images" / "figure-manifest.json").exists())
+            self.assertTrue((edition_root / "source" / "images" / "figure-000.png").exists())
+            self.assertFalse((edition_root / "content" / "images" / "figure-000.png").exists())
 
     def test_registry_declares_edition_root_contract(self) -> None:
         registry = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))

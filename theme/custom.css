@@ -2323,7 +2323,7 @@ a.reader-language-option:focus-visible {
 
 .chapter-nav-previous::after {
   right: 0;
-  background-image: url("../../assets/images/prototype-hero-graywhite-left.png");
+  background-image: url("../../assets/images/prototype-hero-graywhite-left.webp");
   background-position: right bottom;
 }
 
@@ -2335,7 +2335,7 @@ a.reader-language-option:focus-visible {
 .chapter-nav-next::after {
   right: auto;
   left: 0;
-  background-image: url("../../assets/images/prototype-hero-graywhite-right.png");
+  background-image: url("../../assets/images/prototype-hero-graywhite-right.webp");
   background-position: left bottom;
 }
 

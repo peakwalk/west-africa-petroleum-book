@@ -5,11 +5,11 @@ The repository MUST organize each locale's mdBook config, locale catalog, landin
 
 #### Scenario: English and French edition roots use the same workspace shape
 - **WHEN** a contributor inspects `editions/en/` and `editions/fr/`
-- **THEN** each root contains its own `book.toml`, `locale.json`, `site/`, and `content/` directories
+- **THEN** each root contains its own `book.toml`, `locale.json`, `site/`, `source/`, and `content/` directories
 
 #### Scenario: Locale-owned content lives below the edition root
 - **WHEN** a contributor inspects one edition workspace
-- **THEN** the edition's `SUMMARY.md`, chapter Markdown, locale-specific legal content, figure assets, and `figure-manifest.json` are all located under that edition root instead of being split across unrelated top-level directories
+- **THEN** the edition's `SUMMARY.md`, chapter Markdown, locale-specific legal content, published figure assets, `figure-manifest.json`, and any retained raw figure backups are all located under that edition root instead of being split across unrelated top-level directories
 
 ### Requirement: Edition configuration derives paths from the edition root
 The shared edition registry MUST declare each locale using an `editionRoot` convention and MUST derive book, site, content, legal, chapter, locale-catalog, figure-root, and figure-manifest paths from that root instead of storing each derived path independently.

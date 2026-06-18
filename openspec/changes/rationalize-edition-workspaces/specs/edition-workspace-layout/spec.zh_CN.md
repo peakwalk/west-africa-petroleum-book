@@ -5,11 +5,11 @@
 
 #### Scenario: 英文与法文 edition roots 使用同一工作区形状
 - **WHEN** 贡献者检查 `editions/en/` 与 `editions/fr/`
-- **THEN** 两个根目录都包含各自的 `book.toml`、`locale.json`、`site/` 和 `content/` 目录
+- **THEN** 两个根目录都包含各自的 `book.toml`、`locale.json`、`site/`、`source/` 和 `content/` 目录
 
 #### Scenario: 语言自有内容都位于 edition 根目录之下
 - **WHEN** 贡献者检查任一 edition 工作区
-- **THEN** 该语言版本的 `SUMMARY.md`、章节 Markdown、locale-specific legal 内容、figure 资源和 `figure-manifest.json` 都位于该 edition 根目录之下，而不是继续分散在互不相关的顶层目录中
+- **THEN** 该语言版本的 `SUMMARY.md`、章节 Markdown、locale-specific legal 内容、已发布的 figure 资源、`figure-manifest.json` 以及需要保留的原始 figure 备份都位于该 edition 根目录之下，而不是继续分散在互不相关的顶层目录中
 
 ### Requirement: edition 配置必须从 edition root 派生路径
 共享 edition registry MUST 通过 `editionRoot` 约定声明每个语言版本，并且 MUST 从该根目录派生 book、site、content、legal、chapter、locale catalog、figure root 和 figure manifest 路径，而不是独立保存每一条派生路径。

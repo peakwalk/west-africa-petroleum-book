@@ -244,8 +244,6 @@ b).
 
 ![Figure 007](../images/figure-007.webp)
 
-![Figure 007b](../images/figure-007-b.webp)
-
 Figure 7: Gravimetric
 acquisition (a) showing anomalies in the Coastal Sedimentary Basin of
 Benin (CGG 2013) and aeromagnetic (b) to characterize the basement and
@@ -272,7 +270,7 @@ positioning of exploration wells (Figure 9).
 Figure 8: 3D acquisition
 principle (a) and seismic cube (b)
 
-![Figure 009](../images/figure-009.jpg)
+![Figure 009](../images/figure-009.webp)
 
 Figure 9: Seismic
 amplitude anomalies showing Brightspots and Flatspots
@@ -601,9 +599,9 @@ data conservation, analysis and management strategy. Côte d'Ivoire and
 Nigeria are a good example of the establishment of a centre for adequate
 storage and preservation and data analysis (Figure 16).
 
-![Figure 016a](../images/figure-016-a.jpg)
+![Figure 016a](../images/figure-016-a.webp)
 
-![Figure 016b](../images/figure-016-b.jpg)
+![Figure 016b](../images/figure-016-b.webp)
 
 Figure 16: Photos showing the core library of Côte d'Ivoire at the Direction of the PETROCI Analysis and Research Center
 
