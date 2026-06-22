@@ -12,6 +12,7 @@ class OutlineEntry:
 class BodyBlock:
     kind: str
     text: str
+    strong: bool = False
 
 
 @dataclass(frozen=True)
@@ -20,6 +21,7 @@ class ChapterSemanticModel:
     title: str
     outline: list[OutlineEntry] = field(default_factory=list)
     body: list[BodyBlock] = field(default_factory=list)
+    outline_body_indices: tuple[int, ...] = field(default_factory=tuple, compare=False)
 
 
 @dataclass(frozen=True)

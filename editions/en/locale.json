@@ -2,10 +2,10 @@
   "locale": "en",
   "languageName": "English",
   "meta": {
-    "homeTitle": "Exploration and Exploitation of Petroleum Resources in West Africa",
-    "homeDescription": "A professional online edition of Exploration and Exploitation of Petroleum Resources in West Africa.",
-    "chaptersTitle": "Chapter Library | Exploration and Exploitation of Petroleum Resources in West Africa",
-    "chaptersDescription": "Browse the chapter library for Exploration and Exploitation of Petroleum Resources in West Africa."
+    "homeTitle": "Exploration and Production of Petroleum Resources in West Africa: Roles and Responsibilities of Governments and Analysis of Fiscal Regimes",
+    "homeDescription": "A professional online edition of Exploration and Production of Petroleum Resources in West Africa: Roles and Responsibilities of Governments and Analysis of Fiscal Regimes.",
+    "chaptersTitle": "Chapter Library | Exploration and Production of Petroleum Resources in West Africa",
+    "chaptersDescription": "Browse the chapter library for Exploration and Production of Petroleum Resources in West Africa: Roles and Responsibilities of Governments and Analysis of Fiscal Regimes."
   },
   "nav": {
     "home": "Home",
@@ -56,22 +56,36 @@
   },
   "chaptersPage": {
     "eyebrow": "Chapter Library",
-    "heroTitle": "Browse the book by part, chapter, and reference section.",
-    "intro": "A structured entry point into West Africa petroleum resource management, from upstream operations and fiscal design to governance, country analysis, and reference material.",
+    "heroTitle": "Browse the replacement English edition by chapter, reference section, and reading path.",
+    "intro": "A structured entry point into West Africa petroleum exploration, country analysis, national oil companies, fiscal systems, governance, petroleum data, and long-range regional strategy.",
     "additionalResourcesHeading": "Additional Resources",
+    "additionalResourcesOrder": [
+      "glossary",
+      "references",
+      "disclaimer"
+    ],
     "additionalResources": {
       "glossary": {
-        "title": "Glossary of Terms",
-        "description": "Technical and fiscal terminology used throughout the book."
+        "title": "Glossary",
+        "description": "Reference definitions for petroleum, geoscience, fiscal, and institutional terms used throughout the book."
       },
       "references": {
-        "title": "References & Citations",
-        "description": "Academic, policy, and industry sources cited across the study."
+        "title": "Bibliographical References",
+        "description": "Research, legal, policy, and industry sources cited across the replacement manuscript."
       },
-      "conclusion": {
-        "title": "General Conclusion",
-        "description": "Closing synthesis of the book's findings on petroleum operations and governance."
+      "disclaimer": {
+        "title": "Disclaimer",
+        "description": "Publication caveats, scope notes, and liability limitations for the digital reading edition."
       }
+    },
+    "genericDescriptions": {
+      "cover": "Opening material and publication framing for the replacement English digital edition.",
+      "disclaimer": "Publication caveats, scope notes, and liability limitations for the replacement English manuscript.",
+      "preface": "Editorial framing for the replacement English manuscript and its West Africa petroleum focus.",
+      "list-of-figures": "Auxiliary figure index for the web edition. Each entry jumps to the figure caption inside the relevant chapter.",
+      "list-of-tables": "Auxiliary table index for the web edition. Each entry jumps to the relevant table block inside the chapter.",
+      "glossary": "Reference definitions for petroleum, geoscience, fiscal, and institutional terms used throughout the book.",
+      "bibliographical-references": "Research, legal, policy, and industry sources cited across the replacement manuscript."
     }
   }
 }

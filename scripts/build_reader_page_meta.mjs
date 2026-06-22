@@ -6,8 +6,8 @@ import { fileURLToPath } from "node:url";
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(scriptDir, "..");
 const requestedBookDir = process.argv[2] || path.join("public", "book");
-const requestedSummaryPath = process.argv[3] || path.join("src", "SUMMARY.md");
-const requestedSourceRoot = process.argv[4] || "src";
+const requestedSummaryPath = process.argv[3] || path.join("editions", "en", "content", "SUMMARY.md");
+const requestedSourceRoot = process.argv[4] || path.join("editions", "en", "content");
 
 const bookDir = path.resolve(rootDir, requestedBookDir);
 const summaryPath = path.resolve(rootDir, requestedSummaryPath);

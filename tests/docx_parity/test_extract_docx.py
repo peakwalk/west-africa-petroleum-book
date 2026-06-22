@@ -317,6 +317,207 @@ class ExtractDocxTests(unittest.TestCase):
             ],
         )
 
+    def test_preserves_repeated_single_word_semantic_lead_ins_before_future_captions(
+        self,
+    ) -> None:
+        tmp_dir = Path(tempfile.mkdtemp())
+        docx_path = tmp_dir / "fixture-repeated-single-word-lead-in.docx"
+        document = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading1"/></w:pPr>
+      <w:r><w:t>Chapter 1: Value Chain of the Hydrocarbon Sector</w:t></w:r>
+    </w:p>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading2"/></w:pPr>
+      <w:r><w:t>1.1- The Upstream segment</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t>Lead-in paragraph.</w:t></w:r></w:p>
+    <w:p><w:r><w:rPr><w:b/></w:rPr><w:t>Exploration</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Exploration involves identifying hydrocarbon accumulations.</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Table 1: Petroleum Lifecycle Overview</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Closing paragraph.</w:t></w:r></w:p>
+  </w:body>
+</w:document>
+"""
+        with zipfile.ZipFile(docx_path, "w") as archive:
+            archive.writestr("[Content_Types].xml", CONTENT_TYPES)
+            archive.writestr("_rels/.rels", RELS)
+            archive.writestr("word/document.xml", document)
+            archive.writestr(
+                "word/numbering.xml",
+                (FIXTURE_DIR / "numbering-section-restart.xml").read_text(
+                    encoding="utf-8"
+                ),
+            )
+            archive.writestr(
+                "word/styles.xml",
+                (FIXTURE_DIR / "styles-headings.xml").read_text(encoding="utf-8"),
+            )
+
+        expected_body = [
+            "Lead-in paragraph.",
+            "Exploration",
+            "Exploration involves identifying hydrocarbon accumulations.",
+            "Table 1: Petroleum Lifecycle Overview",
+            "Closing paragraph.",
+        ]
+
+        book = extract_docx_book(docx_path)
+        self.assertEqual([block.text for block in book.chapters[0].body], expected_body)
+        self.assertTrue(book.chapters[0].body[1].strong)
+        self.assertFalse(book.chapters[0].body[2].strong)
+
+        anchored = extract_docx_chapter_by_anchors(
+            docx_path,
+            chapter_title="Value Chain of the Hydrocarbon Sector",
+            start_anchor="Lead-in paragraph.",
+            end_anchor=None,
+        )
+        self.assertEqual([block.text for block in anchored.chapters[0].body], expected_body)
+        self.assertTrue(anchored.chapters[0].body[1].strong)
+
+    def test_marks_multiword_all_bold_paragraphs_as_strong_blocks(self) -> None:
+        tmp_dir = Path(tempfile.mkdtemp())
+        docx_path = tmp_dir / "fixture-multiword-strong-paragraph.docx"
+        document = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading1"/></w:pPr>
+      <w:r><w:t>Chapter 1: Value Chain of the Hydrocarbon Sector</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:rPr><w:b/></w:rPr><w:t>High Geological Risk</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Exploration activities involve significant geological uncertainty.</w:t></w:r></w:p>
+  </w:body>
+</w:document>
+"""
+        with zipfile.ZipFile(docx_path, "w") as archive:
+            archive.writestr("[Content_Types].xml", CONTENT_TYPES)
+            archive.writestr("_rels/.rels", RELS)
+            archive.writestr("word/document.xml", document)
+            archive.writestr(
+                "word/styles.xml",
+                (FIXTURE_DIR / "styles-headings.xml").read_text(encoding="utf-8"),
+            )
+
+        book = extract_docx_book(docx_path)
+        chapter = book.chapters[0]
+
+        self.assertEqual(
+            [block.text for block in chapter.body],
+            [
+                "High Geological Risk",
+                "Exploration activities involve significant geological uncertainty.",
+            ],
+        )
+        self.assertTrue(chapter.body[0].strong)
+        self.assertFalse(chapter.body[1].strong)
+
+    def test_preserves_strong_semantic_labels_before_later_captions(self) -> None:
+        tmp_dir = Path(tempfile.mkdtemp())
+        docx_path = tmp_dir / "fixture-strong-label-before-caption.docx"
+        document = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading1"/></w:pPr>
+      <w:r><w:t>Chapter 2: Different Phases of Upstream Oil and the Roles of States</w:t></w:r>
+    </w:p>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading2"/></w:pPr>
+      <w:r><w:t>2.2- Exploration phase</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t>Lead-in paragraph.</w:t></w:r></w:p>
+    <w:p><w:r><w:rPr><w:b/></w:rPr><w:t>Combination Traps</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Created by a combination of structural and stratigraphic processes.</w:t></w:r></w:p>
+    <w:p><w:r><w:rPr><w:b/></w:rPr><w:t>Exploration Techniques</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Geological investigations form the foundation of exploration.</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Figure 19: Seismic reflection workflow</w:t></w:r></w:p>
+  </w:body>
+</w:document>
+"""
+        with zipfile.ZipFile(docx_path, "w") as archive:
+            archive.writestr("[Content_Types].xml", CONTENT_TYPES)
+            archive.writestr("_rels/.rels", RELS)
+            archive.writestr("word/document.xml", document)
+            archive.writestr(
+                "word/numbering.xml",
+                (FIXTURE_DIR / "numbering-section-restart.xml").read_text(
+                    encoding="utf-8"
+                ),
+            )
+            archive.writestr(
+                "word/styles.xml",
+                (FIXTURE_DIR / "styles-headings.xml").read_text(encoding="utf-8"),
+            )
+
+        expected_body = [
+            "Lead-in paragraph.",
+            "Combination Traps",
+            "Created by a combination of structural and stratigraphic processes.",
+            "Exploration Techniques",
+            "Geological investigations form the foundation of exploration.",
+            "Figure 19: Seismic reflection workflow",
+        ]
+
+        book = extract_docx_book(docx_path)
+        self.assertEqual([block.text for block in book.chapters[0].body], expected_body)
+        self.assertTrue(book.chapters[0].body[1].strong)
+        self.assertTrue(book.chapters[0].body[3].strong)
+
+        anchored = extract_docx_chapter_by_anchors(
+            docx_path,
+            chapter_title="Different Phases of Upstream Oil and the Roles of States",
+            start_anchor="Lead-in paragraph.",
+            end_anchor=None,
+        )
+        self.assertEqual([block.text for block in anchored.chapters[0].body], expected_body)
+        self.assertTrue(anchored.chapters[0].body[1].strong)
+        self.assertTrue(anchored.chapters[0].body[3].strong)
+
+    def test_preserves_front_matter_strong_labels_after_caption(self) -> None:
+        tmp_dir = Path(tempfile.mkdtemp())
+        docx_path = tmp_dir / "fixture-front-matter-strong-label.docx"
+        document = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading1"/></w:pPr>
+      <w:r><w:t>General Introduction</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t>Figure 1: Introductory overview</w:t></w:r></w:p>
+    <w:p><w:r><w:rPr><w:b/></w:rPr><w:t>Petroleum as a Driver of Socio-Economic Development</w:t></w:r></w:p>
+    <w:p><w:r><w:rPr><w:b/></w:rPr><w:t>A Historical Resource for Human Welfare</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Petroleum-derived products have been utilised for centuries.</w:t></w:r></w:p>
+  </w:body>
+</w:document>
+"""
+        with zipfile.ZipFile(docx_path, "w") as archive:
+            archive.writestr("[Content_Types].xml", CONTENT_TYPES)
+            archive.writestr("_rels/.rels", RELS)
+            archive.writestr("word/document.xml", document)
+            archive.writestr(
+                "word/styles.xml",
+                (FIXTURE_DIR / "styles-headings.xml").read_text(encoding="utf-8"),
+            )
+
+        book = extract_docx_book(docx_path)
+        chapter = book.chapters[0]
+
+        self.assertEqual(
+            [block.text for block in chapter.body],
+            [
+                "Figure 1: Introductory overview",
+                "Petroleum as a Driver of Socio-Economic Development",
+                "A Historical Resource for Human Welfare",
+                "Petroleum-derived products have been utilised for centuries.",
+            ],
+        )
+        self.assertTrue(chapter.body[1].strong)
+        self.assertTrue(chapter.body[2].strong)
+
     def test_preserves_duplicated_formula_paragraph_before_caption(self) -> None:
         tmp_dir = Path(tempfile.mkdtemp())
         docx_path = tmp_dir / "fixture-duplicated-formula-before-caption.docx"
@@ -1327,6 +1528,132 @@ class ExtractDocxTests(unittest.TestCase):
         self.assertEqual([entry.number for entry in chapter.outline], ["1.1-"])
         self.assertEqual([entry.title for entry in chapter.outline], ["The Upstream segment"])
         self.assertEqual([block.text for block in chapter.body], ["Intro paragraph.", "Body paragraph."])
+
+    def test_extract_docx_book_synthesizes_outline_numbers_for_style_only_headings(self) -> None:
+        tmp_dir = Path(tempfile.mkdtemp())
+        docx_path = tmp_dir / "fixture-style-only-headings.docx"
+        document = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading1"/></w:pPr>
+      <w:r><w:t>General Introduction</w:t></w:r>
+    </w:p>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading2"/></w:pPr>
+      <w:r><w:t>Hydrocarbon Resources and Economic Development</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t>West Africa possesses significant hydrocarbon resources.</w:t></w:r></w:p>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading3"/></w:pPr>
+      <w:r><w:t>The African Development Paradox</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t>Africa remains rich in resources but constrained in value capture.</w:t></w:r></w:p>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading1"/></w:pPr>
+      <w:r><w:t>Emerging Petroleum Provinces in West Africa</w:t></w:r>
+    </w:p>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading2"/></w:pPr>
+      <w:r><w:t>Introduction</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t>Over the past two decades, the petroleum industry in West Africa has undergone significant transformation.</w:t></w:r></w:p>
+  </w:body>
+</w:document>
+"""
+        with zipfile.ZipFile(docx_path, "w") as archive:
+            archive.writestr("[Content_Types].xml", CONTENT_TYPES)
+            archive.writestr("_rels/.rels", RELS)
+            archive.writestr("word/document.xml", document)
+            archive.writestr(
+                "word/styles.xml",
+                (FIXTURE_DIR / "styles-headings.xml").read_text(encoding="utf-8"),
+            )
+
+        book = extract_docx_book(docx_path)
+
+        self.assertEqual(
+            [chapter.title for chapter in book.chapters],
+            [
+                "General Introduction",
+                "Emerging Petroleum Provinces in West Africa",
+            ],
+        )
+        self.assertEqual(
+            [(entry.number, entry.title) for entry in book.chapters[0].outline],
+            [
+                ("1.1-", "Hydrocarbon Resources and Economic Development"),
+                ("1.1.1-", "The African Development Paradox"),
+            ],
+        )
+        self.assertEqual(
+            [(entry.number, entry.title) for entry in book.chapters[1].outline],
+            [("2.1-", "Introduction")],
+        )
+
+    def test_chapter_anchor_extraction_synthesizes_outline_numbers_for_style_only_headings(self) -> None:
+        tmp_dir = Path(tempfile.mkdtemp())
+        docx_path = tmp_dir / "fixture-style-only-anchor-headings.docx"
+        document = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading1"/></w:pPr>
+      <w:r><w:t>General Introduction</w:t></w:r>
+    </w:p>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading2"/></w:pPr>
+      <w:r><w:t>Hydrocarbon Resources and Economic Development</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t>West Africa possesses significant hydrocarbon resources.</w:t></w:r></w:p>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading3"/></w:pPr>
+      <w:r><w:t>The African Development Paradox</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t>Africa remains rich in resources but constrained in value capture.</w:t></w:r></w:p>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading1"/></w:pPr>
+      <w:r><w:t>Emerging Petroleum Provinces in West Africa</w:t></w:r>
+    </w:p>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading2"/></w:pPr>
+      <w:r><w:t>Introduction</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t>Over the past two decades, the petroleum industry in West Africa has undergone significant transformation.</w:t></w:r></w:p>
+  </w:body>
+</w:document>
+"""
+        with zipfile.ZipFile(docx_path, "w") as archive:
+            archive.writestr("[Content_Types].xml", CONTENT_TYPES)
+            archive.writestr("_rels/.rels", RELS)
+            archive.writestr("word/document.xml", document)
+            archive.writestr(
+                "word/styles.xml",
+                (FIXTURE_DIR / "styles-headings.xml").read_text(encoding="utf-8"),
+            )
+
+        book = extract_docx_chapter_by_anchors(
+            docx_path,
+            chapter_title="Chapter 1: General Introduction",
+            start_anchor="West Africa possesses significant hydrocarbon resources.",
+            end_anchor="Over the past two decades, the petroleum industry in West Africa has undergone significant transformation.",
+        )
+        chapter = book.chapters[0]
+
+        self.assertEqual(
+            [(entry.number, entry.title) for entry in chapter.outline],
+            [
+                ("1.1-", "Hydrocarbon Resources and Economic Development"),
+                ("1.1.1-", "The African Development Paradox"),
+            ],
+        )
+        self.assertEqual(
+            [block.text for block in chapter.body],
+            [
+                "West Africa possesses significant hydrocarbon resources.",
+                "Africa remains rich in resources but constrained in value capture.",
+            ],
+        )
 
     def test_splits_merged_formula_and_label_paragraphs(self) -> None:
         tmp_dir = Path(tempfile.mkdtemp())

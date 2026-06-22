@@ -3,7 +3,6 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 import shutil
-import subprocess
 import sys
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
@@ -12,6 +11,7 @@ if str(ROOT_DIR) not in sys.path:
 
 from scripts.edition_config import available_edition_locales, get_edition
 from scripts.docx_figures import build_figure_inventory
+from scripts.docx_figures.bitmap_media import render_bitmap_figure_assets
 from scripts.docx_figures.pdf_figures import (
     DEFAULT_CAPTION_GAP,
     DEFAULT_CROP_PADDING,
@@ -19,9 +19,11 @@ from scripts.docx_figures.pdf_figures import (
     DEFAULT_RENDER_SCALE,
     DEFAULT_SIDE_MARGIN,
     DEFAULT_TOP_MARGIN,
+    build_caption_search_map,
     default_pdf_figure_numbers,
     render_pdf_figures,
 )
+from scripts.docx_figures import raster_assets
 
 DEFAULT_DOCX = Path(
     "resources/Exploration and Exploitation of Petroleum Resources in West Africa (Matt Edited).docx"
@@ -32,7 +34,6 @@ DEFAULT_PDF = Path(
 DEFAULT_SUMMARY = Path("editions/en/content/SUMMARY.md")
 DEFAULT_CHAPTERS_DIR = Path("editions/en/content/chapters")
 DEFAULT_OUTPUT_DIR = Path("editions/en/content/images")
-LOSSLESS_WEBP_FIGURES = {17, 19, 21, 22, 23, 24, 25, 27, 28, 29, 31, 32}
 
 
 def find_cwebp_binary() -> Path | None:
@@ -61,55 +62,20 @@ def ensure_lossless_webp_outputs(
     figure_numbers: list[int],
     cwebp_binary: Path | None = None,
     sips_binary: Path | None = None,
+    cwebp_args: list[str] | None = None,
 ) -> list[int]:
-    binary = cwebp_binary or find_cwebp_binary()
-    sips = sips_binary or find_sips_binary()
-    if binary is None:
-        if sips is None:
-            return []
+    return raster_assets.ensure_lossless_webp_outputs(
+        output_dir=output_dir,
+        figure_numbers=figure_numbers,
+        cwebp_binary=cwebp_binary or find_cwebp_binary(),
+        sips_binary=sips_binary or find_sips_binary(),
+        cwebp_args=cwebp_args,
+        detect_binaries=False,
+    )
 
-    rendered: list[int] = []
-    for figure_number in figure_numbers:
-        if figure_number not in LOSSLESS_WEBP_FIGURES:
-            continue
-        png_path = output_dir / f"figure-{figure_number:03d}.png"
-        webp_path = output_dir / f"figure-{figure_number:03d}.webp"
-        if not png_path.exists():
-            continue
-        if binary is not None:
-            result = subprocess.run(
-                [
-                    str(binary),
-                    "-quiet",
-                    "-lossless",
-                    "-z",
-                    "9",
-                    str(png_path),
-                    "-o",
-                    str(webp_path),
-                ],
-                capture_output=True,
-                text=True,
-                check=False,
-            )
-        else:
-            result = subprocess.run(
-                [
-                    str(sips),
-                    "-s",
-                    "format",
-                    "webp",
-                    str(png_path),
-                    "--out",
-                    str(webp_path),
-                ],
-                capture_output=True,
-                text=True,
-                check=False,
-            )
-        if result.returncode == 0 and webp_path.exists():
-            rendered.append(figure_number)
-    return rendered
+
+def _looks_like_replacement_english_inventory(figure_numbers: list[int], total_records: int) -> bool:
+    return total_records == 80 and sorted(figure_numbers) == list(range(1, 81))
 
 
 def parse_args() -> argparse.Namespace:
@@ -160,12 +126,12 @@ def main() -> int:
         else DEFAULT_OUTPUT_DIR
     )
     requested = list(args.figures or [])
+    inventory = build_figure_inventory(
+        docx_path=docx_path,
+        chapters_dir=chapters_dir,
+        summary_path=summary_path,
+    )
     if not requested:
-        inventory = build_figure_inventory(
-            docx_path=docx_path,
-            chapters_dir=chapters_dir,
-            summary_path=summary_path,
-        )
         requested = default_pdf_figure_numbers(inventory)
 
     if not requested:
@@ -177,6 +143,7 @@ def main() -> int:
         pdf_path=pdf_path,
         output_dir=output_dir,
         figure_numbers=requested,
+        caption_search_map=build_caption_search_map(inventory, requested),
         scale=args.scale,
         side_margin=args.side_margin,
         top_margin=args.top_margin,
@@ -188,17 +155,45 @@ def main() -> int:
         print(result.stdout, end="")
     if result.stderr:
         print(result.stderr, file=sys.stderr, end="")
-    if result.returncode == 0:
-        rendered_webp = ensure_lossless_webp_outputs(
-            output_dir=output_dir,
-            figure_numbers=requested,
+
+    fallback_outputs = render_bitmap_figure_assets(
+        docx_path=docx_path,
+        records=[
+            record
+            for record in inventory
+            if record.number in requested
+            and not (output_dir / f"figure-{record.number:03d}.png").exists()
+            and len(record.objects.blip_targets) == 1
+        ],
+        output_dir=output_dir,
+    )
+    for figure_number, output_path in fallback_outputs:
+        print(f"Rendered Figure {figure_number} -> {output_path.resolve()}")
+
+    rendered_png_numbers = [
+        figure_number
+        for figure_number in requested
+        if (output_dir / f"figure-{figure_number:03d}.png").exists()
+    ]
+    rendered_webp = ensure_lossless_webp_outputs(
+        output_dir=output_dir,
+        figure_numbers=rendered_png_numbers,
+        cwebp_args=["-m", "6"] if _looks_like_replacement_english_inventory(requested, len(inventory)) else None,
+    )
+    for figure_number in rendered_webp:
+        print(
+            f"Rendered Figure {figure_number} -> "
+            f"{(output_dir / f'figure-{figure_number:03d}.webp').resolve()}"
         )
-        for figure_number in rendered_webp:
-            print(
-                f"Rendered Figure {figure_number} -> "
-                f"{(output_dir / f'figure-{figure_number:03d}.webp').resolve()}"
-            )
-    return result.returncode
+
+    remaining_missing = [
+        figure_number
+        for figure_number in requested
+        if not (output_dir / f"figure-{figure_number:03d}.png").exists()
+    ]
+    if remaining_missing:
+        return result.returncode or 1
+    return 0
 
 
 if __name__ == "__main__":

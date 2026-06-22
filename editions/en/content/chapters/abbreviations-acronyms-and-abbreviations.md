@@ -1,4 +1,4 @@
-# Abbreviations, Acronyms and Abbreviations
+# Abbreviations, Initialisms and Acronyms
 
 <div class="reference-index reference-index-abbreviations">
   <section class="reference-index-group">

@@ -105,11 +105,12 @@ class ThemeCustomCssTest(unittest.TestCase):
         self.assertIn("figure-card--panel-pair", css)
         self.assertIn("figure-card--panel-pair", js)
 
-    def test_figure_annotation_accepts_french_caption_spacing_and_panel_pair_variants(self) -> None:
+    def test_figure_annotation_accepts_colonless_and_french_caption_spacing(self) -> None:
         js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
 
-        self.assertIn(r'/^Figure\s+\d+\s*:/i', js)
-        self.assertIn(r'/^Figure\s+(\d+)\s*:\s*(.*)$/i', js)
+        self.assertIn("function parseFigureCaption(text)", js)
+        self.assertIn(r'/^Figure\s+(\d+)(?:\s*:\s*|\s+)(.*)$/i', js)
+        self.assertIn("return Boolean(parseFigureCaption(paragraph.textContent || \"\"));", js)
         self.assertIn('"2": ["figure-card--panel-pair"]', js)
         self.assertIn('"7": ["figure-card--panel-pair"]', js)
 
@@ -202,6 +203,7 @@ class ThemeCustomCssTest(unittest.TestCase):
 
         self.assertIn("Tableau", js)
         self.assertIn("function getLocalizedTableLabel()", js)
+        self.assertIn(r'/^(?:Table|Tableau)\s+(\d+)(?:\s*:\s*|\s+)(.*)$/i', js)
         self.assertIn('document.documentElement.lang || "en"', js)
         self.assertIn("function normalizeDocxTableStructure(table)", js)
         self.assertIn('table.classList.contains("t1")', js)

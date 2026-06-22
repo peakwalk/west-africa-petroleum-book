@@ -442,21 +442,21 @@ function renderSection(section) {
 }
 
 function renderAdditionalResources(edition) {
-  const resources = [
-    {
-      key: "glossary",
-      href: `${edition.routePrefix ? `/${edition.routePrefix}` : ""}/book/chapters/glossary.html`,
-    },
-    {
-      key: "references",
-      href: `${edition.routePrefix ? `/${edition.routePrefix}` : ""}/book/chapters/bibliographical-references.html`,
-    },
-    {
-      key: "conclusion",
-      href: `${edition.routePrefix ? `/${edition.routePrefix}` : ""}/book/chapters/general-conclusion.html`,
-    },
-  ];
   const copy = edition.localeStrings.chaptersPage.additionalResources;
+  const order = edition.localeStrings.chaptersPage.additionalResourcesOrder || Object.keys(copy);
+  const resourcePathByKey = {
+    glossary: "chapters/glossary.html",
+    references: "chapters/bibliographical-references.html",
+    conclusion: "chapters/general-conclusion.html",
+    disclaimer: "chapters/disclaimer.html",
+    preface: "chapters/preface.html",
+  };
+  const resources = order
+    .filter((key) => copy[key] && resourcePathByKey[key])
+    .map((key) => ({
+      key,
+      href: `${edition.routePrefix ? `/${edition.routePrefix}` : ""}/book/${resourcePathByKey[key]}`,
+    }));
 
   return `
       <section class="additional-resources">

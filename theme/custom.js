@@ -1,15 +1,24 @@
 (function () {
-  const defaultChapterPath = "chapters/foreword.html";
+  const englishDefaultChapterPath = "chapters/disclaimer.html";
+  const frenchDefaultChapterPath = "chapters/foreword.html";
+
+  function isFrenchBookPath(pathname) {
+    return /^\/fr\/book(?:\/index\.html)?\/?$/.test(pathname);
+  }
+
+  function getDefaultChapterPath(pathname) {
+    return isFrenchBookPath(pathname) ? frenchDefaultChapterPath : englishDefaultChapterPath;
+  }
 
   function isBookHomePath(pathname) {
-    return /\/book(?:\/index\.html)?\/?$/.test(pathname);
+    return /(?:\/fr)?\/book(?:\/index\.html)?\/?$/.test(pathname);
   }
 
   if (!isBookHomePath(window.location.pathname)) {
     return;
   }
 
-  const target = new URL(defaultChapterPath, window.location.href);
+  const target = new URL(getDefaultChapterPath(window.location.pathname), window.location.href);
   target.search = window.location.search;
 
   if (window.location.href !== target.href) {
@@ -426,8 +435,14 @@
       "7": ["figure-card--panel-pair"],
     };
 
+    function parseFigureCaption(text) {
+      return ((text || "").trim())
+        .replace(/\s+/g, " ")
+        .match(/^Figure\s+(\d+)(?:\s*:\s*|\s+)(.*)$/i);
+    }
+
     const captions = Array.from(document.querySelectorAll(".reader-article p")).filter(function (paragraph) {
-      return /^Figure\s+\d+\s*:/i.test((paragraph.textContent || "").trim());
+      return Boolean(parseFigureCaption(paragraph.textContent || ""));
     });
 
     captions.forEach(function (caption) {
@@ -435,8 +450,7 @@
         return;
       }
 
-      const normalizedCaption = ((caption.textContent || "").trim()).replace(/\s+/g, " ");
-      const match = normalizedCaption.match(/^Figure\s+(\d+)\s*:\s*(.*)$/i);
+      const match = parseFigureCaption(caption.textContent || "");
 
       if (!match) {
         return;
@@ -530,7 +544,7 @@
       return (text || "")
         .trim()
         .replace(/\s+/g, " ")
-        .match(/^(?:Table|Tableau)\s+(\d+)\s*:\s*(.*)$/i);
+        .match(/^(?:Table|Tableau)\s+(\d+)(?:\s*:\s*|\s+)(.*)$/i);
     }
 
     function normalizeTableCellText(cell) {
@@ -1025,34 +1039,53 @@
   }
 
   function applyPageVariants() {
+    function isFrenchBookPath(pathname) {
+      return pathname.indexOf("/fr/book") === 0;
+    }
+
+    function matchesChapterPath(chapterPath) {
+      return window.location.pathname.endsWith("/chapters/" + chapterPath);
+    }
+
     const coverPath = "cover.html";
     const listOfFiguresPath = "list-of-figures.html";
     const listOfTablesPath = "list-of-tables.html";
     const abbreviationsPath = "abbreviations-acronyms-and-abbreviations.html";
+    const disclaimerPath = "disclaimer.html";
+    const prefacePath = "preface.html";
     const forewordPath = "foreword.html";
     const generalIntroductionPath = "general-introduction.html";
     const generalConclusionPath = "general-conclusion.html";
     const glossaryPath = "glossary.html";
     const bibliographicalReferencesPath = "bibliographical-references.html";
-    const isCoverPage = window.location.pathname.endsWith("/chapters/" + coverPath);
-    const isListOfFigures = window.location.pathname.endsWith("/chapters/" + listOfFiguresPath);
-    const isListOfTables = window.location.pathname.endsWith("/chapters/" + listOfTablesPath);
-    const isAbbreviationsPage = window.location.pathname.endsWith("/chapters/" + abbreviationsPath);
-    const isForewordPage = window.location.pathname.endsWith("/chapters/" + forewordPath);
-    const isGeneralIntroductionPage = window.location.pathname.endsWith("/chapters/" + generalIntroductionPath);
-    const isGeneralConclusionPage = window.location.pathname.endsWith("/chapters/" + generalConclusionPath);
-    const isGlossaryPage = window.location.pathname.endsWith("/chapters/" + glossaryPath);
-    const isBibliographicalReferencesPage = window.location.pathname.endsWith("/chapters/" + bibliographicalReferencesPath);
-    const preserveOutlineRail =
-      isCoverPage ||
-      isListOfFigures ||
-      isListOfTables ||
-      isAbbreviationsPage ||
-      isForewordPage ||
-      isGeneralIntroductionPage ||
-      isGeneralConclusionPage ||
-      isGlossaryPage ||
-      isBibliographicalReferencesPage;
+    const preserveOutlinePaths = isFrenchBookPath(window.location.pathname)
+      ? [
+          coverPath,
+          listOfFiguresPath,
+          listOfTablesPath,
+          abbreviationsPath,
+          forewordPath,
+          generalIntroductionPath,
+          generalConclusionPath,
+          glossaryPath,
+          bibliographicalReferencesPath,
+        ]
+      : [
+          coverPath,
+          listOfFiguresPath,
+          listOfTablesPath,
+          abbreviationsPath,
+          disclaimerPath,
+          prefacePath,
+          forewordPath,
+          glossaryPath,
+          bibliographicalReferencesPath,
+        ];
+    const isCoverPage = matchesChapterPath(coverPath);
+    const isListOfFigures = matchesChapterPath(listOfFiguresPath);
+    const isListOfTables = matchesChapterPath(listOfTablesPath);
+    const isAbbreviationsPage = matchesChapterPath(abbreviationsPath);
+    const preserveOutlineRail = preserveOutlinePaths.some(matchesChapterPath);
 
     document.body.classList.toggle("book-page-front-matter-outline-rail", preserveOutlineRail);
 

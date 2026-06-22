@@ -1,16 +1,16 @@
 [
   {
     "number": 1,
-    "caption": "Figure 1: Oil Sector Value Chain",
-    "chapter_title": "Chapter 1: Value Chain of the Hydrocarbon Sector",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md",
-    "caption_paragraph_index": 378,
-    "object_paragraph_start": 375,
-    "object_paragraph_end": 379,
+    "caption": "Figure 1: African Petroleum Development Paradox. Resource wealth does not automatically translate into broad-based economic development.",
+    "chapter_title": "Chapter 1: General Introduction",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-01-general-introduction.md",
+    "caption_paragraph_index": 452,
+    "object_paragraph_start": 451,
+    "object_paragraph_end": 452,
     "kind": "bitmap",
     "objects": {
       "blip_targets": [
-        "word/media/image2.png"
+        "word/media/image1.jpeg"
       ],
       "chart_targets": [],
       "drawing_targets": [],
@@ -25,44 +25,40 @@
   },
   {
     "number": 2,
-    "caption": "Figure 2: a and b Map showing the MSGBC Basin and Map showing the basins of the northern part of the Gulf of Guinea in West Africa",
-    "chapter_title": "Chapter 1: Value Chain of the Hydrocarbon Sector",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md",
-    "caption_paragraph_index": 452,
-    "object_paragraph_start": 410,
-    "object_paragraph_end": 454,
-    "kind": "composite",
+    "caption": "Figure 2: African Value Capture Gap. Most value generated from hydrocarbon resources is created beyond crude oil production through refining, petrochemicals, manufacturing, and consumer products.",
+    "chapter_title": "Chapter 1: General Introduction",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-01-general-introduction.md",
+    "caption_paragraph_index": 460,
+    "object_paragraph_start": 459,
+    "object_paragraph_end": 461,
+    "kind": "bitmap",
     "objects": {
       "blip_targets": [
-        "word/media/image3.emf",
-        "word/media/image30.emf",
-        "word/media/image4.png",
-        "word/media/image5.jpeg"
+        "word/media/image2.jpeg"
       ],
       "chart_targets": [],
       "drawing_targets": [],
-      "anchor_count": 4,
-      "inline_count": 3,
-      "vshape_count": 2,
-      "wps_shape_count": 3
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
     },
     "published_assets": [
-      "figure-002-a.webp",
-      "figure-002-b.webp"
+      "figure-002.webp"
     ]
   },
   {
     "number": 3,
-    "caption": "Figure 3: Map showing the sedimentary basins of Mali and Niger",
-    "chapter_title": "Chapter 1: Value Chain of the Hydrocarbon Sector",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md",
-    "caption_paragraph_index": 455,
-    "object_paragraph_start": 453,
-    "object_paragraph_end": 455,
+    "caption": "Figure 3: Integrated African Petroleum Industry Model. Transforming hydrocarbon resources into long-term economic growth and sustainable development.",
+    "chapter_title": "Chapter 1: General Introduction",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-01-general-introduction.md",
+    "caption_paragraph_index": 542,
+    "object_paragraph_start": 541,
+    "object_paragraph_end": 543,
     "kind": "bitmap",
     "objects": {
       "blip_targets": [
-        "word/media/image5.jpeg"
+        "word/media/image3.png"
       ],
       "chart_targets": [],
       "drawing_targets": [],
@@ -77,24 +73,23 @@
   },
   {
     "number": 4,
-    "caption": "Figure 4: Synthetic diagram showing the different oil cuts",
-    "chapter_title": "Chapter 1: Value Chain of the Hydrocarbon Sector",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md",
-    "caption_paragraph_index": 547,
-    "object_paragraph_start": 542,
-    "object_paragraph_end": 583,
-    "kind": "composite",
+    "caption": "Figure 4: Key emerging petroleum provinces across West Africa.",
+    "chapter_title": "Chapter 2: Emerging Petroleum Provinces in West Africa",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-02-emerging-petroleum-provinces-in-west-africa.md",
+    "caption_paragraph_index": 560,
+    "object_paragraph_start": 559,
+    "object_paragraph_end": 560,
+    "kind": "bitmap",
     "objects": {
       "blip_targets": [
-        "word/media/image6.emf",
-        "word/media/image60.emf"
+        "word/media/image4.jpeg"
       ],
       "chart_targets": [],
       "drawing_targets": [],
-      "anchor_count": 7,
-      "inline_count": 2,
-      "vshape_count": 35,
-      "wps_shape_count": 42
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
     },
     "published_assets": [
       "figure-004.webp"
@@ -102,21 +97,23 @@
   },
   {
     "number": 5,
-    "caption": "Figure 5: Different phases of upstream oil",
-    "chapter_title": "Chapter 2: Different Phases of Upstream Oil and the Roles of States",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 603,
-    "object_paragraph_start": 603,
-    "object_paragraph_end": 626,
-    "kind": "shape_group",
+    "caption": "Figure 5: Petroleum Industry Value Chain",
+    "chapter_title": "Chapter 5: Hydrocarbon Value Chain",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-05-hydrocarbon-value-chain.md",
+    "caption_paragraph_index": 3841,
+    "object_paragraph_start": 3840,
+    "object_paragraph_end": 3841,
+    "kind": "bitmap",
     "objects": {
-      "blip_targets": [],
+      "blip_targets": [
+        "word/media/image5.png"
+      ],
       "chart_targets": [],
       "drawing_targets": [],
-      "anchor_count": 27,
-      "inline_count": 0,
-      "vshape_count": 23,
-      "wps_shape_count": 27
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
     },
     "published_assets": [
       "figure-005.webp"
@@ -124,140 +121,17 @@
   },
   {
     "number": 6,
-    "caption": "Figure 6: Process for Assigning Oil Block to the IPC for Petroleum Exploration and Development",
-    "chapter_title": "Chapter 2: Different Phases of Upstream Oil and the Roles of States",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 673,
-    "object_paragraph_start": 667,
-    "object_paragraph_end": 685,
-    "kind": "shape_group",
-    "objects": {
-      "blip_targets": [],
-      "chart_targets": [],
-      "drawing_targets": [],
-      "anchor_count": 3,
-      "inline_count": 0,
-      "vshape_count": 15,
-      "wps_shape_count": 16
-    },
-    "published_assets": [
-      "figure-006.webp"
-    ]
-  },
-  {
-    "number": 7,
-    "caption": "Figure 7: Gravimetric acquisition (a) showing anomalies in the Coastal Sedimentary Basin of Benin (CGG 2013) and aeromagnetic (b) to characterize the basement and sedimentary formations",
-    "chapter_title": "Chapter 2: Different Phases of Upstream Oil and the Roles of States",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 715,
-    "object_paragraph_start": 709,
-    "object_paragraph_end": 716,
-    "kind": "composite",
-    "objects": {
-      "blip_targets": [
-        "word/media/image7.emf",
-        "word/media/image70.emf",
-        "word/media/image8.emf"
-      ],
-      "chart_targets": [],
-      "drawing_targets": [],
-      "anchor_count": 1,
-      "inline_count": 3,
-      "vshape_count": 1,
-      "wps_shape_count": 1
-    },
-    "published_assets": [
-      "figure-007.webp"
-    ]
-  },
-  {
-    "number": 8,
-    "caption": "Figure 8: 3D acquisition principle (a) and seismic cube (b)",
-    "chapter_title": "Chapter 2: Different Phases of Upstream Oil and the Roles of States",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 732,
-    "object_paragraph_start": 718,
-    "object_paragraph_end": 737,
-    "kind": "composite",
-    "objects": {
-      "blip_targets": [
-        "word/media/image10.png",
-        "word/media/image11.jpeg",
-        "word/media/image9.png",
-        "word/media/image90.png"
-      ],
-      "chart_targets": [],
-      "drawing_targets": [],
-      "anchor_count": 15,
-      "inline_count": 4,
-      "vshape_count": 9,
-      "wps_shape_count": 17
-    },
-    "published_assets": [
-      "figure-008.webp"
-    ]
-  },
-  {
-    "number": 9,
-    "caption": "Figure 9: Seismic amplitude anomalies showing Brightspots and Flatspots",
-    "chapter_title": "Chapter 2: Different Phases of Upstream Oil and the Roles of States",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 738,
-    "object_paragraph_start": 733,
-    "object_paragraph_end": 739,
-    "kind": "shape_group",
-    "objects": {
-      "blip_targets": [
-        "word/media/image11.jpeg"
-      ],
-      "chart_targets": [],
-      "drawing_targets": [],
-      "anchor_count": 8,
-      "inline_count": 1,
-      "vshape_count": 3,
-      "wps_shape_count": 10
-    },
-    "published_assets": [
-      "figure-009.webp"
-    ]
-  },
-  {
-    "number": 10,
-    "caption": "Figure 10: Electromagnetism coupled with seismic reflection showing the contrast of resistivity at the level of the traps highlighted by the seismic",
-    "chapter_title": "Chapter 2: Different Phases of Upstream Oil and the Roles of States",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 745,
-    "object_paragraph_start": 741,
-    "object_paragraph_end": 747,
-    "kind": "shape_group",
-    "objects": {
-      "blip_targets": [
-        "word/media/image12.png"
-      ],
-      "chart_targets": [],
-      "drawing_targets": [],
-      "anchor_count": 5,
-      "inline_count": 1,
-      "vshape_count": 8,
-      "wps_shape_count": 12
-    },
-    "published_assets": [
-      "figure-010.webp"
-    ]
-  },
-  {
-    "number": 11,
-    "caption": "Figure 11: Geological section showing the stratigraphic extent of a fictitious petroleum system (Magoon and Dow, 1994, modified by Schlumberger)",
-    "chapter_title": "Chapter 2: Different Phases of Upstream Oil and the Roles of States",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 758,
-    "object_paragraph_start": 756,
-    "object_paragraph_end": 761,
+    "caption": "Figure 6: Map of the MSGBC Basin",
+    "chapter_title": "Chapter 5: Hydrocarbon Value Chain",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-05-hydrocarbon-value-chain.md",
+    "caption_paragraph_index": 3893,
+    "object_paragraph_start": 3892,
+    "object_paragraph_end": 3894,
     "kind": "multi_photo",
     "objects": {
       "blip_targets": [
-        "word/media/image13.png",
-        "word/media/image14.png"
+        "word/media/image6.png",
+        "word/media/image7.png"
       ],
       "chart_targets": [],
       "drawing_targets": [],
@@ -267,21 +141,142 @@
       "wps_shape_count": 0
     },
     "published_assets": [
+      "figure-006.webp"
+    ]
+  },
+  {
+    "number": 7,
+    "caption": "Figure 7: Map showing sedimentary basins within the northern Gulf of Guinea region of West Africa",
+    "chapter_title": "Chapter 5: Hydrocarbon Value Chain",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-05-hydrocarbon-value-chain.md",
+    "caption_paragraph_index": 3895,
+    "object_paragraph_start": 3894,
+    "object_paragraph_end": 3896,
+    "kind": "multi_photo",
+    "objects": {
+      "blip_targets": [
+        "word/media/image7.png",
+        "word/media/image8.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 2,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-007.webp"
+    ]
+  },
+  {
+    "number": 8,
+    "caption": "Figure 8: Map showing the sedimentary basins of Mali and Niger",
+    "chapter_title": "Chapter 5: Hydrocarbon Value Chain",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-05-hydrocarbon-value-chain.md",
+    "caption_paragraph_index": 3897,
+    "object_paragraph_start": 3896,
+    "object_paragraph_end": 3897,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image8.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-008.webp"
+    ]
+  },
+  {
+    "number": 9,
+    "caption": "Figure 9: Products Obtained from Atmospheric Distillation of Crude Oil in a Refinery",
+    "chapter_title": "Chapter 5: Hydrocarbon Value Chain",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-05-hydrocarbon-value-chain.md",
+    "caption_paragraph_index": 4180,
+    "object_paragraph_start": 4179,
+    "object_paragraph_end": 4194,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image9.png"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-009.webp"
+    ]
+  },
+  {
+    "number": 10,
+    "caption": "Figure 10: Simplified representation of the current petroleum value chain in many African countries, where crude oil is exported and higher-value refined products are subsequently imported.",
+    "chapter_title": "Chapter 5: Hydrocarbon Value Chain",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-05-hydrocarbon-value-chain.md",
+    "caption_paragraph_index": 4505,
+    "object_paragraph_start": 4504,
+    "object_paragraph_end": 4505,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image10.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-010.webp"
+    ]
+  },
+  {
+    "number": 11,
+    "caption": "Figure 11: Integrated African petroleum industry model illustrating how hydrocarbons can support energy security, industrialisation, employment creation, and economic diversification.",
+    "chapter_title": "Chapter 5: Hydrocarbon Value Chain",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-05-hydrocarbon-value-chain.md",
+    "caption_paragraph_index": 4534,
+    "object_paragraph_start": 4533,
+    "object_paragraph_end": 4534,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image11.png"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
       "figure-011.webp"
     ]
   },
   {
     "number": 12,
-    "caption": "Figure 12: Geoseismic section showing petroleum systems in the Benin Coastal Sedimentary Basin, Kerr McGee, 2003",
-    "chapter_title": "Chapter 2: Different Phases of Upstream Oil and the Roles of States",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 762,
-    "object_paragraph_start": 759,
-    "object_paragraph_end": 763,
+    "caption": "Figure 12: Examples of Natural Gas Monetisation Pathways in West Africa",
+    "chapter_title": "Chapter 5: Hydrocarbon Value Chain",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-05-hydrocarbon-value-chain.md",
+    "caption_paragraph_index": 4585,
+    "object_paragraph_start": 4584,
+    "object_paragraph_end": 4585,
     "kind": "bitmap",
     "objects": {
       "blip_targets": [
-        "word/media/image14.png"
+        "word/media/image12.png"
       ],
       "chart_targets": [],
       "drawing_targets": [],
@@ -296,24 +291,23 @@
   },
   {
     "number": 13,
-    "caption": "Figure 13: Seismic interpretation showing a structural trap (anticline)",
-    "chapter_title": "Chapter 2: Different Phases of Upstream Oil and the Roles of States",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 771,
-    "object_paragraph_start": 768,
-    "object_paragraph_end": 772,
-    "kind": "composite",
+    "caption": "Figure 13: Increasing value capture achieved as hydrocarbons move from upstream production to refining, petrochemicals, and manufacturing activities.",
+    "chapter_title": "Chapter 5: Hydrocarbon Value Chain",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-05-hydrocarbon-value-chain.md",
+    "caption_paragraph_index": 4602,
+    "object_paragraph_start": 4601,
+    "object_paragraph_end": 4602,
+    "kind": "bitmap",
     "objects": {
       "blip_targets": [
-        "word/media/image15.png",
-        "word/media/image16.png"
+        "word/media/image13.jpeg"
       ],
       "chart_targets": [],
       "drawing_targets": [],
-      "anchor_count": 1,
-      "inline_count": 2,
-      "vshape_count": 1,
-      "wps_shape_count": 1
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
     },
     "published_assets": [
       "figure-013.webp"
@@ -321,22 +315,21 @@
   },
   {
     "number": 14,
-    "caption": "Figure 14: Some types of traps",
-    "chapter_title": "Chapter 2: Different Phases of Upstream Oil and the Roles of States",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 773,
-    "object_paragraph_start": 772,
-    "object_paragraph_end": 775,
-    "kind": "multi_photo",
+    "caption": "Figure 14: African Petroleum Industrialisation Model: From Hydrocarbon Resources to Economic Development",
+    "chapter_title": "Chapter 5: Hydrocarbon Value Chain",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-05-hydrocarbon-value-chain.md",
+    "caption_paragraph_index": 4741,
+    "object_paragraph_start": 4740,
+    "object_paragraph_end": 4741,
+    "kind": "bitmap",
     "objects": {
       "blip_targets": [
-        "word/media/image16.png",
-        "word/media/image17.png"
+        "word/media/image14.png"
       ],
       "chart_targets": [],
       "drawing_targets": [],
       "anchor_count": 0,
-      "inline_count": 2,
+      "inline_count": 1,
       "vshape_count": 0,
       "wps_shape_count": 0
     },
@@ -346,16 +339,16 @@
   },
   {
     "number": 15,
-    "caption": "Figure 15: Depth map showing the roof of a tank",
-    "chapter_title": "Chapter 2: Different Phases of Upstream Oil and the Roles of States",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 776,
-    "object_paragraph_start": 774,
-    "object_paragraph_end": 778,
+    "caption": "Figure 15: Petroleum Project Lifecycle - Investment Profile, Revenue Generation and Regulatory Milestones",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 5017,
+    "object_paragraph_start": 5016,
+    "object_paragraph_end": 5017,
     "kind": "bitmap",
     "objects": {
       "blip_targets": [
-        "word/media/image17.png"
+        "word/media/image15.png"
       ],
       "chart_targets": [],
       "drawing_targets": [],
@@ -370,51 +363,48 @@
   },
   {
     "number": 16,
-    "caption": "Figure 16: Photos showing the core library of Côte d'Ivoire at the Direction of the PETROCI Analysis and Research Center",
-    "chapter_title": "Chapter 2: Different Phases of Upstream Oil and the Roles of States",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 855,
-    "object_paragraph_start": 854,
-    "object_paragraph_end": 864,
-    "kind": "composite",
+    "caption": "Figure 16: Typical Petroleum Licensing Process for the Award of Exploration Acreage or Petroleum Blocks",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 5038,
+    "object_paragraph_start": 5037,
+    "object_paragraph_end": 5041,
+    "kind": "bitmap",
     "objects": {
       "blip_targets": [
-        "word/media/image18.jpeg",
-        "word/media/image180.jpeg",
-        "word/media/image19.jpeg",
-        "word/media/image190.jpeg"
+        "word/media/image16.png"
       ],
       "chart_targets": [],
       "drawing_targets": [],
-      "anchor_count": 4,
-      "inline_count": 4,
-      "vshape_count": 3,
-      "wps_shape_count": 4
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
     },
     "published_assets": [
-      "figure-016-a.webp",
-      "figure-016-b.webp"
+      "figure-016.webp"
     ]
   },
   {
     "number": 17,
-    "caption": "Figure 17: Methodology Tank Evaluation",
-    "chapter_title": "Chapter 2: Different Phases of Upstream Oil and the Roles of States",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 942,
-    "object_paragraph_start": 891,
-    "object_paragraph_end": 947,
-    "kind": "shape_group",
+    "caption": "Figure 17: Gravimetric Survey",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 5645,
+    "object_paragraph_start": 5644,
+    "object_paragraph_end": 5646,
+    "kind": "multi_photo",
     "objects": {
       "blip_targets": [
-        "word/media/image20.png"
+        "word/media/image17.png",
+        "word/media/image18.png"
       ],
       "chart_targets": [],
       "drawing_targets": [],
-      "anchor_count": 25,
-      "inline_count": 1,
-      "vshape_count": 25,
-      "wps_shape_count": 25
+      "anchor_count": 0,
+      "inline_count": 2,
+      "vshape_count": 0,
+      "wps_shape_count": 0
     },
     "published_assets": [
       "figure-017.webp"
@@ -422,16 +412,16 @@
   },
   {
     "number": 18,
-    "caption": "Figure 18: Diagram showing a reservoir model (Vilgeir Dalen, StatoilHydro, 2007)",
-    "chapter_title": "Chapter 2: Different Phases of Upstream Oil and the Roles of States",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 948,
-    "object_paragraph_start": 943,
-    "object_paragraph_end": 948,
+    "caption": "Figure 18: Aeromagnetic Anomalies and Structural Interpretation of the Benin Coastal Sedimentary Basin. (a) Aeromagnetic anomaly map highlighting subsurface structural trends and fault systems within the basin. (b) Geological and structural interpretation derived",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 5647,
+    "object_paragraph_start": 5646,
+    "object_paragraph_end": 5648,
     "kind": "bitmap",
     "objects": {
       "blip_targets": [
-        "word/media/image20.png"
+        "word/media/image18.png"
       ],
       "chart_targets": [],
       "drawing_targets": [],
@@ -446,23 +436,22 @@
   },
   {
     "number": 19,
-    "caption": "Figure 19: Production profile of an oil field showing the life cycle of an oil field",
-    "chapter_title": "Chapter 2: Different Phases of Upstream Oil and the Roles of States",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 992,
-    "object_paragraph_start": 990,
-    "object_paragraph_end": 992,
-    "kind": "chart",
+    "caption": "Figure 19: Principle of 3D Seismic Acquisition",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 5657,
+    "object_paragraph_start": 5656,
+    "object_paragraph_end": 5659,
+    "kind": "multi_photo",
     "objects": {
-      "blip_targets": [],
-      "chart_targets": [
-        "word/charts/chart1.xml"
+      "blip_targets": [
+        "word/media/image19.jpeg",
+        "word/media/image20.jpeg"
       ],
-      "drawing_targets": [
-        "word/drawings/drawing1.xml"
-      ],
+      "chart_targets": [],
+      "drawing_targets": [],
       "anchor_count": 0,
-      "inline_count": 1,
+      "inline_count": 2,
       "vshape_count": 0,
       "wps_shape_count": 0
     },
@@ -472,16 +461,16 @@
   },
   {
     "number": 20,
-    "caption": "Figure 20: Cash flows during the different phases of upstream oil activities (Dr. Alfred Kjemperud, 2007)",
-    "chapter_title": "Chapter 2: Different Phases of Upstream Oil and the Roles of States",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md",
-    "caption_paragraph_index": 1064,
-    "object_paragraph_start": 1062,
-    "object_paragraph_end": 1146,
+    "caption": "Figure 20: Seismic Reflection Section Showing Direct Hydrocarbon Indicators and Exploration Well Placement",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 5660,
+    "object_paragraph_start": 5658,
+    "object_paragraph_end": 5661,
     "kind": "bitmap",
     "objects": {
       "blip_targets": [
-        "word/media/image21.png"
+        "word/media/image20.jpeg"
       ],
       "chart_targets": [],
       "drawing_targets": [],
@@ -496,21 +485,23 @@
   },
   {
     "number": 21,
-    "caption": "Figure 21: Economic Value of Hydrocarbon Resources",
-    "chapter_title": "Chapter 3: Tax Regimes in the Petroleum Sector",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md",
-    "caption_paragraph_index": 1183,
-    "object_paragraph_start": 1171,
-    "object_paragraph_end": 1198,
-    "kind": "shape_group",
+    "caption": "Figure 21: Workflow from Seismic Acquisition and Interpretation to Prospect Evaluation and Well Planning.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 5695,
+    "object_paragraph_start": 5694,
+    "object_paragraph_end": 5696,
+    "kind": "bitmap",
     "objects": {
-      "blip_targets": [],
+      "blip_targets": [
+        "word/media/image21.jpeg"
+      ],
       "chart_targets": [],
       "drawing_targets": [],
-      "anchor_count": 3,
-      "inline_count": 0,
-      "vshape_count": 5,
-      "wps_shape_count": 9
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
     },
     "published_assets": [
       "figure-021.webp"
@@ -518,46 +509,48 @@
   },
   {
     "number": 22,
-    "caption": "Figure 22: Distribution of income from production (After Johnson, 1995)",
-    "chapter_title": "Chapter 3: Tax Regimes in the Petroleum Sector",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md",
-    "caption_paragraph_index": 1205,
-    "object_paragraph_start": 1204,
-    "object_paragraph_end": 1214,
-    "kind": "composite",
+    "caption": "Figure 22: Integrated Electromagnetic and Seismic Interpretation Showing High-Resistivity Anomalies Associated with Potential Hydrocarbon Traps and Exploration Well Positioning",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 5702,
+    "object_paragraph_start": 5701,
+    "object_paragraph_end": 5703,
+    "kind": "bitmap",
     "objects": {
       "blip_targets": [
-        "word/media/image22.emf",
-        "word/media/image220.emf"
+        "word/media/image22.png"
       ],
       "chart_targets": [],
       "drawing_targets": [],
-      "anchor_count": 2,
-      "inline_count": 2,
-      "vshape_count": 2,
-      "wps_shape_count": 2
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
     },
     "published_assets": [
-      "figure-022.svg"
+      "figure-022.webp"
     ]
   },
   {
     "number": 23,
-    "caption": "Figure 23: Classification of tax regimes",
-    "chapter_title": "Chapter 3: Tax Regimes in the Petroleum Sector",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md",
-    "caption_paragraph_index": 1223,
-    "object_paragraph_start": 1222,
-    "object_paragraph_end": 1236,
-    "kind": "shape_group",
+    "caption": "Figure 23: Geological Cross-Section of the Deer-Boar Petroleum System at the Critical Moment (250 Ma), Illustrating Source Rock Maturation, Hydrocarbon Migration Pathways, Reservoir Development, and the Stratigraphic and Geographic Extent of the Petroleum System",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 5712,
+    "object_paragraph_start": 5711,
+    "object_paragraph_end": 5713,
+    "kind": "multi_photo",
     "objects": {
-      "blip_targets": [],
+      "blip_targets": [
+        "word/media/image23.png",
+        "word/media/image24.jpeg"
+      ],
       "chart_targets": [],
       "drawing_targets": [],
-      "anchor_count": 4,
-      "inline_count": 0,
-      "vshape_count": 12,
-      "wps_shape_count": 24
+      "anchor_count": 0,
+      "inline_count": 2,
+      "vshape_count": 0,
+      "wps_shape_count": 0
     },
     "published_assets": [
       "figure-023.webp"
@@ -565,25 +558,23 @@
   },
   {
     "number": 24,
-    "caption": "Figure 24: Graph showing the cost stops applied in some West African countries",
-    "chapter_title": "Chapter 4: Comparative Study of Tax Regimes in Selected West African Countries",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md",
-    "caption_paragraph_index": 1388,
-    "object_paragraph_start": 1376,
-    "object_paragraph_end": 1390,
-    "kind": "chart",
+    "caption": "Figure 24: Regional Geological and Petroleum Systems Cross-Section of the Benin Coastal Sedimentary Basin, Illustrating Source Rock Distribution, Hydrocarbon Migration Pathways, Reservoir Intervals, Structural Traps, and Identified Prospects and Discoveries (Modified after Kerr-McGee, 2003)",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 5714,
+    "object_paragraph_start": 5713,
+    "object_paragraph_end": 5715,
+    "kind": "bitmap",
     "objects": {
-      "blip_targets": [],
-      "chart_targets": [
-        "word/charts/chart2.xml"
+      "blip_targets": [
+        "word/media/image24.jpeg"
       ],
-      "drawing_targets": [
-        "word/drawings/drawing2.xml"
-      ],
-      "anchor_count": 2,
-      "inline_count": 0,
-      "vshape_count": 1,
-      "wps_shape_count": 1
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
     },
     "published_assets": [
       "figure-024.webp"
@@ -591,21 +582,24 @@
   },
   {
     "number": 25,
-    "caption": "Figure 25: Simplified organizational chart showing the share of the State and the Contractor in the taxation associated with the CPP of Benin",
-    "chapter_title": "Chapter 4: Comparative Study of Tax Regimes in Selected West African Countries",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md",
-    "caption_paragraph_index": 1523,
-    "object_paragraph_start": 1477,
-    "object_paragraph_end": 1547,
-    "kind": "shape_group",
+    "caption": "Figure 25: Seismic Reflection Section Showing a Structural Closure (Anticline) with High-Amplitude Reflectors Indicative of a Potential Hydrocarbon Accumulation.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 5826,
+    "object_paragraph_start": 5825,
+    "object_paragraph_end": 5827,
+    "kind": "multi_photo",
     "objects": {
-      "blip_targets": [],
+      "blip_targets": [
+        "word/media/image25.png",
+        "word/media/image26.jpeg"
+      ],
       "chart_targets": [],
       "drawing_targets": [],
-      "anchor_count": 25,
-      "inline_count": 0,
-      "vshape_count": 70,
-      "wps_shape_count": 71
+      "anchor_count": 0,
+      "inline_count": 2,
+      "vshape_count": 0,
+      "wps_shape_count": 0
     },
     "published_assets": [
       "figure-025.webp"
@@ -613,43 +607,48 @@
   },
   {
     "number": 26,
-    "caption": "Figure 26: Simplified organizational chart showing the share of the State and the Contractor in the taxation used in the Ghana model contract",
-    "chapter_title": "Chapter 4: Comparative Study of Tax Regimes in Selected West African Countries",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md",
-    "caption_paragraph_index": 1548,
-    "object_paragraph_start": 1524,
-    "object_paragraph_end": 1573,
-    "kind": "shape_group",
+    "caption": "Figure 26: Common Structural and Stratigraphic Hydrocarbon Trap Types Showing the Principal Geological Configurations that Enable Oil and Gas Accumulation Beneath Effective Seal Rocks.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 5828,
+    "object_paragraph_start": 5827,
+    "object_paragraph_end": 5829,
+    "kind": "multi_photo",
     "objects": {
-      "blip_targets": [],
+      "blip_targets": [
+        "word/media/image26.jpeg",
+        "word/media/image27.png"
+      ],
       "chart_targets": [],
       "drawing_targets": [],
-      "anchor_count": 15,
-      "inline_count": 0,
-      "vshape_count": 62,
-      "wps_shape_count": 62
+      "anchor_count": 0,
+      "inline_count": 2,
+      "vshape_count": 0,
+      "wps_shape_count": 0
     },
     "published_assets": [
-      "figure-026.svg"
+      "figure-026.webp"
     ]
   },
   {
     "number": 27,
-    "caption": "Figure 27: Simplified organizational chart showing the share of the State and the contractor resulting from the taxation associated with the CPP of Côte d'Ivoire",
-    "chapter_title": "Chapter 4: Comparative Study of Tax Regimes in Selected West African Countries",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md",
-    "caption_paragraph_index": 1574,
-    "object_paragraph_start": 1549,
-    "object_paragraph_end": 1605,
-    "kind": "shape_group",
+    "caption": "Figure 27: Two-Way Travel Time (TWT) Structure Map of the Top Reservoir Horizon of a Prospect Showing Structural Closure, Crest Position, Fault Control, and the Hihon-1 Well Location.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 5830,
+    "object_paragraph_start": 5829,
+    "object_paragraph_end": 5831,
+    "kind": "bitmap",
     "objects": {
-      "blip_targets": [],
+      "blip_targets": [
+        "word/media/image27.png"
+      ],
       "chart_targets": [],
       "drawing_targets": [],
-      "anchor_count": 21,
-      "inline_count": 0,
-      "vshape_count": 61,
-      "wps_shape_count": 61
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
     },
     "published_assets": [
       "figure-027.webp"
@@ -657,21 +656,24 @@
   },
   {
     "number": 28,
-    "caption": "Figure 28: Simplified organizational chart showing the share of the State and the Contractor in the taxation associated with the CPP of Nigeria",
-    "chapter_title": "Chapter 4: Comparative Study of Tax Regimes in Selected West African Countries",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md",
-    "caption_paragraph_index": 1606,
-    "object_paragraph_start": 1575,
-    "object_paragraph_end": 1635,
-    "kind": "shape_group",
+    "caption": "Figure 28: Simplified Geological Chance of Success (Pg) Assessment Showing the Three Fundamental Exploration Risk Elements: Source Rock, Reservoir, and Trap.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 5902,
+    "object_paragraph_start": 5901,
+    "object_paragraph_end": 5904,
+    "kind": "multi_photo",
     "objects": {
-      "blip_targets": [],
+      "blip_targets": [
+        "word/media/image28.png",
+        "word/media/image29.png"
+      ],
       "chart_targets": [],
       "drawing_targets": [],
-      "anchor_count": 27,
-      "inline_count": 0,
-      "vshape_count": 67,
-      "wps_shape_count": 67
+      "anchor_count": 0,
+      "inline_count": 2,
+      "vshape_count": 0,
+      "wps_shape_count": 0
     },
     "published_assets": [
       "figure-028.webp"
@@ -679,21 +681,23 @@
   },
   {
     "number": 29,
-    "caption": "Figure 29: Simplified organizational chart showing the share of the State and the Contractor resulting from the taxation associated with the Senegalese CPP",
-    "chapter_title": "Chapter 4: Comparative Study of Tax Regimes in Selected West African Countries",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md",
-    "caption_paragraph_index": 1636,
-    "object_paragraph_start": 1607,
-    "object_paragraph_end": 1664,
-    "kind": "shape_group",
+    "caption": "Figure 29: Example Geological Chance of Success (CoS) Assessment Workflow Showing the Evaluation and Integration of Key Petroleum System Risk Elements.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 5905,
+    "object_paragraph_start": 5903,
+    "object_paragraph_end": 5913,
+    "kind": "bitmap",
     "objects": {
-      "blip_targets": [],
+      "blip_targets": [
+        "word/media/image29.png"
+      ],
       "chart_targets": [],
       "drawing_targets": [],
-      "anchor_count": 26,
-      "inline_count": 0,
-      "vshape_count": 66,
-      "wps_shape_count": 66
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
     },
     "published_assets": [
       "figure-029.webp"
@@ -701,44 +705,45 @@
   },
   {
     "number": 30,
-    "caption": "Figure 30: Simplified diagram showing the share of the State and the Contractor resulting from the taxation associated with the CPP of Niger",
-    "chapter_title": "Chapter 4: Comparative Study of Tax Regimes in Selected West African Countries",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md",
-    "caption_paragraph_index": 1665,
-    "object_paragraph_start": 1637,
-    "object_paragraph_end": 1668,
-    "kind": "shape_group",
+    "caption": "Figure 30: Example Exploration Prospect Showing the Proposed Exploration Well Location Relative to the Interpreted Structural Closure and Top Reservoir Structure.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 6022,
+    "object_paragraph_start": 6021,
+    "object_paragraph_end": 6023,
+    "kind": "bitmap",
     "objects": {
-      "blip_targets": [],
+      "blip_targets": [
+        "word/media/image30.png"
+      ],
       "chart_targets": [],
       "drawing_targets": [],
-      "anchor_count": 13,
-      "inline_count": 0,
-      "vshape_count": 33,
-      "wps_shape_count": 33
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
     },
     "published_assets": [
-      "figure-030.svg"
+      "figure-030.webp"
     ]
   },
   {
     "number": 31,
-    "caption": "Figure 31: Graph showing the share of net profit accruing to the CPI and the States according to the tax regime applicable in these States",
-    "chapter_title": "Chapter 4: Comparative Study of Tax Regimes in Selected West African Countries",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md",
-    "caption_paragraph_index": 1677,
-    "object_paragraph_start": 1675,
-    "object_paragraph_end": 1678,
-    "kind": "chart",
+    "caption": "Figure 31: Typical Offshore Drilling Units Used During Exploration Activities, Including Drilling Barges, Jack-Up Rigs, Semi-Submersible Rigs, and Drillships, and Their Relative Water Depth Operating Ranges.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 6086,
+    "object_paragraph_start": 6043,
+    "object_paragraph_end": 6087,
+    "kind": "bitmap",
     "objects": {
-      "blip_targets": [],
-      "chart_targets": [
-        "word/charts/chart3.xml",
-        "word/charts/chart4.xml"
+      "blip_targets": [
+        "word/media/image31.jpeg"
       ],
+      "chart_targets": [],
       "drawing_targets": [],
       "anchor_count": 0,
-      "inline_count": 2,
+      "inline_count": 1,
       "vshape_count": 0,
       "wps_shape_count": 0
     },
@@ -748,18 +753,18 @@
   },
   {
     "number": 32,
-    "caption": "Figure 32: Graph showing the distribution of the cash flow between the State and the contractor considering 100 barrels of oil extracted",
-    "chapter_title": "Chapter 4: Comparative Study of Tax Regimes in Selected West African Countries",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md",
-    "caption_paragraph_index": 1679,
-    "object_paragraph_start": 1678,
-    "object_paragraph_end": 1681,
-    "kind": "chart",
+    "caption": "Figure 32: Example Wireline Logging Suite Used for Reservoir Evaluation, Illustrating the Integration of Gamma Ray, Resistivity, Density, Neutron, Sonic, and Photoelectric Logs for Lithology, Porosity, Fluid Saturation, and Reservoir Quality Assessment.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 6121,
+    "object_paragraph_start": 6099,
+    "object_paragraph_end": 6137,
+    "kind": "bitmap",
     "objects": {
-      "blip_targets": [],
-      "chart_targets": [
-        "word/charts/chart4.xml"
+      "blip_targets": [
+        "word/media/image32.png"
       ],
+      "chart_targets": [],
       "drawing_targets": [],
       "anchor_count": 0,
       "inline_count": 1,
@@ -768,6 +773,1170 @@
     },
     "published_assets": [
       "figure-032.webp"
+    ]
+  },
+  {
+    "number": 33,
+    "caption": "Figure 33: Possible Outcomes of Exploration Drilling Operations, Ranging from a Dry Hole to a Hydrocarbon Discovery and Ultimately a Commercial Discovery Suitable for Field Development.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 6149,
+    "object_paragraph_start": 6148,
+    "object_paragraph_end": 6150,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image33.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-033.webp"
+    ]
+  },
+  {
+    "number": 34,
+    "caption": "Figure 34: Discovery Well and Subsequent Appraisal Wells Used to Delineate the Extent, Geometry, Reservoir Quality, Fluid Contacts, and Commercial Potential of a Hydrocarbon Accumulation.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 6276,
+    "object_paragraph_start": 6275,
+    "object_paragraph_end": 6277,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image34.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-034.webp"
+    ]
+  },
+  {
+    "number": 35,
+    "caption": "Figure 35: Typical Pressure Build-Up Test Showing Pressure Recovery Following Well Shut-In and the Determination of Reservoir Pressure, Permeability, Skin Factor, and Reservoir Boundaries.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 6292,
+    "object_paragraph_start": 6291,
+    "object_paragraph_end": 6295,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image35.png"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-035.webp"
+    ]
+  },
+  {
+    "number": 36,
+    "caption": "Figure 36: Example Static and Dynamic Reservoir Models Used During Field Appraisal to Characterise Reservoir Geometry, Petrophysical Properties, Fluid Distribution, and Forecast Future Reservoir Performance.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 6316,
+    "object_paragraph_start": 6315,
+    "object_paragraph_end": 6323,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image36.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-036.webp"
+    ]
+  },
+  {
+    "number": 37,
+    "caption": "Figure 37: Petroleum Resources Management System (PRMS) Classification Framework Showing the Relationship Between Reserves, Contingent Resources, and Prospective Resources According to Project Maturity and Geological Certainty.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 6332,
+    "object_paragraph_start": 6327,
+    "object_paragraph_end": 6334,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image37.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-037.webp"
+    ]
+  },
+  {
+    "number": 38,
+    "caption": "Figure 38: Geological Core Storage Facility Used for the Preservation, Cataloguing, and Long-Term Management of Subsurface Data to Support Exploration, Appraisal, and Future Resource Development Activities.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 6403,
+    "object_paragraph_start": 6402,
+    "object_paragraph_end": 6404,
+    "kind": "multi_photo",
+    "objects": {
+      "blip_targets": [
+        "word/media/image38.jpeg",
+        "word/media/image39.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 2,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-038.webp"
+    ]
+  },
+  {
+    "number": 39,
+    "caption": "Figure 39: Preserved Drill Core Samples Stored in a Geological Repository, Providing Direct Evidence of Lithology, Sedimentary Structures, Reservoir Quality, and Hydrocarbon Occurrence for Exploration and Development Studies.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 6405,
+    "object_paragraph_start": 6404,
+    "object_paragraph_end": 6406,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image39.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-039.webp"
+    ]
+  },
+  {
+    "number": 40,
+    "caption": "Figure 40: Examples of Development Concepts for Oil & Gas Developments",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 6489,
+    "object_paragraph_start": 6488,
+    "object_paragraph_end": 6496,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image40.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-040.webp"
+    ]
+  },
+  {
+    "number": 41,
+    "caption": "Figure 41: Reservoir Evaluation and Field Development Planning Workflow.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 6534,
+    "object_paragraph_start": 6533,
+    "object_paragraph_end": 6535,
+    "kind": "multi_photo",
+    "objects": {
+      "blip_targets": [
+        "word/media/image41.png",
+        "word/media/image42.png"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 2,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-041.webp"
+    ]
+  },
+  {
+    "number": 42,
+    "caption": "Figure 42: Example of a Three-Dimensional Reservoir Model Used for Field Development Planning.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 6536,
+    "object_paragraph_start": 6535,
+    "object_paragraph_end": 6558,
+    "kind": "multi_photo",
+    "objects": {
+      "blip_targets": [
+        "word/media/image42.png",
+        "word/media/image43.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 2,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-042.webp"
+    ]
+  },
+  {
+    "number": 43,
+    "caption": "Figure 43: Typical Hydrocarbon Production and Processing Facilities.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 6559,
+    "object_paragraph_start": 6537,
+    "object_paragraph_end": 6581,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image43.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-043.webp"
+    ]
+  },
+  {
+    "number": 44,
+    "caption": "Figure 44: Government Approval Process for a Field Development Plan. Typical sequence of regulatory reviews, consultations, and approvals required before a hydrocarbon field development can proceed to implementation and production.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 6620,
+    "object_paragraph_start": 6612,
+    "object_paragraph_end": 6627,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image44.png"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-044.webp"
+    ]
+  },
+  {
+    "number": 45,
+    "caption": "Figure 45: Common well types used to produce, inject, and monitor fluids within a hydrocarbon reservoir.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 6707,
+    "object_paragraph_start": 6706,
+    "object_paragraph_end": 6708,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image45.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-045.webp"
+    ]
+  },
+  {
+    "number": 46,
+    "caption": "Figure 46: Comparison of common well configurations used in hydrocarbon developments, illustrating how increased reservoir contact can improve production performance and hydrocarbon recovery.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 6739,
+    "object_paragraph_start": 6738,
+    "object_paragraph_end": 6740,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image46.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-046.webp"
+    ]
+  },
+  {
+    "number": 47,
+    "caption": "Figure 47: Examples of offshore production completion systems used to safely control, produce, and transport hydrocarbons from subsea reservoirs to surface processing facilities.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 6768,
+    "object_paragraph_start": 6767,
+    "object_paragraph_end": 6776,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image47.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-047.webp"
+    ]
+  },
+  {
+    "number": 48,
+    "caption": "Figure 48: Illustration of a typical deepwater subsea production system showing subsea trees, manifolds, flowlines, umbilicals, and risers used to transport hydrocarbons from the reservoir to offshore production facilities.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 6779,
+    "object_paragraph_start": 6778,
+    "object_paragraph_end": 6780,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image48.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-048.webp"
+    ]
+  },
+  {
+    "number": 49,
+    "caption": "Figure 49: A typical FPSO facility showing the key systems used to receive, process, store, and offload hydrocarbons produced from offshore subsea fields.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 6819,
+    "object_paragraph_start": 6818,
+    "object_paragraph_end": 6826,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image49.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-049.webp"
+    ]
+  },
+  {
+    "number": 50,
+    "caption": "Figure 50: Typical sequence of activities and decision gates required to progress a hydrocarbon development project from FID through engineering, procurement, construction, commissioning, and start-up to first production.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 6836,
+    "object_paragraph_start": 6828,
+    "object_paragraph_end": 6837,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image50.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-050.webp"
+    ]
+  },
+  {
+    "number": 51,
+    "caption": "Figure 51: Illustration of the integrated production system used to extract, process, transport, and export hydrocarbons from the reservoir to domestic and international markets.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 6961,
+    "object_paragraph_start": 6960,
+    "object_paragraph_end": 6962,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image51.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-051.webp"
+    ]
+  },
+  {
+    "number": 52,
+    "caption": "Figure 52: Typical workflow used to acquire, analyse, and interpret reservoir and production data to monitor performance, optimise recovery, and support field management decisions throughout the life of a hydrocarbon field.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 6993,
+    "object_paragraph_start": 6992,
+    "object_paragraph_end": 6994,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image52.png"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-052.webp"
+    ]
+  },
+  {
+    "number": 53,
+    "caption": "Figure 53: Examples of the principal artificial lift systems used to enhance hydrocarbon production when natural reservoir energy is insufficient to sustain economic flow rates.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 7023,
+    "object_paragraph_start": 7022,
+    "object_paragraph_end": 7024,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image53.png"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-053.webp"
+    ]
+  },
+  {
+    "number": 54,
+    "caption": "Figure 54: Illustration of the principal hydrocarbon recovery mechanisms, showing how primary, secondary, and tertiary recovery methods are applied to increase reservoir recovery and maximise ultimate hydrocarbon production.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 7055,
+    "object_paragraph_start": 7040,
+    "object_paragraph_end": 7056,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image54.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-054.webp"
+    ]
+  },
+  {
+    "number": 55,
+    "caption": "Figure 55: Typical hydrocarbon production profile illustrating the progression from start-up and production ramp-up through plateau production and eventual field decline as reservoir energy is depleted.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 7069,
+    "object_paragraph_start": 7068,
+    "object_paragraph_end": 7095,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image55.png"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-055.webp"
+    ]
+  },
+  {
+    "number": 56,
+    "caption": "Figure 56: Illustration of a typical asset integrity management framework showing the processes, controls, and continuous improvement activities used to ensure the safe, reliable, and efficient operation of petroleum facilities throughout their lifecycle.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 7098,
+    "object_paragraph_start": 7097,
+    "object_paragraph_end": 7099,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image56.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-056.webp"
+    ]
+  },
+  {
+    "number": 57,
+    "caption": "Figure 57: Typical cash flow profile of an upstream petroleum project from licensing and exploration through production and eventual abandonment.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 7147,
+    "object_paragraph_start": 7146,
+    "object_paragraph_end": 7147,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image57.png"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-057.webp"
+    ]
+  },
+  {
+    "number": 58,
+    "caption": "Figure 58: Illustration of the typical petroleum field lifecycle, from exploration and appraisal through development and production to decommissioning, abandonment, and site restoration at the end of field life.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 7190,
+    "object_paragraph_start": 7177,
+    "object_paragraph_end": 7191,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image58.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-058.webp"
+    ]
+  },
+  {
+    "number": 59,
+    "caption": "Figure 59: Typical sequence of activities undertaken during petroleum asset decommissioning, including planning, facility removal, well abandonment, site clearance, and environmental restoration.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 7278,
+    "object_paragraph_start": 7273,
+    "object_paragraph_end": 7279,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image59.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-059.webp"
+    ]
+  },
+  {
+    "number": 60,
+    "caption": "Figure 60: Typical well plugging and abandonment configuration showing barrier placement and the removal of wellheads, conductors, and surface facilities.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 7295,
+    "object_paragraph_start": 7294,
+    "object_paragraph_end": 7311,
+    "kind": "multi_photo",
+    "objects": {
+      "blip_targets": [
+        "word/media/image60.png",
+        "word/media/image61.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 2,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-060.webp"
+    ]
+  },
+  {
+    "number": 61,
+    "caption": "Figure 61: Examples of offshore facilities and subsea infrastructure that may require decommissioning at the end of field life, including platforms, FPSOs, subsea systems, pipelines, umbilicals, and associated support assets.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 7312,
+    "object_paragraph_start": 7296,
+    "object_paragraph_end": 7323,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image61.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-061.webp"
+    ]
+  },
+  {
+    "number": 62,
+    "caption": "Figure 62: Key environmental considerations during petroleum decommissioning, including habitat protection, waste management, emissions control, seabed disturbance, and site restoration.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 7416,
+    "object_paragraph_start": 7409,
+    "object_paragraph_end": 7417,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image62.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-062.webp"
+    ]
+  },
+  {
+    "number": 63,
+    "caption": "Figure 63: Examples of the principal engineering challenges encountered during offshore decommissioning, including structural integrity, heavy lifting, subsea intervention, environmental constraints, logistics, and cost management.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 7461,
+    "object_paragraph_start": 7460,
+    "object_paragraph_end": 7462,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image63.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-063.webp"
+    ]
+  },
+  {
+    "number": 64,
+    "caption": "Figure 64: Typical regulatory process for the review, assessment, and approval of petroleum decommissioning plans prior to the commencement of decommissioning activities.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 7546,
+    "object_paragraph_start": 7542,
+    "object_paragraph_end": 7547,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image64.png"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-064.webp"
+    ]
+  },
+  {
+    "number": 65,
+    "caption": "Figure 65: Typical onshore site restoration activities undertaken following petroleum operations, including facility removal, remediation, land recontouring, revegetation, and long-term environmental monitoring.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 7588,
+    "object_paragraph_start": 7587,
+    "object_paragraph_end": 7589,
+    "kind": "multi_photo",
+    "objects": {
+      "blip_targets": [
+        "word/media/image65.jpeg",
+        "word/media/image66.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 2,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-065.webp"
+    ]
+  },
+  {
+    "number": 66,
+    "caption": "Figure 66: Typical offshore site restoration activities undertaken following petroleum operations, including infrastructure removal, seabed clearance, environmental remediation, habitat recovery, and long-term monitoring",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 7590,
+    "object_paragraph_start": 7589,
+    "object_paragraph_end": 7591,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image66.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-066.webp"
+    ]
+  },
+  {
+    "number": 67,
+    "caption": "Figure 67: Typical framework used to monitor, verify, and demonstrate the long-term environmental and regulatory performance of decommissioned petroleum facilities and sites.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 7608,
+    "object_paragraph_start": 7607,
+    "object_paragraph_end": 7617,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image67.png"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-067.webp"
+    ]
+  },
+  {
+    "number": 68,
+    "caption": "Figure 68: The economic value of hydrocarbon resources is primarily determined by recoverability, market conditions, and the fiscal regime governing petroleum exploration, development, and production activities.",
+    "chapter_title": "Chapter 7: Petroleum Fiscal Regimes",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-07-petroleum-fiscal-regimes.md",
+    "caption_paragraph_index": 7753,
+    "object_paragraph_start": 7748,
+    "object_paragraph_end": 7753,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image68.png"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-068.webp"
+    ]
+  },
+  {
+    "number": 69,
+    "caption": "Figure 69: Illustration of how production revenues are allocated between cost recovery, contractor entitlement, and government take under a typical petroleum fiscal regime.",
+    "chapter_title": "Chapter 7: Petroleum Fiscal Regimes",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-07-petroleum-fiscal-regimes.md",
+    "caption_paragraph_index": 7765,
+    "object_paragraph_start": 7764,
+    "object_paragraph_end": 7765,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image69.png"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-069.webp"
+    ]
+  },
+  {
+    "number": 70,
+    "caption": "Figure 70: Overview of the principal petroleum fiscal regimes used worldwide, including concessionary systems, service contracts, and production sharing contracts, together with examples of countries where they are applied.",
+    "chapter_title": "Chapter 7: Petroleum Fiscal Regimes",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-07-petroleum-fiscal-regimes.md",
+    "caption_paragraph_index": 7774,
+    "object_paragraph_start": 7773,
+    "object_paragraph_end": 7787,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image70.png"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-070.webp"
+    ]
+  },
+  {
+    "number": 71,
+    "caption": "Figure 71: Comparison of cost recovery limits under selected West African petroleum fiscal regimes, illustrating variations by country and development environment.",
+    "chapter_title": "Chapter 8: West African Fiscal Regimes",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-08-west-african-fiscal-regimes.md",
+    "caption_paragraph_index": 7973,
+    "object_paragraph_start": 7972,
+    "object_paragraph_end": 7974,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image71.png"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-071.webp"
+    ]
+  },
+  {
+    "number": 72,
+    "caption": "Figure 72: Simplified Illustration of State and Contractor Revenue Sharing under Fiscal Regime in Benin.",
+    "chapter_title": "Chapter 8: West African Fiscal Regimes",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-08-west-african-fiscal-regimes.md",
+    "caption_paragraph_index": 8100,
+    "object_paragraph_start": 8098,
+    "object_paragraph_end": 8101,
+    "kind": "multi_photo",
+    "objects": {
+      "blip_targets": [
+        "word/media/image72.png",
+        "word/media/image73.png"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 2,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-072.webp"
+    ]
+  },
+  {
+    "number": 73,
+    "caption": "Figure 73: Simplified Illustration of State and Contractor Revenue Sharing under Fiscal Regime in Ghana.",
+    "chapter_title": "Chapter 8: West African Fiscal Regimes",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-08-west-african-fiscal-regimes.md",
+    "caption_paragraph_index": 8102,
+    "object_paragraph_start": 8101,
+    "object_paragraph_end": 8104,
+    "kind": "multi_photo",
+    "objects": {
+      "blip_targets": [
+        "word/media/image73.png",
+        "word/media/image74.png"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 2,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-073.webp"
+    ]
+  },
+  {
+    "number": 74,
+    "caption": "Figure 74: Simplified Illustration of State and Contractor Revenue Sharing under Fiscal Regime in Côte d’Ivoire.",
+    "chapter_title": "Chapter 8: West African Fiscal Regimes",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-08-west-african-fiscal-regimes.md",
+    "caption_paragraph_index": 8105,
+    "object_paragraph_start": 8103,
+    "object_paragraph_end": 8107,
+    "kind": "multi_photo",
+    "objects": {
+      "blip_targets": [
+        "word/media/image74.png",
+        "word/media/image75.png"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 2,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-074.webp"
+    ]
+  },
+  {
+    "number": 75,
+    "caption": "Figure 75: Simplified Illustration of State and Contractor Revenue Sharing under Fiscal Regime in Nigeria.",
+    "chapter_title": "Chapter 8: West African Fiscal Regimes",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-08-west-african-fiscal-regimes.md",
+    "caption_paragraph_index": 8108,
+    "object_paragraph_start": 8106,
+    "object_paragraph_end": 8109,
+    "kind": "multi_photo",
+    "objects": {
+      "blip_targets": [
+        "word/media/image75.png",
+        "word/media/image76.png"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 2,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-075.webp"
+    ]
+  },
+  {
+    "number": 76,
+    "caption": "Figure 76: Simplified Illustration of State and Contractor Revenue Sharing under Fiscal Regime in Senegal.",
+    "chapter_title": "Chapter 8: West African Fiscal Regimes",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-08-west-african-fiscal-regimes.md",
+    "caption_paragraph_index": 8110,
+    "object_paragraph_start": 8109,
+    "object_paragraph_end": 8111,
+    "kind": "multi_photo",
+    "objects": {
+      "blip_targets": [
+        "word/media/image76.png",
+        "word/media/image77.png"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 2,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-076.webp"
+    ]
+  },
+  {
+    "number": 77,
+    "caption": "Figure 77: Simplified Illustration of State and Contractor Revenue Sharing under Fiscal Regime in Niger.",
+    "chapter_title": "Chapter 8: West African Fiscal Regimes",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-08-west-african-fiscal-regimes.md",
+    "caption_paragraph_index": 8112,
+    "object_paragraph_start": 8111,
+    "object_paragraph_end": 8119,
+    "kind": "multi_photo",
+    "objects": {
+      "blip_targets": [
+        "word/media/image77.png",
+        "word/media/image78.png"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 2,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-077.webp"
+    ]
+  },
+  {
+    "number": 78,
+    "caption": "Figure 78: Distribution of Net Profit Between the Contractor and the State Under Selected West African Petroleum Fiscal Regimes.",
+    "chapter_title": "Chapter 8: West African Fiscal Regimes",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-08-west-african-fiscal-regimes.md",
+    "caption_paragraph_index": 8120,
+    "object_paragraph_start": 8113,
+    "object_paragraph_end": 8121,
+    "kind": "multi_photo",
+    "objects": {
+      "blip_targets": [
+        "word/media/image78.png",
+        "word/media/image79.png"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 2,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-078.webp"
+    ]
+  },
+  {
+    "number": 79,
+    "caption": "Figure 79: Distribution of Cash Flow Between the Contractor and the State for Every 100 Barrels of Oil Produced.",
+    "chapter_title": "Chapter 8: West African Fiscal Regimes",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-08-west-african-fiscal-regimes.md",
+    "caption_paragraph_index": 8122,
+    "object_paragraph_start": 8121,
+    "object_paragraph_end": 8122,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image79.png"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-079.webp"
+    ]
+  },
+  {
+    "number": 80,
+    "caption": "Figure 80: African Petroleum Industrialisation Model: From Hydrocarbon Resources to Economic Development",
+    "chapter_title": "Chapter 12: Vision for West Africa 2050",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-12-vision-for-west-africa-2050.md",
+    "caption_paragraph_index": 9091,
+    "object_paragraph_start": 9090,
+    "object_paragraph_end": 9091,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image80.png"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
+      "figure-080.webp"
     ]
   }
 ]

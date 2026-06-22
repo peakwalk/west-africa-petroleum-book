@@ -16,6 +16,7 @@ PARITY_IGNORE_START = "<!-- parity-ignore:start -->"
 PARITY_IGNORE_END = "<!-- parity-ignore:end -->"
 FIGURE_LABEL_MAX_WORDS = 6
 CAPTION_PREFIXES = ("Figure ", "Table ", "Tableau ")
+STANDALONE_STRONG_RE = re.compile(r"^\s*(\*\*|__)(?P<content>.+?)\1\s*$")
 
 
 def _summary_entries(summary_path: Path) -> list[tuple[str, Path]]:
@@ -89,12 +90,20 @@ def _parse_chapter(chapter_path: Path) -> ChapterSemanticModel:
         nonlocal suppress_figure_labels
         if not paragraph_lines:
             return
-        text = normalize_visible_text(" ".join(paragraph_lines))
+        raw_text = " ".join(paragraph_lines).strip()
+        strong_match = STANDALONE_STRONG_RE.fullmatch(raw_text)
+        text = normalize_visible_text(raw_text)
         paragraph_lines.clear()
         if not text:
             return
         kind = "caption" if text.startswith(CAPTION_PREFIXES) else "paragraph"
-        body.append(BodyBlock(kind=kind, text=text))
+        body.append(
+            BodyBlock(
+                kind=kind,
+                text=text,
+                strong=kind == "paragraph" and strong_match is not None,
+            )
+        )
         if kind == "caption":
             suppress_figure_labels = text.startswith("Figure ")
 
@@ -153,6 +162,8 @@ def _parse_chapter(chapter_path: Path) -> ChapterSemanticModel:
             continue
         if not stripped:
             flush_paragraph()
+            if body and body[-1].kind == "caption":
+                suppress_figure_labels = False
             continue
         if (
             paragraph_lines
@@ -246,6 +257,7 @@ def _parse_chapter(chapter_path: Path) -> ChapterSemanticModel:
             continue
         if (
             _is_short_figure_label(stripped)
+            and not stripped.startswith(CAPTION_PREFIXES)
             and not _looks_like_semantic_callout(stripped)
             and (
             suppress_figure_labels

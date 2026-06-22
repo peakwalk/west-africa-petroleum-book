@@ -12,7 +12,10 @@ from scripts.docx_figures.pdf_figures import (
     PdfCaptionBounds,
     PdfFigurePlacement,
     build_search_windows,
+    caption_search_needles,
+    default_pdf_figure_numbers,
 )
+from scripts.docx_figures.inventory import build_figure_inventory
 from scripts.render_pdf_figures import (
     ensure_lossless_webp_outputs,
     find_cwebp_binary,
@@ -21,11 +24,19 @@ from scripts.render_pdf_figures import (
 ROOT_DIR = Path(__file__).resolve().parents[2]
 PDF_PATH = ROOT_DIR / "resources/Exploration and Exploitation of Petroleum Resources in West Africa (Matt Edited).pdf"
 FR_PDF_PATH = ROOT_DIR / "resources/editions/fr/reference.pdf"
+REPLACEMENT_PDF_PATH = (
+    ROOT_DIR / "resources/Exploration et exploitation des ressources pétrolières en Afrique de 1 (EN).pdf"
+)
+REPLACEMENT_DOCX_PATH = (
+    ROOT_DIR / "resources/Exploration et exploitation des ressources pétrolières en Afrique de 1 (EN).docx"
+)
 RENDER_SCRIPT = ROOT_DIR / "scripts/render_pdf_figures.py"
 CHAPTER_02_PATH = (
     ROOT_DIR
     / "editions/en/content/chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md"
 )
+SUMMARY_PATH = ROOT_DIR / "editions/en/content/SUMMARY.md"
+CHAPTERS_DIR = ROOT_DIR / "editions/en/content/chapters"
 
 
 def _png_dimensions(path: Path) -> tuple[int, int]:
@@ -74,6 +85,18 @@ def _render_pdf_figure_assets(
 
 
 class PdfFiguresTest(unittest.TestCase):
+    def test_caption_search_needles_support_colonless_replacement_captions(self) -> None:
+        needles = caption_search_needles(
+            "Figure 1: African Petroleum Development Paradox. Resource wealth does not "
+            "automatically translate into broad-based economic development."
+        )
+
+        self.assertIn(
+            "Figure 1 African Petroleum Development Paradox. Resource wealth does not "
+            "automatically translate into broad-based economic development.",
+            needles,
+        )
+
     def test_chapter_2_uses_pdf_asset_for_figure_17(self) -> None:
         chapter_text = CHAPTER_02_PATH.read_text(encoding="utf-8")
 
@@ -269,6 +292,83 @@ class PdfFiguresTest(unittest.TestCase):
             self.assertGreater(height, 2100)
             self.assertLess(height, 2400)
             self.assertLess(width / height, 1.6)
+
+    def test_render_replacement_english_pdf_figure_1_with_docx_caption_hints(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            output_dir = Path(tmpdir)
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(RENDER_SCRIPT),
+                    "--pdf",
+                    str(REPLACEMENT_PDF_PATH),
+                    "--docx",
+                    str(REPLACEMENT_DOCX_PATH),
+                    "--summary",
+                    str(SUMMARY_PATH),
+                    "--chapters-dir",
+                    str(CHAPTERS_DIR),
+                    "--figures",
+                    "1",
+                    "--output-dir",
+                    str(output_dir),
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+                cwd=str(ROOT_DIR),
+            )
+
+            self.assertEqual(
+                result.returncode,
+                0,
+                msg=f"stdout:\n{result.stdout}\nstderr:\n{result.stderr}",
+            )
+            self.assertTrue((output_dir / "figure-001.png").exists(), msg=result.stdout)
+            self.assertTrue((output_dir / "figure-001.webp").exists(), msg=result.stdout)
+
+    def test_render_replacement_english_figure_80_falls_back_to_docx_bitmap(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            output_dir = Path(tmpdir)
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(RENDER_SCRIPT),
+                    "--pdf",
+                    str(REPLACEMENT_PDF_PATH),
+                    "--docx",
+                    str(REPLACEMENT_DOCX_PATH),
+                    "--summary",
+                    str(SUMMARY_PATH),
+                    "--chapters-dir",
+                    str(CHAPTERS_DIR),
+                    "--figures",
+                    "80",
+                    "--output-dir",
+                    str(output_dir),
+                ],
+                capture_output=True,
+                text=True,
+                check=False,
+                cwd=str(ROOT_DIR),
+            )
+
+            self.assertEqual(
+                result.returncode,
+                0,
+                msg=f"stdout:\n{result.stdout}\nstderr:\n{result.stderr}",
+            )
+            self.assertTrue((output_dir / "figure-080.png").exists(), msg=result.stdout)
+            self.assertTrue((output_dir / "figure-080.webp").exists(), msg=result.stdout)
+
+    def test_default_pdf_figure_numbers_include_all_replacement_english_figures(self) -> None:
+        inventory = build_figure_inventory(
+            docx_path=REPLACEMENT_DOCX_PATH,
+            chapters_dir=CHAPTERS_DIR,
+            summary_path=SUMMARY_PATH,
+        )
+
+        self.assertEqual(default_pdf_figure_numbers(inventory), list(range(1, 81)))
 
     def test_find_cwebp_binary_uses_homebrew_fallback(self) -> None:
         with mock.patch("scripts.render_pdf_figures.shutil.which", return_value=None):

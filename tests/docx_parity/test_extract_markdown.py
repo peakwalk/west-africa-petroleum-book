@@ -240,6 +240,109 @@ class ExtractMarkdownTests(unittest.TestCase):
                 "Figure 17: Methodology Tank Evaluation",
             ],
         )
+        self.assertFalse(chapter.body[0].strong)
+        self.assertTrue(chapter.body[1].strong)
+
+    def test_marks_standalone_strong_paragraphs_as_strong_blocks(self) -> None:
+        tmp_dir = Path(tempfile.mkdtemp())
+        chapter_dir = tmp_dir / "chapters"
+        chapter_dir.mkdir(parents=True, exist_ok=True)
+        chapter_path = chapter_dir / "chapter-05-callouts.md"
+        chapter_path.write_text(
+            "# Chapter 5: Development\n\n"
+            "## 5.1- Development phase\n\n"
+            "**Exploration**\n\n"
+            "Exploration involves identifying hydrocarbon accumulations.\n",
+            encoding="utf-8",
+        )
+        summary_path = tmp_dir / "SUMMARY.md"
+        summary_path.write_text(
+            "# Summary\n\n"
+            "- [Chapter 5: Development](chapters/chapter-05-callouts.md)\n",
+            encoding="utf-8",
+        )
+
+        book = extract_markdown_book(summary_path, chapter_dir)
+        chapter = book.chapters[0]
+
+        self.assertEqual([block.text for block in chapter.body], [
+            "Exploration",
+            "Exploration involves identifying hydrocarbon accumulations.",
+        ])
+        self.assertTrue(chapter.body[0].strong)
+        self.assertFalse(chapter.body[1].strong)
+
+    def test_preserves_short_semantic_paragraphs_after_figure_captions(self) -> None:
+        tmp_dir = Path(tempfile.mkdtemp())
+        chapter_dir = tmp_dir / "chapters"
+        chapter_dir.mkdir(parents=True, exist_ok=True)
+        chapter_path = chapter_dir / "chapter-05-callouts.md"
+        chapter_path.write_text(
+            "# Chapter 5: Development\n\n"
+            "## 5.1- Development phase\n\n"
+            "Lead-in paragraph.\n\n"
+            "![Figure 009](../images/figure-009.png)\n\n"
+            "Figure 9 Products Obtained from Atmospheric Distillation of Crude Oil in a Refinery\n\n"
+            "Petrochemicals\n\n"
+            "Petrochemical industries convert hydrocarbons into products used in:\n\n"
+            "- Agriculture\n"
+            "- Construction\n",
+            encoding="utf-8",
+        )
+        summary_path = tmp_dir / "SUMMARY.md"
+        summary_path.write_text(
+            "# Summary\n\n"
+            "- [Chapter 5: Development](chapters/chapter-05-callouts.md)\n",
+            encoding="utf-8",
+        )
+
+        book = extract_markdown_book(summary_path, chapter_dir)
+        chapter = book.chapters[0]
+
+        self.assertEqual(
+            [block.text for block in chapter.body],
+            [
+                "Lead-in paragraph.",
+                "Figure 9 Products Obtained from Atmospheric Distillation of Crude Oil in a Refinery",
+                "Petrochemicals",
+                "Petrochemical industries convert hydrocarbons into products used in:",
+                "Agriculture",
+                "Construction",
+            ],
+        )
+
+    def test_keeps_short_colonless_figure_captions_after_image_references(self) -> None:
+        tmp_dir = Path(tempfile.mkdtemp())
+        chapter_dir = tmp_dir / "chapters"
+        chapter_dir.mkdir(parents=True, exist_ok=True)
+        chapter_path = chapter_dir / "chapter-06-surveys.md"
+        chapter_path.write_text(
+            "# Chapter 6: Surveys\n\n"
+            "## 6.1- Exploration\n\n"
+            "Lead-in paragraph.\n\n"
+            "![Figure 017](../images/figure-017.png)\n\n"
+            "Figure 17 Gravimetric Survey\n\n"
+            "Next paragraph.\n",
+            encoding="utf-8",
+        )
+        summary_path = tmp_dir / "SUMMARY.md"
+        summary_path.write_text(
+            "# Summary\n\n"
+            "- [Chapter 6: Surveys](chapters/chapter-06-surveys.md)\n",
+            encoding="utf-8",
+        )
+
+        book = extract_markdown_book(summary_path, chapter_dir)
+        chapter = book.chapters[0]
+
+        self.assertEqual(
+            [block.text for block in chapter.body],
+            [
+                "Lead-in paragraph.",
+                "Figure 17 Gravimetric Survey",
+                "Next paragraph.",
+            ],
+        )
 
     def test_extracts_html_table_caption_while_ignoring_table_cells(self) -> None:
         tmp_dir = Path(tempfile.mkdtemp())

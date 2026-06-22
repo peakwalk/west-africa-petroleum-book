@@ -148,6 +148,22 @@ class PublicEditionBuildTests(unittest.TestCase):
         self.assertNotIn("&lt;div", tables_description)
         self.assertNotIn("reference-index-tables", tables_description)
 
+    def test_english_chapter_library_tracks_replacement_book_topology(self) -> None:
+        english_chapters = (self.output_root / "chapters" / "index.html").read_text(encoding="utf-8")
+
+        self.assertIn(
+            "Exploration and Production of Petroleum Resources in West Africa",
+            english_chapters,
+        )
+        self.assertIn("/book/chapters/chapter-01-general-introduction.html", english_chapters)
+        self.assertIn("/book/chapters/chapter-12-vision-for-west-africa-2050.html", english_chapters)
+        self.assertIn("/book/chapters/glossary.html", english_chapters)
+        self.assertNotIn(
+            "/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html",
+            english_chapters,
+        )
+        self.assertNotIn("/book/chapters/general-conclusion.html", english_chapters)
+
 
 if __name__ == "__main__":
     unittest.main()

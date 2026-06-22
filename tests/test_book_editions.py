@@ -30,40 +30,68 @@ class BookEditionBuildTests(unittest.TestCase):
         self.assertTrue((ROOT_DIR / "public" / "fr" / "book" / "index.html").exists())
 
     def test_book_header_exposes_cross_edition_switch(self) -> None:
-        english_chapter = (ROOT_DIR / "public" / "book" / "chapters" / "foreword.html").read_text(
-            encoding="utf-8"
-        )
-        french_chapter = (
+        english_disclaimer = (
+            ROOT_DIR / "public" / "book" / "chapters" / "disclaimer.html"
+        ).read_text(encoding="utf-8")
+        english_foreword = (
+            ROOT_DIR / "public" / "book" / "chapters" / "foreword.html"
+        ).read_text(encoding="utf-8")
+        english_value_chain = (
+            ROOT_DIR
+            / "public"
+            / "book"
+            / "chapters"
+            / "chapter-05-hydrocarbon-value-chain.html"
+        ).read_text(encoding="utf-8")
+        french_foreword = (
             ROOT_DIR / "public" / "fr" / "book" / "chapters" / "foreword.html"
         ).read_text(encoding="utf-8")
+        french_value_chain = (
+            ROOT_DIR
+            / "public"
+            / "fr"
+            / "book"
+            / "chapters"
+            / "chapter-01-value-chain-of-the-hydrocarbon-sector.html"
+        ).read_text(encoding="utf-8")
 
-        self.assertIn('class="reader-language-switch"', english_chapter)
-        self.assertIn('/fr/book/chapters/foreword.html?lang=fr', english_chapter)
-        self.assertIn('class="reader-language-switch"', french_chapter)
-        self.assertIn('/book/chapters/foreword.html?lang=en', french_chapter)
+        self.assertIn('class="reader-language-switch"', english_disclaimer)
+        self.assertIn('/fr/book/?lang=fr', english_disclaimer)
+        self.assertIn('class="reader-language-switch"', english_foreword)
+        self.assertIn('/fr/book/chapters/foreword.html?lang=fr', english_foreword)
+        self.assertIn('class="reader-language-switch"', french_foreword)
+        self.assertIn('/book/chapters/foreword.html?lang=en', french_foreword)
+        self.assertIn(
+            '/fr/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html?lang=fr',
+            english_value_chain,
+        )
+        self.assertIn(
+            '/book/chapters/chapter-05-hydrocarbon-value-chain.html?lang=en',
+            french_value_chain,
+        )
 
     def test_book_header_language_switch_keeps_en_then_fr_order_without_label(self) -> None:
-        english_chapter = (ROOT_DIR / "public" / "book" / "chapters" / "foreword.html").read_text(
-            encoding="utf-8"
-        )
-        french_chapter = (
+        english_disclaimer = (
+            ROOT_DIR / "public" / "book" / "chapters" / "disclaimer.html"
+        ).read_text(encoding="utf-8")
+        french_foreword = (
             ROOT_DIR / "public" / "fr" / "book" / "chapters" / "foreword.html"
         ).read_text(encoding="utf-8")
 
-        self.assertNotIn('class="reader-language-label"', english_chapter)
-        self.assertNotIn('class="reader-language-label"', french_chapter)
+        self.assertNotIn('class="reader-language-label"', english_disclaimer)
+        self.assertNotIn('class="reader-language-label"', french_foreword)
 
         self.assertRegex(
-            english_chapter,
+            english_disclaimer,
             re.compile(
                 r'<nav class="reader-language-switch"[^>]*>\s*'
                 r'<span class="reader-language-option is-current" aria-current="page">EN</span>\s*'
-                r'<a class="reader-language-option" href="/fr/book/chapters/foreword\.html\?lang=fr" lang="fr" hreflang="fr">FR</a>\s*'
+                r'<a class="reader-language-option" href="/fr/book/\?lang=fr" lang="fr" hreflang="fr">FR</a>\s*'
                 r'</nav>'
             ),
         )
         self.assertRegex(
-            french_chapter,
+            french_foreword,
             re.compile(
                 r'<nav class="reader-language-switch"[^>]*>\s*'
                 r'<a class="reader-language-option" href="/book/chapters/foreword\.html\?lang=en" lang="en" hreflang="en">EN</a>\s*'
@@ -73,27 +101,27 @@ class BookEditionBuildTests(unittest.TestCase):
         )
 
     def test_book_reader_injects_toolbar_and_sidebar_language_switches(self) -> None:
-        english_chapter = (ROOT_DIR / "public" / "book" / "chapters" / "foreword.html").read_text(
-            encoding="utf-8"
-        )
-        french_chapter = (
+        english_disclaimer = (
+            ROOT_DIR / "public" / "book" / "chapters" / "disclaimer.html"
+        ).read_text(encoding="utf-8")
+        french_foreword = (
             ROOT_DIR / "public" / "fr" / "book" / "chapters" / "foreword.html"
         ).read_text(encoding="utf-8")
 
         self.assertRegex(
-            english_chapter,
+            english_disclaimer,
             re.compile(
                 r'<div class="book-sidebar-intro">\s*'
                 r'<nav class="reader-language-switch"[^>]*data-reader-language-switch="sidebar"[^>]*>\s*'
                 r'<span class="reader-language-option is-current" aria-current="page">EN</span>\s*'
-                r'<a class="reader-language-option" href="/fr/book/chapters/foreword\.html\?lang=fr" lang="fr" hreflang="fr">FR</a>\s*'
+                r'<a class="reader-language-option" href="/fr/book/\?lang=fr" lang="fr" hreflang="fr">FR</a>\s*'
                 r'</nav>\s*'
                 r'<p class="book-sidebar-book-title">',
                 re.DOTALL,
             ),
         )
         self.assertRegex(
-            english_chapter,
+            english_disclaimer,
             re.compile(
                 r'<div class="toolbar-actions">\s*'
                 r'<nav class="reader-language-switch"[^>]*data-reader-language-switch="toolbar"[^>]*>',
@@ -101,7 +129,7 @@ class BookEditionBuildTests(unittest.TestCase):
             ),
         )
         self.assertRegex(
-            french_chapter,
+            french_foreword,
             re.compile(
                 r'<div class="book-sidebar-intro">\s*'
                 r'<nav class="reader-language-switch"[^>]*data-reader-language-switch="sidebar"[^>]*>\s*'
@@ -270,30 +298,76 @@ class BookEditionBuildTests(unittest.TestCase):
         self.assertIn('src="../images/figure-022.webp"', french_chapter_three)
         self.assertNotIn('src="../images/figure-022.svg"', french_chapter_three)
 
-    def test_english_chapter_two_figure_nine_uses_full_webp_asset(self) -> None:
-        english_chapter_two = (
+    def test_english_chapter_five_figure_nine_uses_replacement_webp_asset(self) -> None:
+        english_chapter_five = (
             ROOT_DIR
             / "public"
             / "book"
             / "chapters"
-            / "chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html"
+            / "chapter-05-hydrocarbon-value-chain.html"
         ).read_text(encoding="utf-8")
 
-        self.assertIn('src="../images/figure-009.webp"', english_chapter_two)
-        self.assertNotIn('src="../images/figure-009.png"', english_chapter_two)
-        self.assertNotIn('src="../images/figure-009.jpg"', english_chapter_two)
+        self.assertIn('src="../images/figure-009.webp"', english_chapter_five)
+        self.assertNotIn('src="../images/figure-009.png"', english_chapter_five)
+        self.assertNotIn('src="../images/figure-009.jpg"', english_chapter_five)
 
-    def test_english_chapter_two_figure_ten_uses_full_webp_asset(self) -> None:
-        english_chapter_two = (
+    def test_english_chapter_five_figure_ten_uses_replacement_webp_asset(self) -> None:
+        english_chapter_five = (
             ROOT_DIR
             / "public"
             / "book"
             / "chapters"
-            / "chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html"
+            / "chapter-05-hydrocarbon-value-chain.html"
         ).read_text(encoding="utf-8")
 
-        self.assertIn('src="../images/figure-010.webp"', english_chapter_two)
-        self.assertNotIn('src="../images/figure-010.png"', english_chapter_two)
+        self.assertIn('src="../images/figure-010.webp"', english_chapter_five)
+        self.assertNotIn('src="../images/figure-010.png"', english_chapter_five)
+
+    def test_english_chapter_five_rehydrates_table_two_and_three_from_replacement_docx(self) -> None:
+        english_chapter_five = (
+            ROOT_DIR
+            / "public"
+            / "book"
+            / "chapters"
+            / "chapter-05-hydrocarbon-value-chain.html"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn("<table>", english_chapter_five)
+        self.assertIn("Table 2 Estimated Hydrocarbon Resources in West Africa", english_chapter_five)
+        self.assertIn("Crude Oil Reserves (MMbbl)", english_chapter_five)
+        self.assertIn("30,031*", english_chapter_five)
+        self.assertIn("Table 3 Daily Oil Production by Country (Trading Economics, 2025)", english_chapter_five)
+        self.assertIn("Reference Period", english_chapter_five)
+        self.assertIn("Mbbl/d", english_chapter_five)
+
+    def test_english_chapter_four_table_one_caption_excludes_list_of_tables_page_number(self) -> None:
+        english_chapter_four = (
+            ROOT_DIR
+            / "public"
+            / "book"
+            / "chapters"
+            / "chapter-04-national-oil-companies-in-west-africa.html"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn("Table 1 Overview of National Oil Companies in West Africa", english_chapter_four)
+        self.assertNotIn("Table 1 Overview of National Oil Companies in West Africa 175", english_chapter_four)
+
+    def test_english_chapter_eight_rehydrates_principal_fiscal_tables(self) -> None:
+        english_chapter_eight = (
+            ROOT_DIR
+            / "public"
+            / "book"
+            / "chapters"
+            / "chapter-08-west-african-fiscal-regimes.html"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn("Table 20 Principal Fiscal Elements", english_chapter_eight)
+        self.assertIn("Senegal", english_chapter_eight)
+        self.assertIn("Table 33 Overview of Fiscal Systems", english_chapter_eight)
+        self.assertIn("<table>", english_chapter_eight)
+        self.assertIn("<thead>", english_chapter_eight)
+        self.assertIn("<tbody>", english_chapter_eight)
+        self.assertNotIn("&amp;amp;", english_chapter_eight)
 
     def test_french_chapter_two_figure_ten_uses_full_webp_asset(self) -> None:
         french_chapter_two = (

@@ -64,7 +64,14 @@ def _unreferenced_asset_names(locale: str) -> list[str]:
     return sorted(
         path.name
         for path in image_root.iterdir()
-        if path.is_file() and path.name != "figure-manifest.json" and path.name not in references
+        if path.is_file()
+        and path.name != "figure-manifest.json"
+        and path.name not in references
+        and not (
+            locale == "en"
+            and path.suffix.lower() == ".png"
+            and (image_root / f"{path.stem}.webp").exists()
+        )
     )
 
 
@@ -164,9 +171,7 @@ class FigureReferenceNamesTest(unittest.TestCase):
             FR_IMAGES / "figure-003-trimmed.webp",
             EN_IMAGES / "figure-003.jpg",
             EN_IMAGES / "figure-005.jpg",
-            EN_IMAGES / "figure-009.png",
             EN_IMAGES / "figure-009.jpg",
-            EN_IMAGES / "figure-010.png",
             EN_IMAGES / "figure-010.jpg",
             EN_IMAGES / "figure-016-a.jpg",
             EN_IMAGES / "figure-016-b.jpg",

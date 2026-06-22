@@ -1,111 +1,23 @@
-# Foreword
+# Foreword to the English Edition
 
-Geo-extractive resources are a source of income for countries that have
-them and occupy a large part of the Gross Domestic Product (GDP) of some
-countries. They have been the basis of the economic and industrial
-development of many countries. Petroleum resources (oil and natural gas)
-in particular are strategically important energy sources and played a
-prominent and decisive role during the Industrial Revolution in the 19th
-century. In addition to their interest for development, oil resources
-are also at the origin of environmental disasters, endogenous tensions
-and wars between certain states. This bipolar dimension or duality
-characterizing the use of this resource is linked to its multiple uses,
-which can be grouped into two groups:
+This English edition is based on the original French-language work authored by Charles, which provides a comprehensive examination of the West African petroleum industry and the geological, technical, economic, fiscal, regulatory, governance, and socio-political factors that shape the development and management of hydrocarbon resources across the region.
 
-*Use for socio-economic development:*
+As interest in West Africa's petroleum sector continues to grow internationally, it became apparent that there was value in making this work accessible to a broader audience through an English-language edition. However, the objective was not simply to produce a direct translation of the original French text.
 
-- It is a universal medicine used since the 1st century AD: bitumen is
-  prescribed against leprosy, cataracts, gout... It was used in
-  Mesopotamia to cure dermatological ailments and also by the Egyptians
-  and even in the thirteenth century in France.
+During the preparation of this edition, the manuscript was comprehensively reviewed, translated into English, and substantially expanded to reflect developments within the petroleum industry, changes in regional energy markets, and emerging challenges facing petroleum-producing countries across West Africa. Additional material has been incorporated to provide greater technical depth, improve clarity, and broaden the relevance of the work for petroleum professionals, government officials, regulators, investors, academics, and students.
 
-- It is the most widely used source of energy for industrial
-  development: In the nineteenth century in Europe and the United
-  States, oil was the driving force behind the development of industry
-  and transport. Today, despite international policies to develop
-  cleaner energy sources, including renewable energy, as well as
-  strategies to limit or even eliminate the exploitation of fossil
-  fuels, hydrocarbons remain the most widely used primary source of
-  energy in the world.
+Several new sections have been introduced, including expanded discussions on petroleum value creation, gas monetisation, refining and petrochemical development, regional energy integration, technical capacity building, petroleum data management, indigenous African participation, infrastructure development, and the future role of hydrocarbons in supporting Africa's industrialisation and economic transformation. Additional figures, tables, examples, and explanatory material have also been incorporated to improve understanding of complex technical and commercial concepts.
 
-*Weapon of war and source of environmental pollution*
+While every effort has been made to preserve the intent, themes, and objectives of the original French manuscript, this English edition should be regarded as an expanded and updated version rather than a literal translation. The underlying vision remains unchanged: to encourage informed discussion regarding how African countries can maximise the value derived from their petroleum resources and utilise those resources as a catalyst for sustainable economic development.
 
-- Oil is also a weapon of war: it has been used in the Persian wars
-  between Greece and Persia since the fifth century, as well as in the
-  world wars where energy played a strategic role. For example, the
-  control of Kuwait's oil reserves by the US was the main cause of the
-  Gulf War (1990-1991). The same is true of the Biafran war in Nigeria
-  (May 1967-January 1970) maintained by France, and more recently in
-  2011, it was the real motives of the destabilization of Libya by the
-  Western powers that are in particular France animated by the desire to
-  control Libyan oil and to increase its influence in North Africa with
-  the support of other NATO countries particularly the USA.
+The petroleum industry is undergoing significant transformation. Energy security, climate considerations, technological innovation, regional integration, and local capacity development are increasingly shaping the future of hydrocarbon-producing nations. For Africa, the challenge is not simply to produce oil and gas, but to convert natural resource wealth into long-term prosperity through strong institutions, sound governance, industrial development, technical excellence, and strategic investment.
 
-- From an environmental point of view, the extraction of hydrocarbons
-  and the use of petroleum products resulting from their transformation
-  are at the origin of climate change because they emit greenhouse
-  gases, which are responsible for global warming which causes severe
-  weather and climate conditions, namely: the melting of glaciers, the
-  rise in sea level, floods, drought etc.
+It is hoped that this book will contribute to that discussion and serve as a useful reference for policymakers, regulators, national oil companies, industry professionals, investors, researchers, and students seeking a deeper understanding of the opportunities and challenges associated with petroleum resource development in West Africa.
 
-In order to secure this valuable source of energy for industrial
-development, Westerners undertook oil exploration work in Africa during
-the 20th century. During the colonial period (before 1960) and
-especially in the early years of the post-colonial period, the first
-works carried out by foreign powers made it possible to make the
-geological mapping of Africa. This mapping revealed that the African
-continent has a significant potential in geo-extractive resources,
-particularly oil and natural gas.
+The publication of this English edition would not have been possible without the vision, commitment, and original work of Charles, whose contribution forms the foundation upon which this expanded edition has been built.
 
-The development of oil resources requires the existence and mastery of
-technology, skills and financial resources that are not available to
-third world countries, particularly those in Africa. thus. To do this,
-African countries negotiate agreements with foreign powers whose terms
-and implementation are poorly controlled or controlled. On the other
-hand, responsible, sustainable and transparent management of oil
-revenues by governments is decisive in boosting socio-economic
-development in states. As a result, for more than three decades of
-exploitation of oil and gas resources in Africa, the profits they derive
-are insignificant due on the one hand to the signing of unbalanced
-contracts that are not very profitable to States and on the other hand
-poorly managed. This state of affairs is illustrated by three
-observations:
-
-1)  Most African countries that exploit oil resources live below
-    poverty.
-
-2)  Half of Africa's population does not have access to energy, even
-    though it exports a large part of its hydrocarbon production (40% of
-    gas and 50% of oil) in the form of raw materials, according to the
-    International Energy Agency (IEA) in 2017.
-
-3)  the lack of appropriate infrastructure for the processing and
-    development of the entire value chain of the oil industry.
-
-The present work aims to lift a corner of the veil on the challenges of
-African States from the exploration to the exploitation of hydrocarbons,
-to analyze the tax regimes associated with oil legislation in certain
-West African countries and finally to highlight the fundamental levers
-on which States must act to maximize their profit and gradually reverse
-this unprofitable trend that characterizes the exploitation of oil
-resources in most countries. countries of West Africa.
-
-This reflection also calls for the responsibility of African States in
-the monitoring and technical and sovereign control of oil operations in
-order to optimize their profit margin and ensure compliance with safety
-and environmental standards accepted in the international oil industry
-or governed by national legislation.
-
-We believe that we have, through this book, given an overview of the oil
-sector and the difficulties and challenges related to the exploitation
-of resources for the benefit of the populations of West Africa, and made
-our contribution to the development of a real oil industry in West
-Africa.
-
-This book owes a lot to some people who supported me in this exercise
-and who gladly made their contributions and constructive comments.
-
-I would like to express my great gratitude to Mr. Matt ...., Doctor of
-Geological Engineering and Independent Consultant in Petroleum
-Geosciences who did me honor by agreeing to write the preface to this
-book.
+<p><strong>Matthew</strong><br />
+Petroleum Geologist<br />
+<br />
+Independent Petroleum Technical Advisor<br />
+2026</p>

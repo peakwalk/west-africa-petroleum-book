@@ -7,6 +7,7 @@ struct Config {
     var pdfPath: String = ""
     var outputDir: String = ""
     var figures: [Int] = []
+    var captionMapPath: String = ""
     var scale: CGFloat = 6.0
     var sideMargin: CGFloat = 40.0
     var topMargin: CGFloat = 40.0
@@ -88,6 +89,10 @@ func parseArguments() throws -> Config {
             config.figures = args[index]
                 .split(separator: ",")
                 .compactMap { Int($0.trimmingCharacters(in: .whitespaces)) }
+        case "--caption-map":
+            index += 1
+            guard index < args.count else { throw RenderError.invalidArguments("Missing value for --caption-map") }
+            config.captionMapPath = args[index]
         case "--scale":
             index += 1
             guard index < args.count, let value = Double(args[index]) else {
@@ -136,13 +141,32 @@ func parseArguments() throws -> Config {
     return config
 }
 
-func bestPlacement(document: PDFDocument, figureNumber: Int) -> CaptionPlacement? {
-    let needles = [
+func defaultCaptionNeedles(figureNumber: Int) -> [String] {
+    return [
         "Figure \(figureNumber):",
         "Figure \(figureNumber) :",
         "Figure \(figureNumber)\u{00A0}:",
         "Figure \(figureNumber)\u{202F}:",
     ]
+}
+
+func loadCaptionNeedles(path: String) -> [Int: [String]] {
+    guard !path.isEmpty else { return [:] }
+    guard
+        let data = FileManager.default.contents(atPath: path),
+        let raw = try? JSONSerialization.jsonObject(with: data) as? [String: [String]]
+    else {
+        return [:]
+    }
+    return Dictionary(
+        uniqueKeysWithValues: raw.compactMap { key, values in
+            guard let number = Int(key) else { return nil }
+            return (number, values)
+        }
+    )
+}
+
+func bestPlacement(document: PDFDocument, figureNumber: Int, needles: [String]) -> CaptionPlacement? {
     let selections = needles.flatMap { needle in
         document.findString(needle, withOptions: .caseInsensitive)
     }
@@ -390,9 +414,11 @@ do {
     guard let document = PDFDocument(url: URL(fileURLWithPath: config.pdfPath)) else {
         throw RenderError.failedToOpenPdf(config.pdfPath)
     }
+    let captionNeedlesByFigure = loadCaptionNeedles(path: config.captionMapPath)
 
     let placements = try config.figures.map { figureNumber -> CaptionPlacement in
-        guard let placement = bestPlacement(document: document, figureNumber: figureNumber) else {
+        let needles = captionNeedlesByFigure[figureNumber] ?? defaultCaptionNeedles(figureNumber: figureNumber)
+        guard let placement = bestPlacement(document: document, figureNumber: figureNumber, needles: needles) else {
             throw RenderError.failedToFindCaption(figureNumber)
         }
         return placement

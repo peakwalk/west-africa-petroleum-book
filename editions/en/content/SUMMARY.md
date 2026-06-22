@@ -3,29 +3,36 @@
 # Front Matter
 
 - [Cover](chapters/cover.md)
+- [DISCLAIMER](chapters/disclaimer.md)
+- [Preface](chapters/preface.md)
+- [Table of Contents](chapters/table-of-contents.md)
 - [List of Figures](chapters/list-of-figures.md)
 - [List of Tables](chapters/list-of-tables.md)
-- [Abbreviations, Acronyms and Abbreviations](chapters/abbreviations-acronyms-and-abbreviations.md)
-- [Foreword](chapters/foreword.md)
-- [General Introduction](chapters/general-introduction.md)
+- [Abbreviations, Initialisms and Acronyms](chapters/abbreviations-acronyms-and-abbreviations.md)
+- [Foreword to the English Edition](chapters/foreword.md)
 
-# Part I: General Information on the Oil Industry
+# Part I: Regional Foundations
 
-- [Chapter 1: Value Chain of the Hydrocarbon Sector](chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.md)
-- [Chapter 2: Different Phases of Upstream Oil and the Roles of States](chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.md)
+- [Chapter 1: General Introduction](chapters/chapter-01-general-introduction.md)
+- [Chapter 2: Emerging Petroleum Provinces in West Africa](chapters/chapter-02-emerging-petroleum-provinces-in-west-africa.md)
+- [Chapter 3: West Africa Country Analysis](chapters/chapter-03-west-africa-country-analysis.md)
+- [Chapter 4: National Oil Companies in West Africa](chapters/chapter-04-national-oil-companies-in-west-africa.md)
 
-# Part II: Oil Contracts and Oil Taxation in West Africa
+# Part II: Operations and Fiscal Systems
 
-- [Chapter 3: Tax Regimes in the Petroleum Sector](chapters/chapter-03-tax-regimes-in-the-petroleum-sector.md)
-- [Chapter 4: Comparative Study of Tax Regimes in Selected West African Countries](chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.md)
+- [Chapter 5: Hydrocarbon Value Chain](chapters/chapter-05-hydrocarbon-value-chain.md)
+- [Chapter 6: Upstream Operations and Government Roles](chapters/chapter-06-upstream-operations-and-government-roles.md)
+- [Chapter 7: Petroleum Fiscal Regimes](chapters/chapter-07-petroleum-fiscal-regimes.md)
+- [Chapter 8: West African Fiscal Regimes](chapters/chapter-08-west-african-fiscal-regimes.md)
 
-# Part III: Political Stability, Governance and Corruption
+# Part III: Governance, Data and Outlook
 
-- [Chapter 5: Key Socio-Political Determinants of Oil Sector Performance](chapters/chapter-05-key-socio-political-determinants-of-oil-sector-performance.md)
-- [Chapter 6: West Africa: In-Depth Country Analysis](chapters/chapter-06-west-africa-in-depth-country-analysis.md)
+- [Chapter 9: Socio-Political Determinants](chapters/chapter-09-socio-political-determinants.md)
+- [Chapter 10: Petroleum Data Management in West Africa](chapters/chapter-10-petroleum-data-management-in-west-africa.md)
+- [Chapter 11: General Conclusion](chapters/chapter-11-general-conclusion.md)
+- [Chapter 12: Vision for West Africa 2050](chapters/chapter-12-vision-for-west-africa-2050.md)
 
 # Back Matter
 
-- [General Conclusion](chapters/general-conclusion.md)
 - [Glossary](chapters/glossary.md)
 - [Bibliographical References](chapters/bibliographical-references.md)

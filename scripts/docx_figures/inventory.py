@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import posixpath
 import re
+import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
 from xml.etree import ElementTree as ET
@@ -27,7 +28,7 @@ CHAPTER_MARKER_RE = re.compile(
     r"^(?:Chapter|Chapitre)\s+(?P<number>\d+)(?:\s*:?\s*(?P<title>.*))?$",
     re.IGNORECASE,
 )
-FIGURE_CAPTION_RE = re.compile(r"Figure\s+(?P<number>\d+)\s*:\s*(?P<tail>.+)", re.IGNORECASE)
+FIGURE_CAPTION_RE = re.compile(r"Figure\s+(?P<number>\d+)\s*:?\s*(?P<tail>.+)", re.IGNORECASE)
 FIGURE_INDEX_RE = re.compile(
     r'href="(?P<html>[^"#]+)#figure-(?P<number>\d+)">(?P<caption>Figure\s+\d+:\s*[^<]+)</a>',
     re.IGNORECASE,
@@ -41,6 +42,7 @@ class ParagraphScan:
     text: str
     chapter_title: str
     chapter_path: str
+    style_id: str
     is_heading: bool
     caption_number: int | None
     caption_text: str | None
@@ -108,10 +110,13 @@ def _chapter_map(summary_path: Path) -> tuple[dict[str, str], dict[int, str], di
         if not chapter_path.name.startswith("chapter-"):
             continue
         title = normalize_visible_text(match.group("title"))
-        by_title[title] = str(chapter_path)
+        by_title[_title_key(title)] = str(chapter_path)
         chapter_match = CHAPTER_MARKER_RE.match(title)
         if chapter_match is not None:
             chapter_number = int(chapter_match.group("number"))
+            plain_title = normalize_visible_text(chapter_match.group("title") or "")
+            if plain_title:
+                by_title[_title_key(plain_title)] = str(chapter_path)
             by_number[chapter_number] = str(chapter_path)
             by_number_title[chapter_number] = title
     return by_title, by_number, by_number_title
@@ -123,6 +128,69 @@ def _markdown_heading_title(chapter_path: Path) -> str:
         if stripped.startswith("# "):
             return normalize_visible_text(stripped[2:])
     return chapter_path.stem
+
+
+def _plain_chapter_title(title: str) -> str:
+    chapter_match = CHAPTER_MARKER_RE.match(title)
+    if chapter_match is None:
+        return normalize_visible_text(title)
+    return normalize_visible_text(chapter_match.group("title") or "")
+
+
+def _title_key(title: str) -> str:
+    normalized = normalize_visible_text(title)
+    decomposed = unicodedata.normalize("NFKD", normalized)
+    stripped = "".join(char for char in decomposed if not unicodedata.combining(char))
+    return stripped.casefold()
+
+
+def _resolve_chapter_marker(
+    chapter_match: re.Match[str],
+    *,
+    normalized_text: str,
+    title_to_path: dict[str, str],
+    chapter_number_to_path: dict[int, str],
+    chapter_number_to_title: dict[int, str],
+) -> tuple[str, str] | None:
+    chapter_number = int(chapter_match.group("number"))
+    expected_title = chapter_number_to_title.get(chapter_number, "")
+    expected_plain_title = _plain_chapter_title(expected_title)
+    observed_plain_title = normalize_visible_text(chapter_match.group("title") or "")
+
+    if normalized_text != expected_title and observed_plain_title != expected_plain_title:
+        return None
+
+    chapter_path = title_to_path.get(_title_key(normalized_text), "")
+    if not chapter_path:
+        chapter_path = chapter_number_to_path.get(chapter_number, "")
+    if not chapter_path:
+        return None
+
+    chapter_title = expected_title or normalized_text
+    return chapter_title, chapter_path
+
+
+def _resolve_pending_chapter_title(
+    pending_chapter_number: int | None,
+    *,
+    normalized_text: str,
+    chapter_number_to_path: dict[int, str],
+    chapter_number_to_title: dict[int, str],
+) -> tuple[str, str] | None:
+    if pending_chapter_number is None:
+        return None
+
+    expected_title = chapter_number_to_title.get(pending_chapter_number, "")
+    expected_plain_title = _plain_chapter_title(expected_title)
+    if not expected_plain_title:
+        return None
+    if _title_key(normalized_text) != _title_key(expected_plain_title):
+        return None
+
+    chapter_path = chapter_number_to_path.get(pending_chapter_number, "")
+    if not chapter_path:
+        return None
+    return expected_title or normalized_text, chapter_path
 
 
 def _figure_index_map(
@@ -321,11 +389,36 @@ def _cluster_bounds(scans: list[ParagraphScan], caption_index: int) -> tuple[int
 
 def _published_asset_candidates(images_dir: Path, figure_number: int) -> list[str]:
     prefix = f"figure-{figure_number:03d}"
-    return sorted(
-        path.name
+    candidates = [
+        path
         for path in images_dir.glob(prefix + "*")
         if path.is_file() and path.name != "figures.zip"
-    )
+    ]
+    if not candidates:
+        return []
+
+    extension_priority = {
+        ".webp": 0,
+        ".svg": 1,
+        ".png": 2,
+        ".jpg": 3,
+        ".jpeg": 4,
+    }
+    by_stem: dict[str, list[Path]] = {}
+    for candidate in candidates:
+        by_stem.setdefault(candidate.stem, []).append(candidate)
+
+    selected: list[str] = []
+    for stem in sorted(by_stem):
+        preferred = min(
+            by_stem[stem],
+            key=lambda candidate: (
+                extension_priority.get(candidate.suffix.lower(), 999),
+                candidate.name,
+            ),
+        )
+        selected.append(preferred.name)
+    return selected
 
 
 def _record_score(record: FigureRecord) -> tuple[int, int]:
@@ -341,6 +434,7 @@ def build_figure_inventory(
     summary_path: Path,
 ) -> list[FigureRecord]:
     title_to_path, chapter_number_to_path, chapter_number_to_title = _chapter_map(summary_path)
+    active_chapter_paths = set(chapter_number_to_path.values())
     (
         figure_number_to_path,
         figure_number_to_caption,
@@ -361,18 +455,55 @@ def build_figure_inventory(
         scans: list[ParagraphScan] = []
         current_chapter_title = ""
         current_chapter_path = ""
+        pending_chapter_number: int | None = None
 
         for index, paragraph in enumerate(document_root.findall(".//w:body/w:p", W_NS)):
             text = _paragraph_text(paragraph)
             style_id = _paragraph_style(paragraph)
+            normalized_text = normalize_visible_text(text)
             chapter_match = CHAPTER_MARKER_RE.match(text)
             if chapter_match is not None:
-                chapter_number = int(chapter_match.group("number"))
-                normalized_text = normalize_visible_text(text)
-                current_chapter_title = chapter_number_to_title.get(chapter_number, normalized_text)
-                current_chapter_path = title_to_path.get(normalized_text, "")
-                if not current_chapter_path:
-                    current_chapter_path = chapter_number_to_path.get(chapter_number, "")
+                chapter_target = _resolve_chapter_marker(
+                    chapter_match,
+                    normalized_text=normalized_text,
+                    title_to_path=title_to_path,
+                    chapter_number_to_path=chapter_number_to_path,
+                    chapter_number_to_title=chapter_number_to_title,
+                )
+                if chapter_target is not None:
+                    current_chapter_title, current_chapter_path = chapter_target
+                    pending_chapter_number = None
+                elif not normalize_visible_text(chapter_match.group("title") or ""):
+                    pending_chapter_number = int(chapter_match.group("number"))
+            elif _title_key(normalized_text) in title_to_path and _is_heading_paragraph(style_id, text):
+                current_chapter_path = title_to_path[_title_key(normalized_text)]
+                current_chapter_title = chapter_path_to_title.get(current_chapter_path, "")
+                if not current_chapter_title:
+                    chapter_number = next(
+                        (
+                            number
+                            for number, chapter_path in chapter_number_to_path.items()
+                            if chapter_path == current_chapter_path
+                        ),
+                        None,
+                    )
+                    current_chapter_title = (
+                        chapter_number_to_title.get(chapter_number, normalized_text)
+                        if chapter_number is not None
+                        else normalized_text
+                    )
+                pending_chapter_number = None
+            elif pending_chapter_number is not None:
+                if normalized_text:
+                    chapter_target = _resolve_pending_chapter_title(
+                        pending_chapter_number,
+                        normalized_text=normalized_text,
+                        chapter_number_to_path=chapter_number_to_path,
+                        chapter_number_to_title=chapter_number_to_title,
+                    )
+                    pending_chapter_number = None
+                    if chapter_target is not None:
+                        current_chapter_title, current_chapter_path = chapter_target
 
             if not current_chapter_title:
                 continue
@@ -384,6 +515,7 @@ def build_figure_inventory(
                     text=text,
                     chapter_title=current_chapter_title,
                     chapter_path=current_chapter_path,
+                    style_id=style_id,
                     is_heading=_is_heading_paragraph(style_id, text),
                     caption_number=caption[0] if caption else None,
                     caption_text=caption[1] if caption else None,
@@ -396,16 +528,25 @@ def build_figure_inventory(
             )
 
     records_by_number: dict[int, FigureRecord] = {}
+    ranking_by_number: dict[int, tuple[int, int, int]] = {}
     for scan_index, scan in enumerate(scans):
         if scan.caption_number is None or scan.caption_text is None:
             continue
         start, end = _cluster_bounds(scans, scan_index)
         merged_stats = _merge_stats([candidate.objects for candidate in scans[start : end + 1]])
         chapter_path = figure_number_to_path.get(scan.caption_number, scan.chapter_path)
+        if chapter_path not in active_chapter_paths:
+            chapter_path = scan.chapter_path
         chapter_title = chapter_path_to_title.get(chapter_path, scan.chapter_title)
+        figure_index_path = figure_number_to_path.get(scan.caption_number, "")
+        figure_index_caption = (
+            figure_number_to_caption.get(scan.caption_number)
+            if figure_index_path == chapter_path and figure_index_path in active_chapter_paths
+            else None
+        )
         record = FigureRecord(
             number=scan.caption_number,
-            caption=figure_number_to_caption.get(scan.caption_number, scan.caption_text),
+            caption=figure_index_caption or scan.caption_text,
             chapter_title=chapter_title,
             chapter_path=chapter_path,
             caption_paragraph_index=scan.index,
@@ -416,7 +557,12 @@ def build_figure_inventory(
             published_assets=_published_asset_candidates(images_dir, scan.caption_number),
         )
         existing = records_by_number.get(record.number)
-        if existing is None or _record_score(record) > _record_score(existing):
+        ranking = (
+            1 if scan.style_id.lower() == "caption" else 0,
+            *_record_score(record),
+        )
+        if existing is None or ranking > ranking_by_number.get(record.number, (0, -1, -1)):
             records_by_number[record.number] = record
+            ranking_by_number[record.number] = ranking
 
     return [records_by_number[number] for number in sorted(records_by_number)]
