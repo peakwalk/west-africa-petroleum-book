@@ -21,15 +21,44 @@
 - PDF 图表流水线的 WebP 输出是可选的。当没有可写 WebP 编码器时，`png` 是可接受的备用格式。
 
 ## OpenSpec 与 Superpowers 工作流
-- 在开始非平凡工作时使用 Superpowers。请求含糊时使用其澄清或头脑风暴工作流；在编辑代码、渲染脚本、测试或书籍生成逻辑前，使用其规划和 TDD 导向工作流。
+
+### 角色与边界
 - 优先使用仓库本地技能。工作涉及章节、DOCX 对齐、图表、mdBook 输出或生成的站点资源时，`.agents/skills/mdbook-docx-figure-workflow/SKILL.md` 是必读参考。
-- 使用 OpenSpec 作为持久产品、工作流、构建、图表流水线和站点生成规格的权威来源。
-- 新增用户可见的书籍/站点行为、图表渲染或图表元数据行为、DOCX 对齐规则、落地页生成、插件行为、构建/测试工作流、影响多个章节/脚本/生成输出的变更、架构重构和工作流政策变更，都必须有 OpenSpec 变更。
-- 以下情况通常可以跳过 OpenSpec：错别字修正、窄范围文案编辑、一次性章节对齐修正、在已有规格变更后更新生成产物，以及不改变预期行为的小型测试期望更新。
-- 需要 OpenSpec 时，应先创建或更新 proposal、design、tasks 和 spec delta，再进行大范围实现。OpenSpec 是持久设计记录，不要创建与其冲突的 Superpowers-only 最终设计文档。
-- 如果 Superpowers 头脑风暴产出了有用的设计决策，将其总结进 OpenSpec 变更中。大范围实现前先取得人类对 OpenSpec 方向的批准，并让 OpenSpec tasks、specs 和 archive 状态与最终代码保持一致。
-- Superpowers 回答“代理应该如何工作”。OpenSpec 回答“这个仓库应该做什么”。如果二者冲突，产品行为遵循仓库专用说明和 OpenSpec specs，执行方式遵循 Superpowers；当冲突会改变范围或预期行为时，询问用户。
-- 不要只凭 OpenSpec 更新就声称完成；仍然需要实现和仓库专用验证。不要只凭 Superpowers 规划就声称完成；结果必须有测试和检查支撑。
+- OpenSpec 是本仓库“要改什么”的持久权威系统，负责范围、非目标、验收标准、验证要求、回滚条件和长期需求。
+- Superpowers 是“代理如何工作”的选择性执行辅助，负责澄清、方案探索、规划、测试纪律、增量执行和复审技巧。
+- 不要为同一个变更维护并行的持久事实来源。只要 `openspec/changes/<change-name>/` 已存在，该目录就是权威记录。
+
+### 何时必须使用 OpenSpec
+- 对以下改动，应在大范围实现前创建或更新 OpenSpec 变更：新增用户可见的书籍或站点行为；图表渲染、图表元数据或 DOCX 对齐行为；落地页生成；构建、测试或验证工作流变化；插件或工作流政策变化；架构重构；跨多个章节、脚本、生成产物或版本的变更；以及任何验收标准、回滚条件或回归边界本来会含糊不清的改动。
+- 只要是非平凡且由 AI 辅助完成的 bug 修复或重构，并且会改变行为而不只是整理代码结构，也必须有 OpenSpec。
+- 对低风险但非平凡的工作，OpenSpec 变更本身可以直接作为工作计划，不必额外暂停等待批准；但如果用户、仓库安全规则或需求歧义要求确认，则仍然要先确认。
+- 对高风险、跨版本、架构级、工作流/治理级或行为变更类工作，在 proposal、design、tasks 和 spec delta 完整且用户已批准方向之前，不要做大范围实现。
+
+### 何时可以跳过 OpenSpec
+- 以下情况通常可以跳过 OpenSpec：错别字修正、窄范围文案编辑、一次性章节对齐修正、对已触达文件做机械格式化、在已有规格变更后刷新生成产物，以及不改变预期行为的小型测试期望更新。
+- 仅文档澄清类改动，只有在它不改变支持边界、架构、工作流规则、验证要求或操作行为时，才可以跳过 OpenSpec。
+- 如果一项原本跳过 OpenSpec 的改动逐渐超出上述窄范围，应立即停止继续实现，先补建或更新 OpenSpec 变更。
+
+### OpenSpec 文档规则
+- 本地执行 OpenSpec 命令时，优先使用 `./node_modules/.bin/openspec ...`。
+- 新建中的变更目录默认使用 `openspec/changes/chg-YYYYMMDD-HHMMSS-<slug>/` 命名。已接受的历史变更可以保留现有 ID。
+- 每一份持久 OpenSpec 文档都必须在同一个变更目录里保持英文和简体中文对应文件同步：`proposal.md` + `proposal.zh_CN.md`、`design.md` + `design.zh_CN.md`、`tasks.md` + `tasks.zh_CN.md`，以及 `specs/<capability>/spec.md` + `specs/<capability>/spec.zh_CN.md`。
+- 英文 OpenSpec 文件仍然是机器校验的权威文件；`.zh_CN.md` 文件是必须同步的人类可读对应版本。
+- 一个 OpenSpec 变更至少应记录：问题本身、范围与非目标、受影响的文件、版本和能力、来源证据或上下文图谱、高风险面、实施任务、验收标准、验证或 desk check 计划，以及在需要时的回滚/降级条件和批准状态。
+
+### Superpowers 使用规则
+- 只有当 Superpowers 能实质性提升澄清、方案探索、设计复审、实施规划、特征化测试、小步可逆执行或最终复审时，才使用它。
+- 不要假设完整的上游 Superpowers 工作流已经在本仓库启用。只有通过本地 Codex 技能发现路径明确暴露出来的技能，才算本仓库可用。
+- 除非用户明确要求，或当前改动区域已经有可靠的仓库本地命令让该技巧值得使用，否则不要强制执行仅 TDD、git worktree 或分支清理流程。
+- 如果 Superpowers 产出了持久化的设计说明、计划、任务拆分、验收标准或复审结论，应把这些内容写入当前 OpenSpec 变更，或写入另一个被本仓库认可的原生文档。
+- 当某个变更已经有活跃的 OpenSpec 目录时，持久化的设计、计划、任务、验收、验证和复审决策都应落在 `openspec/changes/<change-name>/` 下。不要再为同一变更在 `docs/superpowers/**` 下单独创建持久文件，除非它们被明确标注为辅助证据，并回指权威 OpenSpec 路径。
+- 如果当前没有活跃 OpenSpec 变更，且 OpenSpec 不可用或不需要，持久化的 Superpowers 产物可以放在 `docs/superpowers/specs/` 和 `docs/superpowers/plans/` 下；目录不存在时先创建，并使用可排序的时间戳前缀命名。
+
+### 冲突处理与完成标准
+- 如果 OpenSpec 与 Superpowers 冲突，OpenSpec 决定“做什么、为什么做、范围、非目标、验收标准、验证要求和回滚条件”；Superpowers 只决定“如何执行”。
+- 用户指令、本仓库的 AGENTS 规则、仓库本地技能，以及必须遵守的验证和图表工作流规则，优先级都高于 OpenSpec 和 Superpowers。
+- 如果冲突会影响范围、安全性、架构、验证方式或用户可见行为，应在编辑前先向用户确认。
+- 不要只因为更新了 OpenSpec 或写完了 Superpowers 计划就声称完成；仍然必须完成实现，并运行与本次改动最相关、最窄范围的仓库验证。
 
 ## 常用命令
 - `npm run build`

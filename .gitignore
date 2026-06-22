@@ -11,3 +11,7 @@ __pycache__/
 /.playwright-cli/
 /artifacts/
 /node_modules/
+/resources/*.docx
+/resources/*.pdf
+/resources/**/*.docx
+/resources/**/*.pdf

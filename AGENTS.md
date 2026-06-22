@@ -21,15 +21,44 @@
 - WebP output from the PDF figure pipeline is optional. `png` is the acceptable fallback when no writable WebP encoder is available.
 
 ## OpenSpec and Superpowers Workflow
-- Use Superpowers at the start of non-trivial work. Use its clarification or brainstorming workflow when the request is ambiguous, and its planning and TDD-oriented workflows before editing code, render scripts, tests, or book-generation logic.
+
+### Roles and Boundaries
 - Use repo-local skills first. `.agents/skills/mdbook-docx-figure-workflow/SKILL.md` is a required reference when work touches chapters, DOCX parity, figures, mdBook output, or generated site assets.
-- Use OpenSpec as the canonical source of truth for durable product, workflow, build, figure-pipeline, and site-generation specifications.
-- Require an OpenSpec change for new user-visible book/site behavior; figure rendering or figure metadata behavior; DOCX parity rules; landing-page generation; plugin behavior; build/test workflows; changes affecting multiple chapters, scripts, or generated outputs; architectural refactors; and workflow policy changes.
-- OpenSpec can usually be skipped for typo fixes, narrow copy edits, one-off chapter parity corrections, updating generated artifacts after an already-specified change, and small test expectation updates that do not change intended behavior.
-- When OpenSpec is required, create or update the proposal, design, tasks, and spec delta before broad implementation. Keep OpenSpec as the durable design record, and do not create a separate Superpowers-only final design document that conflicts with it.
-- If Superpowers brainstorming produces useful design decisions, summarize them into the OpenSpec change. Get human approval for the OpenSpec direction before broad implementation, and keep OpenSpec tasks, specs, and archive state aligned with the final code.
-- Superpowers answers how the agent should work. OpenSpec answers what this repo is supposed to do. If they conflict, follow repo-specific instructions and OpenSpec specs for product behavior, follow Superpowers for execution method, and ask the user when the conflict changes scope or expected behavior.
-- Never claim completion from an OpenSpec update alone; implementation and repo-specific verification are still required. Never claim completion from Superpowers planning alone; tests and checks must support the result.
+- OpenSpec is the canonical durable system for what this repo should change: scope, non-goals, acceptance criteria, validation expectations, rollback conditions, and long-lived requirements.
+- Superpowers is a selective execution aid for how the agent should work: clarification, option discovery, planning, testing discipline, incremental execution, and review technique.
+- Do not maintain parallel durable sources of truth for the same change. If `openspec/changes/<change-name>/` exists, that directory is canonical.
+
+### When OpenSpec Is Required
+- Create or update an OpenSpec change before broad implementation for new user-visible book or site behavior; figure rendering, figure metadata, or DOCX parity behavior; landing-page generation; build/test/validation workflow changes; plugin or workflow policy changes; architectural refactors; changes spanning multiple chapters, scripts, generated outputs, or editions; and any change whose acceptance criteria, rollback conditions, or regression-sensitive behavior would otherwise be ambiguous.
+- OpenSpec is also required for non-trivial AI-assisted bug fixes or refactors that change behavior rather than only code structure.
+- For low-risk but non-trivial work, an OpenSpec change may serve as the working plan without a separate approval pause unless the user, repository safety rules, or ambiguity require confirmation.
+- For high-risk, cross-edition, architecture, workflow/governance, or behavior-changing work, do not implement broadly until the proposal, design, tasks, and spec delta exist and the user has approved the direction.
+
+### When OpenSpec Can Be Skipped
+- OpenSpec can usually be skipped for typo fixes, narrow copy edits, one-off chapter parity corrections, mechanical formatting in already-touched files, generated artifact refreshes after an already-specified change, and small test expectation updates that do not change intended behavior.
+- Documentation-only clarifications may skip OpenSpec only when they do not change support boundaries, architecture, workflow rules, validation expectations, or operational behavior.
+- If a skipped change grows beyond that narrow scope, stop and create or update an OpenSpec change before continuing.
+
+### OpenSpec Artifact Rules
+- Prefer `./node_modules/.bin/openspec ...` for local OpenSpec commands.
+- New active change directories should use `openspec/changes/chg-YYYYMMDD-HHMMSS-<slug>/` by default. Existing accepted changes may keep their current IDs.
+- Every durable OpenSpec document must keep English and Simplified Chinese companions aligned in the same change: `proposal.md` + `proposal.zh_CN.md`, `design.md` + `design.zh_CN.md`, `tasks.md` + `tasks.zh_CN.md`, and `specs/<capability>/spec.md` + `specs/<capability>/spec.zh_CN.md`.
+- English OpenSpec files remain the canonical machine-validated files; `.zh_CN.md` files are required human-readable companions.
+- An OpenSpec change should record the problem, scope and non-goals, affected files, editions, and capabilities, source evidence or context map, high-risk surfaces, implementation tasks, acceptance criteria, validation or desk-check plan, rollback or downgrade conditions, and approval state where needed.
+
+### Superpowers Usage Rules
+- Use Superpowers when it materially improves clarification, option discovery, design review, implementation planning, characterization testing, small reversible execution, or final review.
+- Do not assume the full upstream Superpowers workflow is enabled. Only skills intentionally exposed through the local Codex skill-discovery path are active for this repository.
+- Do not require TDD-only execution, git worktrees, or branch-cleanup flows unless the user explicitly asks for them or the touched area already has a reliable repo-local command that makes the technique worthwhile.
+- When Superpowers produces durable design notes, plans, task splits, acceptance criteria, or review conclusions, write that content into the active OpenSpec change or another approved repo-native document.
+- When an active OpenSpec change exists, durable design, plan, task, acceptance, validation, and review decisions belong under `openspec/changes/<change-name>/`. Do not create separate durable files under `docs/superpowers/**` for the same change unless they are clearly marked as supporting evidence that points back to the canonical OpenSpec path.
+- If no active OpenSpec change exists and OpenSpec is unavailable or not required, durable Superpowers artifacts may live under `docs/superpowers/specs/` and `docs/superpowers/plans/`; create the directory if missing and use a sortable timestamp prefix.
+
+### Conflict Resolution and Completion
+- If OpenSpec and Superpowers conflict, OpenSpec controls what to build, why it exists, scope, non-goals, acceptance criteria, validation expectations, and rollback conditions. Superpowers controls only execution technique.
+- User instructions, this repository's AGENTS rules, repo-local skills, and required validation and figure workflow rules override both OpenSpec and Superpowers.
+- If the conflict changes scope, safety, architecture, validation, or user-visible behavior, stop and ask the user before editing.
+- Never claim completion from an OpenSpec update alone or from Superpowers planning alone; implementation and the narrowest relevant repo verification are still required.
 
 ## Common Commands
 - `npm run build`
