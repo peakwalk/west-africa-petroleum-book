@@ -544,6 +544,85 @@
     });
   }
 
+  function installFigureImageOpenLinks() {
+    const figureImages = Array.from(document.querySelectorAll(".reader-article .figure-card img")).filter(function (image) {
+      return !image.closest("a");
+    });
+
+    if (!figureImages.length) {
+      return;
+    }
+
+    function getViewerStrings() {
+      const locale = (document.documentElement.lang || "en").trim().toLowerCase();
+
+      if (locale.startsWith("fr")) {
+        return {
+          openFigure: "Ouvrir la figure",
+          openInNewTab: "dans un nouvel onglet",
+        };
+      }
+
+      return {
+        openFigure: "Open",
+        openInNewTab: "in new tab",
+      };
+    }
+
+    function getFigureLabel(imageElement) {
+      const figureCard = imageElement.closest(".figure-card");
+
+      return normalizeText(
+        figureCard && figureCard.querySelector(".figure-card-label")
+          ? figureCard.querySelector(".figure-card-label").textContent
+          : ""
+      );
+    }
+
+    function openImageInNewTab(imageElement) {
+      const imageUrl = imageElement.currentSrc || imageElement.getAttribute("src") || "";
+
+      if (!imageUrl) {
+        return;
+      }
+
+      const openedWindow = window.open(imageUrl, "_blank", "noopener");
+
+      if (openedWindow) {
+        openedWindow.opener = null;
+      }
+    }
+
+    const strings = getViewerStrings();
+
+    figureImages.forEach(function (figureImage) {
+      if (figureImage.dataset.figureViewerBound === "true") {
+        return;
+      }
+
+      const figureLabel = getFigureLabel(figureImage);
+
+      figureImage.dataset.figureViewerBound = "true";
+      figureImage.classList.add("figure-card-image--zoom-link");
+      figureImage.tabIndex = 0;
+      figureImage.setAttribute("role", "link");
+      figureImage.setAttribute(
+        "aria-label",
+        strings.openFigure + " " + (figureLabel || "image") + " " + strings.openInNewTab
+      );
+      figureImage.addEventListener("click", function (event) {
+        event.preventDefault();
+        openImageInNewTab(figureImage);
+      });
+      figureImage.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openImageInNewTab(figureImage);
+        }
+      });
+    });
+  }
+
   function annotateTables() {
     function getLocalizedTableLabel() {
       const locale = (document.documentElement.lang || "en").trim().toLowerCase();
@@ -2723,6 +2802,7 @@
   annotateTables();
   enhanceTable6();
   annotateFigureCaptions();
+  installFigureImageOpenLinks();
   installCrossReferenceLinks();
 
   document.addEventListener("DOMContentLoaded", function () {

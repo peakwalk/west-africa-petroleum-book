@@ -9,6 +9,8 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 CUSTOM_CSS_PATH = ROOT_DIR / "theme/custom.css"
 CUSTOM_JS_PATH = ROOT_DIR / "theme/custom.js"
 TEST_SITE_RENDER_PATH = ROOT_DIR / "scripts/test-site-render.sh"
+EN_BOOK_TOML_PATH = ROOT_DIR / "editions/en/book.toml"
+FR_BOOK_TOML_PATH = ROOT_DIR / "editions/fr/book.toml"
 
 
 def _rule_block(css: str, selector: str) -> str:
@@ -20,6 +22,36 @@ def _rule_block(css: str, selector: str) -> str:
 
 
 class ThemeCustomCssTest(unittest.TestCase):
+    def test_book_tomls_load_theme_custom_js_without_vendored_panzoom(self) -> None:
+        en_book_toml = EN_BOOK_TOML_PATH.read_text(encoding="utf-8")
+        fr_book_toml = FR_BOOK_TOML_PATH.read_text(encoding="utf-8")
+
+        self.assertIn('additional-js = ["theme/ga.js", "theme/custom.js"]', en_book_toml)
+        self.assertIn('additional-js = ["theme/ga.js", "theme/custom.js"]', fr_book_toml)
+        self.assertNotIn("theme/vendor/panzoom.min.js", en_book_toml)
+        self.assertNotIn("theme/vendor/panzoom.min.js", fr_book_toml)
+
+    def test_reader_figure_new_tab_contract_is_present_in_theme_sources(self) -> None:
+        css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
+        js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("function installFigureImageOpenLinks()", js)
+        self.assertIn('document.querySelectorAll(".reader-article .figure-card img")', js)
+        self.assertIn('window.open(imageUrl, "_blank", "noopener")', js)
+        self.assertIn('event.key === "Enter" || event.key === " "', js)
+        self.assertIn(".figure-card-image--zoom-link:focus-visible {", css)
+        self.assertNotIn('window.Panzoom || window.panzoom', js)
+        self.assertNotIn(".figure-viewer {", css)
+
+    def test_reader_figure_new_tab_flow_removes_custom_viewer_fit_logic(self) -> None:
+        js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
+
+        self.assertNotIn("function syncImageBoundsToViewport()", js)
+        self.assertNotIn("viewport.getBoundingClientRect()", js)
+        self.assertNotIn("image.style.maxWidth =", js)
+        self.assertNotIn("image.style.maxHeight =", js)
+        self.assertNotIn('window.addEventListener("resize", handleViewerResize);', js)
+
     def test_site_render_formula_coverage_is_optional_without_docx_resources(self) -> None:
         script = TEST_SITE_RENDER_PATH.read_text(encoding="utf-8")
 

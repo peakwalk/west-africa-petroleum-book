@@ -33,6 +33,7 @@ def parse_args() -> argparse.Namespace:
         description="Serve the built preview with HTML no-cache headers."
     )
     parser.add_argument("--host", default="127.0.0.1")
+    parser.add_argument("--display-host")
     parser.add_argument("--port", type=int, default=3002)
     parser.add_argument("--directory", required=True)
     return parser.parse_args()
@@ -42,8 +43,12 @@ def main() -> None:
     args = parse_args()
     handler = functools.partial(PreviewRequestHandler, directory=args.directory)
     server = ThreadingHTTPServer((args.host, args.port), handler)
+    display_host = args.display_host or args.host
 
-    print(f"Serving preview on http://{args.host}:{args.port}/ from {args.directory}")
+    print(
+        f"Serving preview on http://{display_host}:{args.port}/ from {args.directory}",
+        flush=True,
+    )
     try:
         server.serve_forever()
     except KeyboardInterrupt:

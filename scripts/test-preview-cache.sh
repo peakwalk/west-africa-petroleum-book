@@ -6,6 +6,7 @@ SERVER_SCRIPT="$ROOT_DIR/scripts/preview_server.py"
 TMP_DIR="$(mktemp -d "${TMPDIR:-/tmp}/preview-cache.XXXXXX")"
 PORT="${PORT:-38123}"
 HOST="${HOST:-127.0.0.1}"
+DISPLAY_HOST="${DISPLAY_HOST:-192.168.0.104}"
 SERVER_PID=""
 
 cleanup() {
@@ -22,7 +23,7 @@ mkdir -p "$TMP_DIR/assets/css"
 printf '%s\n' '<!doctype html><html><body>preview</body></html>' > "$TMP_DIR/index.html"
 printf '%s\n' 'body { color: #123456; }' > "$TMP_DIR/assets/css/app.css"
 
-python3 "$SERVER_SCRIPT" --host "$HOST" --port "$PORT" --directory "$TMP_DIR" >/tmp/preview-cache-server.log 2>&1 &
+python3 "$SERVER_SCRIPT" --host "$HOST" --display-host "$DISPLAY_HOST" --port "$PORT" --directory "$TMP_DIR" >/tmp/preview-cache-server.log 2>&1 &
 SERVER_PID="$!"
 
 for _ in 1 2 3 4 5 6 7 8 9 10; do
@@ -43,5 +44,7 @@ if grep -qi '^Cache-Control: no-store' /tmp/preview-cache-css.headers; then
   echo "Expected non-HTML preview assets to avoid no-store cache headers" >&2
   exit 1
 fi
+
+grep -q "Serving preview on http://$DISPLAY_HOST:$PORT/" /tmp/preview-cache-server.log
 
 echo "Preview cache header checks passed."

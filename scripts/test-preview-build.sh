@@ -25,9 +25,11 @@ exec "$REAL_PYTHON3" "\$@"
 EOF
 chmod +x "$TMP_BIN_DIR/python3"
 
-PATH="$TMP_BIN_DIR:$PATH" "$ROOT_DIR/scripts/preview.sh" >/tmp/preview-build.log 2>&1
+HOST="0.0.0.0" PREVIEW_DISPLAY_HOST="192.168.0.104" PATH="$TMP_BIN_DIR:$PATH" "$ROOT_DIR/scripts/preview.sh" >/tmp/preview-build.log 2>&1
 
 test -f "$ROOT_DIR/public/book/reader-page-meta.json"
-grep -q 'chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html' "$ROOT_DIR/public/book/reader-page-meta.json"
+grep -q 'chapters/chapter-01-general-introduction.html' "$ROOT_DIR/public/book/reader-page-meta.json"
+grep -q 'Landing page: http://192.168.0.104:3002/' /tmp/preview-build.log
+grep -q 'French book:  http://192.168.0.104:3002/fr/book/' /tmp/preview-build.log
 
 echo "Preview build includes reader page metadata."
