@@ -130,7 +130,17 @@ def _coverage_diffs(
         for chapter_path, image_path in refs:
             asset_path = (Path(chapter_path).parent / image_path).resolve()
             if asset_path.exists():
-                existing_asset_found = True
+                if asset_path.stat().st_size > 0:
+                    existing_asset_found = True
+                else:
+                    diffs.append(
+                        FigureCoverageDiff(
+                            figure_number=record.number,
+                            chapter_path=chapter_path,
+                            diff_type="assets.empty_file",
+                            detail=f"Markdown references empty asset file {image_path}.",
+                        )
+                    )
             else:
                 diffs.append(
                     FigureCoverageDiff(
@@ -146,7 +156,7 @@ def _coverage_diffs(
                     figure_number=record.number,
                     chapter_path=record.chapter_path or record.chapter_title,
                     diff_type="assets.no_existing_reference_target",
-                    detail="All Markdown image references for this figure point to files that do not exist on disk.",
+                    detail="All Markdown image references for this figure point to files that are missing or empty.",
                 )
             )
 
@@ -163,9 +173,28 @@ def _coverage_diffs(
             )
         )
 
-    manifest_candidates = {record.number: set(record.published_assets) for record in records}
     for record in records:
         if record.published_assets:
+            for asset_name in record.published_assets:
+                asset_path = images_root / asset_name
+                if not asset_path.exists():
+                    diffs.append(
+                        FigureCoverageDiff(
+                            figure_number=record.number,
+                            chapter_path=record.chapter_path or record.chapter_title,
+                            diff_type="manifest.missing_file",
+                            detail=f"Manifest-selected asset {asset_name} does not exist on disk.",
+                        )
+                    )
+                elif asset_path.stat().st_size == 0:
+                    diffs.append(
+                        FigureCoverageDiff(
+                            figure_number=record.number,
+                            chapter_path=record.chapter_path or record.chapter_title,
+                            diff_type="manifest.empty_file",
+                            detail=f"Manifest-selected asset {asset_name} is empty.",
+                        )
+                    )
             continue
         diffs.append(
             FigureCoverageDiff(

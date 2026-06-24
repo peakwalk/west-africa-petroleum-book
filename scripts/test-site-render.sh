@@ -5,6 +5,8 @@ ROOT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
 
 cd "$ROOT_DIR"
 npm run build:site >/dev/null
+python3 scripts/check_docx_formula_coverage.py --edition en >/dev/null
+python3 scripts/check_docx_formula_coverage.py --edition fr >/dev/null
 
 check_contains() {
   file_path="$1"
@@ -65,6 +67,17 @@ check_file_size_at_most() {
   fi
 }
 
+check_file_size_at_least() {
+  file_path="$1"
+  min_bytes="$2"
+  size_bytes="$(wc -c < "$file_path" | tr -d ' ')"
+
+  if [ "$size_bytes" -lt "$min_bytes" ]; then
+    echo "Expected $file_path to be >= $min_bytes bytes but was $size_bytes bytes" >&2
+    exit 1
+  fi
+}
+
 check_image_has_no_opaque_white_fringe() {
   file_path="$1"
   max_pixels="$2"
@@ -113,6 +126,7 @@ check_exists editions/en/content/images/figure-008.webp
 check_exists editions/en/content/images/figure-009.webp
 check_exists editions/en/content/images/figure-010.webp
 check_exists editions/en/content/images/figure-011.webp
+check_file_size_at_least editions/en/content/images/figure-011.webp 1
 check_exists editions/en/content/images/figure-012.webp
 check_exists editions/en/content/images/figure-013.webp
 check_exists editions/en/content/images/figure-014.webp
@@ -608,8 +622,9 @@ check_contains public/fr/cookie-policy.html 'Politique relative aux cookies'
 check_contains public/fr/book/index.html 'class="reader-language-switch"'
 check_contains public/fr/book/index.html 'aria-label="Changer de langue"'
 check_contains public/fr/book/index.html 'href="/book/?lang=en"'
-check_contains public/fr/book/chapters/foreword.html 'href="/book/chapters/foreword.html?lang=en"'
+check_contains public/fr/book/chapters/foreword.html 'href="/book/chapters/foreword-to-the-french-edition.html?lang=en"'
 check_contains public/fr/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html '/book/chapters/chapter-05-hydrocarbon-value-chain.html?lang=en'
+check_contains public/fr/book/chapters/list-of-equations.html 'Liste des équations'
 check_contains public/fr/book/chapters/list-of-tables.html 'aria-label="Navigation des chapitres"'
 check_contains public/fr/book/chapters/list-of-tables.html '<span class="chapter-nav-label">Chapitre précédent</span>'
 check_contains public/fr/book/chapters/list-of-tables.html '<span class="chapter-nav-label">Chapitre suivant</span>'
@@ -618,8 +633,14 @@ check_contains editions/en/content/SUMMARY.md 'chapters/chapter-05-hydrocarbon-v
 check_contains editions/en/content/SUMMARY.md 'chapters/chapter-06-upstream-operations-and-government-roles.md'
 check_contains editions/en/content/SUMMARY.md 'chapters/chapter-08-west-african-fiscal-regimes.md'
 check_contains editions/en/content/SUMMARY.md 'chapters/foreword.md'
+check_contains editions/en/content/SUMMARY.md 'chapters/foreword-to-the-french-edition.md'
+check_contains editions/en/content/SUMMARY.md 'chapters/list-of-equations.md'
+check_contains editions/fr/content/SUMMARY.md 'chapters/list-of-equations.md'
 check_order editions/en/content/SUMMARY.md 'chapters/abbreviations-acronyms-and-abbreviations.md' 'chapters/foreword.md'
-check_order editions/en/content/SUMMARY.md 'chapters/foreword.md' 'chapters/chapter-01-general-introduction.md'
+check_order editions/en/content/SUMMARY.md 'chapters/list-of-tables.md' 'chapters/list-of-equations.md'
+check_order editions/fr/content/SUMMARY.md 'chapters/list-of-tables.md' 'chapters/list-of-equations.md'
+check_order editions/en/content/SUMMARY.md 'chapters/foreword.md' 'chapters/foreword-to-the-french-edition.md'
+check_order editions/en/content/SUMMARY.md 'chapters/foreword-to-the-french-edition.md' 'chapters/chapter-01-general-introduction.md'
 check_contains editions/en/content/chapters/chapter-01-general-introduction.md 'figure-001.webp'
 check_contains editions/en/content/chapters/chapter-01-general-introduction.md 'figure-002.webp'
 check_contains editions/en/content/chapters/chapter-01-general-introduction.md 'figure-003.webp'
@@ -720,6 +741,7 @@ check_contains public/book/chapters/cover.html 'Exploration and Production of Pe
 check_contains public/book/chapters/cover.html 'Upstream Atlas Reference Edition'
 check_contains public/book/chapters/cover.html 'Digital Reading Edition'
 check_file_size_at_most public/book/images/figure-017.webp 5000000
+check_file_size_at_least public/book/images/figure-011.webp 1
 check_not_exists public/book/images/figure-018.jpg
 check_not_exists public/fr/book/images/figure-018.jpg
 check_contains public/book/chapters/list-of-figures.html 'List of Figures'
@@ -729,10 +751,15 @@ check_contains public/book/chapters/list-of-figures.html 'chapter-01-general-int
 check_contains public/book/chapters/list-of-figures.html 'chapter-08-west-african-fiscal-regimes.html#figure-79'
 check_contains public/book/chapters/table-of-contents.html 'Table of Contents'
 check_contains public/book/chapters/table-of-contents.html 'class="reference-index reference-index-toc"'
-check_contains public/book/chapters/table-of-contents.html 'class="reference-index-heading-link" href="chapter-01-general-introduction.html"'
-check_contains public/book/chapters/table-of-contents.html 'class="reference-index-link reference-index-toc-link" href="chapter-01-general-introduction.html#11--hydrocarbon-resources-and-economic-development"'
-check_contains public/book/chapters/table-of-contents.html 'class="reference-index-link reference-index-toc-link" href="chapter-08-west-african-fiscal-regimes.html#84--state-contractor-cash-flow-analysis"'
-check_contains public/book/chapters/table-of-contents.html 'class="reference-index-heading-page">465</span>'
+check_contains public/book/chapters/table-of-contents.html '<h2>Chapter 1: General Introduction</h2>'
+check_contains public/book/chapters/table-of-contents.html 'class="reference-index-link" href="chapter-01-general-introduction.html#11--hydrocarbon-resources-and-economic-development">1.1 Hydrocarbon Resources and Economic Development</a>'
+check_contains public/book/chapters/table-of-contents.html 'class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#84--state-contractor-cash-flow-analysis">8.4 State-Contractor Cash Flow Analysis</a>'
+check_not_contains public/book/chapters/table-of-contents.html 'reference-index-heading-link'
+check_not_contains public/book/chapters/table-of-contents.html 'reference-index-heading-page'
+check_not_contains public/book/chapters/table-of-contents.html 'reference-index-list--toc'
+check_not_contains public/book/chapters/table-of-contents.html 'reference-index-toc-link'
+check_not_contains public/book/chapters/table-of-contents.html 'reference-index-toc-label'
+check_not_contains public/book/chapters/table-of-contents.html 'reference-index-toc-title'
 check_not_contains public/book/chapters/table-of-contents.html '<p>1.General Introduction23</p>'
 check_contains public/book/chapters/table-of-contents.html 'class="chapter-nav-card chapter-nav-previous"'
 check_contains public/book/chapters/table-of-contents.html 'class="chapter-nav-card chapter-nav-next"'
@@ -747,6 +774,10 @@ check_contains public/book/chapters/list-of-tables.html 'class="chapter-nav-card
 check_contains public/book/chapters/list-of-tables.html 'class="chapter-nav-card chapter-nav-next"'
 check_contains public/book/chapters/list-of-tables.html 'chapter-05-hydrocarbon-value-chain.html#table-2'
 check_contains public/book/chapters/list-of-tables.html 'chapter-08-west-african-fiscal-regimes.html#table-11'
+check_contains public/book/chapters/list-of-equations.html 'List of Equations'
+check_contains public/book/chapters/list-of-equations.html 'class="reference-index reference-index-equations"'
+check_contains public/book/chapters/list-of-equations.html 'chapter-06-upstream-operations-and-government-roles.html#formula-6-1'
+check_contains public/book/chapters/list-of-equations.html 'chapter-08-west-african-fiscal-regimes.html#formula-8-3'
 check_contains public/book/chapters/abbreviations-acronyms-and-abbreviations.html 'Abbreviations, Initialisms and Acronyms'
 check_contains public/book/chapters/abbreviations-acronyms-and-abbreviations.html 'AFREC'
 check_contains public/book/chapters/abbreviations-acronyms-and-abbreviations.html 'African Energy Commission'
@@ -754,11 +785,15 @@ check_contains public/book/chapters/abbreviations-acronyms-and-abbreviations.htm
 check_contains public/book/chapters/abbreviations-acronyms-and-abbreviations.html 'class="chapter-nav-card chapter-nav-next"'
 check_contains public/book/chapters/foreword.html 'Foreword to the English Edition'
 check_contains public/book/chapters/foreword.html 'This English edition is based on the original French-language work authored by Charles'
-check_contains public/book/chapters/foreword.html 'href="/fr/book/chapters/foreword.html?lang=fr"'
+check_contains public/book/chapters/foreword.html 'href="/fr/book/?lang=fr"'
 check_contains public/book/chapters/foreword.html '<strong>Matthew</strong><br />'
 check_contains public/book/chapters/foreword.html 'class="chapter-nav-card chapter-nav-previous"'
 check_contains public/book/chapters/foreword.html 'class="chapter-nav-card chapter-nav-next"'
 check_not_contains public/book/chapters/foreword.html 'Geo-extractive resources are a source of income for countries'
+check_contains public/book/chapters/foreword-to-the-french-edition.html 'Foreword to the French Edition'
+check_contains public/book/chapters/foreword-to-the-french-edition.html 'Geo-extractive resources constitute an important source of revenue for countries endowed with them'
+check_contains public/book/chapters/foreword-to-the-french-edition.html 'href="/fr/book/chapters/foreword.html?lang=fr"'
+check_contains public/book/chapters/foreword-to-the-french-edition.html '<strong>Charles</strong><br />'
 check_contains editions/en/content/chapters/chapter-05-hydrocarbon-value-chain.md '<table>'
 check_contains editions/en/content/chapters/chapter-05-hydrocarbon-value-chain.md 'Crude Oil Reserves (MMbbl)'
 check_contains editions/en/content/chapters/chapter-05-hydrocarbon-value-chain.md 'Reference Period'
@@ -781,6 +816,31 @@ check_contains editions/en/content/chapters/chapter-08-west-african-fiscal-regim
 check_contains editions/en/content/chapters/chapter-08-west-african-fiscal-regimes.md 'Table 12 Summary of Profit Oil Sharing Mechanisms and Government Profit Oil Entitlements in Selected West African Countries.'
 check_contains public/book/chapters/chapter-08-west-african-fiscal-regimes.html '<p>Table 11 Summary of Ad Valorem Royalty Rates Applied in Selected West African Countries.</p>'
 check_contains public/book/chapters/chapter-08-west-african-fiscal-regimes.html '<p>Table 12 Summary of Profit Oil Sharing Mechanisms and Government Profit Oil Entitlements in Selected West African Countries.</p>'
+check_contains editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md 'data-equation-label="6.1"'
+check_contains editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md 'data-equation-label="6.2"'
+check_contains editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md 'data-equation-label="6.3"'
+check_contains editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md 'class="formula-group formula-group--volumetric"'
+check_contains editions/en/content/chapters/chapter-08-west-african-fiscal-regimes.md 'data-equation-label="8.1"'
+check_contains editions/en/content/chapters/chapter-08-west-african-fiscal-regimes.md 'data-equation-label="8.2"'
+check_contains editions/en/content/chapters/chapter-08-west-african-fiscal-regimes.md 'data-equation-label="8.3"'
+check_contains editions/en/content/chapters/chapter-08-west-african-fiscal-regimes.md 'class="table-12-h-factor-cell"'
+check_contains public/book/chapters/chapter-06-upstream-operations-and-government-roles.html 'data-equation-label="6.1"'
+check_contains public/book/chapters/chapter-06-upstream-operations-and-government-roles.html 'data-equation-label="6.2"'
+check_contains public/book/chapters/chapter-06-upstream-operations-and-government-roles.html 'data-equation-label="6.3"'
+check_contains public/book/chapters/chapter-06-upstream-operations-and-government-roles.html 'class="formula-group formula-group--volumetric"'
+check_contains public/book/chapters/chapter-06-upstream-operations-and-government-roles.html 'VHcP = GRV × N/G × ϕ × Shc × 1/FVF'
+check_contains public/book/chapters/chapter-06-upstream-operations-and-government-roles.html 'FVF = Reservoir Volume / Surface Volume'
+check_contains public/book/chapters/chapter-06-upstream-operations-and-government-roles.html 'STOIIP = GRV × N/G × ϕ × So × 1/Bo'
+check_contains public/book/chapters/chapter-06-upstream-operations-and-government-roles.html 'GIIP = GRV × N/G × ϕ × Sg × 1/Bg'
+check_contains public/book/chapters/chapter-06-upstream-operations-and-government-roles.html 'GCoS = Ps × Pr × Pse × Pt'
+check_contains public/book/chapters/chapter-06-upstream-operations-and-government-roles.html '= 0.55 (55%)'
+check_contains public/book/chapters/chapter-08-west-african-fiscal-regimes.html 'data-equation-label="8.1"'
+check_contains public/book/chapters/chapter-08-west-african-fiscal-regimes.html 'data-equation-label="8.2"'
+check_contains public/book/chapters/chapter-08-west-african-fiscal-regimes.html 'data-equation-label="8.3"'
+check_contains public/book/chapters/chapter-08-west-african-fiscal-regimes.html 'class="book-formula-bridge">or<'
+check_contains public/book/chapters/chapter-08-west-african-fiscal-regimes.html 'H = 1.626'
+check_contains theme/custom.css '#table-12 .table-12-h-factor-cell > .book-formula {'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const formulaBlock=css.match(/#table-12 \.table-12-h-factor-cell > \.book-formula \{[^}]*\}/);const lineBlock=css.match(/#table-12 \.table-12-h-factor-cell > \.book-formula \.book-formula-line \{[^}]*\}/);if(!formulaBlock||!lineBlock){console.error("Expected Table 12 H-factor formula rule blocks.");process.exit(1);}for(const expected of ["width: 100%;","max-width: none;","overflow-x: visible;","white-space: normal;"]){if(!formulaBlock[0].includes(expected)){console.error(`Expected Table 12 H-factor formula block to include ${expected}`);process.exit(1);}}if(formulaBlock[0].includes("width: max-content;")){console.error("Expected Table 12 H-factor formula block to stop using width: max-content.");process.exit(1);}for(const expected of ["width: 100%;","min-width: 0;","white-space: normal;"]){if(!lineBlock[0].includes(expected)){console.error(`Expected Table 12 H-factor formula line block to include ${expected}`);process.exit(1);}}'
 check_contains public/book/chapters/glossary.html '<strong>API Gravity</strong>'
 check_contains public/book/chapters/glossary.html 'Light oil: &gt;30° API'
 check_contains public/book/chapters/glossary.html 'Medium oil: 20-30° API'
@@ -1470,6 +1530,7 @@ for (const expected of [
   "overflow-x: auto;",
   "overflow-y: hidden;",
   "white-space: nowrap;",
+  "text-align: center;",
 ]) {
   if (!formulaRule[0].includes(expected)) {
     console.error(`Expected volumetric formula CSS to include ${expected}`);
@@ -1482,11 +1543,41 @@ if (!formulaLineRule) {
   process.exit(1);
 }
 for (const expected of [
-  "width: max-content;",
-  "min-width: 100%;",
+  "width: 100%;",
+  "min-width: 0;",
+  "text-align: center;",
 ]) {
   if (!formulaLineRule[0].includes(expected)) {
     console.error(`Expected volumetric formula line CSS to include ${expected}`);
+    process.exit(1);
+  }
+}
+const formulaCopyRule = css.match(/\.formula-group--volumetric \.formula-case-copy \{[\s\S]*?\n\}/);
+if (!formulaCopyRule) {
+  console.error("Expected volumetric formula copy rule in theme/custom.css");
+  process.exit(1);
+}
+for (const expected of [
+  "justify-self: start;",
+  "width: 100%;",
+  "text-align: left;",
+]) {
+  if (!formulaCopyRule[0].includes(expected)) {
+    console.error(`Expected volumetric formula copy CSS to include ${expected}`);
+    process.exit(1);
+  }
+}
+const formulaConnectorRule = css.match(/\.formula-case-connector \{[\s\S]*?\n\}/);
+if (!formulaConnectorRule) {
+  console.error("Expected formula connector rule in theme/custom.css");
+  process.exit(1);
+}
+for (const expected of [
+  "justify-self: start;",
+  "text-align: left;",
+]) {
+  if (!formulaConnectorRule[0].includes(expected)) {
+    console.error(`Expected formula connector CSS to include ${expected}`);
     process.exit(1);
   }
 }
@@ -1562,7 +1653,7 @@ check_contains scripts/build_site.mjs 'listSiteEditions().forEach(buildBookEditi
 check_contains scripts/preview.sh 'npm run build:site >/dev/null'
 check_contains scripts/preview.sh 'French site:  http://$HOST:$PORT/fr/'
 check_contains scripts/preview.sh 'French book:  http://$HOST:$PORT/fr/book/'
-node -e 'const fs=require("fs");const hbs=fs.readFileSync("theme/index.hbs","utf8");for(const expected of ["<body class=\"book-layout-booting\">","sessionStorage.getItem(\"reader-sidebar-scroll-top\")","sessionStorage.setItem(\"reader-sidebar-scroll-top\"","document.body.classList.remove(\"book-layout-booting\");"]){if(!hbs.includes(expected)){console.error(`Expected theme/index.hbs to include ${expected}`);process.exit(1);}}for(const forbidden of ["function bootstrapSidebarProjection()","reader-sidebar-scroll-offset","customElements.whenDefined(\"mdbook-sidebar-scrollbox\")"]){if(hbs.includes(forbidden)){console.error(`Expected theme/index.hbs to stop including ${forbidden}`);process.exit(1);}}'
+node -e 'const fs=require("fs");const hbs=fs.readFileSync("theme/index.hbs","utf8");for(const expected of ["<body class=\"book-layout-booting\">","sessionStorage.getItem(\"reader-sidebar-scroll-top\")","sessionStorage.setItem(\"reader-sidebar-scroll-top\"","document.body.classList.remove(\"book-layout-booting\");"]){if(!hbs.includes(expected)){console.error(`Expected theme/index.hbs to include ${expected}`);process.exit(1);}}for(const forbidden of ["function bootstrapSidebarProjection()","reader-sidebar-scroll-offset","customElements.whenDefined(\"mdbook-sidebar-scrollbox\")"]){if(hbs.includes(forbidden)){console.error(`Expected theme/index.hbs to stop including ${forbidden}`);process.exit(1);}}const initialVariantStart=hbs.indexOf("function applyInitialBookPageVariant() {");const initialVariantEnd=hbs.indexOf("</script>", initialVariantStart);if(initialVariantStart===-1||initialVariantEnd===-1){console.error("Expected applyInitialBookPageVariant() inline script block in theme/index.hbs");process.exit(1);}const initialVariantBlock=hbs.slice(initialVariantStart, initialVariantEnd);for(const expected of ["const tableOfContentsPath = \"table-of-contents.html\";","const listOfEquationsPath = \"list-of-equations.html\";","const isAuxIndexPage =","document.body.classList.add(\"book-page-front-matter-outline-rail\");","document.body.classList.add(\"book-page-aux-index\", \"book-outline-empty\");"]){if(!initialVariantBlock.includes(expected)){console.error(`Expected applyInitialBookPageVariant() to include ${expected}`);process.exit(1);}}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const chapterLink=block(".book-sidebar-shell .chapter li a {");for(const expected of ["font-size: 0.875rem;","line-height: 1.4286;"]){if(!chapterLink.includes(expected)){console.error(`Expected .book-sidebar-shell .chapter li a to include ${expected}`);process.exit(1);}}if(chapterLink.includes("font-size: 14px;")||chapterLink.includes("line-height: 20px;")||chapterLink.includes("font-size: 1.4rem;")||chapterLink.includes("line-height: 2rem;")){console.error("Expected .book-sidebar-shell .chapter li a to use repo-owned typography calibrated for the explicit /book root font contract");process.exit(1);}const partTitle=block(".book-sidebar-shell .chapter li.part-title {");if(!partTitle.includes("font-size: 0.75rem;")){console.error("Expected .book-sidebar-shell .chapter li.part-title to include font-size: 0.75rem;");process.exit(1);}if(partTitle.includes("font-size: 12px;")||partTitle.includes("font-size: 1.2rem;")){console.error("Expected .book-sidebar-shell .chapter li.part-title to stop using legacy sizing under the explicit /book root font contract");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const bookTitle=block(".book-sidebar-book-title {");if(!bookTitle.includes("color: var(--sidebar-fg);")){console.error("Expected .book-sidebar-book-title to align with the normal sidebar navigation text color.");process.exit(1);}const frontBackTitle=block(".reader-sidebar-section--front-matter .reader-sidebar-section-title,");if(!frontBackTitle.includes("color: var(--sidebar-fg);")){console.error("Expected Front Matter and Back Matter section titles to align with the normal sidebar navigation text color.");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const sectionHeader=block(".reader-sidebar-section-header {");if(sectionHeader.includes("line-height: 25%;")){console.error("Expected sidebar section headers to stop relying on line-height: 25% for visual alignment; use explicit layout instead.");process.exit(1);}'
@@ -1771,6 +1862,8 @@ check_contains theme/custom.css '.reference-index .reference-index-link:visited 
 check_contains theme/custom.css 'color: var(--primary);'
 check_contains theme/custom.css 'text-decoration-color: rgba(43, 91, 166, 0.18);'
 check_contains theme/custom.css '.reference-index-link {'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const listBlock=css.match(/\.reference-index-list \{[^}]*\}/);if(!listBlock){console.error("Expected .reference-index-list rule block");process.exit(1);}for(const expected of ["display: grid;","grid-template-columns: minmax(0, 1fr);","width: 100%;","max-width: none;"]){if(!listBlock[0].includes(expected)){console.error(`Expected .reference-index-list to include ${expected}`);process.exit(1);}}const liBlock=css.match(/\.reference-index-list > li \{[^}]*\}/);if(!liBlock||!liBlock[0].includes("min-width: 0;")){console.error("Expected .reference-index-list > li to preserve min-width: 0; so TOC rows cannot shrink-wrap their content.");process.exit(1);}const linkBlock=css.match(/\.reference-index-link \{[^}]*\}/);if(!linkBlock){console.error("Expected .reference-index-link rule block");process.exit(1);}for(const expected of ["display: block;","width: 100%;","text-decoration: none;"]){if(!linkBlock[0].includes(expected)){console.error(`Expected .reference-index-link to include ${expected}`);process.exit(1);}}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");for(const forbidden of [".reference-index-heading-link {",".reference-index-heading-title {",".reference-index-heading-page {",".reference-index-list--toc {",".reference-index-toc-link {",".reference-index-toc-label,",".reference-index-toc-label {",".reference-index-toc-title {",".reference-index-toc-page {"]){if(css.includes(forbidden)){console.error(`Expected TOC-specific selector to be removed: ${forbidden}`);process.exit(1);}}'
 check_contains theme/custom.css '.reference-glossary-list {'
 check_not_contains theme/custom.css '.reference-index-list li::marker {'
 check_contains theme/custom.css '.reference-glossary-item {'
@@ -1778,7 +1871,7 @@ check_contains theme/custom.css '.reader-article .book-formula {'
 check_contains theme/custom.css '.book-formula-line {'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const start=css.indexOf(".book-formula-line {");const end=css.indexOf("}\n\n.book-formula-bridge",start);if(start===-1||end===-1){console.error("Expected .book-formula-line rule block");process.exit(1);}const block=css.slice(start,end+1);if(!block.includes("font-style: normal;")){console.error("Expected .book-formula-line to use normal font style");process.exit(1);}if(block.includes("font-style: italic;")){console.error("Did not expect .book-formula-line to keep italic font style");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const bridgeStart=css.indexOf(".book-formula-bridge {");const bridgeEnd=css.indexOf("}\n\n.formula-anchor-target",bridgeStart);if(bridgeStart===-1||bridgeEnd===-1){console.error("Expected .book-formula-bridge rule block");process.exit(1);}const bridgeBlock=css.slice(bridgeStart,bridgeEnd+1);for(const expected of ["text-align: left;","color: rgba(15, 23, 42, 0.86);","font-size: 0.92rem;","font-weight: 800;","letter-spacing: 0.16em;"]){if(!bridgeBlock.includes(expected)){console.error(`Expected formula bridge styling for: ${expected}`);process.exit(1);}}'
-node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const singleStart=css.indexOf(".reader-article .book-formula {");const singleEnd=css.indexOf("}\n\n.reader-article .book-formula:not(.api-density-formula)",singleStart);const outerStart=css.indexOf(".reader-article .book-formula:not(.api-density-formula) {");const outerEnd=css.indexOf("}\n\n.reader-article .api-density-formula",outerStart);const prospectStart=css.indexOf(".formula-group--prospect > .book-formula,");const prospectEnd=css.indexOf("}\n\n.formula-group--prospect > .book-formula .book-formula-line,",prospectStart);const splitStart=css.indexOf(".formula-group--split > .formula-split-entry > .book-formula {");const splitEnd=css.indexOf("}\n\n.formula-group--split > .formula-split-entry:first-child > .book-formula",splitStart);const panelStart=css.indexOf(".formula-panel .book-formula--panel-row {");const panelEnd=css.indexOf("}\n\n.formula-panel .book-formula--panel-row::before",panelStart);if(singleStart===-1||singleEnd===-1||outerStart===-1||outerEnd===-1||prospectStart===-1||prospectEnd===-1||splitStart===-1||splitEnd===-1||panelStart===-1||panelEnd===-1){console.error("Expected formula rule blocks");process.exit(1);}const singleBlock=css.slice(singleStart,singleEnd+1);const outerBlock=css.slice(outerStart,outerEnd+1);const prospectBlock=css.slice(prospectStart,prospectEnd+1);const splitBlock=css.slice(splitStart,splitEnd+1);const panelBlock=css.slice(panelStart,panelEnd+1);for(const [name,block,expected] of [["single",singleBlock,["font-size: 16px;","line-height: 1.2;"]],["prospect",prospectBlock,["font-size: 16px;","line-height: 1.2;"]],["split",splitBlock,["font-size: 16px;","line-height: 1.28;"]],["panel",panelBlock,["font-size: 16px;","line-height: 1.28;"]]]){for(const value of expected){if(!block.includes(value)){console.error(`Expected ${name} formulas to include ${value}`);process.exit(1);}}}for(const expected of ["margin: 24px 0 22px;"]){if(!singleBlock.includes(expected)){console.error(`Expected standalone formula block to include ${expected}`);process.exit(1);}}for(const expected of ["justify-items: start;","text-align: left;"]){if(!outerBlock.includes(expected)){console.error(`Expected standalone non-table formula alignment for ${expected}`);process.exit(1);}}for(const forbidden of ["margin: 24px auto 22px;","justify-items: center;","text-align: center;"]){if(singleBlock.includes(forbidden)||outerBlock.includes(forbidden)){console.error(`Did not expect standalone non-table formulas to include ${forbidden}`);process.exit(1);}}'
+node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const singleStart=css.indexOf(".reader-article .book-formula {");const singleEnd=css.indexOf("}\n\n.reader-article .book-formula:not(.api-density-formula)",singleStart);const outerStart=css.indexOf(".reader-article .book-formula:not(.api-density-formula) {");const outerEnd=css.indexOf("}\n\n.reader-article .api-density-formula",outerStart);const prospectStart=css.indexOf(".formula-group--prospect > .book-formula,");const prospectEnd=css.indexOf("}\n\n.formula-group--prospect > .book-formula .book-formula-line,",prospectStart);const splitStart=css.indexOf(".formula-group--split > .formula-split-entry > .book-formula {");const splitEnd=css.indexOf("}\n\n.formula-group--split > .formula-split-entry:first-child > .book-formula",splitStart);const panelStart=css.indexOf(".formula-panel .book-formula--panel-row {");const panelEnd=css.indexOf("}\n\n.formula-panel .book-formula--panel-row::before",panelStart);if(singleStart===-1||singleEnd===-1||outerStart===-1||outerEnd===-1||prospectStart===-1||prospectEnd===-1||splitStart===-1||splitEnd===-1||panelStart===-1||panelEnd===-1){console.error("Expected formula rule blocks");process.exit(1);}const singleBlock=css.slice(singleStart,singleEnd+1);const outerBlock=css.slice(outerStart,outerEnd+1);const prospectBlock=css.slice(prospectStart,prospectEnd+1);const splitBlock=css.slice(splitStart,splitEnd+1);const panelBlock=css.slice(panelStart,panelEnd+1);for(const [name,block,expected] of [["single",singleBlock,["font-size: 16px;","line-height: 1.2;"]],["prospect",prospectBlock,["font-size: clamp(20px, 1.55vw, 25px);","line-height: 1.2;"]],["split",splitBlock,["font-size: 16px;","line-height: 1.28;"]],["panel",panelBlock,["font-size: 16px;","line-height: 1.28;"]]]){for(const value of expected){if(!block.includes(value)){console.error(`Expected ${name} formulas to include ${value}`);process.exit(1);}}}for(const expected of ["margin: 24px 0 22px;"]){if(!singleBlock.includes(expected)){console.error(`Expected standalone formula block to include ${expected}`);process.exit(1);}}for(const expected of ["justify-items: start;","text-align: left;"]){if(!outerBlock.includes(expected)){console.error(`Expected standalone non-table formula alignment for ${expected}`);process.exit(1);}}for(const forbidden of ["margin: 24px auto 22px;","justify-items: center;","text-align: center;"]){if(singleBlock.includes(forbidden)||outerBlock.includes(forbidden)){console.error(`Did not expect standalone non-table formulas to include ${forbidden}`);process.exit(1);}}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const start=css.indexOf(".reader-article > .book-formula,");const end=css.indexOf("}\n\n.formula-group {",start);if(start===-1||end===-1){console.error("Expected top-level article formula column rule block");process.exit(1);}const block=css.slice(start,end+1);for(const selector of [".reader-article > .book-formula,",".reader-article > .formula-anchor-target,",".reader-article > .formula-group,",".reader-article > .formula-panel,",".reader-article > .formula-derivation,",".reader-article > .formula-where {"]){if(!block.includes(selector)){console.error(`Expected top-level article formula selector for ${selector}`);process.exit(1);}}for(const expected of ["grid-column: 2;","width: 100%;","max-width: none;","margin-inline: 0;"]){if(!block.includes(expected)){console.error(`Expected top-level article formulas to include ${expected}`);process.exit(1);}}'
 check_contains theme/custom.css '.formula-derivation {'
 check_contains theme/custom.css '.formula-panel {'
@@ -1981,9 +2074,10 @@ check_contains theme/custom.js 'searchbar.select();'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const marker="@media (max-width: 1023px) {";const start=css.indexOf(marker);if(start===-1){console.error("Expected mobile toolbar media query.");process.exit(1);}const next=css.indexOf("\n\n@media",start + marker.length);const block=(next===-1?css.slice(start):css.slice(start,next));for(const expected of [".toolbar-actions {","display: flex;","#mdbook-search-toggle {","display: inline-flex !important;","order: 3;",".toolbar-main {","position: absolute;",".toolbar-main .toolbar-search-slot.hidden {","display: none !important;","#mdbook-menu-bar .book-toolbar .toolbar-actions .toolbar-contact-link {","display: inline-flex !important;","order: 2;",".toolbar-actions .reader-language-switch[data-reader-language-switch=\"toolbar\"] {","order: 1;",".toolbar-actions .toolbar-contact-link .toolbar-link-label {","display: none;"]){if(!block.includes(expected)){console.error(`Expected mobile search access rule ${expected}`);process.exit(1);}}'
 node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");const start=js.indexOf("item.addEventListener(\"mouseenter\", function () {");if(start===-1){console.error("Expected mouseenter handler for search result items.");process.exit(1);}const end=js.indexOf("      });",start);if(end===-1){console.error("Expected end of mouseenter handler for search result items.");process.exit(1);}const block=js.slice(start,end);if(block.includes("renderResults();")){console.error("Search result mouseenter handler must not re-render the full results list.");process.exit(1);}'
 check_contains theme/custom.js 'function applyPageVariants()'
-node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");const start=js.indexOf("function applyPageVariants() {");const end=js.indexOf("\n\n  function moveOutline()",start);if(start===-1||end===-1){console.error("Expected applyPageVariants() block.");process.exit(1);}const block=js.slice(start,end);for(const expected of ["function isFrenchBookPath(pathname) {","function matchesChapterPath(chapterPath) {","const disclaimerPath = \"disclaimer.html\";","const prefacePath = \"preface.html\";","const forewordPath = \"foreword.html\";","const generalIntroductionPath = \"general-introduction.html\";","const generalConclusionPath = \"general-conclusion.html\";","const preserveOutlinePaths = isFrenchBookPath(window.location.pathname)","disclaimerPath,","prefacePath,","forewordPath,","generalIntroductionPath,","generalConclusionPath,","const preserveOutlineRail = preserveOutlinePaths.some(matchesChapterPath);","document.body.classList.toggle(\"book-page-front-matter-outline-rail\", preserveOutlineRail);"]){if(!block.includes(expected)){console.error(`Expected applyPageVariants() to include ${expected}`);process.exit(1);}}'
+node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");const start=js.indexOf("function applyPageVariants() {");const end=js.indexOf("\n\n  function moveOutline()",start);if(start===-1||end===-1){console.error("Expected applyPageVariants() block.");process.exit(1);}const block=js.slice(start,end);for(const expected of ["function isFrenchBookPath(pathname) {","function matchesChapterPath(chapterPath) {","const tableOfContentsPath = \"table-of-contents.html\";","const listOfEquationsPath = \"list-of-equations.html\";","const disclaimerPath = \"disclaimer.html\";","const prefacePath = \"preface.html\";","const forewordPath = \"foreword.html\";","const generalIntroductionPath = \"general-introduction.html\";","const generalConclusionPath = \"general-conclusion.html\";","const preserveOutlinePaths = isFrenchBookPath(window.location.pathname)","tableOfContentsPath,","listOfEquationsPath,","disclaimerPath,","prefacePath,","forewordPath,","generalIntroductionPath,","generalConclusionPath,","const isTableOfContentsPage = matchesChapterPath(tableOfContentsPath);","const preserveOutlineRail = preserveOutlinePaths.some(matchesChapterPath);","document.body.classList.toggle(\"book-page-front-matter-outline-rail\", preserveOutlineRail);","if (isTableOfContentsPage || isListOfFigures || isListOfTables || isListOfEquations || isAbbreviationsPage) {"]){if(!block.includes(expected)){console.error(`Expected applyPageVariants() to include ${expected}`);process.exit(1);}}'
 check_contains theme/custom.js 'disclaimer.html'
 check_contains theme/custom.js 'preface.html'
+check_contains theme/custom.js 'list-of-equations.html'
 check_contains theme/custom.js 'cover.html'
 check_not_contains theme/custom.js 'front-matter.html'
 check_contains theme/custom.js 'list-of-figures.html'
@@ -2019,7 +2113,7 @@ check_contains theme/custom.js 'footer.className = "figure-card-footer"'
 check_contains theme/custom.js 'captionText.className = "figure-card-title"'
 check_contains theme/custom.js 'wrapper.appendChild(header);'
 check_contains theme/custom.js 'wrapper.appendChild(footer);'
-node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");for(const expected of ["function parseFigureCaption(text)",".match(/^Figure\\s+(\\d+)(?:\\s*:\\s*|\\s+)(.*)$/i);","return Boolean(parseFigureCaption(paragraph.textContent || \"\"));"]){if(!js.includes(expected)){console.error(`Expected figure caption parsing compatibility for: ${expected}`);process.exit(1);}}'
+node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");for(const expected of ["function isNarrativeFigureReference(text)","function parseFigureCaption(text)","if (isNarrativeFigureReference(normalized))","return Boolean(parseFigureCaption(paragraph.textContent || \"\"));"]){if(!js.includes(expected)){console.error(`Expected figure caption parsing compatibility for: ${expected}`);process.exit(1);}}'
 check_contains theme/custom.js 'collectReferenceCards(".figure-card", ".figure-card-footer", ".figure-card-label", ".figure-card-title")'
 check_contains theme/custom.js 'function annotateTables()'
 check_contains theme/custom.js 'const tableId = "table-" +'
@@ -2046,6 +2140,15 @@ check_not_contains theme/custom.js 'wrapper.appendChild(caption);'
 check_not_contains theme/custom.js 'wrapper.appendChild(notesGroup);'
 check_contains theme/custom.js 'function collectTableNotes('
 check_contains theme/custom.js 'function enhanceTable6()'
+check_contains theme/custom.js 'function installCrossReferenceLinks()'
+check_contains theme/custom.js 'document.querySelectorAll(".reader-article p, .reader-article li")'
+check_contains theme/custom.js 'document.getElementById("figure-" + referenceNumber)'
+check_contains theme/custom.js 'document.getElementById("table-" + referenceNumber)'
+check_contains theme/custom.js 'element.closest(".figure-card, .table-anchor-target, .formula-anchor-target, .reference-index")'
+check_contains theme/custom.js 'installCrossReferenceLinks();'
+node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");const expected=`document.querySelectorAll(".reader-sidebar-row--chapter[href]")`;if(!js.includes(expected)){console.error("Expected chapter-route lookup in theme/custom.js");process.exit(1);}'
+check_contains theme/custom.js 'document.getElementById("formula-" + formulaAnchorLabel)'
+node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");const expected=String.raw`/\b(Figure)\s+(\d+)\b|\b(Table|Tableau)\s+(\d+)\b|\b(Section)\s+(\d+(?:\.\d+)*)\b|\b(Chapter|Chapitre)\s+(\d+)\b|\b(Equation|Formula|Équation|Formule)\s+(\d+(?:\.\d+)*)\b/g`;if(!js.includes(expected)){console.error("Expected reader cross-reference matcher in theme/custom.js");process.exit(1);}'
 check_contains theme/custom.js 'function parseTable6Rule(text)'
 check_contains theme/custom.js 'ruleList.className = "table-6-rule-list"'
 check_contains theme/custom.js 'ruleItem.className = "table-6-rule-item"'

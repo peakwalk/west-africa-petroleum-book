@@ -8,8 +8,10 @@
 - [Table of Contents](chapters/table-of-contents.md)
 - [List of Figures](chapters/list-of-figures.md)
 - [List of Tables](chapters/list-of-tables.md)
+- [List of Equations](chapters/list-of-equations.md)
 - [Abbreviations, Initialisms and Acronyms](chapters/abbreviations-acronyms-and-abbreviations.md)
 - [Foreword to the English Edition](chapters/foreword.md)
+- [Foreword to the French Edition](chapters/foreword-to-the-french-edition.md)
 
 # Part I: Regional Foundations
 

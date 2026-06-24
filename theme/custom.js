@@ -435,10 +435,20 @@
       "7": ["figure-card--panel-pair"],
     };
 
+    function isNarrativeFigureReference(text) {
+      return /^Figures?\s+\d+(?:(?:\s*,\s*|\s+and\s+|\s+to\s+|\s*-\s*)(?:Figures?\s+)?\d+)*\s+(?:show|shows|illustrate|illustrates|present|presents|depict|depicts|contain|contains)\b/i.test(
+        (text || "").trim().replace(/\s+/g, " ")
+      );
+    }
+
     function parseFigureCaption(text) {
-      return ((text || "").trim())
-        .replace(/\s+/g, " ")
-        .match(/^Figure\s+(\d+)(?:\s*:\s*|\s+)(.*)$/i);
+      const normalized = ((text || "").trim()).replace(/\s+/g, " ");
+
+      if (isNarrativeFigureReference(normalized)) {
+        return null;
+      }
+
+      return normalized.match(/^Figure\s+(\d+)(?:\s*:\s*|\s+)(.*)$/i);
     }
 
     const captions = Array.from(document.querySelectorAll(".reader-article p")).filter(function (paragraph) {
@@ -944,6 +954,249 @@
     candidates.forEach(annotateEquationElement);
   }
 
+  function installCrossReferenceLinks() {
+    const crossReferencePattern =
+      /\b(Figure)\s+(\d+)\b|\b(Table|Tableau)\s+(\d+)\b|\b(Section)\s+(\d+(?:\.\d+)*)\b|\b(Chapter|Chapitre)\s+(\d+)\b|\b(Equation|Formula|Équation|Formule)\s+(\d+(?:\.\d+)*)\b/g;
+
+    function normalizeReferenceNumber(referenceNumber) {
+      if (!referenceNumber) {
+        return "";
+      }
+
+      const numericValue = Number(referenceNumber);
+      return Number.isFinite(numericValue) ? String(numericValue) : normalizeText(referenceNumber);
+    }
+
+    function buildFormulaAnchorLabel(referenceNumber) {
+      return normalizeText(referenceNumber)
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+    }
+
+    function buildSectionReferenceMap() {
+      const sectionTargets = new Map();
+      const headings = Array.from(
+        document.querySelectorAll(
+          ".reader-article h1[id], .reader-article h2[id], .reader-article h3[id], .reader-article h4[id], .reader-article h5[id], .reader-article h6[id]"
+        )
+      );
+
+      headings.forEach(function (heading) {
+        const headingAnchor = heading.querySelector("a.header");
+        const headingText = normalizeText(
+          (headingAnchor && headingAnchor.dataset.readerHeadingDisplayText) ||
+            (headingAnchor && headingAnchor.textContent) ||
+            heading.textContent ||
+            ""
+        );
+        const sectionMatch = headingText.match(/^(\d+(?:\.\d+)*)\b/);
+
+        if (!sectionMatch || !heading.id) {
+          return;
+        }
+
+        sectionTargets.set(sectionMatch[1], "#" + heading.id);
+      });
+
+      return sectionTargets;
+    }
+
+    function buildChapterReferenceMap() {
+      const chapterTargets = new Map();
+      const chapterLinks = Array.from(document.querySelectorAll(".reader-sidebar-row--chapter[href]"));
+
+      chapterLinks.forEach(function (link) {
+        const chapterIndex = normalizeReferenceNumber(
+          link.querySelector(".reader-sidebar-row-index")?.textContent || ""
+        );
+        const href = link.getAttribute("href") || "";
+
+        if (!chapterIndex || !href) {
+          return;
+        }
+
+        chapterTargets.set(chapterIndex, href);
+      });
+
+      return chapterTargets;
+    }
+
+    function shouldSkipCrossReferenceContainer(element) {
+      if (!element) {
+        return true;
+      }
+
+      if (element.closest("a, h1, h2, h3, h4, h5, h6")) {
+        return true;
+      }
+
+      if (element.closest(".figure-card, .table-anchor-target, .formula-anchor-target, .reference-index")) {
+        return true;
+      }
+
+      return false;
+    }
+
+    function resolveCrossReferenceHref(referenceKind, referenceNumber, context) {
+      if (referenceKind === "figure") {
+        return document.getElementById("figure-" + referenceNumber) ? "#figure-" + referenceNumber : "";
+      }
+
+      if (referenceKind === "table") {
+        return document.getElementById("table-" + referenceNumber) ? "#table-" + referenceNumber : "";
+      }
+
+      if (referenceKind === "section") {
+        return context.sectionTargets.get(referenceNumber) || "";
+      }
+
+      if (referenceKind === "chapter") {
+        const href = context.chapterTargets.get(referenceNumber) || "";
+
+        if (!href) {
+          return "";
+        }
+
+        return getBookPageKeyFromHref(href) === context.currentPageKey ? "" : href;
+      }
+
+      if (referenceKind === "formula") {
+        const formulaAnchorLabel = buildFormulaAnchorLabel(referenceNumber);
+
+        if (!formulaAnchorLabel) {
+          return "";
+        }
+
+        if (document.getElementById("formula-" + formulaAnchorLabel)) {
+          return "#formula-" + formulaAnchorLabel;
+        }
+
+        const chapterMatch = referenceNumber.match(/^(\d+)(?:\.\d+)*$/);
+        const chapterNumber = normalizeReferenceNumber(chapterMatch ? chapterMatch[1] : "");
+        const chapterHref = chapterNumber ? context.chapterTargets.get(chapterNumber) || "" : "";
+
+        if (!chapterHref) {
+          return "";
+        }
+
+        return getBookPageKeyFromHref(chapterHref) === context.currentPageKey
+          ? ""
+          : chapterHref + "#formula-" + formulaAnchorLabel;
+      }
+
+      return "";
+    }
+
+    function buildCrossReferenceLink(referenceKind, referenceText, href) {
+      const link = document.createElement("a");
+      link.className = "reader-cross-reference-link";
+      link.href = href;
+      link.dataset.readerCrossReference = referenceKind;
+      link.textContent = referenceText;
+      return link;
+    }
+
+    function replaceTextNodeWithCrossReferenceLinks(textNode, context) {
+      const parentElement = textNode.parentElement;
+      const textValue = textNode.textContent || "";
+
+      if (!parentElement || !textValue.trim()) {
+        return;
+      }
+
+      if (textNode.parentElement.closest("a")) {
+        return;
+      }
+
+      crossReferencePattern.lastIndex = 0;
+
+      let match = null;
+      let lastIndex = 0;
+      let hasLinkedReference = false;
+      const fragment = document.createDocumentFragment();
+
+      while ((match = crossReferencePattern.exec(textValue))) {
+        const matchedText = match[0];
+        const matchIndex = match.index;
+        const referenceKind = match[1]
+          ? "figure"
+          : match[3]
+            ? "table"
+            : match[5]
+              ? "section"
+              : match[7]
+                ? "chapter"
+                : "formula";
+        const referenceNumber = normalizeReferenceNumber(
+          match[2] || match[4] || match[6] || match[8] || match[10] || ""
+        );
+        const href = resolveCrossReferenceHref(referenceKind, referenceNumber, context);
+
+        if (matchIndex > lastIndex) {
+          fragment.appendChild(document.createTextNode(textValue.slice(lastIndex, matchIndex)));
+        }
+
+        if (href) {
+          fragment.appendChild(buildCrossReferenceLink(referenceKind, matchedText, href));
+          hasLinkedReference = true;
+        } else {
+          fragment.appendChild(document.createTextNode(matchedText));
+        }
+
+        lastIndex = matchIndex + matchedText.length;
+      }
+
+      if (!hasLinkedReference) {
+        return;
+      }
+
+      if (lastIndex < textValue.length) {
+        fragment.appendChild(document.createTextNode(textValue.slice(lastIndex)));
+      }
+
+      textNode.replaceWith(fragment);
+    }
+
+    const articleTextContainers = Array.from(
+      document.querySelectorAll(".reader-article p, .reader-article li")
+    ).filter(function (element) {
+      return !shouldSkipCrossReferenceContainer(element);
+    });
+    const context = {
+      sectionTargets: buildSectionReferenceMap(),
+      chapterTargets: buildChapterReferenceMap(),
+      currentPageKey: getCurrentBookPageKey(),
+    };
+
+    articleTextContainers.forEach(function (element) {
+      const textNodes = [];
+      const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, {
+        acceptNode: function (node) {
+          if (!node || !node.parentElement) {
+            return NodeFilter.FILTER_REJECT;
+          }
+
+          if (shouldSkipCrossReferenceContainer(node.parentElement)) {
+            return NodeFilter.FILTER_REJECT;
+          }
+
+          return normalizeText(node.textContent || "")
+            ? NodeFilter.FILTER_ACCEPT
+            : NodeFilter.FILTER_REJECT;
+        },
+      });
+
+      while (walker.nextNode()) {
+        textNodes.push(walker.currentNode);
+      }
+
+      textNodes.forEach(function (textNode) {
+        replaceTextNodeWithCrossReferenceLinks(textNode, context);
+      });
+    });
+  }
+
   function enhanceTable6() {
     function parseTable6Rule(text) {
       const normalized = (text || "").trim().replace(/\s+/g, " ");
@@ -1048,8 +1301,10 @@
     }
 
     const coverPath = "cover.html";
+    const tableOfContentsPath = "table-of-contents.html";
     const listOfFiguresPath = "list-of-figures.html";
     const listOfTablesPath = "list-of-tables.html";
+    const listOfEquationsPath = "list-of-equations.html";
     const abbreviationsPath = "abbreviations-acronyms-and-abbreviations.html";
     const disclaimerPath = "disclaimer.html";
     const prefacePath = "preface.html";
@@ -1061,8 +1316,10 @@
     const preserveOutlinePaths = isFrenchBookPath(window.location.pathname)
       ? [
           coverPath,
+          tableOfContentsPath,
           listOfFiguresPath,
           listOfTablesPath,
+          listOfEquationsPath,
           abbreviationsPath,
           forewordPath,
           generalIntroductionPath,
@@ -1072,8 +1329,10 @@
         ]
       : [
           coverPath,
+          tableOfContentsPath,
           listOfFiguresPath,
           listOfTablesPath,
+          listOfEquationsPath,
           abbreviationsPath,
           disclaimerPath,
           prefacePath,
@@ -1082,8 +1341,10 @@
           bibliographicalReferencesPath,
         ];
     const isCoverPage = matchesChapterPath(coverPath);
+    const isTableOfContentsPage = matchesChapterPath(tableOfContentsPath);
     const isListOfFigures = matchesChapterPath(listOfFiguresPath);
     const isListOfTables = matchesChapterPath(listOfTablesPath);
+    const isListOfEquations = matchesChapterPath(listOfEquationsPath);
     const isAbbreviationsPage = matchesChapterPath(abbreviationsPath);
     const preserveOutlineRail = preserveOutlinePaths.some(matchesChapterPath);
 
@@ -1097,14 +1358,15 @@
     document.body.classList.remove("book-page-cover");
     document.body.classList.toggle("book-page-figure-index", isListOfFigures);
     document.body.classList.toggle("book-page-table-index", isListOfTables);
+    document.body.classList.toggle("book-page-equation-index", isListOfEquations);
     document.body.classList.toggle("book-page-abbreviations-index", isAbbreviationsPage);
 
-    if (isListOfFigures || isListOfTables || isAbbreviationsPage) {
+    if (isTableOfContentsPage || isListOfFigures || isListOfTables || isListOfEquations || isAbbreviationsPage) {
       document.body.classList.add("book-page-aux-index");
       return;
     }
 
-    document.body.classList.remove("book-page-aux-index", "book-page-figure-index", "book-page-table-index", "book-page-abbreviations-index");
+    document.body.classList.remove("book-page-aux-index", "book-page-figure-index", "book-page-table-index", "book-page-equation-index", "book-page-abbreviations-index");
   }
 
   function moveOutline() {
@@ -1280,7 +1542,7 @@
 
   function buildReferenceRailParts(label, text) {
     const normalizedLabel = normalizeText(label).replace(/:$/, "");
-    const normalizedText = normalizeText(text).replace(/^[a-z](?:\s+and\s+[a-z])?\s+/i, "");
+    const normalizedText = normalizeText(text);
 
     return {
       label: normalizedLabel,
@@ -2461,6 +2723,7 @@
   annotateTables();
   enhanceTable6();
   annotateFigureCaptions();
+  installCrossReferenceLinks();
 
   document.addEventListener("DOMContentLoaded", function () {
     requestAnimationFrame(function () {

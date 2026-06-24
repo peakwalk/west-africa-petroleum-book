@@ -36,6 +36,13 @@ class BookEditionBuildTests(unittest.TestCase):
         english_foreword = (
             ROOT_DIR / "public" / "book" / "chapters" / "foreword.html"
         ).read_text(encoding="utf-8")
+        english_french_edition_foreword = (
+            ROOT_DIR
+            / "public"
+            / "book"
+            / "chapters"
+            / "foreword-to-the-french-edition.html"
+        ).read_text(encoding="utf-8")
         english_value_chain = (
             ROOT_DIR
             / "public"
@@ -58,9 +65,17 @@ class BookEditionBuildTests(unittest.TestCase):
         self.assertIn('class="reader-language-switch"', english_disclaimer)
         self.assertIn('/fr/book/?lang=fr', english_disclaimer)
         self.assertIn('class="reader-language-switch"', english_foreword)
-        self.assertIn('/fr/book/chapters/foreword.html?lang=fr', english_foreword)
+        self.assertIn('/fr/book/?lang=fr', english_foreword)
+        self.assertIn('class="reader-language-switch"', english_french_edition_foreword)
+        self.assertIn(
+            '/fr/book/chapters/foreword.html?lang=fr',
+            english_french_edition_foreword,
+        )
         self.assertIn('class="reader-language-switch"', french_foreword)
-        self.assertIn('/book/chapters/foreword.html?lang=en', french_foreword)
+        self.assertIn(
+            '/book/chapters/foreword-to-the-french-edition.html?lang=en',
+            french_foreword,
+        )
         self.assertIn(
             '/fr/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html?lang=fr',
             english_value_chain,
@@ -94,7 +109,7 @@ class BookEditionBuildTests(unittest.TestCase):
             french_foreword,
             re.compile(
                 r'<nav class="reader-language-switch"[^>]*>\s*'
-                r'<a class="reader-language-option" href="/book/chapters/foreword\.html\?lang=en" lang="en" hreflang="en">EN</a>\s*'
+                r'<a class="reader-language-option" href="/book/chapters/foreword-to-the-french-edition\.html\?lang=en" lang="en" hreflang="en">EN</a>\s*'
                 r'<span class="reader-language-option is-current" aria-current="page">FR</span>\s*'
                 r'</nav>'
             ),
@@ -133,7 +148,7 @@ class BookEditionBuildTests(unittest.TestCase):
             re.compile(
                 r'<div class="book-sidebar-intro">\s*'
                 r'<nav class="reader-language-switch"[^>]*data-reader-language-switch="sidebar"[^>]*>\s*'
-                r'<a class="reader-language-option" href="/book/chapters/foreword\.html\?lang=en" lang="en" hreflang="en">EN</a>\s*'
+                r'<a class="reader-language-option" href="/book/chapters/foreword-to-the-french-edition\.html\?lang=en" lang="en" hreflang="en">EN</a>\s*'
                 r'<span class="reader-language-option is-current" aria-current="page">FR</span>\s*'
                 r'</nav>\s*'
                 r'<p class="book-sidebar-book-title">',
@@ -204,6 +219,23 @@ class BookEditionBuildTests(unittest.TestCase):
         self.assertIn("Formés dans le sous-sol", french_intro)
         self.assertIn("Chapitre 1 : Chaîne des valeurs du secteur des hydrocarbures", french_chapter_one)
         self.assertNotIn("Chapter 1: Value Chain of the Hydrocarbon Sector", french_chapter_one)
+
+    def test_english_front_matter_includes_foreword_to_the_french_edition(self) -> None:
+        english_french_edition_foreword = (
+            ROOT_DIR
+            / "public"
+            / "book"
+            / "chapters"
+            / "foreword-to-the-french-edition.html"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn("Foreword to the French Edition", english_french_edition_foreword)
+        self.assertIn(
+            "Geo-extractive resources constitute an important source of revenue for countries endowed with them",
+            english_french_edition_foreword,
+        )
+        self.assertIn("Petroleum as a Driver of Socio-Economic Development", english_french_edition_foreword)
+        self.assertIn("<strong>Charles</strong><br />", english_french_edition_foreword)
 
     def test_french_chapter_one_table_one_uses_superscript_notes_like_english_table_card(self) -> None:
         french_chapter_one = (
@@ -323,6 +355,24 @@ class BookEditionBuildTests(unittest.TestCase):
         self.assertIn('src="../images/figure-010.webp"', english_chapter_five)
         self.assertNotIn('src="../images/figure-010.png"', english_chapter_five)
 
+    def test_english_chapter_five_figure_eleven_published_webp_is_non_empty(self) -> None:
+        english_chapter_five = (
+            ROOT_DIR
+            / "public"
+            / "book"
+            / "chapters"
+            / "chapter-05-hydrocarbon-value-chain.html"
+        ).read_text(encoding="utf-8")
+        published_figure_eleven = ROOT_DIR / "public" / "book" / "images" / "figure-011.webp"
+
+        self.assertIn('src="../images/figure-011.webp"', english_chapter_five)
+        self.assertTrue(published_figure_eleven.exists())
+        self.assertGreater(
+            published_figure_eleven.stat().st_size,
+            0,
+            "Expected the published Figure 11 WebP asset to be non-empty.",
+        )
+
     def test_english_chapter_five_rehydrates_table_two_and_three_from_replacement_docx(self) -> None:
         english_chapter_five = (
             ROOT_DIR
@@ -339,6 +389,73 @@ class BookEditionBuildTests(unittest.TestCase):
         self.assertIn("Table 3 Daily Oil Production by Country (Trading Economics, 2025)", english_chapter_five)
         self.assertIn("Reference Period", english_chapter_five)
         self.assertIn("Mbbl/d", english_chapter_five)
+
+    def test_english_chapter_six_figure_twenty_one_keeps_one_image_and_body_copy(self) -> None:
+        english_chapter_six = (
+            ROOT_DIR
+            / "public"
+            / "book"
+            / "chapters"
+            / "chapter-06-upstream-operations-and-government-roles.html"
+        ).read_text(encoding="utf-8")
+
+        self.assertEqual(english_chapter_six.count('src="../images/figure-021.webp"'), 1)
+        self.assertIn(
+            "<p>Figure 21 illustrates the typical workflow used to transform raw seismic data into drilling decisions.",
+            english_chapter_six,
+        )
+        self.assertIn(
+            "<p>Figure 21 Workflow from Seismic Acquisition and Interpretation to Prospect Evaluation and Well Planning.</p>",
+            english_chapter_six,
+        )
+
+    def test_english_figure_body_copy_does_not_duplicate_figure_cards(self) -> None:
+        english_chapter_six = (
+            ROOT_DIR
+            / "public"
+            / "book"
+            / "chapters"
+            / "chapter-06-upstream-operations-and-government-roles.html"
+        ).read_text(encoding="utf-8")
+        english_chapter_seven = (
+            ROOT_DIR
+            / "public"
+            / "book"
+            / "chapters"
+            / "chapter-07-petroleum-fiscal-regimes.html"
+        ).read_text(encoding="utf-8")
+        english_chapter_eight = (
+            ROOT_DIR
+            / "public"
+            / "book"
+            / "chapters"
+            / "chapter-08-west-african-fiscal-regimes.html"
+        ).read_text(encoding="utf-8")
+
+        for asset in ["016", "025", "026", "027", "038", "040", "041", "042"]:
+            self.assertEqual(english_chapter_six.count(f'src="../images/figure-{asset}.webp"'), 1)
+
+        for asset in ["069", "070"]:
+            self.assertEqual(english_chapter_seven.count(f'src="../images/figure-{asset}.webp"'), 1)
+
+        self.assertEqual(english_chapter_eight.count('src="../images/figure-072.webp"'), 1)
+
+        self.assertIn(
+            "<p>Figure 16 shows the process for the award of petroleum blocks to International Oil Companies (IOCs) for exploration and production activities.</p>",
+            english_chapter_six,
+        )
+        self.assertIn(
+            "<p>Figure 38 and Figure 39 illustrate the importance of preserving geological samples and subsurface data acquired during petroleum exploration and development activities.",
+            english_chapter_six,
+        )
+        self.assertIn(
+            "<p>Figure 69 illustrates the typical distribution of revenues generated from petroleum production under a fiscal regime.",
+            english_chapter_seven,
+        )
+        self.assertIn(
+            "Figure 72, Figure 73, Figure 74, Figure 75, Figure 76, and Figure 77 present simplified illustrations of State-Contractor revenue sharing under the petroleum fiscal regimes",
+            english_chapter_eight,
+        )
 
     def test_english_chapter_four_table_one_caption_excludes_list_of_tables_page_number(self) -> None:
         english_chapter_four = (

@@ -60,8 +60,91 @@
     <body class="book-layout-booting">
     <script>
         (function applyInitialBookPageVariant() {
-            if (window.location.pathname.endsWith("/chapters/cover.html")) {
+            function isFrenchBookPath(pathname) {
+                return pathname.indexOf("/fr/book") === 0;
+            }
+
+            function matchesChapterPath(chapterPath) {
+                return window.location.pathname.endsWith("/chapters/" + chapterPath);
+            }
+
+            const coverPath = "cover.html";
+            const tableOfContentsPath = "table-of-contents.html";
+            const listOfFiguresPath = "list-of-figures.html";
+            const listOfTablesPath = "list-of-tables.html";
+            const listOfEquationsPath = "list-of-equations.html";
+            const abbreviationsPath = "abbreviations-acronyms-and-abbreviations.html";
+            const disclaimerPath = "disclaimer.html";
+            const prefacePath = "preface.html";
+            const forewordPath = "foreword.html";
+            const generalIntroductionPath = "general-introduction.html";
+            const generalConclusionPath = "general-conclusion.html";
+            const glossaryPath = "glossary.html";
+            const bibliographicalReferencesPath = "bibliographical-references.html";
+
+            const preserveOutlinePaths = isFrenchBookPath(window.location.pathname)
+                ? [
+                    coverPath,
+                    tableOfContentsPath,
+                    listOfFiguresPath,
+                    listOfTablesPath,
+                    listOfEquationsPath,
+                    abbreviationsPath,
+                    forewordPath,
+                    generalIntroductionPath,
+                    generalConclusionPath,
+                    glossaryPath,
+                    bibliographicalReferencesPath,
+                ]
+                : [
+                    coverPath,
+                    tableOfContentsPath,
+                    listOfFiguresPath,
+                    listOfTablesPath,
+                    listOfEquationsPath,
+                    abbreviationsPath,
+                    disclaimerPath,
+                    prefacePath,
+                    forewordPath,
+                    glossaryPath,
+                    bibliographicalReferencesPath,
+                ];
+
+            const isCoverPage = matchesChapterPath(coverPath);
+            const isTableOfContentsPage = matchesChapterPath(tableOfContentsPath);
+            const isListOfFiguresPage = matchesChapterPath(listOfFiguresPath);
+            const isListOfTablesPage = matchesChapterPath(listOfTablesPath);
+            const isListOfEquationsPage = matchesChapterPath(listOfEquationsPath);
+            const isAbbreviationsPage = matchesChapterPath(abbreviationsPath);
+            const isAuxIndexPage =
+                isTableOfContentsPage || isListOfFiguresPage || isListOfTablesPage || isListOfEquationsPage || isAbbreviationsPage;
+
+            if (preserveOutlinePaths.some(matchesChapterPath)) {
+                document.body.classList.add("book-page-front-matter-outline-rail");
+            }
+
+            if (isCoverPage) {
                 document.body.classList.add("book-page-cover");
+            }
+
+            if (isListOfFiguresPage) {
+                document.body.classList.add("book-page-figure-index");
+            }
+
+            if (isListOfTablesPage) {
+                document.body.classList.add("book-page-table-index");
+            }
+
+            if (isListOfEquationsPage) {
+                document.body.classList.add("book-page-equation-index");
+            }
+
+            if (isAbbreviationsPage) {
+                document.body.classList.add("book-page-abbreviations-index");
+            }
+
+            if (isAuxIndexPage) {
+                document.body.classList.add("book-page-aux-index", "book-outline-empty");
             }
         })();
     </script>

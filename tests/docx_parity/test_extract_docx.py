@@ -317,6 +317,55 @@ class ExtractDocxTests(unittest.TestCase):
             ],
         )
 
+    def test_treats_figure_reference_sentences_as_body_paragraphs(self) -> None:
+        tmp_dir = Path(tempfile.mkdtemp())
+        docx_path = tmp_dir / "fixture-figure-reference-body.docx"
+        document = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading1"/></w:pPr>
+      <w:r><w:t>Chapter 2: Different Phases of Upstream Oil and the Roles of States</w:t></w:r>
+    </w:p>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading2"/></w:pPr>
+      <w:r><w:t>2.1- Pre-Licensing Phase</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t>Figure 16 shows the process for the award of petroleum blocks.</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Figure 16 Typical Petroleum Licensing Process for the Award of Exploration Acreage or Petroleum Blocks</w:t></w:r></w:p>
+  </w:body>
+</w:document>
+"""
+        with zipfile.ZipFile(docx_path, "w") as archive:
+            archive.writestr("[Content_Types].xml", CONTENT_TYPES)
+            archive.writestr("_rels/.rels", RELS)
+            archive.writestr("word/document.xml", document)
+            archive.writestr(
+                "word/numbering.xml",
+                (FIXTURE_DIR / "numbering-section-restart.xml").read_text(
+                    encoding="utf-8"
+                ),
+            )
+            archive.writestr(
+                "word/styles.xml",
+                (FIXTURE_DIR / "styles-headings.xml").read_text(encoding="utf-8"),
+            )
+
+        book = extract_docx_book(docx_path)
+        chapter = book.chapters[0]
+
+        self.assertEqual(
+            [block.kind for block in chapter.body],
+            ["paragraph", "caption"],
+        )
+        self.assertEqual(
+            [block.text for block in chapter.body],
+            [
+                "Figure 16 shows the process for the award of petroleum blocks.",
+                "Figure 16 Typical Petroleum Licensing Process for the Award of Exploration Acreage or Petroleum Blocks",
+            ],
+        )
+
     def test_preserves_repeated_single_word_semantic_lead_ins_before_future_captions(
         self,
     ) -> None:
@@ -2034,6 +2083,75 @@ class ExtractDocxTests(unittest.TestCase):
             [
                 "DensitéAPI=141,5/Densitéà15°C-131,5",
                 "API density: A scale adopted by the American Petroleum Institute (API) that evaluates whether oil is light or heavy in relation to water.",
+            ],
+        )
+
+    def test_preserves_paragraph_level_math_blocks(self) -> None:
+        tmp_dir = Path(tempfile.mkdtemp())
+        docx_path = tmp_dir / "fixture-paragraph-level-math.docx"
+        document = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document
+  xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"
+  xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math">
+  <w:body>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading1"/></w:pPr>
+      <w:r><w:t>Chapter 6: Upstream Operations and Government Roles</w:t></w:r>
+    </w:p>
+    <w:p>
+      <w:r><w:t>Accordingly, the quantity of hydrocarbons in place is determined as follows:</w:t></w:r>
+    </w:p>
+    <w:p>
+      <m:oMathPara>
+        <m:oMath>
+          <m:r><m:t>VHcP=GRV×N</m:t></m:r>
+          <m:r><m:t>/</m:t></m:r>
+          <m:r><m:t>G×ϕ×Shc×</m:t></m:r>
+          <m:f>
+            <m:num><m:r><m:t>1</m:t></m:r></m:num>
+            <m:den><m:r><m:t>FVF</m:t></m:r></m:den>
+          </m:f>
+        </m:oMath>
+      </m:oMathPara>
+    </w:p>
+    <w:p>
+      <w:r><w:t>Where:</w:t></w:r>
+    </w:p>
+    <w:p>
+      <m:oMathPara>
+        <m:oMath>
+          <m:r><m:t>Shc=1-Sw</m:t></m:r>
+        </m:oMath>
+      </m:oMathPara>
+    </w:p>
+  </w:body>
+</w:document>
+"""
+        with zipfile.ZipFile(docx_path, "w") as archive:
+            archive.writestr("[Content_Types].xml", CONTENT_TYPES)
+            archive.writestr("_rels/.rels", RELS)
+            archive.writestr("word/document.xml", document)
+            archive.writestr(
+                "word/numbering.xml",
+                (FIXTURE_DIR / "numbering-section-restart.xml").read_text(
+                    encoding="utf-8"
+                ),
+            )
+            archive.writestr(
+                "word/styles.xml",
+                (FIXTURE_DIR / "styles-headings.xml").read_text(encoding="utf-8"),
+            )
+
+        book = extract_docx_book(docx_path)
+        chapter = book.chapters[0]
+
+        self.assertEqual(
+            [block.text for block in chapter.body],
+            [
+                "Accordingly, the quantity of hydrocarbons in place is determined as follows:",
+                "VHcP=GRV×N/G×ϕ×Shc×1/FVF",
+                "Where:",
+                "Shc=1-Sw",
             ],
         )
 

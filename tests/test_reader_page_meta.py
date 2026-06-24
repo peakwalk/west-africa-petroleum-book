@@ -45,8 +45,10 @@ class ReaderPageMetaTests(unittest.TestCase):
             "chapters/table-of-contents.html",
             "chapters/list-of-figures.html",
             "chapters/list-of-tables.html",
+            "chapters/list-of-equations.html",
             "chapters/abbreviations-acronyms-and-abbreviations.html",
             "chapters/foreword.html",
+            "chapters/foreword-to-the-french-edition.html",
             "chapters/chapter-01-general-introduction.html",
             "chapters/chapter-02-emerging-petroleum-provinces-in-west-africa.html",
             "chapters/chapter-03-west-africa-country-analysis.html",
@@ -74,6 +76,7 @@ class ReaderPageMetaTests(unittest.TestCase):
         chapter_one = self.reader_page_meta["chapters/chapter-01-general-introduction.html"]
         chapter_eleven = self.reader_page_meta["chapters/chapter-11-general-conclusion.html"]
         foreword = self.reader_page_meta["chapters/foreword.html"]
+        french_edition_foreword = self.reader_page_meta["chapters/foreword-to-the-french-edition.html"]
         glossary = self.reader_page_meta["chapters/glossary.html"]
         disclaimer = self.reader_page_meta["chapters/disclaimer.html"]
 
@@ -83,6 +86,8 @@ class ReaderPageMetaTests(unittest.TestCase):
         self.assertEqual("General Conclusion", chapter_eleven["title"])
         self.assertEqual("", foreword["eyebrow"])
         self.assertEqual("Foreword to the English Edition", foreword["title"])
+        self.assertEqual("", french_edition_foreword["eyebrow"])
+        self.assertEqual("Foreword to the French Edition", french_edition_foreword["title"])
         self.assertEqual("", glossary["eyebrow"])
         self.assertEqual("Glossary", glossary["title"])
         self.assertEqual("", disclaimer["eyebrow"])

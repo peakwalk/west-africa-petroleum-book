@@ -392,7 +392,7 @@ def _published_asset_candidates(images_dir: Path, figure_number: int) -> list[st
     candidates = [
         path
         for path in images_dir.glob(prefix + "*")
-        if path.is_file() and path.name != "figures.zip"
+        if path.is_file() and path.name != "figures.zip" and path.stat().st_size > 0
     ]
     if not candidates:
         return []

@@ -15,6 +15,13 @@ LATEX_DEGREE_RE = re.compile(r"\{?\^\\circ\}?")
 LATEX_WRAPPER_RE = re.compile(r"\\(?:mathbf|text|mathrm)\{([^{}]*)\}")
 LATEX_FRACTION_RE = re.compile(r"\\frac\{([^{}]*)\}\{([^{}]*)\}")
 DOUBLE_BRACE_RE = re.compile(r"\{\{([^{}]*)\}\}")
+CAPTION_PREFIXES = ("Figure ", "Table ", "Tableau ")
+FIGURE_REFERENCE_SENTENCE_RE = re.compile(
+    r"^Figures?\s+\d+"
+    r"(?:(?:\s*,\s*|\s+and\s+|\s+to\s+|\s*-\s*)(?:Figures?\s+)?\d+)*"
+    r"\s+(?:show|shows|illustrate|illustrates|present|presents|depict|depicts|contain|contains)\b",
+    re.IGNORECASE,
+)
 
 
 def normalize_visible_text(value: str) -> str:
@@ -25,6 +32,17 @@ def normalize_visible_text(value: str) -> str:
     stripped = INLINE_MARKUP_RE.sub("", unescaped)
     collapsed = WHITESPACE_RE.sub(" ", stripped.replace("\u00a0", " "))
     return collapsed.strip()
+
+
+def is_narrative_figure_reference(value: str) -> bool:
+    return FIGURE_REFERENCE_SENTENCE_RE.match(normalize_visible_text(value)) is not None
+
+
+def is_caption_text(value: str) -> bool:
+    normalized = normalize_visible_text(value)
+    if not normalized.startswith(CAPTION_PREFIXES):
+        return False
+    return not is_narrative_figure_reference(normalized)
 
 
 def normalize_heading_number(value: str) -> str:

@@ -71,6 +71,14 @@ class InventoryTest(unittest.TestCase):
                 ["figure-002-a.webp", "figure-002-b.png"],
             )
 
+    def test_published_asset_candidates_skip_empty_webp_and_fallback_to_png(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            images_dir = Path(tmpdir)
+            (images_dir / "figure-011.png").write_bytes(b"png")
+            (images_dir / "figure-011.webp").write_bytes(b"")
+
+            self.assertEqual(_published_asset_candidates(images_dir, 11), ["figure-011.png"])
+
     def test_french_docx_inventory_covers_figures_1_through_32(self) -> None:
         inventory = build_figure_inventory(
             docx_path=FR_DOCX_PATH,

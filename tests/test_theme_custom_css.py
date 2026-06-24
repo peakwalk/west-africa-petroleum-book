@@ -109,6 +109,8 @@ class ThemeCustomCssTest(unittest.TestCase):
         js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
 
         self.assertIn("function parseFigureCaption(text)", js)
+        self.assertIn("function isNarrativeFigureReference(text)", js)
+        self.assertIn("if (isNarrativeFigureReference(normalized))", js)
         self.assertIn(r'/^Figure\s+(\d+)(?:\s*:\s*|\s+)(.*)$/i', js)
         self.assertIn("return Boolean(parseFigureCaption(paragraph.textContent || \"\"));", js)
         self.assertIn('"2": ["figure-card--panel-pair"]', js)
@@ -212,18 +214,23 @@ class ThemeCustomCssTest(unittest.TestCase):
     def test_mobile_reader_keeps_language_switch_in_toolbar_before_search(self) -> None:
         css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
         sidebar_switch_block = _rule_block(css, '.reader-language-switch[data-reader-language-switch="sidebar"]')
+        marker = "@media (max-width: 1023px) {"
+        start = css.index(marker)
+        next_marker = css.index("\n\n@media", start + len(marker))
+        block = css[start:next_marker]
 
         self.assertIn("display: none;", sidebar_switch_block)
-        self.assertRegex(
-            css,
-            re.compile(
-                r"@media \(max-width: 1023px\) \{.*?"
-                r"\.toolbar-actions \{\s*min-width: 0;\s*padding-inline-start: 0\.5rem;\s*padding-inline-end: 0;\s*gap: 0\.5rem;\s*\}.*?"
-                r'\.toolbar-actions \.reader-language-switch\[data-reader-language-switch="toolbar"\] \{.*?display: inline-flex;.*?\}.*?'
-                r'#mdbook-search-toggle \{\s*display: inline-flex !important;\s*\}',
-                re.DOTALL,
-            ),
+        self.assertIn("min-width: 0;", block)
+        self.assertIn("padding-inline-start: 0.5rem;", block)
+        self.assertIn("padding-inline-end: 0;", block)
+        self.assertIn("gap: 0.5rem;", block)
+        self.assertIn(
+            '.toolbar-actions .reader-language-switch[data-reader-language-switch="toolbar"] {',
+            block,
         )
+        self.assertIn("display: inline-flex;", block)
+        self.assertIn("#mdbook-search-toggle {", block)
+        self.assertIn("display: inline-flex !important;", block)
 
     def test_mobile_reader_compacts_logo_and_toolbar_switch(self) -> None:
         css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
@@ -352,6 +359,28 @@ class ThemeCustomCssTest(unittest.TestCase):
         self.assertIn('captionLabel.textContent = "Equation " + formulaLabel;', js)
         self.assertNotIn("function getFormulaSubLabel(index)", js)
 
+    def test_reader_cross_reference_linker_supports_figures_tables_sections_chapters_and_equations(self) -> None:
+        js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("function installCrossReferenceLinks()", js)
+        self.assertIn('document.querySelectorAll(".reader-article p, .reader-article li")', js)
+        self.assertIn(
+            '.reader-article h1[id], .reader-article h2[id], .reader-article h3[id], .reader-article h4[id], .reader-article h5[id], .reader-article h6[id]',
+            js,
+        )
+        self.assertIn('document.querySelectorAll(".reader-sidebar-row--chapter[href]")', js)
+        self.assertIn('document.getElementById("figure-" + referenceNumber)', js)
+        self.assertIn('document.getElementById("table-" + referenceNumber)', js)
+        self.assertIn('document.getElementById("formula-" + formulaAnchorLabel)', js)
+        self.assertIn('element.closest("a, h1, h2, h3, h4, h5, h6")', js)
+        self.assertIn('element.closest(".figure-card, .table-anchor-target, .formula-anchor-target, .reference-index")', js)
+        self.assertIn('textNode.parentElement.closest("a")', js)
+        self.assertIn(
+            r'/\b(Figure)\s+(\d+)\b|\b(Table|Tableau)\s+(\d+)\b|\b(Section)\s+(\d+(?:\.\d+)*)\b|\b(Chapter|Chapitre)\s+(\d+)\b|\b(Equation|Formula|Équation|Formule)\s+(\d+(?:\.\d+)*)\b/g',
+            js,
+        )
+        self.assertIn('installCrossReferenceLinks();', js)
+
     def test_outline_reference_sections_are_gated_by_reader_page_meta(self) -> None:
         js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
 
@@ -381,6 +410,12 @@ class ThemeCustomCssTest(unittest.TestCase):
         self.assertNotIn("-webkit-line-clamp:", block)
         self.assertNotIn("const conciseText = truncateReferenceText(primaryClause || normalizedText, 44);", js)
 
+    def test_outline_reference_titles_preserve_leading_articles_and_symbols(self) -> None:
+        js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("const normalizedText = normalizeText(text);", js)
+        self.assertNotIn('replace(/^[a-z](?:\\s+and\\s+[a-z])?\\s+/i, "")', js)
+
     def test_formula_card_inner_formula_wraps_without_scrollbar(self) -> None:
         css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
 
@@ -393,6 +428,24 @@ class ThemeCustomCssTest(unittest.TestCase):
         self.assertIn("width: 100%;", nested_line_block)
         self.assertIn("min-width: 0;", nested_line_block)
         self.assertNotIn("width: max-content;", nested_line_block)
+
+    def test_table_12_h_factor_formula_can_wrap_within_the_cell(self) -> None:
+        css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
+
+        formula_block = _rule_block(css, "#table-12 .table-12-h-factor-cell > .book-formula")
+        line_block = _rule_block(
+            css,
+            "#table-12 .table-12-h-factor-cell > .book-formula .book-formula-line",
+        )
+
+        self.assertIn("width: 100%;", formula_block)
+        self.assertIn("max-width: none;", formula_block)
+        self.assertIn("overflow-x: visible;", formula_block)
+        self.assertIn("white-space: normal;", formula_block)
+        self.assertNotIn("width: max-content;", formula_block)
+        self.assertIn("width: 100%;", line_block)
+        self.assertIn("min-width: 0;", line_block)
+        self.assertIn("white-space: normal;", line_block)
 
     def test_formula_where_blocks_and_group_children_are_borderless_inside_cards(self) -> None:
         css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
@@ -502,18 +555,18 @@ class ThemeCustomCssTest(unittest.TestCase):
         )
 
         self.assertIn("grid-template-columns: 2.25rem minmax(0, 1fr);", row_block)
-        self.assertIn("padding: 0.5rem 1.75rem 0.5rem 0.75rem;", row_block)
+        self.assertIn("padding: 0.5rem 2.125rem 0.5rem 0.75rem;", row_block)
         self.assertIn("grid-template-columns: minmax(0, 1fr);", reference_block)
-        self.assertIn("padding: 0.4rem 1.25rem 0.4rem 0.75rem;", reference_block)
+        self.assertIn("padding: 0.4rem 2.125rem 0.4rem 0.75rem;", reference_block)
         self.assertIn(
-            "padding: 0.4rem 1.25rem 0.4rem calc(1.1875rem + 0.625rem);",
+            "padding: 0.4rem 2.125rem 0.4rem calc(1.1875rem + 0.625rem);",
             front_matter_reference_block,
         )
         self.assertIn("grid-template-columns: 1.375rem minmax(0, 1fr);", icon_row_block)
         self.assertIn("gap: 0.5rem;", icon_row_block)
-        self.assertIn("padding: 0.4rem 1.25rem 0.4rem 0.75rem;", active_reference_block)
+        self.assertIn("padding: 0.4rem 2.125rem 0.4rem 0.75rem;", active_reference_block)
         self.assertIn(
-            "padding: 0.4rem 1.25rem 0.4rem calc(1.1875rem + 0.625rem);",
+            "padding: 0.4rem 2.125rem 0.4rem calc(1.1875rem + 0.625rem);",
             front_matter_active_reference_block,
         )
 
@@ -554,7 +607,7 @@ class ThemeCustomCssTest(unittest.TestCase):
         self.assertIn('requestAnimationFrame(syncSidebarDisplayState);', js)
         self.assertRegex(
             js,
-            r'applyPageVariants\(\);\s+installSidebarDisplayStateSync\(\);\s+installSidebarShellGeometry\(\);',
+            r'applyPageVariants\(\);\s+installSidebarDisplayStateSync\(\);\s+hydrateSidebarProjectionRows\(projection\);',
         )
 
     def test_mobile_chapter_selector_is_removed(self) -> None:

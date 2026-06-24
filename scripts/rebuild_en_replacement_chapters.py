@@ -35,6 +35,7 @@ EMPTY_TABLE_PARAGRAPH_RE = re.compile(
     r"<p\b[^>]*>\s*(?:(?:<(?:strong|b|em|i)>\s*</(?:strong|b|em|i)>)|<br\s*/?>|&nbsp;|&#160;|\u00a0|\s)*</p>",
     re.IGNORECASE | re.DOTALL,
 )
+SRC_EN_DIR = ROOT_DIR / "editions" / "en" / "content" / "chapters"
 
 
 def parse_args() -> argparse.Namespace:
@@ -84,6 +85,106 @@ def _figure_image_map(docx_path: Path, summary_path: Path, chapters_dir: Path) -
 def _clean_line(text: str) -> str:
     cleaned = text.replace("\x0c", " ").replace("\u00a0", " ")
     return re.sub(r"\s+", " ", cleaned).strip()
+
+
+def _replace_once(markdown: str, old: str, new: str, *, context: str) -> str:
+    if old not in markdown:
+        raise ValueError(f"Missing expected English source block for {context}")
+    return markdown.replace(old, new, 1)
+
+
+def _replace_if_present(markdown: str, old: str, new: str) -> str:
+    if old not in markdown:
+        return markdown
+    return markdown.replace(old, new, 1)
+
+
+def _extract_required_formula_snippet(file_name: str, pattern: str, *, context: str) -> str:
+    source = (SRC_EN_DIR / file_name).read_text(encoding="utf-8")
+    match = re.search(pattern, source, re.DOTALL)
+    if match is None:
+        raise ValueError(f"Missing preserved English formula snippet for {context}")
+    return match.group(0)
+
+
+def _restore_english_formula_semantics(file_name: str, markdown: str) -> str:
+    if file_name != "chapter-06-upstream-operations-and-government-roles.md":
+        return markdown
+
+    volumetric_block = _extract_required_formula_snippet(
+        file_name,
+        (
+            r'<!-- parity-ignore:start -->[\s\S]*?'
+            r'<p hidden>CGR \(Condensate-Gas Ratio\) - the ratio of produced condensate volume to produced gas volume\.</p>'
+            r'(?=\n\n\*\*Prospect Ranking and Appraisal\*\*)'
+        ),
+        context="chapter 6 volumetric formulas",
+    )
+    markdown = _replace_once(
+        markdown,
+        (
+            "VHcP=GRV×N/G×ϕ×Shc×1/FVF\n\n"
+            "Where:\n\n"
+            "GRV (Gross Rock Volume) - the gross volume of the reservoir rock. It is determined from the geometric shape and thickness of the reservoir.\n\n"
+            "GRV=∑(ReservoirArea×ReservoirThickness)\n\n"
+            "N/G (Net-to-Gross Ratio) - the ratio of net reservoir thickness to gross reservoir thickness. Reservoir intervals rarely exhibit uniform lithology and are often interbedded with impermeable shale layers.\n\n"
+            "φ (Phi) - Reservoir Porosity - estimated from well logs, core measurements, and analogue reservoir data. It is defined as:\n\n"
+            "ϕ=PoreVolume(Vv)/BulkReservoirVolume(V)\n\n"
+            "Shc (Hydrocarbon Saturation) - determined from the water saturation (Sw). It is generally calculated from well log data within the effective porosity interval.\n\n"
+            "Shc=1-Sw\n\n"
+            "FVF (Formation Volume Factor) - expresses the change in fluid volume between reservoir conditions and standard surface conditions (pressure = 1 atmosphere and temperature = 15°C). For oil, the formation volume factor is represented by Bo, while for gas it is represented by Bg.\n\n"
+            "FVF=ReservoirVolume/SurfaceVolume\n\n"
+            "**Oil Volumes**\n\n"
+            "For oil:\n\n"
+            "FVF=Bo\n\n"
+            "Shc=So\n\n"
+            "where So is the oil saturation.\n\n"
+            "Therefore:\n\n"
+            "STOIIP=GRV×N/G×ϕ×So×1/Bo\n\n"
+            "The volume of associated gas in place is calculated as:\n\n"
+            "AssociatedGasInPlace=STOIIP×GOR\n\n"
+            "**Gas Volumes**\n\n"
+            "For gas:\n\n"
+            "FVF=Bg\n\n"
+            "Shc=Sg\n\n"
+            "where Sg is the gas saturation.\n\n"
+            "Therefore:\n\n"
+            "GIIP=GRV×N/G×ϕ×Sg×1/Bg\n\n"
+            "The volume of condensate in place is calculated as:\n\n"
+            "CondensateInPlace=GIIP×CGR\n\n"
+            "Where:\n\n"
+            "GOR (Gas-Oil Ratio) - the ratio of produced gas volume to produced oil volume.\n\n"
+            "CGR (Condensate-Gas Ratio) - the ratio of produced condensate volume to produced gas volume."
+        ),
+        volumetric_block,
+        context="chapter 6 volumetric formulas",
+    )
+    gcos_primary_block = _extract_required_formula_snippet(
+        file_name,
+        r'<div class="book-formula" data-equation-label="6\.2"[\s\S]*?</div>',
+        context="chapter 6 GCoS primary formula",
+    )
+    gcos_examples_block = _extract_required_formula_snippet(
+        file_name,
+        r'<div class="book-formula" data-equation-label="6\.3" role="img" aria-label="GCoS equals 0\.90 times 0\.80 times 0\.85 times 0\.90 and equals 0\.55 or 55 percent">[\s\S]*?</div>',
+        context="chapter 6 GCoS example formulas",
+    )
+    markdown = _replace_if_present(
+        markdown,
+        "**GCoS = Ps × Pr × Pse × Pt**",
+        gcos_primary_block,
+    )
+    markdown = _replace_if_present(
+        markdown,
+        "GCoS = Ps × Pr × Pse × Pt",
+        gcos_primary_block,
+    )
+    markdown = _replace_if_present(
+        markdown,
+        "GCoS = 0.90 × 0.80 × 0.85 × 0.90\n\n= 0.55 (55%)",
+        gcos_examples_block,
+    )
+    return markdown
 
 
 def _strip_table_caption_lines(table_lines: list[str]) -> list[str]:
@@ -316,19 +417,23 @@ def build_rendered_outputs(
     table_html_map = _table_html_map(docx_path)
     rendered_outputs: list[tuple[Path, str]] = []
     for docx_chapter, markdown_chapter in zip(docx_book.chapters, expected_markdown_chapters):
+        rendered_markdown = render_markdown_chapter(
+            type(docx_chapter)(
+                source_path=docx_chapter.source_path,
+                title=markdown_chapter.title,
+                outline=docx_chapter.outline,
+                body=docx_chapter.body,
+                outline_body_indices=docx_chapter.outline_body_indices,
+            ),
+            figure_image_map=figure_image_map,
+            table_html_map=table_html_map,
+        )
         rendered_outputs.append(
             (
                 Path(markdown_chapter.source_path),
-                render_markdown_chapter(
-                    type(docx_chapter)(
-                        source_path=docx_chapter.source_path,
-                        title=markdown_chapter.title,
-                        outline=docx_chapter.outline,
-                        body=docx_chapter.body,
-                        outline_body_indices=docx_chapter.outline_body_indices,
-                    ),
-                    figure_image_map=figure_image_map,
-                    table_html_map=table_html_map,
+                _restore_english_formula_semantics(
+                    Path(markdown_chapter.source_path).name,
+                    rendered_markdown,
                 ),
             )
         )

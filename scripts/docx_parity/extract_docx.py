@@ -9,6 +9,7 @@ from zipfile import ZipFile
 
 from .model import BodyBlock, BookSemanticModel, ChapterSemanticModel, OutlineEntry
 from .normalize import (
+    is_caption_text,
     normalize_formula_text,
     normalize_heading_number,
     normalize_visible_text,
@@ -20,7 +21,6 @@ W_NS = {
     "m": "http://schemas.openxmlformats.org/officeDocument/2006/math",
 }
 CHAPTER_TITLE_RE = re.compile(r"^(?:Chapter|Chapitre)\s+(?P<number>\d+)\s*:", re.IGNORECASE)
-CAPTION_PREFIXES = ("Figure ", "Table ", "Tableau ")
 CAPTION_START_RE = re.compile(r"(Figure|Table|Tableau)\s+\d+\s*:", re.IGNORECASE)
 BARE_CAPTION_PLACEHOLDER_RE = re.compile(
     r"^(Figure|Table|Tableau)\s+\d+\s*:\s*$",
@@ -222,6 +222,11 @@ def _paragraph_components(paragraph: ET.Element) -> list[tuple[str, str]]:
             for run in child.findall("w:r", W_NS):
                 for kind, value in _run_components(run):
                     _append_component(components, kind, value)
+            continue
+        if child.tag.startswith(f"{{{W_NS['m']}}}") or child.find(".//m:t", W_NS) is not None:
+            value = _serialize_math_node(child)
+            if value:
+                _append_component(components, "math", value)
     return components
 
 
@@ -463,7 +468,7 @@ def _looks_like_short_graphic_label_fragment(text: str) -> bool:
 
 def _looks_like_concatenated_label_cluster(text: str) -> bool:
     normalized = _dedupe_exact_double(text)
-    if normalized.startswith(CAPTION_PREFIXES):
+    if is_caption_text(normalized):
         return False
     if any(punctuation in normalized for punctuation in ".!?;"):
         return False
@@ -596,7 +601,7 @@ def _lookahead_texts(paragraphs: list[ET.Element], start_index: int, limit: int 
 
 
 def _is_caption_candidate(text: str) -> bool:
-    if text.startswith(CAPTION_PREFIXES):
+    if is_caption_text(text):
         return True
 
     spillover_caption = _extract_caption_from_spillover(text)
@@ -834,7 +839,7 @@ def _normalize_paragraph_body_blocks(text: str, *, strong: bool = False) -> list
     if list_cluster is not None:
         return list_cluster
 
-    if deduped.startswith(CAPTION_PREFIXES):
+    if is_caption_text(deduped):
         return [BodyBlock(kind="caption", text=deduped)]
 
     return [
@@ -1029,7 +1034,7 @@ def extract_docx_book(
         num_id, ilvl = _extract_num_values(num_pr)
         paragraph_is_strong = (
             num_id is None
-            and not text.startswith(CAPTION_PREFIXES)
+            and not is_caption_text(text)
             and not any(component_kind == "math" for component_kind, _ in components)
             and _paragraph_is_all_bold_text(paragraph)
         )
@@ -1183,7 +1188,7 @@ def extract_docx_book(
 
         if num_id is not None:
             kind = "list_item"
-        elif text.startswith(CAPTION_PREFIXES):
+        elif is_caption_text(text):
             kind = "caption"
             if not seen_outline:
                 suppress_pre_heading_figure_labels = True
@@ -1306,7 +1311,7 @@ def extract_docx_chapter_by_anchors(
         num_id, ilvl = _extract_num_values(num_pr)
         paragraph_is_strong = (
             num_id is None
-            and not text.startswith(CAPTION_PREFIXES)
+            and not is_caption_text(text)
             and not any(component_kind == "math" for component_kind, _ in components)
             and _paragraph_is_all_bold_text(paragraph)
         )
@@ -1449,7 +1454,7 @@ def extract_docx_chapter_by_anchors(
 
         if num_id is not None:
             kind = "list_item"
-        elif text.startswith(CAPTION_PREFIXES):
+        elif is_caption_text(text):
             kind = "caption"
             if not seen_outline:
                 suppress_pre_heading_figure_labels = True

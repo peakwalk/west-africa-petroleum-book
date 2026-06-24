@@ -48,7 +48,9 @@ Royalties may be paid in kind or in cash.
 
 Post-royalty revenue is defined as:
 
-**Post-Royalty Revenue = Gross Revenue - Royalty**
+<div class="book-formula" data-equation-label="8.1" role="img" aria-label="Post royalty revenue equals gross revenue minus royalty">
+  <span class="book-formula-line" aria-hidden="true">Post-Royalty Revenue = Gross Revenue &minus; Royalty</span>
+</div>
 
 Gross revenue depends on production volume, crude quality, and international oil price fluctuations.
 
@@ -161,9 +163,28 @@ Figure 71 Comparison of cost recovery limits under selected West African petrole
 
 Profit oil is the portion remaining after deduction of royalty and recoverable costs, shared between the State and contractor.
 
-**Profit Oil = Post-Royalty Revenue - Recoverable Costs**
+<!-- parity-ignore:start -->
+<section class="formula-group formula-group--split formula-group--oil-profit" data-equation-label="8.2" aria-label="Profit oil formulas">
+  <div class="formula-split-entry">
+    <div class="book-formula" role="img" aria-label="Profit oil equals post royalty revenue minus recoverable costs">
+      <span class="book-formula-line" aria-hidden="true">Profit Oil = Post-Royalty Revenue &minus; Recoverable Costs</span>
+    </div>
+  </div>
 
-**Profit Oil = Gross Revenue - Royalty - Recoverable Costs**
+  <div class="formula-split-divider" aria-hidden="true">
+    <span class="book-formula-bridge">or</span>
+  </div>
+
+  <div class="formula-split-entry">
+    <div class="book-formula" role="img" aria-label="Profit oil equals gross revenue minus royalty minus recoverable costs">
+      <span class="book-formula-line" aria-hidden="true">Profit Oil = Gross Revenue &minus; Royalty &minus; Recoverable Costs</span>
+    </div>
+  </div>
+</section>
+<!-- parity-ignore:end -->
+<p hidden>Profit Oil = Post-Royalty Revenue - Recoverable Costs</p>
+
+<p hidden>Profit Oil = Gross Revenue - Royalty - Recoverable Costs</p>
 
 It is analogous to taxable income under concession systems.
 
@@ -180,9 +201,28 @@ Two main approaches exist:
 
 Common formulations include:
 
+<!-- parity-ignore:start -->
+<section class="formula-panel formula-panel--r-factor" data-equation-label="8.3" aria-label="R-factor calculation formulas">
+  <div class="book-formula book-formula--panel-row" data-formula-label="a)" role="img" aria-label="R equals cumulative revenue over cumulative cost">
+    <span class="book-formula-line" aria-hidden="true">R = cumulative revenue / cumulative cost</span>
+  </div>
+
+  <div class="book-formula book-formula--panel-row" data-formula-label="b)" role="img" aria-label="R equals revenues minus operating expenditure over capital expenditure">
+    <span class="book-formula-line" aria-hidden="true">R = (revenues &minus; OPEX) / CAPEX</span>
+  </div>
+
+  <div class="book-formula book-formula--panel-row" data-formula-label="c)" role="img" aria-label="R equals net revenue over total cost">
+    <span class="book-formula-line" aria-hidden="true">R = net revenue / total cost</span>
+  </div>
+</section>
+<!-- parity-ignore:end -->
+<div hidden>
+
 - R = cumulative revenue / cumulative cost
 - R = (revenues - OPEX) / CAPEX
 - R = net revenue / total cost
+
+</div>
 
 As R increases, project profitability increases, and the State share typically rises.
 
@@ -308,7 +348,11 @@ As R increases, project profitability increases, and the State share typically r
 <tr>
   <td></td>
   <td><p>Example (Total PSC, 2019)</p></td>
-  <td><p>H = 1.626 − 0.141 ln (oil price indexed to December 2011)</p></td>
+  <td class="table-12-h-factor-cell">
+    <div class="book-formula" role="img" aria-label="H equals 1.626 minus 0.141 natural logarithm of oil price indexed to December 2011">
+      <span class="book-formula-line" aria-hidden="true">H = 1.626 &minus; 0.141 ln (oil price indexed to December 2011)</span>
+    </div>
+  </td>
   <td><p>State share varies according to contract terms and H-factor</p></td>
 </tr>
 <tr>
@@ -816,8 +860,6 @@ The result is a simplified comparison of State take and contractor take across s
 Table 16 Simplified State-Contractor Cash Flow Distribution Using 100 Barrels of Gross Production
 
 This reference model shows that fiscal competitiveness generally increases as geological and commercial risk increases. Established producers can sustain a higher State take because they offer proven resources, infrastructure, and production history. Frontier countries usually need to provide a larger contractor share because investors must absorb higher exploration risk, longer payback periods, and greater uncertainty over commercial discoveries.
-
-![Figure 072](../images/figure-072.webp)
 
 Figure 72, Figure 73, Figure 74, Figure 75, Figure 76, and Figure 77 present simplified illustrations of State-Contractor revenue sharing under the petroleum fiscal regimes of Benin, Ghana, Côte d'Ivoire, Nigeria, Senegal, and Niger using a standardised 100-barrel reference model. The diagrams demonstrate how gross petroleum revenues are allocated through successive fiscal mechanisms, including royalties, cost recovery, profit oil sharing, taxation, and State participation. Although the specific fiscal parameters differ between countries, the figures clearly illustrate the fundamental objective of petroleum fiscal systems: balancing investor returns with government revenue generation. Countries such as Nigeria generally exhibit higher overall State take due to stronger government participation and taxation, while frontier or emerging producers may offer more favourable contractor terms to encourage exploration and development investment. The comparative analysis highlights the significant impact that fiscal design can have on project economics, investment attractiveness, and the distribution of petroleum wealth between the State and investors. These simplified examples are intended for illustrative purposes only and do not represent the full complexity of individual petroleum contracts or project-specific fiscal outcomes.
 

@@ -977,6 +977,28 @@ body.book-outline-empty .reader-outline {
   margin-bottom: 0;
 }
 
+#table-12 .table-12-h-factor-cell > .book-formula {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0.5rem 0.65rem;
+  overflow-x: visible;
+  overflow-y: visible;
+  font-size: inherit;
+  font-weight: 560;
+  line-height: 1.22;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  box-shadow: none;
+  border-radius: 0.8rem;
+}
+
+#table-12 .table-12-h-factor-cell > .book-formula .book-formula-line {
+  width: 100%;
+  min-width: 0;
+  white-space: normal;
+}
+
 #table-6 .table-data-table tbody td:nth-child(4) ul {
   margin: 0.45rem 0 0.75rem;
   padding-inline-start: 1.2rem;
@@ -2746,73 +2768,18 @@ body.book-page-aux-index .reader-article {
   letter-spacing: -0.01em;
 }
 
-.reference-index-heading-link {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) max-content;
-  gap: 1rem;
-  align-items: baseline;
-  color: inherit;
-  text-decoration: none;
-}
-
-.reference-index-heading-link:link,
-.reference-index-heading-link:visited {
-  color: inherit;
-}
-
-.reference-index-heading-title {
-  text-decoration: underline;
-  text-decoration-color: transparent;
-  text-decoration-thickness: 0.08em;
-  text-underline-offset: 0.18em;
-  transition: text-decoration-color 120ms ease;
-}
-
-.reference-index-heading-link:hover,
-.reference-index-heading-link:focus-visible {
-  color: var(--primary-deep);
-}
-
-.reference-index-heading-link:hover .reference-index-heading-title,
-.reference-index-heading-link:focus-visible .reference-index-heading-title {
-  text-decoration-color: currentColor;
-}
-
-.reference-index-heading-page,
-.reference-index-toc-page {
-  color: var(--muted);
-  font-size: 0.9375rem;
-  font-variant-numeric: tabular-nums;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
 .reference-index-list {
   margin: 0;
   padding-left: 0;
   list-style: none;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 10px;
+  width: 100%;
+  max-width: none;
 }
 
-.reference-index-list--toc {
-  gap: 12px;
-}
-
-.reference-index-toc-link {
-  display: grid;
-  grid-template-columns: max-content minmax(0, 1fr) max-content;
-  gap: 0.75rem;
-  align-items: baseline;
-}
-
-.reference-index-toc-label {
-  font-variant-numeric: tabular-nums;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-.reference-index-toc-title {
+.reference-index-list > li {
   min-width: 0;
 }
 
@@ -2828,6 +2795,8 @@ body.book-page-aux-index .reader-article {
 }
 
 .reference-index-link {
+  display: block;
+  width: 100%;
   text-decoration: none;
 }
 
@@ -3093,7 +3062,7 @@ body.book-page-aux-index .reader-article {
 
 .formula-group--prospect > .book-formula,
 .formula-group--volumetric > .book-formula {
-  font-size: 16px;
+  font-size: clamp(20px, 1.55vw, 25px);
   line-height: 1.2;
 }
 
@@ -3415,6 +3384,44 @@ body.book-page-aux-index .reader-article {
   background: var(--reader-table-card-bg);
 }
 
+.formula-case-copy {
+  margin: 0;
+  color: rgba(31, 41, 55, 0.9);
+  font-size: 12.5px;
+  line-height: 1.56;
+}
+
+.formula-group--volumetric .formula-case-copy {
+  justify-self: start;
+  width: 100%;
+  text-align: left;
+}
+
+.formula-case-group {
+  display: grid;
+  gap: 0.12rem;
+}
+
+.formula-group--volumetric .formula-case-group--bridge-result {
+  gap: 0;
+}
+
+.formula-group--volumetric .formula-case .book-formula--result + .formula-case-group--bridge-result {
+  margin-top: 0.85rem;
+}
+
+.formula-group--volumetric .formula-case-copy--bridge {
+  line-height: 1.42;
+}
+
+.formula-group--volumetric .formula-case-group--bridge-result .book-formula--bridge-result {
+  margin-top: 0;
+}
+
+.formula-group--volumetric .formula-case-group--bridge-result > .book-formula--bridge-result {
+  margin-top: -0.7rem;
+}
+
 .formula-case-connector {
   margin: -0.05rem 0;
   color: rgba(71, 85, 105, 0.82);
@@ -3422,6 +3429,9 @@ body.book-page-aux-index .reader-article {
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.12em;
+  justify-self: start;
+  width: 100%;
+  text-align: left;
   text-transform: uppercase;
 }
 
@@ -3429,6 +3439,10 @@ body.book-page-aux-index .reader-article {
   color: rgba(71, 85, 105, 0.74);
   font-size: 11px;
   letter-spacing: 0.08em;
+}
+
+.formula-group--volumetric .formula-case-stack > .formula-case-connector:first-child {
+  margin-top: 0;
 }
 
 .formula-group--volumetric .formula-case .book-formula + .formula-case-connector {
@@ -3459,11 +3473,13 @@ body.book-page-aux-index .reader-article {
   white-space: nowrap;
   font-size: 13px;
   line-height: 1.28;
+  text-align: center;
 }
 
 .formula-group--volumetric .formula-case .book-formula-line {
-  width: max-content;
-  min-width: 100%;
+  width: 100%;
+  min-width: 0;
+  text-align: center;
 }
 
 .formula-case .book-formula--result .book-formula-line {

@@ -23,9 +23,11 @@ const CROSS_LOCALE_PAGE_MAP = {
     "chapters/table-of-contents.html": "index.html",
     "chapters/list-of-figures.html": "chapters/list-of-figures.html",
     "chapters/list-of-tables.html": "chapters/list-of-tables.html",
+    "chapters/list-of-equations.html": "chapters/list-of-equations.html",
     "chapters/abbreviations-acronyms-and-abbreviations.html":
       "chapters/abbreviations-acronyms-and-abbreviations.html",
-    "chapters/foreword.html": "chapters/foreword.html",
+    "chapters/foreword.html": "index.html",
+    "chapters/foreword-to-the-french-edition.html": "chapters/foreword.html",
     "chapters/chapter-01-general-introduction.html": "chapters/general-introduction.html",
     "chapters/chapter-02-emerging-petroleum-provinces-in-west-africa.html": "index.html",
     "chapters/chapter-03-west-africa-country-analysis.html":
@@ -53,9 +55,10 @@ const CROSS_LOCALE_PAGE_MAP = {
     "chapters/front-matter.html": "index.html",
     "chapters/list-of-figures.html": "chapters/list-of-figures.html",
     "chapters/list-of-tables.html": "chapters/list-of-tables.html",
+    "chapters/list-of-equations.html": "chapters/list-of-equations.html",
     "chapters/abbreviations-acronyms-and-abbreviations.html":
       "chapters/abbreviations-acronyms-and-abbreviations.html",
-    "chapters/foreword.html": "chapters/foreword.html",
+    "chapters/foreword.html": "chapters/foreword-to-the-french-edition.html",
     "chapters/general-introduction.html": "chapters/chapter-01-general-introduction.html",
     "chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html":
       "chapters/chapter-05-hydrocarbon-value-chain.html",

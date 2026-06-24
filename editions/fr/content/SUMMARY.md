@@ -5,6 +5,7 @@
 - [Couverture](chapters/cover.md)
 - [Liste des figures](chapters/list-of-figures.md)
 - [Liste des tableaux](chapters/list-of-tables.md)
+- [Liste des équations](chapters/list-of-equations.md)
 - [Abréviations, sigles et acronymes](chapters/abbreviations-acronyms-and-abbreviations.md)
 - [Avant-propos](chapters/foreword.md)
 - [Introduction générale](chapters/general-introduction.md)

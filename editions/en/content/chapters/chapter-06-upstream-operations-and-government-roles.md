@@ -48,8 +48,6 @@ In many countries, deficiencies during this phase have resulted in:
 
 Consequently, the pre-licensing phase should be considered one of the most important stages in the petroleum value chain.
 
-![Figure 016](../images/figure-016.webp)
-
 Figure 16 shows the process for the award of petroleum blocks to International Oil Companies (IOCs) for exploration and production activities.
 
 ![Figure 016](../images/figure-016.webp)
@@ -1099,8 +1097,6 @@ Changes in reflection amplitude with offset that may indicate the presence of hy
 
 DHIs can significantly reduce exploration risk when properly interpreted.
 
-![Figure 021](../images/figure-021.webp)
-
 Figure 21 illustrates the typical workflow used to transform raw seismic data into drilling decisions. The process begins with seismic acquisition and data processing, followed by geological and geophysical interpretation to identify horizons, faults and potential hydrocarbon traps. Seismic data are then integrated with well, geological and reservoir information to build subsurface models, evaluate prospects and assess exploration risk. The workflow culminates in well planning and placement, where the optimum drilling target and trajectory are selected to maximise the likelihood of a successful hydrocarbon discovery.
 
 ![Figure 021](../images/figure-021.webp)
@@ -1340,15 +1336,9 @@ Modern interpretation often incorporates seismic attributes such as:
 
 These tools can improve reservoir prediction and prospect definition.
 
-![Figure 025](../images/figure-025.webp)
-
 Figure 25 illustrates an interpreted seismic reflection section containing an anticlinal structural closure, one of the most common hydrocarbon trapping mechanisms in petroleum exploration. The high-amplitude, laterally continuous reflectors observed within the closure may indicate the presence of hydrocarbon-bearing reservoir rocks sealed beneath an impermeable cap rock. Seismic interpretation is a critical exploration tool used to identify potential traps, evaluate reservoir geometry, and optimise exploration well placement.
 
-![Figure 026](../images/figure-026.webp)
-
 Figure 26 presents the principal structural and stratigraphic trap types responsible for hydrocarbon accumulation. Structural traps, such as anticlines, fault traps, and salt dome traps, result from tectonic deformation, whereas stratigraphic traps, including pinch-out, unconformity, reef, and channel traps, are created by variations in sediment deposition and erosion. Effective hydrocarbon accumulations occur where reservoir rocks, seal rocks, migration pathways, and trapping mechanisms coincide within a functioning petroleum system.
-
-![Figure 027](../images/figure-027.webp)
 
 Figure 27 presents a Two-Way Travel Time (TWT) structural contour map of the top reservoir horizon at the Hihon Prospect. The map illustrates the geometry of the mapped structural closure, with lower TWT values representing structurally higher areas that form the crest of the prospect. The interpreted fault system influences the shape and extent of the closure and may contribute to hydrocarbon trapping. The green outline defines the interpreted structural closure, while the Hihon-1 well was drilled to evaluate the prospect. TWT structure maps are a fundamental tool in petroleum exploration, allowing geoscientists to identify structural highs, estimate closure area, and assess the potential for hydrocarbon accumulation.
 
@@ -1386,43 +1376,168 @@ Key input parameters include:
 
 Because considerable uncertainty exists, volumetric estimates are generally expressed as probabilistic ranges.
 
-Where:
+<!-- parity-ignore:start -->
+<section class="formula-group formula-group--volumetric" data-equation-label="6.1" aria-label="Volumetric evaluation formulas">
+  <div class="book-formula" role="img" aria-label="VHcP equals GRV times N over G times phi times Shc times one over FVF">
+    <span class="book-formula-line" aria-hidden="true">VHcP = GRV × N/G × ϕ × Shc × 1/FVF</span>
+  </div>
 
-GRV (Gross Rock Volume) - the gross volume of the reservoir rock. It is determined from the geometric shape and thickness of the reservoir.
+  <div class="formula-where formula-where--grid formula-where--volumetric" aria-label="Volumetric evaluation formula definitions">
+    <p class="formula-where-label">Where:</p>
+    <div class="formula-spec-grid formula-spec-grid--two formula-spec-grid--volumetric">
+      <article class="formula-spec-item">
+        <p class="formula-spec-copy"><span class="formula-where-term">GRV (Gross Rock Volume)</span> - the gross volume of the reservoir rock. It is determined from the geometric shape and thickness of the reservoir.</p>
+        <div class="book-formula book-formula--local" role="img" aria-label="GRV equals the sum of reservoir area times reservoir thickness">
+          <span class="book-formula-line" aria-hidden="true">GRV = ∑(Reservoir Area × Reservoir Thickness)</span>
+        </div>
+      </article>
+      <article class="formula-spec-item">
+        <p class="formula-spec-copy"><span class="formula-where-term">N/G (Net-to-Gross Ratio)</span> - the ratio of net reservoir thickness to gross reservoir thickness. Reservoir intervals rarely exhibit uniform lithology and are often interbedded with impermeable shale layers.</p>
+      </article>
+      <article class="formula-spec-item">
+        <p class="formula-spec-copy"><span class="formula-where-term">ϕ (Phi) - Reservoir Porosity</span> - estimated from well logs, core measurements, and analogue reservoir data. It is defined as:</p>
+        <div class="book-formula book-formula--local" role="img" aria-label="Phi equals pore volume Vv over bulk reservoir volume V">
+          <span class="book-formula-line" aria-hidden="true">ϕ = Pore Volume (Vv) / Bulk Reservoir Volume (V)</span>
+        </div>
+      </article>
+      <article class="formula-spec-item">
+        <p class="formula-spec-copy"><span class="formula-where-term">Shc (Hydrocarbon Saturation)</span> - determined from the water saturation (Sw). It is generally calculated from well log data within the effective porosity interval.</p>
+        <div class="book-formula book-formula--local" role="img" aria-label="Shc equals one minus Sw">
+          <span class="book-formula-line" aria-hidden="true">Shc = 1 &minus; Sw</span>
+        </div>
+      </article>
+      <article class="formula-spec-item">
+        <p class="formula-spec-copy"><span class="formula-where-term">FVF (Formation Volume Factor)</span> - expresses the change in fluid volume between reservoir conditions and standard surface conditions (pressure = 1 atmosphere and temperature = 15°C). For oil, the formation volume factor is represented by Bo, while for gas it is represented by Bg.</p>
+        <div class="book-formula book-formula--local" role="img" aria-label="FVF equals reservoir volume over surface volume">
+          <span class="book-formula-line" aria-hidden="true">FVF = Reservoir Volume / Surface Volume</span>
+        </div>
+      </article>
+      <article class="formula-spec-item formula-spec-item--empty" aria-hidden="true"></article>
+    </div>
+  </div>
 
-N/G (Net-to-Gross Ratio) - the ratio of net reservoir thickness to gross reservoir thickness. Reservoir intervals rarely exhibit uniform lithology and are often interbedded with impermeable shale layers.
+  <div class="formula-derivation formula-derivation--volumetric" aria-label="Oil and gas volumetric derivations">
+    <div class="formula-case-grid">
+      <section class="formula-case" aria-label="Oil volume derivation">
+        <p class="formula-case-title">Oil Volumes</p>
+        <div class="formula-case-stack">
+          <p class="formula-case-connector">For Oil</p>
+          <div class="book-formula book-formula--secondary" role="img" aria-label="FVF equals Bo for oil">
+            <span class="book-formula-line" aria-hidden="true">FVF = Bo</span>
+          </div>
+          <p class="formula-case-connector">and</p>
+          <div class="book-formula book-formula--secondary" role="img" aria-label="Shc equals So for oil saturation">
+            <span class="book-formula-line" aria-hidden="true">Shc = So</span>
+          </div>
+          <p class="formula-case-copy">where <span class="formula-note-term">So</span> is the oil saturation.</p>
+          <p class="formula-case-connector">Therefore</p>
+          <div class="book-formula book-formula--secondary book-formula--result" role="img" aria-label="STOIIP equals GRV times N over G times phi times So times one over Bo">
+            <span class="book-formula-line" aria-hidden="true">STOIIP = GRV × N/G × ϕ × So × 1/Bo</span>
+          </div>
+          <div class="formula-case-group formula-case-group--bridge-result">
+            <p class="formula-case-copy formula-case-copy--bridge">The volume of associated gas in place is calculated as:</p>
+            <div class="book-formula book-formula--secondary book-formula--bridge-result" role="img" aria-label="Associated gas in place equals STOIIP times GOR">
+              <span class="book-formula-line" aria-hidden="true">Associated Gas In Place = STOIIP × GOR</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="formula-case" aria-label="Gas volume derivation">
+        <p class="formula-case-title">Gas Volumes</p>
+        <div class="formula-case-stack">
+          <p class="formula-case-connector">For Gas</p>
+          <div class="book-formula book-formula--secondary" role="img" aria-label="FVF equals Bg for gas">
+            <span class="book-formula-line" aria-hidden="true">FVF = Bg</span>
+          </div>
+          <p class="formula-case-connector">and</p>
+          <div class="book-formula book-formula--secondary" role="img" aria-label="Shc equals Sg for gas saturation">
+            <span class="book-formula-line" aria-hidden="true">Shc = Sg</span>
+          </div>
+          <p class="formula-case-copy">where <span class="formula-note-term">Sg</span> is the gas saturation.</p>
+          <p class="formula-case-connector">Therefore</p>
+          <div class="book-formula book-formula--secondary book-formula--result" role="img" aria-label="GIIP equals GRV times N over G times phi times Sg times one over Bg">
+            <span class="book-formula-line" aria-hidden="true">GIIP = GRV × N/G × ϕ × Sg × 1/Bg</span>
+          </div>
+          <div class="formula-case-group formula-case-group--bridge-result">
+            <p class="formula-case-copy formula-case-copy--bridge">The volume of condensate in place is calculated as:</p>
+            <div class="book-formula book-formula--secondary book-formula--bridge-result" role="img" aria-label="Condensate in place equals GIIP times CGR">
+              <span class="book-formula-line" aria-hidden="true">Condensate In Place = GIIP × CGR</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="formula-case-note">
+      <p class="formula-where-label">Where:</p>
+      <p class="formula-note"><span class="formula-note-term">GOR:</span> the ratio of produced gas volume to produced oil volume.</p>
+      <p class="formula-note"><span class="formula-note-term">CGR:</span> the ratio of produced condensate volume to produced gas volume.</p>
+    </div>
+  </div>
+</section>
+<!-- parity-ignore:end -->
+<p hidden>VHcP=GRV×N/G×ϕ×Shc×1/FVF</p>
 
-φ (Phi) - Reservoir Porosity - estimated from well logs, core measurements, and analogue reservoir data. It is defined as:
+<p hidden>Where:</p>
 
-Shc (Hydrocarbon Saturation) - determined from the water saturation (Sw). It is generally calculated from well log data within the effective porosity interval.
+<p hidden>GRV (Gross Rock Volume) - the gross volume of the reservoir rock. It is determined from the geometric shape and thickness of the reservoir.</p>
 
-FVF (Formation Volume Factor) - expresses the change in fluid volume between reservoir conditions and standard surface conditions (pressure = 1 atmosphere and temperature = 15°C). For oil, the formation volume factor is represented by Bo, while for gas it is represented by Bg.
+<p hidden>GRV=∑(ReservoirArea×ReservoirThickness)</p>
 
-**Oil Volumes**
+<p hidden>N/G (Net-to-Gross Ratio) - the ratio of net reservoir thickness to gross reservoir thickness. Reservoir intervals rarely exhibit uniform lithology and are often interbedded with impermeable shale layers.</p>
 
-For oil:
+<p hidden>φ (Phi) - Reservoir Porosity - estimated from well logs, core measurements, and analogue reservoir data. It is defined as:</p>
 
-where So is the oil saturation.
+<p hidden>ϕ=PoreVolume(Vv)/BulkReservoirVolume(V)</p>
 
-Therefore:
+<p hidden>Shc (Hydrocarbon Saturation) - determined from the water saturation (Sw). It is generally calculated from well log data within the effective porosity interval.</p>
 
-The volume of associated gas in place is calculated as:
+<p hidden>Shc=1-Sw</p>
 
-**Gas Volumes**
+<p hidden>FVF (Formation Volume Factor) - expresses the change in fluid volume between reservoir conditions and standard surface conditions (pressure = 1 atmosphere and temperature = 15°C). For oil, the formation volume factor is represented by Bo, while for gas it is represented by Bg.</p>
 
-For gas:
+<p hidden>FVF=ReservoirVolume/SurfaceVolume</p>
 
-where Sg is the gas saturation.
+<p hidden>Oil Volumes</p>
 
-Therefore:
+<p hidden>For oil:</p>
 
-The volume of condensate in place is calculated as:
+<p hidden>FVF=Bo</p>
 
-Where:
+<p hidden>Shc=So</p>
 
-GOR (Gas-Oil Ratio) - the ratio of produced gas volume to produced oil volume.
+<p hidden>where So is the oil saturation.</p>
 
-CGR (Condensate-Gas Ratio) - the ratio of produced condensate volume to produced gas volume.
+<p hidden>Therefore:</p>
+
+<p hidden>STOIIP=GRV×N/G×ϕ×So×1/Bo</p>
+
+<p hidden>The volume of associated gas in place is calculated as:</p>
+
+<p hidden>AssociatedGasInPlace=STOIIP×GOR</p>
+
+<p hidden>Gas Volumes</p>
+
+<p hidden>For gas:</p>
+
+<p hidden>FVF=Bg</p>
+
+<p hidden>Shc=Sg</p>
+
+<p hidden>where Sg is the gas saturation.</p>
+
+<p hidden>Therefore:</p>
+
+<p hidden>GIIP=GRV×N/G×ϕ×Sg×1/Bg</p>
+
+<p hidden>The volume of condensate in place is calculated as:</p>
+
+<p hidden>CondensateInPlace=GIIP×CGR</p>
+
+<p hidden>Where:</p>
+
+<p hidden>GOR (Gas-Oil Ratio) - the ratio of produced gas volume to produced oil volume.</p>
+
+<p hidden>CGR (Condensate-Gas Ratio) - the ratio of produced condensate volume to produced gas volume.</p>
 
 **Prospect Ranking and Appraisal**
 
@@ -1498,7 +1613,9 @@ Typical risk factors include:
 
 The overall Geological Chance of Success is calculated as:
 
-**GCoS = Ps × Pr × Pse × Pt**
+<div class="book-formula" data-equation-label="6.2" role="img" aria-label="GCoS equals Ps times Pr times Pse times Pt">
+  <span class="book-formula-line" aria-hidden="true">GCoS = Ps × Pr × Pse × Pt</span>
+</div>
 
 For example:
 
@@ -1530,9 +1647,10 @@ For example:
 </tbody>
 </table>
 
-GCoS = 0.90 × 0.80 × 0.85 × 0.90
-
-= 0.55 (55%)
+<div class="book-formula" data-equation-label="6.3" role="img" aria-label="GCoS equals 0.90 times 0.80 times 0.85 times 0.90 and equals 0.55 or 55 percent">
+  <span class="book-formula-line" aria-hidden="true">GCoS = 0.90 × 0.80 × 0.85 × 0.90</span>
+  <span class="book-formula-line" aria-hidden="true">= 0.55 (55%)</span>
+</div>
 
 This indicates approximately a 55% probability that the prospect contains hydrocarbons.
 
@@ -2404,8 +2522,6 @@ Appraisal programmes confirmed the scale of gas resources and supported one of A
 
 Appraisal drilling played a critical role in confirming the commercial viability of this deepwater development.
 
-![Figure 038](../images/figure-038.webp)
-
 Figure 38 and Figure 39 illustrate the importance of preserving geological samples and subsurface data acquired during petroleum exploration and development activities. The photographs were taken in the core library of Côte d’Ivoire at the Direction of the PETROCI Analysis and Research Center, where drill core samples are systematically archived, catalogued, and maintained for long-term access.
 
 Such facilities play a critical role in safeguarding valuable geological information that can be re-examined as new exploration concepts, analytical techniques, and technologies emerge. Core samples provide direct evidence of lithology, sedimentary structures, reservoir quality, diagenetic processes, and hydrocarbon occurrences, making them an essential complement to seismic, well log, and production data. National core repositories therefore represent strategic assets that support ongoing exploration, field appraisal, academic research, and future resource development while ensuring that subsurface information remains accessible to industry, government, and research institutions.
@@ -2556,8 +2672,6 @@ Frequently used in deepwater developments.
 
 Used where existing infrastructure is available nearby.
 
-![Figure 040](../images/figure-040.webp)
-
 Figure 40 illustrates a range of development concepts commonly used in hydrocarbon field developments, selected according to reservoir characteristics, water depth, production requirements, economics and project objectives. The examples range from conventional onshore wells and fixed offshore platforms to floating production systems (FPSOs), subsea tie-backs, subsea processing facilities and converted Mobile Offshore Production Units (MOPUs). Each concept offers distinct advantages in terms of cost, technical complexity, production capacity and field location, highlighting the importance of selecting the most appropriate development solution to maximise project value and hydrocarbon recovery.
 
 ![Figure 040](../images/figure-040.webp)
@@ -2629,11 +2743,7 @@ Continuous monitoring may involve:
 
 Reservoir surveillance enables operators to optimise field performance throughout the life of the asset.
 
-![Figure 041](../images/figure-041.webp)
-
 Figure 41 shows the typical workflow used to evaluate hydrocarbon reservoirs and develop field development strategies, progressing from data acquisition and interpretation through reservoir modelling, recovery option assessment, production forecasting, and economic evaluation to support investment and development decisions.
-
-![Figure 042](../images/figure-042.webp)
 
 Figure 42 shows a 3D reservoir model integrating geological structure, petrophysical properties, fluid contacts, and well data to support volumetric estimation, reservoir simulation, well placement, production forecasting, and field development optimisation.
 

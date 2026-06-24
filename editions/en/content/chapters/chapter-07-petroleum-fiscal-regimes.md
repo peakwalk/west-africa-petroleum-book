@@ -34,8 +34,6 @@ By contrast, the State seeks to ensure:
 - employment, welfare, and technology transfer; and consequently
 - the longest possible production life with the highest possible recovery factor.
 
-![Figure 069](../images/figure-069.webp)
-
 Figure 69 illustrates the typical distribution of revenues generated from petroleum production under a fiscal regime. Gross revenue from the sale of hydrocarbons is first used to recover eligible exploration, development, and operating costs incurred by the contractor. The remaining value, commonly referred to as profit oil or profit gas, is then shared between the contractor and the government in accordance with the terms of the applicable petroleum contract and fiscal framework. In addition to profit sharing, governments may receive revenues through royalties, bonuses, taxes, levies, and other fiscal instruments. The balance between government take and contractor entitlement is a key determinant of project economics and plays an important role in attracting investment while ensuring the State receives an equitable share of the value generated from its petroleum resources.
 
 ![Figure 069](../images/figure-069.webp)
@@ -53,8 +51,6 @@ Petroleum projects require very large investments and extend over long periods, 
 At the same time, investors require stability. Sudden or unpredictable fiscal changes can undermine confidence and delay investment decisions. Governments, however, also require flexibility to adapt to changing economic conditions. Achieving the right balance between stability and adaptability remains one of the key challenges in designing and implementing effective petroleum fiscal systems.
 
 There are two main families of petroleum fiscal systems: concessionary systems and contractual systems (Figure 23). The legal and regulatory framework governing petroleum exploration and production in any country depends on the fiscal regime adopted.
-
-![Figure 070](../images/figure-070.webp)
 
 Figure 70 presents a simplified classification of the principal petroleum fiscal regimes used by governments to manage and monetise hydrocarbon resources. Petroleum fiscal systems generally fall into two broad categories: concessionary systems and contractual systems. Under concessionary systems, companies are granted rights to explore for and produce hydrocarbons in return for the payment of taxes, royalties, and other fiscal obligations. Contractual systems include service contracts and production sharing contracts (PSCs), under which the State retains ownership of the petroleum resources while defining how costs, risks, and revenues are allocated between the government and the contractor. The choice of fiscal regime has a significant influence on investment attractiveness, government revenues, and the overall economics of petroleum developments.
 

@@ -133,12 +133,19 @@ class PublicEditionBuildTests(unittest.TestCase):
             english_chapters,
             re.DOTALL,
         )
+        equations_match = re.search(
+            r"<h3>List of Equations</h3>\s*<p>(.*?)</p>",
+            english_chapters,
+            re.DOTALL,
+        )
 
         self.assertIsNotNone(figures_match)
         self.assertIsNotNone(tables_match)
+        self.assertIsNotNone(equations_match)
 
         figures_description = figures_match.group(1)
         tables_description = tables_match.group(1)
+        equations_description = equations_match.group(1)
 
         self.assertIn("Auxiliary figure index for the web edition.", figures_description)
         self.assertNotIn("&lt;div", figures_description)
@@ -147,6 +154,10 @@ class PublicEditionBuildTests(unittest.TestCase):
         self.assertIn("Auxiliary table index for the web edition.", tables_description)
         self.assertNotIn("&lt;div", tables_description)
         self.assertNotIn("reference-index-tables", tables_description)
+
+        self.assertIn("Auxiliary equation index for the web edition.", equations_description)
+        self.assertNotIn("&lt;div", equations_description)
+        self.assertNotIn("reference-index-equations", equations_description)
 
     def test_english_chapter_library_tracks_replacement_book_topology(self) -> None:
         english_chapters = (self.output_root / "chapters" / "index.html").read_text(encoding="utf-8")

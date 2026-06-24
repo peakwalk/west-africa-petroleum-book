@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 
 from .model import BodyBlock, BookSemanticModel, ChapterSemanticModel, OutlineEntry
-from .normalize import normalize_formula_text, normalize_visible_text, split_heading_label
+from .normalize import is_caption_text, normalize_formula_text, normalize_visible_text, split_heading_label
 
 SUMMARY_LINK_RE = re.compile(r"^\s*-\s+\[(?P<title>.+?)\]\((?P<path>.+?)\)\s*$")
 LIST_ITEM_RE = re.compile(r"^(?:[-*+]|\d+[.)])\s+(?P<text>.+)$")
@@ -15,7 +15,6 @@ FENCE_RE = re.compile(r"^```(?:\s*(?P<lang>[A-Za-z0-9_+-]+))?\s*$")
 PARITY_IGNORE_START = "<!-- parity-ignore:start -->"
 PARITY_IGNORE_END = "<!-- parity-ignore:end -->"
 FIGURE_LABEL_MAX_WORDS = 6
-CAPTION_PREFIXES = ("Figure ", "Table ", "Tableau ")
 STANDALONE_STRONG_RE = re.compile(r"^\s*(\*\*|__)(?P<content>.+?)\1\s*$")
 
 
@@ -96,7 +95,7 @@ def _parse_chapter(chapter_path: Path) -> ChapterSemanticModel:
         paragraph_lines.clear()
         if not text:
             return
-        kind = "caption" if text.startswith(CAPTION_PREFIXES) else "paragraph"
+        kind = "caption" if is_caption_text(text) else "paragraph"
         body.append(
             BodyBlock(
                 kind=kind,
@@ -167,7 +166,7 @@ def _parse_chapter(chapter_path: Path) -> ChapterSemanticModel:
             continue
         if (
             paragraph_lines
-            and paragraph_lines[0].startswith(CAPTION_PREFIXES)
+            and is_caption_text(paragraph_lines[0])
             and not stripped.startswith(("#", ">", "!["))
             and not LIST_ITEM_RE.match(stripped)
         ):
@@ -257,11 +256,12 @@ def _parse_chapter(chapter_path: Path) -> ChapterSemanticModel:
             continue
         if (
             _is_short_figure_label(stripped)
-            and not stripped.startswith(CAPTION_PREFIXES)
+            and not is_caption_text(stripped)
             and not _looks_like_semantic_callout(stripped)
             and (
-            suppress_figure_labels
-            or next_stripped.startswith(("![", *CAPTION_PREFIXES))
+                suppress_figure_labels
+                or next_stripped.startswith("![")
+                or is_caption_text(next_stripped)
             )
         ):
             continue
@@ -272,7 +272,7 @@ def _parse_chapter(chapter_path: Path) -> ChapterSemanticModel:
             and not _looks_like_semantic_callout(stripped)
         ):
             continue
-        if stripped.startswith(CAPTION_PREFIXES):
+        if is_caption_text(stripped):
             suppress_pre_heading_figure_labels = not seen_outline
             suppress_figure_labels = True
         elif suppress_figure_labels:
