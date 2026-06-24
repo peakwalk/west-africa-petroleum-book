@@ -410,6 +410,40 @@ class ThemeCustomCssTest(unittest.TestCase):
 
         self.assertIn("display: none;", block)
 
+    def test_mobile_outline_card_uses_stable_grid_navigation(self) -> None:
+        css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
+        list_block = _rule_block(css, ".reader-mobile-outline-card .on-this-page > ol")
+        item_block = _rule_block(css, ".reader-mobile-outline-card .on-this-page li.header-item")
+        separator_block = _rule_block(
+            css,
+            ".reader-mobile-outline-card .on-this-page li.header-item:not(:last-child)::after",
+        )
+        wrapper_block = _rule_block(
+            css,
+            ".reader-mobile-outline-card .on-this-page .chapter-link-wrapper",
+        )
+        link_block_match = re.search(
+            r"\.reader-mobile-outline-card \.on-this-page a,\n"
+            r"\.reader-mobile-outline-card \.on-this-page a:visited \{(?P<body>.*?)\n\}",
+            css,
+            re.DOTALL,
+        )
+
+        self.assertIn("display: grid;", list_block)
+        self.assertIn(
+            "grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));",
+            list_block,
+        )
+        self.assertNotIn("flex-wrap:", list_block)
+        self.assertIn("display: block;", item_block)
+        self.assertIn("content: none;", separator_block)
+        self.assertIn("display: none;", separator_block)
+        self.assertIn("width: 100%;", wrapper_block)
+        self.assertIsNotNone(link_block_match)
+        link_block = link_block_match.group("body")
+        self.assertIn("display: block;", link_block)
+        self.assertIn("overflow-wrap: break-word;", link_block)
+
     def test_outline_reference_titles_wrap_without_truncation(self) -> None:
         css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
         js = CUSTOM_JS_PATH.read_text(encoding="utf-8")

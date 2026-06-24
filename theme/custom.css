@@ -1895,9 +1895,9 @@ a.reader-language-option:focus-visible {
 }
 
 .reader-mobile-outline-card .on-this-page > ol {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 0.65rem 1rem;
 }
 
 .reader-mobile-outline-card .on-this-page ol.section {
@@ -1905,31 +1905,30 @@ a.reader-language-option:focus-visible {
 }
 
 .reader-mobile-outline-card .on-this-page li.header-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 0;
+  display: block;
   min-width: 0;
   max-width: 100%;
 }
 
 .reader-mobile-outline-card .on-this-page li.header-item:not(:last-child)::after {
-  content: "";
-  width: 1px;
-  height: 0.95rem;
-  margin-inline-start: 1rem;
-  background: rgba(11, 31, 51, 0.16);
+  content: none;
+  display: none;
 }
 
 .reader-mobile-outline-card .on-this-page .chapter-link-wrapper {
   display: block;
+  width: 100%;
 }
 
 .reader-mobile-outline-card .on-this-page a,
 .reader-mobile-outline-card .on-this-page a:visited {
+  display: block;
+  padding-block: 0.1rem;
   color: var(--brand-blue-deep);
   font-size: 0.9375rem;
   font-weight: 600;
   line-height: 1.45;
+  overflow-wrap: break-word;
 }
 
 #mdbook-searchbar {
