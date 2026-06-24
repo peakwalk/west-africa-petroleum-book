@@ -5,8 +5,27 @@ ROOT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
 
 cd "$ROOT_DIR"
 npm run build:site >/dev/null
-python3 scripts/check_docx_formula_coverage.py --edition en >/dev/null
-python3 scripts/check_docx_formula_coverage.py --edition fr >/dev/null
+
+run_docx_formula_check_if_available() {
+  edition="$1"
+  docx_path="$(
+    python3 - "$edition" <<'PY'
+import sys
+from scripts.edition_config import get_edition
+
+print(get_edition(sys.argv[1]).docx_path)
+PY
+  )"
+
+  if [ -f "$docx_path" ]; then
+    python3 scripts/check_docx_formula_coverage.py --edition "$edition" >/dev/null
+  else
+    echo "Skipping DOCX formula coverage check for $edition; missing $docx_path" >&2
+  fi
+}
+
+run_docx_formula_check_if_available en
+run_docx_formula_check_if_available fr
 
 check_contains() {
   file_path="$1"

@@ -8,6 +8,7 @@ from pathlib import Path
 ROOT_DIR = Path(__file__).resolve().parents[1]
 CUSTOM_CSS_PATH = ROOT_DIR / "theme/custom.css"
 CUSTOM_JS_PATH = ROOT_DIR / "theme/custom.js"
+TEST_SITE_RENDER_PATH = ROOT_DIR / "scripts/test-site-render.sh"
 
 
 def _rule_block(css: str, selector: str) -> str:
@@ -19,6 +20,16 @@ def _rule_block(css: str, selector: str) -> str:
 
 
 class ThemeCustomCssTest(unittest.TestCase):
+    def test_site_render_formula_coverage_is_optional_without_docx_resources(self) -> None:
+        script = TEST_SITE_RENDER_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("run_docx_formula_check_if_available()", script)
+        self.assertIn('if [ -f "$docx_path" ]; then', script)
+        self.assertIn("python3 scripts/check_docx_formula_coverage.py --edition \"$edition\"", script)
+        self.assertIn("Skipping DOCX formula coverage check", script)
+        self.assertIn("run_docx_formula_check_if_available en", script)
+        self.assertIn("run_docx_formula_check_if_available fr", script)
+
     def test_reader_article_unordered_lists_include_padding_within_body_width(self) -> None:
         css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
         block = _rule_block(css, ".reader-article ul")
