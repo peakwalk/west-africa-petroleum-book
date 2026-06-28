@@ -1170,8 +1170,8 @@ def extract_docx_book(
             continue
 
         spillover_caption = _extract_caption_from_spillover(text)
-        if spillover_caption is not None and (
-            not seen_outline or _is_spillover_caption(text, spillover_caption)
+        if spillover_caption is not None and _is_spillover_caption(
+            text, spillover_caption
         ):
             current_body.append(BodyBlock(kind="caption", text=spillover_caption))
             if not seen_outline:
@@ -1436,8 +1436,8 @@ def extract_docx_chapter_by_anchors(
             continue
 
         spillover_caption = _extract_caption_from_spillover(text)
-        if spillover_caption is not None and (
-            not seen_outline or _is_spillover_caption(text, spillover_caption)
+        if spillover_caption is not None and _is_spillover_caption(
+            text, spillover_caption
         ):
             body.append(BodyBlock(kind="caption", text=spillover_caption))
             if not seen_outline:

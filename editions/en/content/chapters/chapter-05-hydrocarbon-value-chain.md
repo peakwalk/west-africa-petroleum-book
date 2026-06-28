@@ -1,8 +1,10 @@
 # Chapter 5: Hydrocarbon Value Chain
 
+The petroleum industry value chain comprises three principal segments, as illustrated in Figure 5: the upstream sector, the midstream sector, and the downstream sector.
+
 ![Figure 005](../images/figure-005.webp)
 
-Figure 5: the upstream sector, the midstream sector, and the downstream sector.
+Figure 5 Petroleum Industry Value Chain
 
 ## 5.1- Upstream Sector
 

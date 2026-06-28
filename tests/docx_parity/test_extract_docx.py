@@ -366,6 +366,66 @@ class ExtractDocxTests(unittest.TestCase):
             ],
         )
 
+    def test_preserves_pre_outline_figure_reference_sentences_before_caption(self) -> None:
+        tmp_dir = Path(tempfile.mkdtemp())
+        docx_path = tmp_dir / "fixture-pre-outline-figure-reference-body.docx"
+        document = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading1"/></w:pPr>
+      <w:r><w:t>Chapter 5: Hydrocarbon Value Chain</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t>The petroleum industry value chain comprises three principal segments, as illustrated in Figure 5: the upstream sector, the midstream sector, and the downstream sector.</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Figure 5 Petroleum Industry Value Chain</w:t></w:r></w:p>
+    <w:p>
+      <w:pPr><w:pStyle w:val="Heading2"/></w:pPr>
+      <w:r><w:t>5.1- Upstream Sector</w:t></w:r>
+    </w:p>
+    <w:p><w:r><w:t>The upstream petroleum sector forms the foundation of the petroleum industry.</w:t></w:r></w:p>
+  </w:body>
+</w:document>
+"""
+        with zipfile.ZipFile(docx_path, "w") as archive:
+            archive.writestr("[Content_Types].xml", CONTENT_TYPES)
+            archive.writestr("_rels/.rels", RELS)
+            archive.writestr("word/document.xml", document)
+            archive.writestr(
+                "word/numbering.xml",
+                (FIXTURE_DIR / "numbering-section-restart.xml").read_text(
+                    encoding="utf-8"
+                ),
+            )
+            archive.writestr(
+                "word/styles.xml",
+                (FIXTURE_DIR / "styles-headings.xml").read_text(encoding="utf-8"),
+            )
+
+        expected_body = [
+            "The petroleum industry value chain comprises three principal segments, as illustrated in Figure 5: the upstream sector, the midstream sector, and the downstream sector.",
+            "Figure 5 Petroleum Industry Value Chain",
+            "The upstream petroleum sector forms the foundation of the petroleum industry.",
+        ]
+
+        book = extract_docx_book(docx_path)
+        self.assertEqual([block.text for block in book.chapters[0].body], expected_body)
+        self.assertEqual(
+            [block.kind for block in book.chapters[0].body],
+            ["paragraph", "caption", "paragraph"],
+        )
+
+        anchored = extract_docx_chapter_by_anchors(
+            docx_path,
+            chapter_title="Chapter 5: Hydrocarbon Value Chain",
+            start_anchor="The petroleum industry value chain comprises three principal segments, as illustrated in Figure 5: the upstream sector, the midstream sector, and the downstream sector.",
+            end_anchor=None,
+        )
+        self.assertEqual([block.text for block in anchored.chapters[0].body], expected_body)
+        self.assertEqual(
+            [block.kind for block in anchored.chapters[0].body],
+            ["paragraph", "caption", "paragraph"],
+        )
+
     def test_preserves_repeated_single_word_semantic_lead_ins_before_future_captions(
         self,
     ) -> None:
