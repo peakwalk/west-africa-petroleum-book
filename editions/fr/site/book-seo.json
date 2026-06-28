@@ -1,0 +1,14 @@
+{
+  "landing": {
+    "title": "Exploration et exploitation des ressources pétrolières en Afrique de l’Ouest",
+    "description": "Édition numérique de référence sur les ressources pétrolières ouest-africaines, la chaîne de valeur des hydrocarbures, la fiscalité, la gouvernance et l’analyse pays.",
+    "bookSchemaName": "Exploration et exploitation des ressources pétrolières en Afrique de l’Ouest",
+    "bookSchemaDescription": "Édition numérique de référence sur les ressources pétrolières ouest-africaines, le rôle des États, la fiscalité pétrolière, la gouvernance et les dynamiques régionales."
+  },
+  "pageOverrides": {
+    "chapters/cover.html": {
+      "title": "Exploration et exploitation des ressources pétrolières en Afrique de l’Ouest",
+      "description": "Édition numérique de référence sur les ressources pétrolières ouest-africaines, la chaîne de valeur des hydrocarbures, la fiscalité, la gouvernance et l’analyse pays."
+    }
+  }
+}

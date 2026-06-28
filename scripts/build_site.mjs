@@ -89,6 +89,11 @@ function buildBookEdition(edition) {
   ]);
 }
 
+function injectBookSeo(edition) {
+  const bookDest = path.join(publicDir, edition.routePrefix || "", "book");
+  runNodeScript("scripts/inject_book_seo.mjs", [bookDest, edition.locale]);
+}
+
 function main() {
   fs.rmSync(publicDir, { recursive: true, force: true });
   fs.mkdirSync(publicDir, { recursive: true });
@@ -98,7 +103,11 @@ function main() {
   runNodeScript("scripts/generate-chapters-page.mjs", ["--output-root", publicDir]);
   copyIntoPublic();
 
-  listSiteEditions().forEach(buildBookEdition);
+  const editions = listSiteEditions();
+  editions.forEach(buildBookEdition);
+  editions.forEach(injectBookSeo);
+  runNodeScript("scripts/generate_book_sitemap.mjs", [publicDir]);
+  runNodeScript("scripts/generate_site_robots.mjs", [publicDir]);
 }
 
 main();

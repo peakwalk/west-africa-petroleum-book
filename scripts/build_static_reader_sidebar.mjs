@@ -156,9 +156,28 @@ function toPosixPath(value) {
   return value.split(path.sep).join("/");
 }
 
+function normalizeSidebarItemHref(itemHref) {
+  return itemHref === "chapters/cover.html" || itemHref === "./" || itemHref === "."
+    ? "index.html"
+    : itemHref;
+}
+
+function normalizeRawTocMarkup(markup) {
+  return markup.replace(/href="chapters\/cover\.html"/g, 'href="./"');
+}
+
+function resolveBookRootHref(pageDir) {
+  const relativeDir = path.posix.relative(pageDir, ".");
+  return relativeDir ? `${relativeDir}/` : "./";
+}
+
 function resolveSidebarActivePageKey(pageKey) {
-  if (pageKey === "index.html" || pageKey === "chapters/front-matter.html") {
-    return "chapters/cover.html";
+  if (
+    pageKey === "index.html" ||
+    pageKey === "chapters/front-matter.html" ||
+    pageKey === "chapters/cover.html"
+  ) {
+    return "index.html";
   }
 
   return pageKey;
@@ -195,7 +214,7 @@ function collectSidebarProjectionGroups(tocHtml) {
     }
 
     currentGroup.items.push({
-      href: normalizeText(rawHref),
+      href: normalizeSidebarItemHref(normalizeText(rawHref)),
       text: normalizeText(decodeHtmlEntities(stripTags(rawLinkText))),
     });
 
@@ -217,6 +236,10 @@ function buildSidebarSectionIcon(iconName) {
 
 function resolveRowHref(pageKey, itemHref) {
   const pageDir = path.posix.dirname(pageKey);
+  if (itemHref === "index.html") {
+    return resolveBookRootHref(pageDir);
+  }
+
   return path.posix.relative(pageDir, itemHref) || path.posix.basename(itemHref);
 }
 
@@ -351,10 +374,39 @@ async function injectSidebarProjection(bookDir, pageKey, groups) {
   await fs.writeFile(filePath, html);
 }
 
+async function normalizeRawTocResources(bookDir, tocHtml) {
+  const normalizedTocHtml = normalizeRawTocMarkup(tocHtml);
+
+  if (normalizedTocHtml !== tocHtml) {
+    await fs.writeFile(path.join(bookDir, "toc.html"), normalizedTocHtml);
+  }
+
+  const bookEntries = await fs.readdir(bookDir, { withFileTypes: true });
+
+  for (const entry of bookEntries) {
+    if (!entry.isFile() || !/^toc-[^.]+\.js$/.test(entry.name)) {
+      continue;
+    }
+
+    const tocScriptPath = path.join(bookDir, entry.name);
+    const tocScript = await fs.readFile(tocScriptPath, "utf8");
+    const normalizedTocScript = normalizeRawTocMarkup(tocScript);
+
+    if (normalizedTocScript !== tocScript) {
+      await fs.writeFile(tocScriptPath, normalizedTocScript);
+    }
+  }
+
+  return normalizedTocHtml;
+}
+
 async function main() {
   const bookDir = path.resolve(process.cwd(), process.argv[2] || "book");
   const tocPath = path.join(bookDir, "toc.html");
-  const tocHtml = await fs.readFile(tocPath, "utf8");
+  const tocHtml = await normalizeRawTocResources(
+    bookDir,
+    await fs.readFile(tocPath, "utf8")
+  );
   const groups = collectSidebarProjectionGroups(tocHtml);
   const pages = await listTargetPages(bookDir);
 

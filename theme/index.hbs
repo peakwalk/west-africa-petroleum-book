@@ -64,6 +64,10 @@
                 return pathname.indexOf("/fr/book") === 0;
             }
 
+            function isBookHomePath(pathname) {
+                return /(?:\/fr)?\/book(?:\/index\.html)?\/?$/.test(pathname);
+            }
+
             function matchesChapterPath(chapterPath) {
                 return window.location.pathname.endsWith("/chapters/" + chapterPath);
             }
@@ -79,6 +83,7 @@
             const forewordPath = "foreword.html";
             const generalIntroductionPath = "general-introduction.html";
             const generalConclusionPath = "general-conclusion.html";
+            const chapterElevenGeneralConclusionPath = "chapter-11-general-conclusion.html";
             const glossaryPath = "glossary.html";
             const bibliographicalReferencesPath = "bibliographical-references.html";
 
@@ -93,10 +98,11 @@
                     forewordPath,
                     generalIntroductionPath,
                     generalConclusionPath,
+                    chapterElevenGeneralConclusionPath,
                     glossaryPath,
                     bibliographicalReferencesPath,
                 ]
-                : [
+              : [
                     coverPath,
                     tableOfContentsPath,
                     listOfFiguresPath,
@@ -106,11 +112,12 @@
                     disclaimerPath,
                     prefacePath,
                     forewordPath,
+                    chapterElevenGeneralConclusionPath,
                     glossaryPath,
                     bibliographicalReferencesPath,
                 ];
 
-            const isCoverPage = matchesChapterPath(coverPath);
+            const isCoverPage = isBookHomePath(window.location.pathname) || matchesChapterPath(coverPath);
             const isTableOfContentsPage = matchesChapterPath(tableOfContentsPath);
             const isListOfFiguresPage = matchesChapterPath(listOfFiguresPath);
             const isListOfTablesPage = matchesChapterPath(listOfTablesPath);

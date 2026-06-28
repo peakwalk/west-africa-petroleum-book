@@ -12,6 +12,7 @@ const registry = JSON.parse(readFileSync(REGISTRY_PATH, "utf8"));
 function deriveEditionPaths(editionRoot) {
   return {
     bookConfigPath: path.join(editionRoot, "book.toml"),
+    bookSeoConfigPath: path.join(editionRoot, "site", "book-seo.json"),
     siteRoot: path.join(editionRoot, "site"),
     landingMainPath: path.join(editionRoot, "site", "index-main.html"),
     legalRoot: path.join(editionRoot, "site", "legal"),

@@ -1,0 +1,14 @@
+{
+  "landing": {
+    "title": "Exploration and Production of Petroleum Resources in West Africa",
+    "description": "Digital reference edition covering West Africa petroleum foundations, hydrocarbon value chains, fiscal systems, governance, petroleum data, and long-range regional strategy.",
+    "bookSchemaName": "Exploration and Production of Petroleum Resources in West Africa",
+    "bookSchemaDescription": "Digital reference edition on West African petroleum resources, state roles, fiscal regimes, governance, petroleum data, and long-range industry strategy."
+  },
+  "pageOverrides": {
+    "chapters/cover.html": {
+      "title": "Exploration and Production of Petroleum Resources in West Africa",
+      "description": "Digital reference edition covering West Africa petroleum foundations, hydrocarbon value chains, fiscal systems, governance, petroleum data, and long-range regional strategy."
+    }
+  }
+}

@@ -1,32 +1,4 @@
 (function () {
-  const englishDefaultChapterPath = "chapters/disclaimer.html";
-  const frenchDefaultChapterPath = "chapters/foreword.html";
-
-  function isFrenchBookPath(pathname) {
-    return /^\/fr\/book(?:\/index\.html)?\/?$/.test(pathname);
-  }
-
-  function getDefaultChapterPath(pathname) {
-    return isFrenchBookPath(pathname) ? frenchDefaultChapterPath : englishDefaultChapterPath;
-  }
-
-  function isBookHomePath(pathname) {
-    return /(?:\/fr)?\/book(?:\/index\.html)?\/?$/.test(pathname);
-  }
-
-  if (!isBookHomePath(window.location.pathname)) {
-    return;
-  }
-
-  const target = new URL(getDefaultChapterPath(window.location.pathname), window.location.href);
-  target.search = window.location.search;
-
-  if (window.location.href !== target.href) {
-    window.location.replace(target.href);
-  }
-})();
-
-(function () {
   const bookScroller =
     document.getElementById("mdbook-reader-scroll") ||
     document.getElementById("mdbook-page-wrapper");
@@ -1375,6 +1347,10 @@
       return pathname.indexOf("/fr/book") === 0;
     }
 
+    function isBookHomePath(pathname) {
+      return /(?:\/fr)?\/book(?:\/index\.html)?\/?$/.test(pathname);
+    }
+
     function matchesChapterPath(chapterPath) {
       return window.location.pathname.endsWith("/chapters/" + chapterPath);
     }
@@ -1390,6 +1366,7 @@
     const forewordPath = "foreword.html";
     const generalIntroductionPath = "general-introduction.html";
     const generalConclusionPath = "general-conclusion.html";
+    const chapterElevenGeneralConclusionPath = "chapter-11-general-conclusion.html";
     const glossaryPath = "glossary.html";
     const bibliographicalReferencesPath = "bibliographical-references.html";
     const preserveOutlinePaths = isFrenchBookPath(window.location.pathname)
@@ -1403,6 +1380,7 @@
           forewordPath,
           generalIntroductionPath,
           generalConclusionPath,
+          chapterElevenGeneralConclusionPath,
           glossaryPath,
           bibliographicalReferencesPath,
         ]
@@ -1416,10 +1394,11 @@
           disclaimerPath,
           prefacePath,
           forewordPath,
+          chapterElevenGeneralConclusionPath,
           glossaryPath,
           bibliographicalReferencesPath,
         ];
-    const isCoverPage = matchesChapterPath(coverPath);
+    const isCoverPage = isBookHomePath(window.location.pathname) || matchesChapterPath(coverPath);
     const isTableOfContentsPage = matchesChapterPath(tableOfContentsPath);
     const isListOfFigures = matchesChapterPath(listOfFiguresPath);
     const isListOfTables = matchesChapterPath(listOfTablesPath);

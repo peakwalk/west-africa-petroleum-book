@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import json
 import re
 import shutil
 import subprocess
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -24,6 +26,60 @@ class BookEditionBuildTests(unittest.TestCase):
     @classmethod
     def tearDownClass(cls) -> None:
         shutil.rmtree(ROOT_DIR / "public", ignore_errors=True)
+
+    @staticmethod
+    def _extract_title(html: str) -> str:
+        match = re.search(r"<title>(.*?)</title>", html, re.DOTALL)
+        if match is None:
+            raise AssertionError("Expected a <title> tag in generated HTML.")
+        return match.group(1).strip()
+
+    @staticmethod
+    def _extract_meta_description(html: str) -> str:
+        match = re.search(r'<meta name="description" content="([^"]*)">', html)
+        if match is None:
+            raise AssertionError('Expected a meta name="description" tag in generated HTML.')
+        return match.group(1).strip()
+
+    @staticmethod
+    def _extract_meta_content(html: str, name: str) -> str | None:
+        match = re.search(
+            rf'<meta name="{re.escape(name)}" content="([^"]*)">',
+            html,
+        )
+        return match.group(1).strip() if match is not None else None
+
+    @staticmethod
+    def _extract_link_href(html: str, rel: str, hreflang: str | None = None) -> str | None:
+        attributes = [f'rel="{rel}"']
+        if hreflang is not None:
+            attributes.append(f'hreflang="{hreflang}"')
+        pattern = "<link " + r"[^>]*".join(attributes) + r'[^>]*href="([^"]+)"'
+        match = re.search(pattern, html)
+        return match.group(1) if match is not None else None
+
+    @staticmethod
+    def _extract_json_ld_blocks(html: str) -> list[object]:
+        blocks = []
+        for raw_json in re.findall(
+            r'<script type="application/ld\+json">\s*(.*?)\s*</script>',
+            html,
+            re.DOTALL,
+        ):
+            blocks.append(json.loads(raw_json))
+        return blocks
+
+    @staticmethod
+    def _iter_canonical_book_pages(locale_root: Path) -> list[Path]:
+        pages = [locale_root / "index.html"]
+        pages.extend(
+            sorted(
+                chapter_path
+                for chapter_path in (locale_root / "chapters").glob("*.html")
+                if chapter_path.name not in {"front-matter.html", "cover.html"}
+            )
+        )
+        return pages
 
     def test_dual_book_outputs_are_published(self) -> None:
         self.assertTrue((ROOT_DIR / "public" / "book" / "index.html").exists())
@@ -168,27 +224,17 @@ class BookEditionBuildTests(unittest.TestCase):
         english_book_index = (ROOT_DIR / "public" / "book" / "index.html").read_text(
             encoding="utf-8"
         )
-        english_cover = (
-            ROOT_DIR / "public" / "book" / "chapters" / "cover.html"
-        ).read_text(encoding="utf-8")
 
         self.assertIn('src="images/figure-000.webp"', english_book_index)
         self.assertNotIn('src="images/figure-001.webp"', english_book_index)
-        self.assertIn('src="../images/figure-000.webp"', english_cover)
-        self.assertNotIn('src="../images/figure-001.webp"', english_cover)
 
     def test_french_book_cover_uses_french_cover_asset(self) -> None:
         french_book_index = (ROOT_DIR / "public" / "fr" / "book" / "index.html").read_text(
             encoding="utf-8"
         )
-        french_cover = (
-            ROOT_DIR / "public" / "fr" / "book" / "chapters" / "cover.html"
-        ).read_text(encoding="utf-8")
 
         self.assertIn('src="images/figure-000.webp"', french_book_index)
         self.assertNotIn('src="images/figure-001.webp"', french_book_index)
-        self.assertIn('src="../images/figure-000.webp"', french_cover)
-        self.assertNotIn('src="../images/figure-001.webp"', french_cover)
 
     def test_french_front_matter_and_chapter_titles_use_french_copy(self) -> None:
         french_figures = (
@@ -800,6 +846,381 @@ class BookEditionBuildTests(unittest.TestCase):
         )
         self.assertIn("navigator.languages", english_book_index)
         self.assertIn("/fr/book/", english_book_index)
+
+    def test_book_home_pages_keep_cover_in_place_without_default_chapter_redirect(self) -> None:
+        english_book_index = (ROOT_DIR / "public" / "book" / "index.html").read_text(
+            encoding="utf-8"
+        )
+        french_book_index = (ROOT_DIR / "public" / "fr" / "book" / "index.html").read_text(
+            encoding="utf-8"
+        )
+        english_custom_js = next((ROOT_DIR / "public" / "book" / "theme").glob("custom-*.js"))
+        french_custom_js = next((ROOT_DIR / "public" / "fr" / "book" / "theme").glob("custom-*.js"))
+
+        for html in [english_book_index, french_book_index]:
+            self.assertIn('class="book-cover-entry-link"', html)
+            self.assertIn("function isBookHomePath(pathname)", html)
+            self.assertIn(
+                "const isCoverPage = isBookHomePath(window.location.pathname) || matchesChapterPath(coverPath);",
+                html,
+            )
+
+        for script_path in [english_custom_js, french_custom_js]:
+            script = script_path.read_text(encoding="utf-8")
+            self.assertIn("function isBookHomePath(pathname)", script)
+            self.assertIn(
+                "const isCoverPage = isBookHomePath(window.location.pathname) || matchesChapterPath(coverPath);",
+                script,
+            )
+            self.assertNotIn(
+                "new URL(getDefaultChapterPath(window.location.pathname), window.location.href)",
+                script,
+            )
+            self.assertNotIn("window.location.replace(target.href);", script)
+
+    def test_book_root_outputs_sitemap_and_robots_reference(self) -> None:
+        sitemap_path = ROOT_DIR / "public" / "book-sitemap.xml"
+        robots_path = ROOT_DIR / "public" / "robots.txt"
+
+        self.assertTrue(sitemap_path.exists())
+        self.assertTrue(robots_path.exists())
+
+        sitemap = sitemap_path.read_text(encoding="utf-8")
+        robots = robots_path.read_text(encoding="utf-8")
+
+        self.assertIn("https://upstreamatlas.com/book/", sitemap)
+        self.assertIn("https://upstreamatlas.com/fr/book/", sitemap)
+        self.assertIn(
+            "https://upstreamatlas.com/book/chapters/chapter-05-hydrocarbon-value-chain.html",
+            sitemap,
+        )
+        self.assertIn(
+            "https://upstreamatlas.com/fr/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html",
+            sitemap,
+        )
+        self.assertNotIn("https://upstreamatlas.com/book/chapters/cover.html", sitemap)
+        self.assertNotIn("https://upstreamatlas.com/book/chapters/front-matter.html", sitemap)
+        self.assertNotIn("https://upstreamatlas.com/fr/book/chapters/cover.html", sitemap)
+        self.assertNotIn("https://upstreamatlas.com/fr/book/chapters/front-matter.html", sitemap)
+        self.assertIn("Sitemap: https://upstreamatlas.com/book-sitemap.xml", robots)
+
+    def test_site_robots_generation_includes_base_rules_and_book_sitemap(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_public_dir = Path(temp_dir) / "public"
+            temp_public_dir.mkdir(parents=True, exist_ok=True)
+            robots_path = temp_public_dir / "robots.txt"
+
+            subprocess.run(
+                ["node", "scripts/generate_site_robots.mjs", str(temp_public_dir)],
+                cwd=ROOT_DIR,
+                check=True,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+
+            robots = robots_path.read_text(encoding="utf-8")
+            self.assertIn("User-agent: *", robots)
+            self.assertIn("Allow: /", robots)
+            self.assertIn("Sitemap: https://upstreamatlas.com/book-sitemap.xml", robots)
+
+    def test_canonical_book_pages_emit_non_empty_unique_metadata(self) -> None:
+        for locale_root in [ROOT_DIR / "public" / "book", ROOT_DIR / "public" / "fr" / "book"]:
+            seen_pairs: set[tuple[str, str]] = set()
+            for page_path in self._iter_canonical_book_pages(locale_root):
+                html = page_path.read_text(encoding="utf-8")
+                title = self._extract_title(html)
+                description = self._extract_meta_description(html)
+
+                self.assertTrue(title, f"Expected non-empty title for {page_path}")
+                self.assertTrue(description, f"Expected non-empty description for {page_path}")
+                self.assertNotIn((title, description), seen_pairs, page_path)
+                seen_pairs.add((title, description))
+
+    def test_equivalent_chapter_pages_emit_reciprocal_hreflang_and_absolute_canonical_links(self) -> None:
+        english_value_chain = (
+            ROOT_DIR
+            / "public"
+            / "book"
+            / "chapters"
+            / "chapter-05-hydrocarbon-value-chain.html"
+        ).read_text(encoding="utf-8")
+        french_value_chain = (
+            ROOT_DIR
+            / "public"
+            / "fr"
+            / "book"
+            / "chapters"
+            / "chapter-01-value-chain-of-the-hydrocarbon-sector.html"
+        ).read_text(encoding="utf-8")
+
+        self.assertEqual(
+            "https://upstreamatlas.com/book/chapters/chapter-05-hydrocarbon-value-chain.html",
+            self._extract_link_href(english_value_chain, "canonical"),
+        )
+        self.assertEqual(
+            "https://upstreamatlas.com/book/chapters/chapter-05-hydrocarbon-value-chain.html",
+            self._extract_link_href(english_value_chain, "alternate", "en"),
+        )
+        self.assertEqual(
+            "https://upstreamatlas.com/fr/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html",
+            self._extract_link_href(english_value_chain, "alternate", "fr"),
+        )
+        self.assertEqual(
+            "https://upstreamatlas.com/book/chapters/chapter-05-hydrocarbon-value-chain.html",
+            self._extract_link_href(english_value_chain, "alternate", "x-default"),
+        )
+
+        self.assertEqual(
+            "https://upstreamatlas.com/fr/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html",
+            self._extract_link_href(french_value_chain, "canonical"),
+        )
+        self.assertEqual(
+            "https://upstreamatlas.com/fr/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html",
+            self._extract_link_href(french_value_chain, "alternate", "fr"),
+        )
+        self.assertEqual(
+            "https://upstreamatlas.com/book/chapters/chapter-05-hydrocarbon-value-chain.html",
+            self._extract_link_href(french_value_chain, "alternate", "en"),
+        )
+
+    def test_non_equivalent_english_page_keeps_self_reference_and_x_default_only(self) -> None:
+        english_disclaimer = (
+            ROOT_DIR / "public" / "book" / "chapters" / "disclaimer.html"
+        ).read_text(encoding="utf-8")
+
+        self.assertEqual(
+            "https://upstreamatlas.com/book/chapters/disclaimer.html",
+            self._extract_link_href(english_disclaimer, "canonical"),
+        )
+        self.assertEqual(
+            "https://upstreamatlas.com/book/chapters/disclaimer.html",
+            self._extract_link_href(english_disclaimer, "alternate", "en"),
+        )
+        self.assertEqual(
+            "https://upstreamatlas.com/book/chapters/disclaimer.html",
+            self._extract_link_href(english_disclaimer, "alternate", "x-default"),
+        )
+        self.assertIsNone(self._extract_link_href(english_disclaimer, "alternate", "fr"))
+
+    def test_book_pages_emit_page_type_specific_structured_data(self) -> None:
+        english_book_index = (ROOT_DIR / "public" / "book" / "index.html").read_text(
+            encoding="utf-8"
+        )
+        french_book_index = (ROOT_DIR / "public" / "fr" / "book" / "index.html").read_text(
+            encoding="utf-8"
+        )
+        english_value_chain = (
+            ROOT_DIR
+            / "public"
+            / "book"
+            / "chapters"
+            / "chapter-05-hydrocarbon-value-chain.html"
+        ).read_text(encoding="utf-8")
+        french_general_introduction = (
+            ROOT_DIR / "public" / "fr" / "book" / "chapters" / "general-introduction.html"
+        ).read_text(encoding="utf-8")
+        french_glossary = (
+            ROOT_DIR / "public" / "fr" / "book" / "chapters" / "glossary.html"
+        ).read_text(encoding="utf-8")
+
+        english_index_blocks = self._extract_json_ld_blocks(english_book_index)
+        french_index_blocks = self._extract_json_ld_blocks(french_book_index)
+        english_chapter_blocks = self._extract_json_ld_blocks(english_value_chain)
+        french_chapter_blocks = self._extract_json_ld_blocks(french_general_introduction)
+        french_glossary_blocks = self._extract_json_ld_blocks(french_glossary)
+
+        self.assertTrue(
+            any(block.get("@type") == "Book" for block in english_index_blocks if isinstance(block, dict))
+        )
+        self.assertTrue(
+            any(block.get("@type") == "Book" for block in french_index_blocks if isinstance(block, dict))
+        )
+        self.assertTrue(
+            any(block.get("@type") == "Chapter" for block in english_chapter_blocks if isinstance(block, dict))
+        )
+        self.assertTrue(
+            any(block.get("@type") == "Chapter" for block in french_chapter_blocks if isinstance(block, dict))
+        )
+        self.assertTrue(
+            any(
+                block.get("@type") == "BreadcrumbList"
+                for block in english_chapter_blocks
+                if isinstance(block, dict)
+            )
+        )
+        self.assertTrue(
+            any(
+                block.get("@type") == "BreadcrumbList"
+                for block in french_chapter_blocks
+                if isinstance(block, dict)
+            )
+        )
+        self.assertTrue(
+            any(block.get("@type") == "WebPage" for block in french_glossary_blocks if isinstance(block, dict))
+        )
+        self.assertTrue(
+            any(
+                block.get("@type") == "BreadcrumbList"
+                for block in french_glossary_blocks
+                if isinstance(block, dict)
+            )
+        )
+
+    def test_book_landing_structured_data_declares_single_locale_language(self) -> None:
+        english_book_index = (ROOT_DIR / "public" / "book" / "index.html").read_text(
+            encoding="utf-8"
+        )
+        french_book_index = (ROOT_DIR / "public" / "fr" / "book" / "index.html").read_text(
+            encoding="utf-8"
+        )
+
+        english_book_schema = next(
+            block
+            for block in self._extract_json_ld_blocks(english_book_index)
+            if isinstance(block, dict) and block.get("@type") == "Book"
+        )
+        french_book_schema = next(
+            block
+            for block in self._extract_json_ld_blocks(french_book_index)
+            if isinstance(block, dict) and block.get("@type") == "Book"
+        )
+
+        self.assertEqual("en", english_book_schema.get("inLanguage"))
+        self.assertEqual("fr", french_book_schema.get("inLanguage"))
+
+    def test_redirect_only_cover_and_front_matter_point_to_book_root(self) -> None:
+        english_cover = (
+            ROOT_DIR / "public" / "book" / "chapters" / "cover.html"
+        ).read_text(encoding="utf-8")
+        french_cover = (
+            ROOT_DIR / "public" / "fr" / "book" / "chapters" / "cover.html"
+        ).read_text(encoding="utf-8")
+        english_front_matter = (
+            ROOT_DIR / "public" / "book" / "chapters" / "front-matter.html"
+        ).read_text(encoding="utf-8")
+        french_front_matter = (
+            ROOT_DIR / "public" / "fr" / "book" / "chapters" / "front-matter.html"
+        ).read_text(encoding="utf-8")
+
+        for html, canonical in [
+            (english_cover, "https://upstreamatlas.com/book/"),
+            (french_cover, "https://upstreamatlas.com/fr/book/"),
+            (english_front_matter, "https://upstreamatlas.com/book/"),
+            (french_front_matter, "https://upstreamatlas.com/fr/book/"),
+        ]:
+            self.assertEqual(canonical, self._extract_link_href(html, "canonical"))
+            self.assertEqual("noindex,follow", self._extract_meta_content(html, "robots"))
+            self.assertEqual([], self._extract_json_ld_blocks(html))
+            self.assertIn('http-equiv="refresh" content="0; url=../"', html)
+            self.assertIn('window.location.replace(target)', html)
+            self.assertIn('href="../"', html)
+            self.assertNotIn('rel="alternate" hreflang=', html)
+
+        self.assertIn("Cette page a été déplacée", french_cover)
+        self.assertIn("Cette page a été déplacée", french_front_matter)
+
+    def test_book_navigation_links_use_book_root_instead_of_cover_alias(self) -> None:
+        english_book_index = (ROOT_DIR / "public" / "book" / "index.html").read_text(
+            encoding="utf-8"
+        )
+        french_list_of_figures = (
+            ROOT_DIR / "public" / "fr" / "book" / "chapters" / "list-of-figures.html"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn('href="./"', english_book_index)
+        self.assertNotIn('href="index.html"', english_book_index)
+        self.assertNotIn('href="chapters/cover.html"', english_book_index)
+        self.assertIn('href="../"', french_list_of_figures)
+        self.assertNotIn('href="../index.html"', french_list_of_figures)
+        self.assertNotIn('href="cover.html"', french_list_of_figures)
+
+    def test_raw_toc_resources_use_book_root_instead_of_cover_alias(self) -> None:
+        for locale_root in [ROOT_DIR / "public" / "book", ROOT_DIR / "public" / "fr" / "book"]:
+            toc_html = (locale_root / "toc.html").read_text(encoding="utf-8")
+            self.assertNotIn('href="chapters/cover.html"', toc_html)
+
+            for toc_script in locale_root.glob("toc-*.js"):
+                toc_script_text = toc_script.read_text(encoding="utf-8")
+                self.assertNotIn('href="chapters/cover.html"', toc_script_text)
+
+    def test_seo_reinjection_preserves_non_managed_json_ld_blocks(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_book_dir = Path(temp_dir) / "book"
+            shutil.copytree(ROOT_DIR / "public" / "book", temp_book_dir)
+            target_page = temp_book_dir / "index.html"
+            preserved_block = (
+                '<script type="application/ld+json">'
+                '{"@context":"https://schema.org","@type":"Thing","name":"Preserved fixture"}'
+                "</script>"
+            )
+            html = target_page.read_text(encoding="utf-8").replace(
+                "</head>",
+                f"        {preserved_block}\n    </head>",
+            )
+            target_page.write_text(html, encoding="utf-8")
+
+            subprocess.run(
+                ["node", "scripts/inject_book_seo.mjs", str(temp_book_dir), "en"],
+                cwd=ROOT_DIR,
+                check=True,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+
+            reinjected_html = target_page.read_text(encoding="utf-8")
+            json_ld_types = [
+                block.get("@type")
+                for block in self._extract_json_ld_blocks(reinjected_html)
+                if isinstance(block, dict)
+            ]
+
+            self.assertIn("Preserved fixture", reinjected_html)
+            self.assertIn("Thing", json_ld_types)
+            self.assertIn("Book", json_ld_types)
+
+    def test_seo_reinjection_replaces_stale_canonical_and_hreflang_links(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_book_dir = Path(temp_dir) / "book"
+            shutil.copytree(ROOT_DIR / "public" / "book", temp_book_dir)
+            target_page = temp_book_dir / "chapters" / "chapter-05-hydrocarbon-value-chain.html"
+            stale_head_markup = (
+                '<link rel="canonical" href="https://stale.example.com/book/old.html">\n'
+                '        <link rel="alternate" hreflang="en" href="https://stale.example.com/book/old.html">\n'
+                '        <link rel="alternate" hreflang="fr" href="https://stale.example.com/fr/book/old.html">\n'
+            )
+            html = target_page.read_text(encoding="utf-8").replace(
+                "</head>",
+                f"        {stale_head_markup}</head>",
+            )
+            target_page.write_text(html, encoding="utf-8")
+
+            subprocess.run(
+                ["node", "scripts/inject_book_seo.mjs", str(temp_book_dir), "en"],
+                cwd=ROOT_DIR,
+                check=True,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+
+            reinjected_html = target_page.read_text(encoding="utf-8")
+            self.assertEqual(1, len(re.findall(r'<link rel="canonical" ', reinjected_html)))
+            self.assertEqual(3, len(re.findall(r'<link rel="alternate" ', reinjected_html)))
+            self.assertNotIn("stale.example.com", reinjected_html)
+
+    def test_seo_injection_preserves_static_chapter_body_text(self) -> None:
+        english_value_chain = (
+            ROOT_DIR
+            / "public"
+            / "book"
+            / "chapters"
+            / "chapter-05-hydrocarbon-value-chain.html"
+        ).read_text(encoding="utf-8")
+
+        self.assertIn("Chapter 5: Hydrocarbon Value Chain", english_value_chain)
+        self.assertIn(
+            "The upstream petroleum sector forms the foundation of the petroleum industry",
+            english_value_chain,
+        )
 
 
 if __name__ == "__main__":

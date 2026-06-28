@@ -2,6 +2,8 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { resolveBookNavPeerPageKey } from "./shared/book-page-maps.mjs";
+
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(scriptDir, "..");
 
@@ -12,71 +14,6 @@ const routePrefix = process.argv[4] || "";
 const peerLocale = locale === "fr" ? "en" : "fr";
 const currentBookBase = routePrefix ? `/${routePrefix}/book/` : "/book/";
 const peerBookBase = peerLocale === "fr" ? "/fr/book/" : "/book/";
-
-const CROSS_LOCALE_PAGE_MAP = {
-  en: {
-    "index.html": "index.html",
-    "chapters/cover.html": "chapters/cover.html",
-    "chapters/front-matter.html": "index.html",
-    "chapters/disclaimer.html": "index.html",
-    "chapters/preface.html": "index.html",
-    "chapters/table-of-contents.html": "index.html",
-    "chapters/list-of-figures.html": "chapters/list-of-figures.html",
-    "chapters/list-of-tables.html": "chapters/list-of-tables.html",
-    "chapters/list-of-equations.html": "chapters/list-of-equations.html",
-    "chapters/abbreviations-acronyms-and-abbreviations.html":
-      "chapters/abbreviations-acronyms-and-abbreviations.html",
-    "chapters/foreword.html": "index.html",
-    "chapters/foreword-to-the-french-edition.html": "chapters/foreword.html",
-    "chapters/chapter-01-general-introduction.html": "chapters/general-introduction.html",
-    "chapters/chapter-02-emerging-petroleum-provinces-in-west-africa.html": "index.html",
-    "chapters/chapter-03-west-africa-country-analysis.html":
-      "chapters/chapter-06-west-africa-in-depth-country-analysis.html",
-    "chapters/chapter-04-national-oil-companies-in-west-africa.html": "index.html",
-    "chapters/chapter-05-hydrocarbon-value-chain.html":
-      "chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html",
-    "chapters/chapter-06-upstream-operations-and-government-roles.html":
-      "chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html",
-    "chapters/chapter-07-petroleum-fiscal-regimes.html":
-      "chapters/chapter-03-tax-regimes-in-the-petroleum-sector.html",
-    "chapters/chapter-08-west-african-fiscal-regimes.html":
-      "chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html",
-    "chapters/chapter-09-socio-political-determinants.html":
-      "chapters/chapter-05-key-socio-political-determinants-of-oil-sector-performance.html",
-    "chapters/chapter-10-petroleum-data-management-in-west-africa.html": "index.html",
-    "chapters/chapter-11-general-conclusion.html": "chapters/general-conclusion.html",
-    "chapters/chapter-12-vision-for-west-africa-2050.html": "index.html",
-    "chapters/glossary.html": "chapters/glossary.html",
-    "chapters/bibliographical-references.html": "chapters/bibliographical-references.html",
-  },
-  fr: {
-    "index.html": "index.html",
-    "chapters/cover.html": "chapters/cover.html",
-    "chapters/front-matter.html": "index.html",
-    "chapters/list-of-figures.html": "chapters/list-of-figures.html",
-    "chapters/list-of-tables.html": "chapters/list-of-tables.html",
-    "chapters/list-of-equations.html": "chapters/list-of-equations.html",
-    "chapters/abbreviations-acronyms-and-abbreviations.html":
-      "chapters/abbreviations-acronyms-and-abbreviations.html",
-    "chapters/foreword.html": "chapters/foreword-to-the-french-edition.html",
-    "chapters/general-introduction.html": "chapters/chapter-01-general-introduction.html",
-    "chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html":
-      "chapters/chapter-05-hydrocarbon-value-chain.html",
-    "chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html":
-      "chapters/chapter-06-upstream-operations-and-government-roles.html",
-    "chapters/chapter-03-tax-regimes-in-the-petroleum-sector.html":
-      "chapters/chapter-07-petroleum-fiscal-regimes.html",
-    "chapters/chapter-04-comparative-study-of-tax-regimes-in-selected-west-african-countries.html":
-      "chapters/chapter-08-west-african-fiscal-regimes.html",
-    "chapters/chapter-05-key-socio-political-determinants-of-oil-sector-performance.html":
-      "chapters/chapter-09-socio-political-determinants.html",
-    "chapters/chapter-06-west-africa-in-depth-country-analysis.html":
-      "chapters/chapter-03-west-africa-country-analysis.html",
-    "chapters/general-conclusion.html": "chapters/chapter-11-general-conclusion.html",
-    "chapters/glossary.html": "chapters/glossary.html",
-    "chapters/bibliographical-references.html": "chapters/bibliographical-references.html",
-  },
-};
 
 const SHELL_COPY = {
   en: {
@@ -127,7 +64,7 @@ const SHELL_COPY = {
 
 function buildLanguageSwitchMarkup(pageKey, location) {
   const copy = SHELL_COPY[locale];
-  const peerPageKey = resolvePeerPageKey(pageKey);
+  const peerPageKey = resolveBookNavPeerPageKey(locale, pageKey);
   const peerHref =
     peerPageKey === "index.html"
       ? `${peerBookBase}?lang=${peerLocale}`
@@ -147,21 +84,6 @@ function buildLanguageSwitchMarkup(pageKey, location) {
                                 ${renderedOptions}
                             </nav>`;
 }
-
-function resolvePeerPageKey(pageKey) {
-  const localeMap = CROSS_LOCALE_PAGE_MAP[locale] || {};
-
-  if (Object.prototype.hasOwnProperty.call(localeMap, pageKey)) {
-    return localeMap[pageKey];
-  }
-
-  if (pageKey.startsWith("chapters/")) {
-    return "index.html";
-  }
-
-  return pageKey;
-}
-
 function injectLanguageSwitch(html, pageKey) {
   if (
     html.includes('data-reader-language-switch="toolbar"') &&
