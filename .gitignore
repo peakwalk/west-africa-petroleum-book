@@ -4,6 +4,7 @@ converted-book.md
 extracted-media/
 .DS_Store
 temp/
+tmp/
 .worktrees/
 output/
 __pycache__/
@@ -15,3 +16,4 @@ __pycache__/
 /resources/*.pdf
 /resources/**/*.docx
 /resources/**/*.pdf
+!/resources/version2/**
