@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { resolveBookNavPeerPageKey } from "./shared/book-page-maps.mjs";
+import { getBookPageBodyClasses } from "./shared/book-page-variants.mjs";
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(scriptDir, "..");
@@ -103,6 +104,29 @@ function injectLanguageSwitch(html, pageKey) {
   );
 }
 
+function injectBodyClasses(html, pageKey) {
+  const variantClasses = getBookPageBodyClasses(pageKey, locale);
+
+  if (!variantClasses.length) {
+    return html;
+  }
+
+  return html.replace(/<body\b([^>]*)class="([^"]*)"([^>]*)>/, function (_match, before, classValue, after) {
+    const classes = classValue
+      .split(/\s+/)
+      .map((value) => value.trim())
+      .filter(Boolean);
+
+    variantClasses.forEach(function (className) {
+      if (!classes.includes(className)) {
+        classes.push(className);
+      }
+    });
+
+    return `<body${before}class="${classes.join(" ")}"${after}>`;
+  });
+}
+
 function injectNeutralRedirect(html) {
   if (locale !== "en" || html.includes("upstream-atlas-book-edition")) {
     return html;
@@ -152,10 +176,9 @@ function injectNeutralRedirect(html) {
     </script>
 `;
 
-  return html.replace(
-    /<script>\s*\(function applyInitialBookPageVariant\(\) \{/,
-    `${redirectScript}<script>\n        (function applyInitialBookPageVariant() {`
-  );
+  return html.replace(/<body\b[^>]*>/, function (match) {
+    return `${match}\n${redirectScript}`;
+  });
 }
 
 function localizeShellCopy(html) {
@@ -208,6 +231,7 @@ async function main() {
   for (const pageKey of pages) {
     const filePath = path.join(bookDir, ...pageKey.split("/"));
     let html = await fs.readFile(filePath, "utf8");
+    html = injectBodyClasses(html, pageKey);
     html = injectLanguageSwitch(html, pageKey);
     if (pageKey === "index.html") {
       html = injectNeutralRedirect(html);

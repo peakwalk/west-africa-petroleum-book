@@ -143,6 +143,103 @@
     return (text || "").replace(/\s+/g, " ").trim();
   }
 
+  const figureCaptionRuntime = (function createFigureCaptionRuntime() {
+    function normalizeFigureText(text) {
+      return String(text || "").replace(/\s+/g, " ").trim();
+    }
+
+    function isNarrativeFigureReference(text) {
+      return /^Figures?\s+\d+(?:(?:\s*,\s*|\s+and\s+|\s+to\s+|\s*-\s*)(?:Figures?\s+)?\d+)*\s+(?:show|shows|illustrate|illustrates|present|presents|depict|depicts|contain|contains)\b/i.test(
+        normalizeFigureText(text)
+      );
+    }
+
+    function parseFigureCaption(text) {
+      const normalized = normalizeFigureText(text);
+
+      if (isNarrativeFigureReference(normalized)) {
+        return null;
+      }
+
+      const match = normalized.match(/^Figure\s+0*(\d+)(?:\s*:\s*|\s+)(.*)$/i);
+
+      if (!match) {
+        return null;
+      }
+
+      return {
+        number: String(Number(match[1])),
+        title: normalizeFigureText(match[2] || ""),
+      };
+    }
+
+    function parseFigureNumber(text) {
+      const match = normalizeFigureText(text).match(/^Figure\s+0*(\d+)\b/i);
+      return match ? String(Number(match[1])) : "";
+    }
+
+    function getFigureNumberFromMediaCandidate(candidate) {
+      return Array.from(candidate.querySelectorAll("img"))
+        .map(function (image) {
+          return parseFigureNumber(image.getAttribute("alt") || "");
+        })
+        .find(Boolean) || "";
+    }
+
+    function isLikelyAltDerivedCaption(text) {
+      const normalized = normalizeFigureText(text);
+
+      if (!normalized) {
+        return false;
+      }
+
+      if (/^(Figure|Table|Chapter|Chapitre|Section)\b/i.test(normalized)) {
+        return false;
+      }
+
+      return normalized.split(/\s+/).length <= 24;
+    }
+
+    function buildAltDerivedFigureCaption(paragraph) {
+      const normalizedText = normalizeFigureText(paragraph.textContent || "");
+      const mediaCandidates = [];
+      let currentElement = paragraph.previousElementSibling;
+
+      if (!isLikelyAltDerivedCaption(normalizedText)) {
+        return null;
+      }
+
+      while (currentElement && currentElement.matches("p") && currentElement.querySelector("img")) {
+        mediaCandidates.unshift(currentElement);
+        currentElement = currentElement.previousElementSibling;
+      }
+
+      if (!mediaCandidates.length) {
+        return null;
+      }
+
+      const figureNumber = mediaCandidates
+        .map(getFigureNumberFromMediaCandidate)
+        .find(Boolean);
+
+      if (!figureNumber) {
+        return null;
+      }
+
+      return {
+        number: figureNumber,
+        title: normalizedText,
+      };
+    }
+
+    return {
+      buildAltDerivedFigureCaption,
+      isLikelyAltDerivedCaption,
+      parseFigureCaption,
+      parseFigureNumber,
+    };
+  })();
+
   function normalizeHeadingDisplayText(text) {
     const normalized = normalizeText(text);
     return normalized.replace(/^(\d+(?:\.\d+)*)(?:\s*-\s*|\s+)?(?=\S)/, "$1 ");
@@ -407,38 +504,38 @@
       "7": ["figure-card--panel-pair"],
     };
 
-    function isNarrativeFigureReference(text) {
-      return /^Figures?\s+\d+(?:(?:\s*,\s*|\s+and\s+|\s+to\s+|\s*-\s*)(?:Figures?\s+)?\d+)*\s+(?:show|shows|illustrate|illustrates|present|presents|depict|depicts|contain|contains)\b/i.test(
-        (text || "").trim().replace(/\s+/g, " ")
-      );
-    }
+    const captions = Array.from(document.querySelectorAll(".reader-article p"))
+      .map(function (paragraph) {
+        const explicitCaption = figureCaptionRuntime.parseFigureCaption(paragraph.textContent || "");
 
-    function parseFigureCaption(text) {
-      const normalized = ((text || "").trim()).replace(/\s+/g, " ");
+        if (explicitCaption) {
+          return { paragraph, match: explicitCaption };
+        }
 
-      if (isNarrativeFigureReference(normalized)) {
+        const altDerivedCaption = figureCaptionRuntime.buildAltDerivedFigureCaption(paragraph);
+
+        if (altDerivedCaption) {
+          return { paragraph, match: altDerivedCaption };
+        }
+
         return null;
-      }
+      })
+      .filter(Boolean);
 
-      return normalized.match(/^Figure\s+(\d+)(?:\s*:\s*|\s+)(.*)$/i);
-    }
+    captions.forEach(function (entry) {
+      const caption = entry.paragraph;
 
-    const captions = Array.from(document.querySelectorAll(".reader-article p")).filter(function (paragraph) {
-      return Boolean(parseFigureCaption(paragraph.textContent || ""));
-    });
-
-    captions.forEach(function (caption) {
       if (caption.closest(".figure-card")) {
         return;
       }
 
-      const match = parseFigureCaption(caption.textContent || "");
+      const match = entry.match;
 
       if (!match) {
         return;
       }
 
-      const figureId = "figure-" + match[1];
+      const figureId = "figure-" + match.number;
       const mediaCandidates = [];
       let currentElement = caption.previousElementSibling;
 
@@ -456,10 +553,10 @@
 
       header.className = "figure-card-header";
       captionLabel.className = "figure-card-label";
-      captionLabel.textContent = "Figure " + match[1];
+      captionLabel.textContent = "Figure " + match.number;
       footer.className = "figure-card-footer";
       captionText.className = "figure-card-title";
-      captionText.textContent = match[2];
+      captionText.textContent = match.title;
 
       header.appendChild(captionLabel);
       footer.appendChild(captionText);
@@ -504,7 +601,7 @@
         wrapper.classList.add("figure-card--multi");
       }
 
-      (figureVariantClasses[match[1]] || []).forEach(function (className) {
+      (figureVariantClasses[match.number] || []).forEach(function (className) {
         wrapper.classList.add(className);
       });
 
@@ -1342,91 +1439,6 @@
     });
   }
 
-  function applyPageVariants() {
-    function isFrenchBookPath(pathname) {
-      return pathname.indexOf("/fr/book") === 0;
-    }
-
-    function isBookHomePath(pathname) {
-      return /(?:\/fr)?\/book(?:\/index\.html)?\/?$/.test(pathname);
-    }
-
-    function matchesChapterPath(chapterPath) {
-      return window.location.pathname.endsWith("/chapters/" + chapterPath);
-    }
-
-    const coverPath = "cover.html";
-    const tableOfContentsPath = "table-of-contents.html";
-    const listOfFiguresPath = "list-of-figures.html";
-    const listOfTablesPath = "list-of-tables.html";
-    const listOfEquationsPath = "list-of-equations.html";
-    const abbreviationsPath = "abbreviations-acronyms-and-abbreviations.html";
-    const disclaimerPath = "disclaimer.html";
-    const prefacePath = "preface.html";
-    const forewordPath = "foreword.html";
-    const generalIntroductionPath = "general-introduction.html";
-    const generalConclusionPath = "general-conclusion.html";
-    const chapterElevenGeneralConclusionPath = "chapter-11-general-conclusion.html";
-    const glossaryPath = "glossary.html";
-    const bibliographicalReferencesPath = "bibliographical-references.html";
-    const preserveOutlinePaths = isFrenchBookPath(window.location.pathname)
-      ? [
-          coverPath,
-          tableOfContentsPath,
-          listOfFiguresPath,
-          listOfTablesPath,
-          listOfEquationsPath,
-          abbreviationsPath,
-          forewordPath,
-          generalIntroductionPath,
-          generalConclusionPath,
-          chapterElevenGeneralConclusionPath,
-          glossaryPath,
-          bibliographicalReferencesPath,
-        ]
-      : [
-          coverPath,
-          tableOfContentsPath,
-          listOfFiguresPath,
-          listOfTablesPath,
-          listOfEquationsPath,
-          abbreviationsPath,
-          disclaimerPath,
-          prefacePath,
-          forewordPath,
-          chapterElevenGeneralConclusionPath,
-          glossaryPath,
-          bibliographicalReferencesPath,
-        ];
-    const isCoverPage = isBookHomePath(window.location.pathname) || matchesChapterPath(coverPath);
-    const isTableOfContentsPage = matchesChapterPath(tableOfContentsPath);
-    const isListOfFigures = matchesChapterPath(listOfFiguresPath);
-    const isListOfTables = matchesChapterPath(listOfTablesPath);
-    const isListOfEquations = matchesChapterPath(listOfEquationsPath);
-    const isAbbreviationsPage = matchesChapterPath(abbreviationsPath);
-    const preserveOutlineRail = preserveOutlinePaths.some(matchesChapterPath);
-
-    document.body.classList.toggle("book-page-front-matter-outline-rail", preserveOutlineRail);
-
-    if (isCoverPage) {
-      document.body.classList.add("book-page-cover");
-      return;
-    }
-
-    document.body.classList.remove("book-page-cover");
-    document.body.classList.toggle("book-page-figure-index", isListOfFigures);
-    document.body.classList.toggle("book-page-table-index", isListOfTables);
-    document.body.classList.toggle("book-page-equation-index", isListOfEquations);
-    document.body.classList.toggle("book-page-abbreviations-index", isAbbreviationsPage);
-
-    if (isTableOfContentsPage || isListOfFigures || isListOfTables || isListOfEquations || isAbbreviationsPage) {
-      document.body.classList.add("book-page-aux-index");
-      return;
-    }
-
-    document.body.classList.remove("book-page-aux-index", "book-page-figure-index", "book-page-table-index", "book-page-equation-index", "book-page-abbreviations-index");
-  }
-
   function moveOutline() {
     const outlineBody = document.querySelector(".book-outline-body");
     const outlineSource = document.querySelector("#mdbook-sidebar mdbook-sidebar-scrollbox .chapter-item > .on-this-page");
@@ -2135,6 +2147,10 @@
       toolbarSearchSlot.appendChild(searchresultsOuter);
     }
 
+    if (searchWrap.dataset.readerSearchSlotBound === "true") {
+      return;
+    }
+
     let wasHidden = searchWrap.classList.contains("hidden");
 
     function removeChildren(element) {
@@ -2694,6 +2710,8 @@
     } else if (desktopMediaQuery.addListener) {
       desktopMediaQuery.addListener(syncToolbarSearchSlot);
     }
+
+    searchWrap.dataset.readerSearchSlotBound = "true";
   }
 
   function syncChapterPaginationHeights() {
@@ -2745,6 +2763,11 @@
       return;
     }
 
+    if (pagination.dataset.readerPaginationHeightBound === "true") {
+      syncChapterPaginationHeights();
+      return;
+    }
+
     let rafId = null;
 
     function requestSync() {
@@ -2775,6 +2798,8 @@
 
       observer.observe(pagination);
     }
+
+    pagination.dataset.readerPaginationHeightBound = "true";
   }
 
   annotateFormulas();
@@ -2784,45 +2809,247 @@
   installFigureImageOpenLinks();
   installCrossReferenceLinks();
 
-  document.addEventListener("DOMContentLoaded", function () {
-    requestAnimationFrame(function () {
-      const projection = document.querySelector("#mdbook-sidebar .reader-sidebar-projection");
+  let readerRuntimeInitialized = false;
+  let readerRuntimeInitializationScheduled = false;
+  let readerRuntimeRetryCount = 0;
+  let readerRuntimeSidebarObserver = null;
+  let readerRuntimeSidebarRefreshQueued = false;
+  let readerRuntimeSidebarRefreshInFlight = false;
+  let readerRuntimeSidebarRefreshPending = false;
+  const maxReaderRuntimeRetries = 1;
 
-      applyPageVariants();
-      installSidebarDisplayStateSync();
-      hydrateSidebarProjectionRows(projection);
-      installHeaderSearchSlot();
-      installChapterPaginationMeta();
-      installChapterPaginationHeightSync();
-      sanitizeArticleHeadingAnchors();
-      moveOutline();
-      installOutlineReferenceSections().then(syncOutlineRailVisibility);
+  function setReaderRuntimeState(state) {
+    window.__readerRuntimeState = state;
+    document.documentElement.dataset.readerRuntimeState = state;
+  }
+
+  function scheduleReaderRuntimePass(callback) {
+    let settled = false;
+    const timeoutId = window.setTimeout(function () {
+      if (settled) {
+        return;
+      }
+
+      settled = true;
+      callback();
+    }, 64);
+
+    if (typeof window.requestAnimationFrame !== "function") {
+      return;
+    }
+
+    window.requestAnimationFrame(function () {
+      if (settled) {
+        return;
+      }
+
+      settled = true;
+      window.clearTimeout(timeoutId);
+      callback();
+    });
+  }
+
+  function handleReaderRuntimeFailure(message, error) {
+    console.error(message, error);
+    setReaderRuntimeState("failed");
+  }
+
+  function scheduleReaderRuntimeRetry() {
+    if (
+      readerRuntimeInitialized ||
+      readerRuntimeInitializationScheduled ||
+      readerRuntimeRetryCount >= maxReaderRuntimeRetries
+    ) {
+      return;
+    }
+
+    readerRuntimeRetryCount += 1;
+    window.setTimeout(function () {
+      initializeReaderRuntime();
+    }, 0);
+  }
+
+  function runReaderRuntimeOutlinePass() {
+    return Promise.resolve(installOutlineReferenceSections())
+      .then(function () {
+        syncOutlineRailVisibility();
+        setReaderRuntimeState("ready");
+      })
+      .catch(function (error) {
+        handleReaderRuntimeFailure("Failed to hydrate reader outline state", error);
+        throw error;
+      });
+  }
+
+  function refreshReaderRuntimeFromSidebar(sidebar) {
+    const projection = sidebar ? sidebar.querySelector(".reader-sidebar-projection") : null;
+
+    setReaderRuntimeState("hydrating");
+    installSidebarDisplayStateSync();
+    hydrateSidebarProjectionRows(projection);
+    moveOutline();
+    return runReaderRuntimeOutlinePass().then(function () {
       installOutlineScrollSpy();
       installChapterHero();
       installInlineOutlineCard();
-      balanceLeadFigureWeight();
-      updateProgress();
+    });
+  }
+
+  function requestReaderRuntimeSidebarRefresh(sidebar) {
+    if (!sidebar) {
+      return;
+    }
+
+    if (!readerRuntimeInitialized) {
+      readerRuntimeSidebarRefreshPending = true;
+      return;
+    }
+
+    if (readerRuntimeSidebarRefreshQueued || readerRuntimeSidebarRefreshInFlight) {
+      readerRuntimeSidebarRefreshPending = true;
+      return;
+    }
+
+    readerRuntimeSidebarRefreshQueued = true;
+    scheduleReaderRuntimePass(function () {
+      readerRuntimeSidebarRefreshQueued = false;
+      if (!readerRuntimeInitialized) {
+        readerRuntimeSidebarRefreshPending = true;
+        return;
+      }
+
+      readerRuntimeSidebarRefreshInFlight = true;
+
+      refreshReaderRuntimeFromSidebar(sidebar)
+        .then(function () {
+          const projection = sidebar.querySelector(".reader-sidebar-projection");
+          const sidebarSource = sidebar.querySelector("mdbook-sidebar-scrollbox .chapter-item");
+          const outlineSource = sidebar.querySelector("mdbook-sidebar-scrollbox .chapter-item > .on-this-page");
+          const articleHasHeadings = Boolean(document.querySelector(".reader-article h2, .reader-article h3, .reader-article h4, .reader-article h5, .reader-article h6"));
+
+          if (
+            readerRuntimeSidebarObserver &&
+            projection &&
+            projection.querySelector(".reader-sidebar-row") &&
+            sidebarSource &&
+            (!articleHasHeadings || outlineSource || document.body.classList.contains("book-outline-ready"))
+          ) {
+            readerRuntimeSidebarObserver.disconnect();
+            readerRuntimeSidebarObserver = null;
+          }
+        })
+        .catch(function () {
+          // runReaderRuntimeOutlinePass() already records the failure state.
+        })
+        .finally(function () {
+          readerRuntimeSidebarRefreshInFlight = false;
+
+          if (readerRuntimeSidebarRefreshPending) {
+            readerRuntimeSidebarRefreshPending = false;
+            requestReaderRuntimeSidebarRefresh(sidebar);
+          }
+        });
+    });
+  }
+
+  function installReaderRuntimeSidebarObserver(sidebar) {
+    const scrollContainer = sidebar ? sidebar.querySelector(".reader-sidebar-scroll") : null;
+
+    if (!scrollContainer || readerRuntimeSidebarObserver) {
+      return;
+    }
+
+    readerRuntimeSidebarObserver = new MutationObserver(function (mutations) {
+      const shouldRefresh = mutations.some(function (mutation) {
+        if (mutation.type === "attributes") {
+          return true;
+        }
+
+        return mutation.addedNodes.length > 0 || mutation.removedNodes.length > 0;
+      });
+
+      if (shouldRefresh) {
+        requestReaderRuntimeSidebarRefresh(sidebar);
+      }
     });
 
+    readerRuntimeSidebarObserver.observe(scrollContainer, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["class", "hidden", "aria-hidden"],
+    });
+  }
+
+  function initializeReaderRuntime() {
+    if (readerRuntimeInitialized || readerRuntimeInitializationScheduled) {
+      return;
+    }
+
+    const article = document.querySelector(".reader-article");
     const sidebar = document.getElementById("mdbook-sidebar");
 
-    if (sidebar) {
-      const observer = new MutationObserver(function () {
-        const projection = sidebar.querySelector(".reader-sidebar-projection");
+    if (!article || !sidebar) {
+      setReaderRuntimeState("not-applicable");
+      return;
+    }
+
+    readerRuntimeInitializationScheduled = true;
+    setReaderRuntimeState("hydrating");
+
+    scheduleReaderRuntimePass(function () {
+      readerRuntimeInitializationScheduled = false;
+
+      if (readerRuntimeInitialized) {
+        return;
+      }
+
+      try {
+        const projection = document.querySelector("#mdbook-sidebar .reader-sidebar-projection");
 
         installSidebarDisplayStateSync();
         hydrateSidebarProjectionRows(projection);
+        sanitizeArticleHeadingAnchors();
         moveOutline();
-        installOutlineReferenceSections().then(syncOutlineRailVisibility);
-        installOutlineScrollSpy();
-        installChapterHero();
-        installInlineOutlineCard();
         balanceLeadFigureWeight();
-      });
+        updateProgress();
+        installHeaderSearchSlot();
+        installChapterPaginationMeta();
+        installChapterPaginationHeightSync();
+        installReaderRuntimeSidebarObserver(sidebar);
+        runReaderRuntimeOutlinePass()
+          .then(function () {
+            installOutlineScrollSpy();
+            installChapterHero();
+            installInlineOutlineCard();
+            readerRuntimeInitialized = true;
 
-      observer.observe(sidebar, { childList: true, subtree: true });
-    }
-  });
+            if (readerRuntimeSidebarRefreshPending) {
+              readerRuntimeSidebarRefreshPending = false;
+              requestReaderRuntimeSidebarRefresh(sidebar);
+            }
+          })
+          .catch(function () {
+            scheduleReaderRuntimeRetry();
+          });
+      } catch (error) {
+        handleReaderRuntimeFailure("Failed to initialize reader runtime", error);
+        scheduleReaderRuntimeRetry();
+      }
+    });
+  }
+
+  setReaderRuntimeState("booting");
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeReaderRuntime, { once: true });
+  } else {
+    scheduleReaderRuntimePass(initializeReaderRuntime);
+  }
+
+  window.setTimeout(function () {
+    initializeReaderRuntime();
+  }, 0);
 
   const scroller =
     document.getElementById("mdbook-reader-scroll") ||

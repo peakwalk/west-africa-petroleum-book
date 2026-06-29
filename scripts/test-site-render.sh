@@ -24,6 +24,85 @@ PY
   fi
 }
 
+create_temp_file() {
+  file_prefix="$1"
+  file_suffix="$2"
+
+  python3 - "$file_prefix" "$file_suffix" <<'PY'
+import os
+import sys
+import tempfile
+
+prefix = sys.argv[1]
+suffix = sys.argv[2]
+tmp_dir = os.environ.get("TMPDIR") or "/tmp"
+fd, temp_path = tempfile.mkstemp(prefix=prefix, suffix=suffix, dir=tmp_dir)
+os.close(fd)
+print(temp_path)
+PY
+}
+
+run_browser_runtime_check_if_available() {
+  if [ "$(uname -s)" = "Darwin" ] && command -v swift >/dev/null 2>&1; then
+    browser_page_config="$(create_temp_file "reader-runtime-browser-config." ".json")"
+    browser_check_scope="${READER_RUNTIME_BROWSER_CHECK_SCOPE:-smoke}"
+    browser_server_log="$(create_temp_file "reader-runtime-browser-http." ".log")"
+    browser_server_port_file="$(create_temp_file "reader-runtime-browser-port." ".txt")"
+
+    node scripts/build_reader_runtime_browser_check_config.mjs >"$browser_page_config"
+
+    python3 scripts/serve_reader_runtime_browser_check.py \
+      --directory public \
+      --host 127.0.0.1 \
+      --port-file "$browser_server_port_file" >"$browser_server_log" 2>&1 &
+    browser_server_pid="$!"
+
+    cleanup_browser_runtime_server() {
+      kill "$browser_server_pid" 2>/dev/null || true
+      wait "$browser_server_pid" 2>/dev/null || true
+      rm -f "$browser_page_config" "$browser_server_log" "$browser_server_port_file"
+    }
+
+    trap cleanup_browser_runtime_server EXIT INT TERM
+    python3 - "$browser_server_port_file" <<'PY'
+from pathlib import Path
+import socket
+import sys
+import time
+
+port_file = Path(sys.argv[1])
+deadline = time.time() + 5
+
+while time.time() < deadline:
+    try:
+        port = int(port_file.read_text(encoding="utf-8").strip())
+    except (FileNotFoundError, ValueError):
+        time.sleep(0.05)
+        continue
+
+    try:
+        with socket.create_connection(("127.0.0.1", port), timeout=0.2):
+            sys.exit(0)
+    except OSError:
+        time.sleep(0.05)
+
+print(f"Timed out waiting for local browser check server from {port_file}", file=sys.stderr)
+sys.exit(1)
+PY
+    browser_port="$(cat "$browser_server_port_file")"
+    SWIFT_MODULECACHE_PATH="${TMPDIR:-/tmp}/swift-module-cache" \
+      CLANG_MODULE_CACHE_PATH="${TMPDIR:-/tmp}/clang-module-cache" \
+      swift scripts/check_reader_runtime_browser.swift \
+        --base-url "http://127.0.0.1:$browser_port" \
+        --scope "$browser_check_scope" \
+        --page-config "$browser_page_config" >/dev/null
+    trap - EXIT INT TERM
+    cleanup_browser_runtime_server
+  else
+    echo "Skipping browser runtime DOM check; requires macOS swift/WebKit" >&2
+  fi
+}
+
 run_docx_formula_check_if_available en
 run_docx_formula_check_if_available fr
 
@@ -234,6 +313,9 @@ check_exists assets/icons/homepage/icon-audience-policy.svg
 check_exists assets/icons/homepage/icon-audience-operators.svg
 check_exists assets/icons/homepage-sprite.svg
 check_exists scripts/build_reader_page_meta.mjs
+check_exists scripts/check_reader_runtime_build_contract.mjs
+check_exists scripts/check_reader_runtime_outline.mjs
+check_exists scripts/check_reader_runtime_browser.swift
 check_contains package.json '"build:index": "node scripts/generate-index-page.mjs"'
 check_contains package.json '"build:legal": "node scripts/generate-legal-pages.mjs"'
 check_contains package.json '"build:reader-meta": "node scripts/build_reader_page_meta.mjs"'
@@ -583,6 +665,9 @@ check_contains public/book/index.html 'class="book-outline-inner"'
 check_contains public/book/index.html 'class="chapter-nav-card chapter-nav-next"'
 check_exists public/book/reader-page-meta.json
 check_contains public/book/reader-page-meta.json 'chapters/chapter-01-general-introduction.html'
+node scripts/check_reader_runtime_build_contract.mjs
+node scripts/check_reader_runtime_outline.mjs
+run_browser_runtime_check_if_available
 check_order public/book/index.html 'css/general-' 'theme/custom-'
 check_not_contains public/book/toc.html 'href="index.html" target="_parent">Home</a>'
 check_not_contains public/book/print.html 'title="Git repository"'
@@ -764,10 +849,13 @@ check_not_contains public/fr/book/index.html 'src="images/figure-001.webp"'
 check_contains public/fr/book/chapters/list-of-figures.html 'href="../"'
 check_not_contains public/fr/book/chapters/list-of-figures.html 'href="../index.html"'
 check_not_contains public/fr/book/chapters/list-of-figures.html 'href="cover.html"'
-check_contains public/book/index.html 'function applyInitialBookPageVariant()'
+check_contains public/book/index.html 'class="book-layout-booting book-page-cover"'
+check_contains public/book/chapters/list-of-figures.html 'book-page-front-matter-outline-rail'
+check_contains public/book/chapters/list-of-figures.html 'book-page-figure-index'
+check_contains public/book/chapters/list-of-figures.html 'book-page-aux-index'
 for book_theme_custom_js in public/book/theme/custom-*.js public/fr/book/theme/custom-*.js; do
-  check_contains "$book_theme_custom_js" 'function isBookHomePath(pathname)'
-  check_contains "$book_theme_custom_js" 'const isCoverPage = isBookHomePath(window.location.pathname) || matchesChapterPath(coverPath);'
+  check_not_contains "$book_theme_custom_js" 'window.bookPageVariants'
+  check_not_contains "$book_theme_custom_js" 'function applyPageVariants()'
   check_not_contains "$book_theme_custom_js" 'const englishDefaultChapterPath = "chapters/disclaimer.html";'
   check_not_contains "$book_theme_custom_js" 'const frenchDefaultChapterPath = "chapters/foreword.html";'
   check_not_contains "$book_theme_custom_js" 'new URL(getDefaultChapterPath(window.location.pathname), window.location.href)'
@@ -1201,7 +1289,7 @@ check_contains theme/index.hbs 'class="reader-mobile-outline-anchor"'
 check_contains theme/index.hbs 'class="book-outline-section book-outline-figures"'
 check_contains theme/index.hbs 'class="book-outline-section book-outline-tables"'
 check_contains theme/index.hbs 'class="book-outline-section book-outline-formulas"'
-check_contains theme/index.hbs 'function applyInitialBookPageVariant()'
+check_not_contains theme/index.hbs 'function applyInitialBookPageVariant()'
 node -e 'const fs=require("fs");const text=fs.readFileSync("scripts/test-site-render.sh","utf8");const legacy=["/book ","62.5%"," root contract"].join("");if(text.includes(legacy)){console.error("Expected scripts/test-site-render.sh to stop referring to the legacy /book root contract in test messages");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");if(!/:root\s*\{[^}]*font-size:\s*100%;/s.test(css)){console.error("Expected theme/custom.css to declare the repo-owned /book root font-size: 100%");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const rootMatch=css.match(/:root\s*\{[\s\S]*?\n\}/);if(!rootMatch){console.error("Expected :root block in theme/custom.css");process.exit(1);}for(const expected of ["--reader-ink: #0b1f33;","--reader-muted: #526171;","--reader-brand: #3163c2;","--reader-brand-deep: #264d97;","--reader-sidebar-width: 320px;","--reader-sidebar-width-base: 256px;","--reader-outline-width: 256px;","--reader-content-max: 896px;","--reader-logo-width-desktop: 138px;","--reader-logo-width-narrow: 180px;","--reader-figure-radius: 20px;","--reader-table-radius: 16px;","--reader-formula-radius: 6px;"]){if(!rootMatch[0].includes(expected)){console.error(`Expected :root token mapping for ${expected}`);process.exit(1);}}'
@@ -1740,7 +1828,12 @@ check_contains scripts/preview.sh '--display-host "$DISPLAY_HOST"'
 check_contains scripts/preview_server.py 'parser.add_argument("--display-host")'
 check_contains scripts/preview_server.py 'display_host = args.display_host or args.host'
 check_contains scripts/preview_server.py 'Serving preview on http://{display_host}:{args.port}/ from {args.directory}'
-node -e 'const fs=require("fs");const hbs=fs.readFileSync("theme/index.hbs","utf8");for(const expected of ["<body class=\"book-layout-booting\">","sessionStorage.getItem(\"reader-sidebar-scroll-top\")","sessionStorage.setItem(\"reader-sidebar-scroll-top\"","document.body.classList.remove(\"book-layout-booting\");"]){if(!hbs.includes(expected)){console.error(`Expected theme/index.hbs to include ${expected}`);process.exit(1);}}for(const forbidden of ["function bootstrapSidebarProjection()","reader-sidebar-scroll-offset","customElements.whenDefined(\"mdbook-sidebar-scrollbox\")"]){if(hbs.includes(forbidden)){console.error(`Expected theme/index.hbs to stop including ${forbidden}`);process.exit(1);}}const initialVariantStart=hbs.indexOf("function applyInitialBookPageVariant() {");const initialVariantEnd=hbs.indexOf("</script>", initialVariantStart);if(initialVariantStart===-1||initialVariantEnd===-1){console.error("Expected applyInitialBookPageVariant() inline script block in theme/index.hbs");process.exit(1);}const initialVariantBlock=hbs.slice(initialVariantStart, initialVariantEnd);for(const expected of ["function isBookHomePath(pathname) {","const tableOfContentsPath = \"table-of-contents.html\";","const listOfEquationsPath = \"list-of-equations.html\";","const chapterElevenGeneralConclusionPath = \"chapter-11-general-conclusion.html\";","const isCoverPage = isBookHomePath(window.location.pathname) || matchesChapterPath(coverPath);","const isAuxIndexPage =","document.body.classList.add(\"book-page-front-matter-outline-rail\");","document.body.classList.add(\"book-page-aux-index\", \"book-outline-empty\");"]){if(!initialVariantBlock.includes(expected)){console.error(`Expected applyInitialBookPageVariant() to include ${expected}`);process.exit(1);}}'
+node -e 'const fs=require("fs");const hbs=fs.readFileSync("theme/index.hbs","utf8");for(const expected of ["<body class=\"book-layout-booting\">","sessionStorage.getItem(\"reader-sidebar-scroll-top\")","sessionStorage.setItem(\"reader-sidebar-scroll-top\"","document.body.classList.remove(\"book-layout-booting\");"]){if(!hbs.includes(expected)){console.error(`Expected theme/index.hbs to include ${expected}`);process.exit(1);}}for(const forbidden of ["window.bookPageVariants","applyInitialBookPageVariant","reader-sidebar-scroll-offset","customElements.whenDefined(\"mdbook-sidebar-scrollbox\")"]){if(hbs.includes(forbidden)){console.error(`Expected theme/index.hbs to stop including ${forbidden}`);process.exit(1);}}'
+check_contains scripts/localize_reader_shell.mjs 'import { getBookPageBodyClasses } from "./shared/book-page-variants.mjs";'
+check_contains scripts/localize_reader_shell.mjs 'function injectBodyClasses(html, pageKey) {'
+check_contains scripts/localize_reader_shell.mjs 'html = injectBodyClasses(html, pageKey);'
+check_contains scripts/shared/book-page-variants.mjs 'export function getBookPageBodyClasses(pageKey, locale) {'
+check_contains scripts/shared/book-page-variants.mjs 'chapter-11-general-conclusion.html'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const chapterLink=block(".book-sidebar-shell .chapter li a {");for(const expected of ["font-size: 0.875rem;","line-height: 1.4286;"]){if(!chapterLink.includes(expected)){console.error(`Expected .book-sidebar-shell .chapter li a to include ${expected}`);process.exit(1);}}if(chapterLink.includes("font-size: 14px;")||chapterLink.includes("line-height: 20px;")||chapterLink.includes("font-size: 1.4rem;")||chapterLink.includes("line-height: 2rem;")){console.error("Expected .book-sidebar-shell .chapter li a to use repo-owned typography calibrated for the explicit /book root font contract");process.exit(1);}const partTitle=block(".book-sidebar-shell .chapter li.part-title {");if(!partTitle.includes("font-size: 0.75rem;")){console.error("Expected .book-sidebar-shell .chapter li.part-title to include font-size: 0.75rem;");process.exit(1);}if(partTitle.includes("font-size: 12px;")||partTitle.includes("font-size: 1.2rem;")){console.error("Expected .book-sidebar-shell .chapter li.part-title to stop using legacy sizing under the explicit /book root font contract");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const bookTitle=block(".book-sidebar-book-title {");if(!bookTitle.includes("color: var(--sidebar-fg);")){console.error("Expected .book-sidebar-book-title to align with the normal sidebar navigation text color.");process.exit(1);}const frontBackTitle=block(".reader-sidebar-section--front-matter .reader-sidebar-section-title,");if(!frontBackTitle.includes("color: var(--sidebar-fg);")){console.error("Expected Front Matter and Back Matter section titles to align with the normal sidebar navigation text color.");process.exit(1);}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const sectionHeader=block(".reader-sidebar-section-header {");if(sectionHeader.includes("line-height: 25%;")){console.error("Expected sidebar section headers to stop relying on line-height: 25% for visual alignment; use explicit layout instead.");process.exit(1);}'
@@ -1751,7 +1844,7 @@ node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8
 node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");const start=js.indexOf("function syncOutlineRailVisibility() {");const end=js.indexOf("\n\n  function syncOutlineActiveState()",start);if(start===-1||end===-1){console.error("Expected syncOutlineRailVisibility() to manage the empty right-rail contract.");process.exit(1);}const block=js.slice(start,end);for(const expected of ["document.querySelector(\"#mdbook-outline-scroll\")","document.querySelector(\".book-outline-body .on-this-page\")","document.querySelector(\".book-outline-figures\")","document.querySelector(\".book-outline-tables\")","document.querySelector(\".book-outline-formulas\")","document.body.classList.toggle(\"book-outline-empty\", !hasVisibleOutlineContent);","outline.hidden = !hasVisibleOutlineContent;"]){if(!block.includes(expected)){console.error(`Expected syncOutlineRailVisibility() to include ${expected}`);process.exit(1);}}'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const layout=block("body.book-outline-empty .reader-layout {");if(!layout.includes("grid-template-columns: minmax(0, 1fr);")){console.error("Expected empty outline pages to collapse the reader layout back to a single content column.");process.exit(1);}const rail=block("body.book-outline-empty .reader-outline {");if(!rail.includes("display: none;")){console.error("Expected empty outline pages to hide the desktop right rail entirely.");process.exit(1);}'
 node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");for(const expected of ["function bindSidebarProjectionRowInteraction(","if (row.dataset.readerSidebarBound === \"true\") {","row.dataset.readerSidebarBound = \"true\";","hydrateSidebarProjectionRows(projection);"]){if(!js.includes(expected)){console.error(`Expected theme/custom.js to include ${expected}`);process.exit(1);}}'
-node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");for(const expected of ["function installSidebarDisplayStateSync()","function syncSidebarDisplayState()","if (!sidebarToggle.checked) {","if (sidebar.style.display === \"none\") {","sidebar.style.display = \"\";","sidebar.offsetHeight;","sidebar.setAttribute(\"aria-hidden\", \"false\");","requestAnimationFrame(syncSidebarDisplayState);","installSidebarDisplayStateSync();"]){if(!js.includes(expected)){console.error(`Expected theme/custom.js to include ${expected}`);process.exit(1);}}const applyIndex=js.indexOf("applyPageVariants();");const displayIndex=js.indexOf("installSidebarDisplayStateSync();");if(applyIndex===-1||displayIndex===-1||!(applyIndex<displayIndex)){console.error("Expected sidebar display-state sync to run after page variants.");process.exit(1);}'
+node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");for(const expected of ["function installSidebarDisplayStateSync()","function syncSidebarDisplayState()","if (!sidebarToggle.checked) {","if (sidebar.style.display === \"none\") {","sidebar.style.display = \"\";","sidebar.offsetHeight;","sidebar.setAttribute(\"aria-hidden\", \"false\");","requestAnimationFrame(syncSidebarDisplayState);","installSidebarDisplayStateSync();"]){if(!js.includes(expected)){console.error(`Expected theme/custom.js to include ${expected}`);process.exit(1);}}const displayIndex=js.indexOf("installSidebarDisplayStateSync();");const hydrateIndex=js.indexOf("hydrateSidebarProjectionRows(projection);");if(displayIndex===-1||hydrateIndex===-1||!(displayIndex<hydrateIndex)){console.error("Expected sidebar display-state sync to run before sidebar projection hydration.");process.exit(1);}'
 check_contains theme/custom.js 'new ResizeObserver'
 check_not_contains theme/custom.js '--sidebar-intro-height'
 check_contains theme/custom.js 'reader-sidebar-scroll'
@@ -1803,9 +1896,9 @@ check_contains theme/custom.js 'const outlineAnchors = Array.from(outlineSource.
 check_contains theme/custom.js 'outlineContainer.appendChild(buildOutlineList(outlineAnchors));'
 check_not_contains theme/custom.js 'const outlineAnchors = Array.from(outlineBody.querySelectorAll(".on-this-page a.header-in-summary"));'
 check_not_contains theme/custom.js 'const outlineAnchors = Array.from(document.querySelectorAll(".on-this-page a.header-in-summary"));'
-check_contains theme/custom.js 'general-conclusion.html'
-check_contains theme/custom.js 'glossary.html'
-check_contains theme/custom.js 'bibliographical-references.html'
+check_contains scripts/shared/book-page-variants.mjs 'general-conclusion.html'
+check_contains scripts/shared/book-page-variants.mjs 'glossary.html'
+check_contains scripts/shared/book-page-variants.mjs 'bibliographical-references.html'
 check_contains theme/custom.css '.reader-outline {'
 check_contains theme/custom.css 'overflow-y: auto;'
 check_contains theme/custom.css '#mdbook-page-wrapper {'
@@ -2037,7 +2130,7 @@ node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","ut
 check_contains theme/custom.css '.figure-card img {'
 check_contains theme/custom.css '.figure-anchor-target:target img {'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const tableAnchor=css.indexOf(".table-anchor-target {");if(tableAnchor===-1){console.error("Expected .table-anchor-target rule after the mobile figure media query block.");process.exit(1);}const start=css.lastIndexOf("@media (max-width: 760px) {", tableAnchor);if(start===-1){console.error("Expected mobile figure media query block.");process.exit(1);}const block=css.slice(start, tableAnchor);if(block.includes("padding: 0.75rem 0;")){console.error("Expected mobile figure media to stop adding vertical padding overrides.");process.exit(1);}'
-node -e "const fs=require('fs');const js=fs.readFileSync('theme/custom.js','utf8');if(!js.includes('captionLabel.textContent = \"Figure \" + match[1];')){console.error('Expected figure labels to render without a trailing colon.');process.exit(1);}if(js.includes('captionLabel.textContent = \"Figure \" + match[1] + \":\";')){console.error('Expected figure labels to stop rendering a trailing colon.');process.exit(1);}"
+node -e "const fs=require('fs');const js=fs.readFileSync('theme/custom.js','utf8');if(!js.includes('captionLabel.textContent = \"Figure \" + match.number;')){console.error('Expected figure labels to render without a trailing colon.');process.exit(1);}if(js.includes('captionLabel.textContent = \"Figure \" + match.number + \":\";')){console.error('Expected figure labels to stop rendering a trailing colon.');process.exit(1);}"
 check_contains theme/custom.css '.table-anchor-target {'
 check_contains theme/custom.css '.table-card {'
 check_contains theme/custom.css '.table-anchor-shell {'
@@ -2160,23 +2253,27 @@ check_contains theme/custom.js 'searchbar.focus();'
 check_contains theme/custom.js 'searchbar.select();'
 node -e 'const fs=require("fs");const css=fs.readFileSync("theme/custom.css","utf8");const marker="@media (max-width: 1023px) {";const start=css.indexOf(marker);if(start===-1){console.error("Expected mobile toolbar media query.");process.exit(1);}const next=css.indexOf("\n\n@media",start + marker.length);const block=(next===-1?css.slice(start):css.slice(start,next));for(const expected of [".toolbar-actions {","display: flex;","#mdbook-search-toggle {","display: inline-flex !important;","order: 3;",".toolbar-main {","position: absolute;",".toolbar-main .toolbar-search-slot.hidden {","display: none !important;","#mdbook-menu-bar .book-toolbar .toolbar-actions .toolbar-contact-link {","display: inline-flex !important;","order: 2;",".toolbar-actions .reader-language-switch[data-reader-language-switch=\"toolbar\"] {","order: 1;",".toolbar-actions .toolbar-contact-link .toolbar-link-label {","display: none;"]){if(!block.includes(expected)){console.error(`Expected mobile search access rule ${expected}`);process.exit(1);}}'
 node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");const start=js.indexOf("item.addEventListener(\"mouseenter\", function () {");if(start===-1){console.error("Expected mouseenter handler for search result items.");process.exit(1);}const end=js.indexOf("      });",start);if(end===-1){console.error("Expected end of mouseenter handler for search result items.");process.exit(1);}const block=js.slice(start,end);if(block.includes("renderResults();")){console.error("Search result mouseenter handler must not re-render the full results list.");process.exit(1);}'
-check_contains theme/custom.js 'function applyPageVariants()'
-node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");const start=js.indexOf("function applyPageVariants() {");const end=js.indexOf("\n\n  function moveOutline()",start);if(start===-1||end===-1){console.error("Expected applyPageVariants() block.");process.exit(1);}const block=js.slice(start,end);for(const expected of ["function isFrenchBookPath(pathname) {","function matchesChapterPath(chapterPath) {","const tableOfContentsPath = \"table-of-contents.html\";","const listOfEquationsPath = \"list-of-equations.html\";","const disclaimerPath = \"disclaimer.html\";","const prefacePath = \"preface.html\";","const forewordPath = \"foreword.html\";","const generalIntroductionPath = \"general-introduction.html\";","const generalConclusionPath = \"general-conclusion.html\";","const chapterElevenGeneralConclusionPath = \"chapter-11-general-conclusion.html\";","const preserveOutlinePaths = isFrenchBookPath(window.location.pathname)","tableOfContentsPath,","listOfEquationsPath,","disclaimerPath,","prefacePath,","forewordPath,","generalIntroductionPath,","generalConclusionPath,","chapterElevenGeneralConclusionPath,","const isTableOfContentsPage = matchesChapterPath(tableOfContentsPath);","const preserveOutlineRail = preserveOutlinePaths.some(matchesChapterPath);","document.body.classList.toggle(\"book-page-front-matter-outline-rail\", preserveOutlineRail);","if (isTableOfContentsPage || isListOfFigures || isListOfTables || isListOfEquations || isAbbreviationsPage) {"]){if(!block.includes(expected)){console.error(`Expected applyPageVariants() to include ${expected}`);process.exit(1);}}'
-check_contains theme/custom.js 'disclaimer.html'
-check_contains theme/custom.js 'preface.html'
-check_contains theme/custom.js 'list-of-equations.html'
-check_contains theme/custom.js 'cover.html'
-check_not_contains theme/custom.js 'front-matter.html'
-check_contains theme/custom.js 'list-of-figures.html'
-check_contains theme/custom.js 'foreword.html'
-check_contains theme/custom.js 'general-introduction.html'
-check_contains theme/custom.js 'general-conclusion.html'
-check_contains theme/custom.js 'glossary.html'
-check_contains theme/custom.js 'bibliographical-references.html'
-check_contains theme/custom.js 'abbreviations-acronyms-and-abbreviations.html'
-check_contains theme/custom.js 'book-page-front-matter-outline-rail'
-check_contains theme/custom.js 'document.body.classList.add("book-page-cover")'
+check_not_contains theme/custom.js 'function applyPageVariants()'
+check_not_contains theme/custom.js 'window.bookPageVariants'
+check_contains scripts/shared/book-page-variants.mjs 'disclaimer.html'
+check_contains scripts/shared/book-page-variants.mjs 'general-conclusion.html'
+check_contains scripts/shared/book-page-variants.mjs 'list-of-equations.html'
+check_contains scripts/shared/book-page-variants.mjs 'cover.html'
+check_not_contains scripts/shared/book-page-variants.mjs 'front-matter.html'
+check_contains scripts/shared/book-page-variants.mjs 'list-of-figures.html'
+check_contains scripts/shared/book-page-variants.mjs 'foreword.html'
+check_contains scripts/shared/book-page-variants.mjs 'general-introduction.html'
+check_contains scripts/shared/book-page-variants.mjs 'chapter-11-general-conclusion.html'
+check_contains scripts/shared/book-page-variants.mjs 'glossary.html'
+check_contains scripts/shared/book-page-variants.mjs 'bibliographical-references.html'
+check_contains scripts/shared/book-page-variants.mjs 'abbreviations-acronyms-and-abbreviations.html'
 check_contains theme/custom.js 'function annotateFigureCaptions()'
+check_contains theme/custom.js 'const figureCaptionRuntime = (function createFigureCaptionRuntime() {'
+check_contains theme/custom.js 'function parseFigureNumber(text) {'
+check_contains theme/custom.js 'function isLikelyAltDerivedCaption(text) {'
+check_contains theme/custom.js 'function buildAltDerivedFigureCaption(paragraph) {'
+check_contains theme/custom.js 'const altDerivedCaption = figureCaptionRuntime.buildAltDerivedFigureCaption(paragraph);'
+check_not_contains theme/custom.js '/[.!?]["'"'"']?$/.test(normalized)'
 check_contains theme/custom.js 'const figureVariantClasses = {'
 check_contains theme/custom.js 'const wrapper = document.createElement("figure")'
 check_contains theme/custom.js 'wrapper.className = "figure-card figure-anchor-target"'
@@ -2200,7 +2297,7 @@ check_contains theme/custom.js 'footer.className = "figure-card-footer"'
 check_contains theme/custom.js 'captionText.className = "figure-card-title"'
 check_contains theme/custom.js 'wrapper.appendChild(header);'
 check_contains theme/custom.js 'wrapper.appendChild(footer);'
-node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");for(const expected of ["function isNarrativeFigureReference(text)","function parseFigureCaption(text)","if (isNarrativeFigureReference(normalized))","return Boolean(parseFigureCaption(paragraph.textContent || \"\"));"]){if(!js.includes(expected)){console.error(`Expected figure caption parsing compatibility for: ${expected}`);process.exit(1);}}'
+node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");for(const expected of ["function isNarrativeFigureReference(text)","function parseFigureCaption(text)","if (isNarrativeFigureReference(normalized))","const explicitCaption = figureCaptionRuntime.parseFigureCaption(paragraph.textContent || \"\");","const altDerivedCaption = figureCaptionRuntime.buildAltDerivedFigureCaption(paragraph);"]){if(!js.includes(expected)){console.error(`Expected figure caption parsing compatibility for: ${expected}`);process.exit(1);}}'
 check_contains theme/custom.js 'collectReferenceCards(".figure-card", ".figure-card-footer", ".figure-card-label", ".figure-card-title")'
 check_contains theme/custom.js 'function annotateTables()'
 check_contains theme/custom.js 'const tableId = "table-" +'
@@ -2258,8 +2355,6 @@ check_contains theme/custom.js 'querySelectorAll("a.header-in-summary")'
 check_contains theme/custom.js 'document.getElementById("mdbook-reader-scroll")'
 check_not_contains theme/custom.js 'const englishDefaultChapterPath = "chapters/disclaimer.html";'
 check_not_contains theme/custom.js 'const frenchDefaultChapterPath = "chapters/foreword.html";'
-check_contains theme/custom.js 'function isBookHomePath(pathname)'
-check_contains theme/custom.js 'const isCoverPage = isBookHomePath(window.location.pathname) || matchesChapterPath(coverPath);'
 check_not_contains theme/custom.js 'window.location.replace(target.href)'
 check_contains public/book/chapters/chapter-01-general-introduction.html 'class="reader-sidebar-projection"'
 check_contains public/book/chapters/chapter-01-general-introduction.html 'class="sidebar book-sidebar-shell book-sidebar-shell--projected"'

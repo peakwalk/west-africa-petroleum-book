@@ -859,24 +859,30 @@ class BookEditionBuildTests(unittest.TestCase):
 
         for html in [english_book_index, french_book_index]:
             self.assertIn('class="book-cover-entry-link"', html)
-            self.assertIn("function isBookHomePath(pathname)", html)
-            self.assertIn(
-                "const isCoverPage = isBookHomePath(window.location.pathname) || matchesChapterPath(coverPath);",
+            self.assertNotIn("window.bookPageVariants", html)
+            self.assertNotIn("applyInitialBookPageVariant", html)
+            self.assertRegex(
                 html,
+                r'<body class="book-layout-booting book-page-cover"',
             )
 
         for script_path in [english_custom_js, french_custom_js]:
             script = script_path.read_text(encoding="utf-8")
-            self.assertIn("function isBookHomePath(pathname)", script)
-            self.assertIn(
-                "const isCoverPage = isBookHomePath(window.location.pathname) || matchesChapterPath(coverPath);",
-                script,
-            )
+            self.assertNotIn("window.bookPageVariants", script)
+            self.assertNotIn("function applyPageVariants() {", script)
             self.assertNotIn(
                 "new URL(getDefaultChapterPath(window.location.pathname), window.location.href)",
                 script,
             )
             self.assertNotIn("window.location.replace(target.href);", script)
+
+        english_list_of_figures = (
+            ROOT_DIR / "public" / "book" / "chapters" / "list-of-figures.html"
+        ).read_text(encoding="utf-8")
+        self.assertRegex(
+            english_list_of_figures,
+            r'<body class="book-layout-booting book-page-front-matter-outline-rail book-page-figure-index book-page-aux-index book-outline-empty"',
+        )
 
     def test_book_root_outputs_sitemap_and_robots_reference(self) -> None:
         sitemap_path = ROOT_DIR / "public" / "book-sitemap.xml"
@@ -1133,6 +1139,68 @@ class BookEditionBuildTests(unittest.TestCase):
         self.assertIn('href="../"', french_list_of_figures)
         self.assertNotIn('href="../index.html"', french_list_of_figures)
         self.assertNotIn('href="cover.html"', french_list_of_figures)
+
+    def test_cross_platform_reader_runtime_build_contract_checker_passes(self) -> None:
+        subprocess.run(
+            ["node", "scripts/check_reader_runtime_build_contract.mjs"],
+            cwd=ROOT_DIR,
+            check=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+
+    def test_content_pages_keep_front_matter_variant_classes_out(self) -> None:
+        english_socio_political = (
+            ROOT_DIR
+            / "public"
+            / "book"
+            / "chapters"
+            / "chapter-09-socio-political-determinants.html"
+        ).read_text(encoding="utf-8")
+        french_socio_political = (
+            ROOT_DIR
+            / "public"
+            / "fr"
+            / "book"
+            / "chapters"
+            / "chapter-05-key-socio-political-determinants-of-oil-sector-performance.html"
+        ).read_text(encoding="utf-8")
+
+        for html in [english_socio_political, french_socio_political]:
+            self.assertRegex(html, r'<body class="book-layout-booting"')
+            self.assertNotIn("book-page-front-matter-outline-rail", html)
+            self.assertNotIn("book-page-aux-index", html)
+            self.assertNotIn("book-outline-empty", html)
+
+    def test_browser_runtime_smoke_config_covers_high_risk_page_types(self) -> None:
+        browser_config = json.loads(
+            subprocess.check_output(
+                ["node", "scripts/build_reader_runtime_browser_check_config.mjs"],
+                cwd=ROOT_DIR,
+                text=True,
+            )
+        )
+
+        self.assertEqual(
+            browser_config["smokePages"]["en"],
+            [
+                "index.html",
+                "chapters/list-of-figures.html",
+                "chapters/chapter-05-hydrocarbon-value-chain.html",
+                "chapters/chapter-09-socio-political-determinants.html",
+                "chapters/chapter-11-general-conclusion.html",
+            ],
+        )
+        self.assertEqual(
+            browser_config["smokePages"]["fr"],
+            [
+                "index.html",
+                "chapters/list-of-figures.html",
+                "chapters/chapter-02-different-phases-of-upstream-oil-and-the-roles-of-states.html",
+                "chapters/chapter-05-key-socio-political-determinants-of-oil-sector-performance.html",
+                "chapters/general-conclusion.html",
+            ],
+        )
 
     def test_raw_toc_resources_use_book_root_instead_of_cover_alias(self) -> None:
         for locale_root in [ROOT_DIR / "public" / "book", ROOT_DIR / "public" / "fr" / "book"]:

@@ -8,7 +8,16 @@ from pathlib import Path
 ROOT_DIR = Path(__file__).resolve().parents[1]
 CUSTOM_CSS_PATH = ROOT_DIR / "theme/custom.css"
 CUSTOM_JS_PATH = ROOT_DIR / "theme/custom.js"
+INDEX_HBS_PATH = ROOT_DIR / "theme/index.hbs"
 TEST_SITE_RENDER_PATH = ROOT_DIR / "scripts/test-site-render.sh"
+READER_RUNTIME_CHECK_PATH = ROOT_DIR / "scripts/check_reader_runtime_outline.mjs"
+BROWSERLESS_RUNTIME_BUILD_CONTRACT_PATH = ROOT_DIR / "scripts/check_reader_runtime_build_contract.mjs"
+BROWSER_RUNTIME_CHECK_PATH = ROOT_DIR / "scripts/check_reader_runtime_browser.swift"
+BROWSER_RUNTIME_CONFIG_PATH = ROOT_DIR / "scripts/build_reader_runtime_browser_check_config.mjs"
+BROWSER_RUNTIME_SERVER_PATH = ROOT_DIR / "scripts/serve_reader_runtime_browser_check.py"
+LOCALIZE_READER_SHELL_PATH = ROOT_DIR / "scripts/localize_reader_shell.mjs"
+BOOK_PAGE_VARIANTS_PATH = ROOT_DIR / "scripts/shared/book-page-variants.mjs"
+READER_OUTLINE_RUNTIME_PATH = ROOT_DIR / "scripts/shared/reader-outline-runtime.mjs"
 EN_BOOK_TOML_PATH = ROOT_DIR / "editions/en/book.toml"
 FR_BOOK_TOML_PATH = ROOT_DIR / "editions/fr/book.toml"
 
@@ -51,6 +60,271 @@ class ThemeCustomCssTest(unittest.TestCase):
         self.assertNotIn("image.style.maxWidth =", js)
         self.assertNotIn("image.style.maxHeight =", js)
         self.assertNotIn('window.addEventListener("resize", handleViewerResize);', js)
+
+    def test_book_page_variants_are_applied_at_build_time(self) -> None:
+        hbs = INDEX_HBS_PATH.read_text(encoding="utf-8")
+        localize_shell = LOCALIZE_READER_SHELL_PATH.read_text(encoding="utf-8")
+
+        self.assertNotIn("window.bookPageVariants", hbs)
+        self.assertNotIn("applyInitialBookPageVariant", hbs)
+        self.assertIn('import { getBookPageBodyClasses } from "./shared/book-page-variants.mjs";', localize_shell)
+        self.assertIn("function injectBodyClasses(html, pageKey) {", localize_shell)
+        self.assertTrue(BOOK_PAGE_VARIANTS_PATH.exists())
+
+    def test_runtime_page_variant_classifier_is_removed(self) -> None:
+        js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
+
+        self.assertNotIn("window.bookPageVariants", js)
+        self.assertNotIn("function applyPageVariants() {", js)
+        self.assertNotIn('document.body.classList.add("book-page-cover")', js)
+
+    def test_reader_runtime_initializes_when_dom_is_already_ready(self) -> None:
+        js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("function initializeReaderRuntime()", js)
+        self.assertIn('if (document.readyState === "loading") {', js)
+        self.assertIn('document.addEventListener("DOMContentLoaded", initializeReaderRuntime, { once: true });', js)
+        self.assertIn("function scheduleReaderRuntimePass(callback)", js)
+        self.assertIn("scheduleReaderRuntimePass(initializeReaderRuntime);", js)
+        self.assertIn('window.setTimeout(function () {', js)
+        self.assertNotIn("window.setTimeout(initializeReaderRuntime, 0);", js)
+
+    def test_reader_runtime_exposes_hydration_state_without_infinite_bootstrap_spin(self) -> None:
+        js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("function setReaderRuntimeState(state)", js)
+        self.assertIn("window.__readerRuntimeState = state;", js)
+        self.assertIn("document.documentElement.dataset.readerRuntimeState = state;", js)
+        self.assertIn('setReaderRuntimeState("booting");', js)
+        self.assertIn('setReaderRuntimeState("hydrating");', js)
+        self.assertIn('setReaderRuntimeState("ready");', js)
+        self.assertNotIn("if (!article || !sidebar) {\n      window.setTimeout(initializeReaderRuntime, 0);", js)
+
+    def test_reader_runtime_retries_before_locking_initialized_state(self) -> None:
+        js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("function scheduleReaderRuntimeRetry()", js)
+        self.assertIn("scheduleReaderRuntimeRetry();", js)
+        self.assertIn("runReaderRuntimeOutlinePass()", js)
+        self.assertRegex(
+            js,
+            r"runReaderRuntimeOutlinePass\(\)\s*\.then\(function \(\) \{[\s\S]*?readerRuntimeInitialized = true;",
+        )
+        self.assertIn("installReaderRuntimeSidebarObserver(sidebar);", js)
+
+    def test_reader_runtime_sidebar_observer_is_throttled_and_disconnects_after_stabilizing(self) -> None:
+        js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("let readerRuntimeSidebarObserver = null;", js)
+        self.assertIn("let readerRuntimeSidebarRefreshQueued = false;", js)
+        self.assertIn("function requestReaderRuntimeSidebarRefresh(sidebar)", js)
+        self.assertIn("function installReaderRuntimeSidebarObserver(sidebar)", js)
+        self.assertIn("readerRuntimeSidebarObserver.disconnect();", js)
+        self.assertIn(
+            'const outlineSource = sidebar.querySelector("mdbook-sidebar-scrollbox .chapter-item > .on-this-page");',
+            js,
+        )
+        self.assertIn('const articleHasHeadings = Boolean(document.querySelector(".reader-article h2, .reader-article h3, .reader-article h4, .reader-article h5, .reader-article h6"));', js)
+        self.assertIn("!articleHasHeadings || outlineSource || document.body.classList.contains(\"book-outline-ready\")", js)
+        self.assertIn('attributeFilter: ["class", "hidden", "aria-hidden"]', js)
+
+    def test_reader_runtime_defers_sidebar_refresh_until_initial_hydration_completes(self) -> None:
+        js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
+
+        observer_block = js[
+            js.index("function installReaderRuntimeSidebarObserver(sidebar)"):
+            js.index("function initializeReaderRuntime()", js.index("function installReaderRuntimeSidebarObserver(sidebar)"))
+        ]
+        observer_tail = observer_block[
+            observer_block.index('readerRuntimeSidebarObserver.observe(scrollContainer, {'):
+        ]
+
+        self.assertIn("let readerRuntimeSidebarRefreshPending = false;", js)
+        self.assertIn(
+            "if (!readerRuntimeInitialized) {\n      readerRuntimeSidebarRefreshPending = true;\n      return;\n    }",
+            js,
+        )
+        self.assertNotIn("requestReaderRuntimeSidebarRefresh(sidebar);", observer_tail)
+        self.assertRegex(
+            js,
+            r"readerRuntimeInitialized = true;\s*if \(readerRuntimeSidebarRefreshPending\) \{\s*readerRuntimeSidebarRefreshPending = false;\s*requestReaderRuntimeSidebarRefresh\(sidebar\);",
+        )
+
+    def test_reader_runtime_sidebar_refresh_is_single_flight(self) -> None:
+        js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("let readerRuntimeSidebarRefreshInFlight = false;", js)
+        self.assertIn("readerRuntimeSidebarRefreshInFlight = true;", js)
+        self.assertRegex(
+            js,
+            r"\.finally\(function \(\) \{\s*readerRuntimeSidebarRefreshInFlight = false;[\s\S]*requestReaderRuntimeSidebarRefresh\(sidebar\);",
+        )
+
+    def test_runtime_binding_markers_are_written_after_successful_setup(self) -> None:
+        js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
+
+        search_bound_index = js.index('searchWrap.dataset.readerSearchSlotBound = "true";')
+        self.assertLess(
+            js.index('observer.observe(searchWrap, { attributes: true, attributeFilter: ["class"] });'),
+            search_bound_index,
+        )
+        pagination_bound_index = js.rindex('pagination.dataset.readerPaginationHeightBound = "true";')
+        self.assertLess(
+            js.index('window.addEventListener("load", requestSync, { once: true });'),
+            pagination_bound_index,
+        )
+
+    def test_figure_annotation_supports_alt_derived_caption_fallback(self) -> None:
+        js = CUSTOM_JS_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("const figureCaptionRuntime = (function createFigureCaptionRuntime() {", js)
+        self.assertIn("function parseFigureNumber(text) {", js)
+        self.assertIn("function isLikelyAltDerivedCaption(text) {", js)
+        self.assertIn("function buildAltDerivedFigureCaption(paragraph) {", js)
+        self.assertIn('return parseFigureNumber(image.getAttribute("alt") || "");', js)
+        self.assertIn(
+            "const altDerivedCaption = figureCaptionRuntime.buildAltDerivedFigureCaption(paragraph);",
+            js,
+        )
+        self.assertNotIn(r'/[.!?]["\']?$/.test(normalized)', js)
+
+    def test_site_render_uses_shared_runtime_outline_checker(self) -> None:
+        script = TEST_SITE_RENDER_PATH.read_text(encoding="utf-8")
+        runtime_checker = READER_RUNTIME_CHECK_PATH.read_text(encoding="utf-8")
+
+        self.assertTrue(READER_RUNTIME_CHECK_PATH.exists())
+        self.assertTrue(READER_OUTLINE_RUNTIME_PATH.exists())
+        self.assertIn("node scripts/check_reader_runtime_outline.mjs", script)
+        self.assertIn('from "./shared/book-page-variants.mjs";', runtime_checker)
+        self.assertIn('from "./shared/reader-outline-runtime.mjs";', runtime_checker)
+        self.assertIn("countRuntimeFigures", runtime_checker)
+        self.assertIn("countRuntimeFormulas", runtime_checker)
+        self.assertIn("countRuntimeTables", runtime_checker)
+        self.assertIn("collectRuntimeFigureNumbers", runtime_checker)
+        self.assertIn("figureSentinels", runtime_checker)
+        self.assertNotIn('import vm from "node:vm";', runtime_checker)
+        self.assertNotIn("extractIifeExpression(", runtime_checker)
+
+    def test_site_render_runs_cross_platform_reader_runtime_build_contract_check(self) -> None:
+        script = TEST_SITE_RENDER_PATH.read_text(encoding="utf-8")
+
+        self.assertTrue(BROWSERLESS_RUNTIME_BUILD_CONTRACT_PATH.exists())
+        build_contract_checker = BROWSERLESS_RUNTIME_BUILD_CONTRACT_PATH.read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn("node scripts/check_reader_runtime_build_contract.mjs", script)
+        self.assertIn('from "./shared/book-page-variants.mjs";', build_contract_checker)
+        self.assertIn("book-layout-booting", build_contract_checker)
+        self.assertIn("book-outline-empty", build_contract_checker)
+        self.assertIn("readerRuntimeSidebarRefreshInFlight", build_contract_checker)
+
+    def test_build_contract_checker_rejects_unexpected_variant_classes_globally(self) -> None:
+        build_contract_checker = BROWSERLESS_RUNTIME_BUILD_CONTRACT_PATH.read_text(
+            encoding="utf-8"
+        )
+        page_variants = BOOK_PAGE_VARIANTS_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("bookPageVariantClassNames", build_contract_checker)
+        self.assertIn('from "./shared/book-page-variants.mjs";', build_contract_checker)
+        self.assertNotIn("const trackedVariantClasses = [", build_contract_checker)
+        self.assertIn("export const bookPageVariantClassNames", page_variants)
+        self.assertIn("const expectedClasses = new Set(getBookPageBodyClasses(pageKey, locale));", build_contract_checker)
+        self.assertIn("if (!expectedClasses.has(className)) {", build_contract_checker)
+        self.assertIn("assertLacksClass(bodyClasses, className, pageLabel);", build_contract_checker)
+
+    def test_static_runtime_outline_checker_does_not_reject_empty_non_preserved_pages(self) -> None:
+        runtime_checker = READER_RUNTIME_CHECK_PATH.read_text(encoding="utf-8")
+
+        self.assertNotIn(
+            "Unexpected runtime-empty outline page without preserved rail",
+            runtime_checker,
+        )
+
+    def test_static_runtime_outline_checker_matches_reader_article_by_class_token(self) -> None:
+        runtime_checker = READER_RUNTIME_CHECK_PATH.read_text(encoding="utf-8")
+
+        self.assertIn(r'class="[^"]*\breader-article\b[^"]*"', runtime_checker)
+        self.assertNotIn('<article class="reader-article"', runtime_checker)
+
+    def test_site_render_runs_optional_browser_runtime_dom_check_on_macos(self) -> None:
+        script = TEST_SITE_RENDER_PATH.read_text(encoding="utf-8")
+
+        self.assertTrue(BROWSER_RUNTIME_CHECK_PATH.exists())
+        self.assertTrue(BROWSER_RUNTIME_CONFIG_PATH.exists())
+        self.assertTrue(BROWSER_RUNTIME_SERVER_PATH.exists())
+        browser_checker = BROWSER_RUNTIME_CHECK_PATH.read_text(encoding="utf-8")
+        browser_checker_config = BROWSER_RUNTIME_CONFIG_PATH.read_text(encoding="utf-8")
+        browser_runtime_server = BROWSER_RUNTIME_SERVER_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("run_browser_runtime_check_if_available()", script)
+        self.assertIn('if [ "$(uname -s)" = "Darwin" ] && command -v swift >/dev/null 2>&1; then', script)
+        self.assertIn("node scripts/build_reader_runtime_browser_check_config.mjs", script)
+        self.assertIn("scripts/serve_reader_runtime_browser_check.py", script)
+        self.assertIn('browser_server_port_file="$(create_temp_file "reader-runtime-browser-port." ".txt")"', script)
+        self.assertIn('browser_port="$(cat "$browser_server_port_file")"', script)
+        self.assertNotIn("python3 -m http.server", script)
+        self.assertNotIn('sock.bind(("127.0.0.1", 0))', script)
+        self.assertIn("127.0.0.1", script)
+        self.assertIn("--base-url", script)
+        self.assertIn("--page-config", script)
+        self.assertIn("--scope", script)
+        self.assertIn('browser_check_scope="${READER_RUNTIME_BROWSER_CHECK_SCOPE:-smoke}"', script)
+        self.assertIn("swift scripts/check_reader_runtime_browser.swift", script)
+        self.assertIn("Skipping browser runtime DOM check", script)
+        self.assertLess(
+            script.index("node scripts/check_reader_runtime_outline.mjs"),
+            script.rindex("\nrun_browser_runtime_check_if_available\n"),
+        )
+        self.assertIn("import WebKit", browser_checker)
+        self.assertIn("loadFileURL", browser_checker)
+        self.assertIn("evaluateJavaScript", browser_checker)
+        self.assertNotIn("window.requestAnimationFrame = function", browser_checker)
+        self.assertIn("readerRuntimeState", browser_checker)
+        self.assertIn('case "--scope":', browser_checker)
+        self.assertIn('if config.scope == "full"', browser_checker)
+        self.assertIn('from "./shared/book-page-variants.mjs";', browser_checker_config)
+        self.assertIn("getPreserveOutlinePaths", browser_checker_config)
+        self.assertIn("ThreadingHTTPServer", browser_runtime_server)
+        self.assertIn("SimpleHTTPRequestHandler", browser_runtime_server)
+        self.assertIn("--port-file", browser_runtime_server)
+        self.assertIn("serve_forever()", browser_runtime_server)
+
+    def test_site_render_uses_portable_tempfiles_for_browser_runtime_check(self) -> None:
+        script = TEST_SITE_RENDER_PATH.read_text(encoding="utf-8")
+
+        self.assertNotIn('mktemp "${TMPDIR:-/tmp}/reader-runtime-browser-config.XXXXXX.json"', script)
+        self.assertNotIn('mktemp "${TMPDIR:-/tmp}/reader-runtime-browser-http.XXXXXX.log"', script)
+        self.assertNotIn('mktemp "${TMPDIR:-/tmp}/reader-runtime-browser-port.XXXXXX.txt"', script)
+        self.assertIn("tempfile.mkstemp", script)
+
+    def test_browser_runtime_smoke_config_covers_high_risk_outline_pages(self) -> None:
+        browser_checker_config = BROWSER_RUNTIME_CONFIG_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("chapter-09-socio-political-determinants.html", browser_checker_config)
+        self.assertIn("chapter-11-general-conclusion.html", browser_checker_config)
+        self.assertIn("chapter-05-key-socio-political-determinants-of-oil-sector-performance.html", browser_checker_config)
+        self.assertIn('"chapters/general-conclusion.html"', browser_checker_config)
+
+    def test_browser_runtime_checker_respects_reader_page_meta_reference_sections(self) -> None:
+        browser_checker = BROWSER_RUNTIME_CHECK_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("struct ReferenceSections: Decodable {", browser_checker)
+        self.assertIn("struct ReaderPageMeta: Decodable {", browser_checker)
+        self.assertIn("let referenceSections: ReferenceSections?", browser_checker)
+        self.assertIn("func loadReaderPageMeta(bookRoot: URL) throws -> [String: ReaderPageMeta]", browser_checker)
+        self.assertIn("let figuresEnabled = pageMeta?.referenceSections?.figures != false", browser_checker)
+        self.assertIn("let tablesEnabled = pageMeta?.referenceSections?.tables != false", browser_checker)
+        self.assertIn("let formulasEnabled = pageMeta?.referenceSections?.formulas != false", browser_checker)
+
+    def test_browser_runtime_checker_ignores_expected_webkit_navigation_cancellations(self) -> None:
+        browser_checker = BROWSER_RUNTIME_CHECK_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("NSURLErrorCancelled", browser_checker)
+        self.assertIn(
+            "nsError.domain == NSURLErrorDomain && nsError.code == NSURLErrorCancelled",
+            browser_checker,
+        )
 
     def test_site_render_formula_coverage_is_optional_without_docx_resources(self) -> None:
         script = TEST_SITE_RENDER_PATH.read_text(encoding="utf-8")
@@ -154,8 +428,12 @@ class ThemeCustomCssTest(unittest.TestCase):
         self.assertIn("function parseFigureCaption(text)", js)
         self.assertIn("function isNarrativeFigureReference(text)", js)
         self.assertIn("if (isNarrativeFigureReference(normalized))", js)
-        self.assertIn(r'/^Figure\s+(\d+)(?:\s*:\s*|\s+)(.*)$/i', js)
-        self.assertIn("return Boolean(parseFigureCaption(paragraph.textContent || \"\"));", js)
+        self.assertIn(r'/^Figure\s+0*(\d+)(?:\s*:\s*|\s+)(.*)$/i', js)
+        self.assertIn('number: String(Number(match[1]))', js)
+        self.assertIn(
+            "const explicitCaption = figureCaptionRuntime.parseFigureCaption(paragraph.textContent || \"\");",
+            js,
+        )
         self.assertIn('"2": ["figure-card--panel-pair"]', js)
         self.assertIn('"7": ["figure-card--panel-pair"]', js)
 
@@ -434,7 +712,9 @@ class ThemeCustomCssTest(unittest.TestCase):
         self.assertIn("populateOutlineSection(figuresSection, figureItems, figuresEnabled);", js)
         self.assertIn("populateOutlineSection(tablesSection, tableItems, tablesEnabled);", js)
         self.assertIn("populateOutlineSection(formulasSection, formulaItems, formulasEnabled);", js)
-        self.assertIn("installOutlineReferenceSections().then(syncOutlineRailVisibility);", js)
+        self.assertIn("function runReaderRuntimeOutlinePass()", js)
+        self.assertIn("return Promise.resolve(installOutlineReferenceSections())", js)
+        self.assertIn("syncOutlineRailVisibility();", js)
 
     def test_hidden_outline_sections_stay_hidden(self) -> None:
         css = CUSTOM_CSS_PATH.read_text(encoding="utf-8")
@@ -684,7 +964,7 @@ class ThemeCustomCssTest(unittest.TestCase):
         self.assertIn('requestAnimationFrame(syncSidebarDisplayState);', js)
         self.assertRegex(
             js,
-            r'applyPageVariants\(\);\s+installSidebarDisplayStateSync\(\);\s+hydrateSidebarProjectionRows\(projection\);',
+            r'installSidebarDisplayStateSync\(\);\s+hydrateSidebarProjectionRows\(projection\);',
         )
 
     def test_mobile_chapter_selector_is_removed(self) -> None:
