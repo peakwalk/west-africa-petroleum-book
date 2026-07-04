@@ -788,6 +788,8 @@ ${STAKEHOLDER_GROUPS.map((stakeholder) => renderStakeholder(stakeholder, edition
     </div>
   </section>
 
+  <hr class="section-divider section-divider-country-discovery" aria-hidden="true">
+
   <section id="${HOMEPAGE_SECTION_IDS.countries}" class="section section-country-discovery">
     <div class="section-heading section-heading-wide">
       <div>

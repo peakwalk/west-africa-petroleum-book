@@ -1,5 +1,5 @@
 .decision-strip {
-  padding-block: 2.2rem 2.65rem;
+  padding-block: 2.2rem 0;
 }
 
 .decision-strip-inner {
@@ -162,12 +162,15 @@
   display: block;
 }
 
-.section-country-discovery,
 .section-map-overview,
 .section-search-surface,
 .section-topic-discovery,
 .section-summary-modules {
   padding-top: 2rem;
+}
+
+.section-country-discovery {
+  padding-top: 0;
 }
 
 .country-grid-v2 {
