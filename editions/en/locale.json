@@ -11,8 +11,12 @@
     "home": "Home",
     "countries": "Countries",
     "chapters": "Chapters",
+    "search": "Search",
+    "contact": "Contact",
     "about": "About",
-    "resources": "Resources"
+    "resources": "Resources",
+    "brandTitleLine1": "West Africa Petroleum",
+    "brandTitleLine2": "Reference Resource"
   },
   "buttons": {
     "startReading": "Start Reading",
@@ -29,12 +33,17 @@
   },
   "footer": {
     "intro": "Practical insights into the technical, commercial, fiscal, regulatory, and governance aspects of the West African oil and gas industry.",
+    "coverageHeading": "Coverage",
     "exploreHeading": "Explore",
+    "supportHeading": "Support",
+    "legalHeading": "Legal",
     "resourcesHeading": "Resources",
     "contactHeading": "Contact Us",
     "bookContents": "Book Contents",
+    "search": "Search the Book",
     "contact": "Contact",
     "latestUpdates": "Latest Updates",
+    "currentEdition": "Current Edition",
     "industryNews": "Industry News",
     "comingSoon": "Coming soon",
     "email": "Email",

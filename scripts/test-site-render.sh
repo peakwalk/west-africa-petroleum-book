@@ -110,7 +110,7 @@ check_contains() {
   file_path="$1"
   pattern="$2"
 
-  if ! grep -q -- "$pattern" "$file_path"; then
+  if ! grep -Fq -- "$pattern" "$file_path"; then
     echo "Missing expected pattern '$pattern' in $file_path" >&2
     exit 1
   fi
@@ -120,7 +120,7 @@ check_not_contains() {
   file_path="$1"
   pattern="$2"
 
-  if grep -q -- "$pattern" "$file_path"; then
+  if grep -Fq -- "$pattern" "$file_path"; then
     echo "Unexpected pattern '$pattern' found in $file_path" >&2
     exit 1
   fi
@@ -165,6 +165,17 @@ check_file_size_at_most() {
   fi
 }
 
+check_line_count_at_most() {
+  file_path="$1"
+  max_lines="$2"
+  line_count="$(wc -l < "$file_path" | tr -d ' ')"
+
+  if [ "$line_count" -gt "$max_lines" ]; then
+    echo "Expected $file_path to be <= $max_lines lines but was $line_count lines" >&2
+    exit 1
+  fi
+}
+
 check_file_size_at_least() {
   file_path="$1"
   min_bytes="$2"
@@ -190,6 +201,39 @@ check_image_has_no_opaque_white_fringe() {
     echo "Expected $file_path to have <= $max_pixels opaque white pixels but found $fringe_pixels" >&2
     exit 1
   fi
+}
+
+build_expanded_landing_css_check_file() {
+  output_path="$1"
+
+  python3 - "$output_path" <<'PY'
+from pathlib import Path
+import re
+import sys
+
+output_path = Path(sys.argv[1])
+entry_path = Path("assets/css/landing.css").resolve()
+import_pattern = re.compile(r'@import\s+"([^"]+)";\s*$')
+
+def expand(path, stack):
+    resolved = path.resolve()
+    if resolved in stack:
+        raise SystemExit(f"Recursive landing CSS import detected: {resolved}")
+
+    stack = (*stack, resolved)
+    expanded = []
+
+    for raw_line in resolved.read_text(encoding="utf-8").splitlines(keepends=True):
+        match = import_pattern.fullmatch(raw_line.strip())
+        if match:
+            expanded.append(expand(resolved.parent / match.group(1), stack))
+        else:
+            expanded.append(raw_line)
+
+    return "".join(expanded)
+
+output_path.write_text(expand(entry_path, ()), encoding="utf-8")
+PY
 }
 
 check_order() {
@@ -286,6 +330,7 @@ check_exists editions/en/content/images/figure-032.webp
 check_exists editions/en/content/images/figure-000.webp
 check_exists assets/images/west-africa-intelligence-overlay.svg
 check_exists assets/images/upstream-atlas-nav-logo.webp
+check_exists assets/images/upstream-atlas-hero-v7-clean-left.webp
 check_exists assets/images/prototype-hero-graywhite-left.webp
 check_exists assets/images/prototype-hero-graywhite-right.webp
 check_exists assets/icons/homepage/icon-research.svg
@@ -312,6 +357,12 @@ check_exists assets/icons/homepage/icon-audience-research.svg
 check_exists assets/icons/homepage/icon-audience-policy.svg
 check_exists assets/icons/homepage/icon-audience-operators.svg
 check_exists assets/icons/homepage-sprite.svg
+check_exists assets/icons/stakeholders/governments.svg
+check_exists assets/icons/stakeholders/regulators.svg
+check_exists assets/icons/stakeholders/national-oil-companies.svg
+check_exists assets/icons/stakeholders/operators.svg
+check_exists assets/icons/stakeholders/investors.svg
+check_exists assets/icons/stakeholders/universities-researchers.svg
 check_exists scripts/build_reader_page_meta.mjs
 check_exists scripts/check_reader_runtime_build_contract.mjs
 check_exists scripts/check_reader_runtime_outline.mjs
@@ -340,10 +391,10 @@ check_not_contains editions/fr/book.toml 'git-repository-url = "https://github.c
 check_not_contains editions/fr/book.toml 'edit-url-template = "https://github.com/peakwalk/west-africa-petroleum-book/edit/main/{path}"'
 
 check_contains public/index.html 'class="landing-shell"'
-check_contains public/index.html 'class="hero-panel"'
-check_contains public/index.html 'class="chapter-preview-card"'
+check_contains public/index.html 'class="hero-panel hero-panel-v2"'
+check_contains public/index.html 'class="hero-copy-block hero-copy-block-v2"'
 check_contains public/index.html 'class="site-header-inner"'
-check_contains public/index.html 'assets/css/landing.css?v=20260616'
+check_contains public/index.html 'assets/css/landing.css?v=20260703'
 check_contains public/index.html 'upstream-atlas-favicon.png?v=2'
 check_contains public/index.html 'upstream-atlas-nav-logo.webp'
 check_not_contains public/index.html 'upstream-atlas-nav-logo.png'
@@ -351,37 +402,22 @@ check_contains public/index.html 'upstream-atlas-icon.png'
 check_contains public/index.html 'href="/chapters/"'
 check_contains public/index.html 'class="current-link" href="/">Home</a>'
 check_contains public/index.html 'href="/#countries">Countries</a>'
-check_contains public/index.html 'href="/#about">About</a>'
-check_contains public/index.html 'href="/#resources">Resources</a>'
-check_order public/index.html 'href="/#about">About</a>' 'href="/#resources">Resources</a>'
-check_contains public/index.html 'class="header-contact-link"'
-check_contains public/index.html 'mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas'
-check_contains public/index.html 'aria-label="Contact Us"'
+check_contains public/index.html 'href="/#topics">Chapters</a>'
+check_contains public/index.html 'href="/#search">Search</a>'
+check_not_contains public/index.html 'href="/#about">About</a>'
+check_not_contains public/index.html 'href="/#resources">Resources</a>'
+check_contains public/index.html 'mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas%20Enquiry'
 check_not_contains public/index.html 'class="nav-search"'
 check_not_contains public/index.html 'href="book/toc.html"'
-check_not_contains public/index.html 'section-heading section-heading-centered'
-check_contains public/index.html 'West African Petroleum Intelligence'
-check_contains public/index.html 'West African upstream intelligence built on a rigorous reference base.'
-check_contains public/index.html 'rigorous upstream reference base'
-check_contains public/index.html 'Reference book'
-check_contains public/index.html 'Available now'
-check_contains public/index.html 'In build'
-check_contains public/index.html 'Platform Intelligence'
-check_contains public/index.html 'Coming Soon'
-check_contains public/index.html 'class="feature-card-icon ua-icon-image ua-icon-image--feature"'
-check_contains public/index.html 'assets/icons/homepage-cropped/icon-research.webp'
-check_contains public/index.html 'assets/icons/homepage-cropped/icon-industry-monitoring.webp'
-check_contains public/index.html 'assets/icons/homepage-cropped/icon-intelligence.webp'
+check_not_contains public/index.html 'West Africa Petroleum Reference'
+check_contains public/index.html '<span class="hero-title-line">West Africa&#39;s</span><span class="hero-title-line">Independent Petroleum Reference</span>'
+check_contains public/index.html 'Independent reference material covering petroleum systems, fiscal regimes, governance frameworks, national oil companies, upstream operations, and country-specific petroleum sectors across West Africa.'
+check_contains public/index.html 'class="hero-stat-grid"'
+check_contains public/index.html 'Start Reading</a>'
+check_contains public/index.html 'Browse Countries</a>'
 check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-start-reading'
 check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-menu'
 check_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-close'
-check_contains public/index.html 'assets/icons/homepage-cropped/icon-production.webp'
-check_contains public/index.html 'assets/icons/homepage-cropped/icon-exploration.webp'
-check_contains public/index.html 'assets/icons/homepage-cropped/icon-fiscal.webp'
-check_contains public/index.html 'assets/icons/homepage-cropped/icon-regulation.webp'
-check_contains public/index.html 'assets/icons/homepage-cropped/icon-audience-research.webp'
-check_contains public/index.html 'assets/icons/homepage-cropped/icon-audience-policy.webp'
-check_contains public/index.html 'assets/icons/homepage-cropped/icon-audience-operators.webp'
 check_not_contains public/index.html 'assets/icons/homepage-cropped/icon-research.png'
 check_not_contains public/index.html 'assets/icons/homepage-cropped/icon-industry-monitoring.png'
 check_not_contains public/index.html 'assets/icons/homepage-cropped/icon-intelligence.png'
@@ -400,21 +436,42 @@ check_contains public/index.html 'class="mobile-nav-icon mobile-nav-icon-menu ua
 check_contains public/index.html 'class="mobile-nav-icon mobile-nav-icon-close ua-icon ua-icon--sm"'
 check_not_contains public/index.html 'class="mobile-nav-contact"'
 check_not_contains public/index.html '>Contact Us</a>'
-check_contains public/index.html 'class="reference-evidence-grid"'
-check_contains public/index.html 'Country reserves'
-check_contains public/index.html 'Country Intelligence'
-check_contains public/index.html 'class="country-card country-card-compact"'
-check_contains public/index.html 'Additional markets'
-check_contains public/index.html 'class="country-card-top"'
-check_contains public/index.html 'class="country-card-badge"'
-check_contains public/index.html 'class="country-signal-grid"'
-check_contains public/index.html 'class="country-signal-icon ua-icon-image ua-icon-image--signal"'
-check_contains public/index.html 'class="country-signal-copy"'
-check_contains public/index.html 'class="country-signal-value"'
-check_contains public/index.html 'Template ready'
-check_contains public/index.html 'Brief queued'
-check_contains public/index.html 'Signals planned'
-check_contains public/index.html 'class="chapters-link-row"'
+check_contains public/index.html 'class="section section-platform decision-strip"'
+check_contains public/index.html 'Built for informed decision-making'
+check_contains public/index.html '<span class="decision-strip-title-line">Built for informed</span><span class="decision-strip-title-line">decision-making</span>'
+check_contains public/index.html 'class="stakeholder-grid"'
+check_contains public/index.html 'class="stakeholder-card stakeholder-card--governments"'
+check_contains public/index.html 'class="stakeholder-icon-slot"'
+check_contains public/index.html 'class="stakeholder-copy-slot"'
+check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/governments.svg"'
+check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/regulators.svg"'
+check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/national-oil-companies.svg"'
+check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/operators.svg"'
+check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/investors.svg"'
+check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/universities-researchers.svg"'
+check_not_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-audience-policy'
+check_not_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-audience-national-oil-companies'
+check_not_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-industry-monitoring'
+check_not_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-audience-investors'
+check_not_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-research'
+check_contains public/index.html '<span class="stakeholder-label-line">National Oil</span><span class="stakeholder-label-line">Companies</span>'
+check_contains public/index.html '<span class="stakeholder-label-line">Universities &amp;</span><span class="stakeholder-label-line">Researchers</span>'
+check_not_contains public/index.html 'class="stakeholder-chip"'
+check_contains public/index.html 'class="country-grid-v2"'
+check_contains public/index.html 'class="country-card-v2 status-producing"'
+check_contains public/index.html 'class="country-card-v2 status-exploration"'
+check_contains public/index.html 'class="country-card-v2 status-noCommercialProduction"'
+check_contains public/index.html 'View All Countries'
+check_contains public/index.html 'Country Analysis <span aria-hidden="true">→</span></a>'
+check_contains public/index.html 'class="section-heading section-heading-centered"'
+check_contains public/index.html 'Search Upstream Atlas'
+check_contains public/index.html 'class="search-scope-chip" href="/book/?search=Fiscal%20Systems"'
+check_contains public/index.html 'class="topic-grid"'
+check_contains public/index.html 'Governance &amp; Regulation'
+check_contains public/index.html 'class="summary-card-eyebrow">Latest Updates</p>'
+check_contains public/index.html 'class="summary-card-eyebrow">Current Edition</p>'
+check_contains public/index.html 'class="summary-card-eyebrow">Topics Covered</p>'
+check_contains public/index.html 'class="summary-card-eyebrow">Future Development</p>'
 check_contains public/index.html 'class="site-footer site-footer-detailed"'
 check_contains public/index.html 'class="brand-mark-image brand-mark-image-full"'
 check_contains public/index.html 'class="brand-mark-image brand-mark-image-compact"'
@@ -450,9 +507,39 @@ check_exists public/assets/icons/homepage/icon-audience-research.svg
 check_exists public/assets/icons/homepage/icon-audience-policy.svg
 check_exists public/assets/icons/homepage/icon-audience-operators.svg
 check_exists public/assets/icons/homepage-sprite.svg
+check_exists public/assets/icons/stakeholders/governments.svg
+check_exists public/assets/icons/stakeholders/regulators.svg
+check_exists public/assets/icons/stakeholders/national-oil-companies.svg
+check_exists public/assets/icons/stakeholders/operators.svg
+check_exists public/assets/icons/stakeholders/investors.svg
+check_exists public/assets/icons/stakeholders/universities-researchers.svg
 check_exists public/assets/images/upstream-atlas-nav-logo.webp
+check_exists public/assets/images/upstream-atlas-hero-v7-clean-left.webp
 check_exists public/assets/images/prototype-hero-graywhite-left.webp
 check_exists public/assets/images/prototype-hero-graywhite-right.webp
+check_exists assets/css/landing.base.css
+check_exists assets/css/landing.header.css
+check_exists assets/css/landing.hero.css
+check_exists assets/css/landing.sections.css
+check_exists assets/css/landing.components.css
+check_exists assets/css/landing.footer.css
+check_exists assets/css/landing.homepage-v2.css
+check_exists assets/css/landing.discovery.css
+check_exists assets/css/landing.modules.css
+check_exists assets/css/landing.responsive-tablet.css
+check_exists assets/css/landing.responsive-mobile.css
+check_line_count_at_most assets/css/landing.css 20
+check_line_count_at_most assets/css/landing.base.css 500
+check_line_count_at_most assets/css/landing.header.css 500
+check_line_count_at_most assets/css/landing.hero.css 500
+check_line_count_at_most assets/css/landing.sections.css 500
+check_line_count_at_most assets/css/landing.components.css 500
+check_line_count_at_most assets/css/landing.footer.css 500
+check_line_count_at_most assets/css/landing.homepage-v2.css 500
+check_line_count_at_most assets/css/landing.discovery.css 500
+check_line_count_at_most assets/css/landing.modules.css 500
+check_line_count_at_most assets/css/landing.responsive-tablet.css 500
+check_line_count_at_most assets/css/landing.responsive-mobile.css 500
 check_file_size_at_most public/assets/images/upstream-atlas-icon.png 50000
 check_file_size_at_most public/assets/images/upstream-atlas-wordmark.png 110000
 check_file_size_at_most public/assets/images/upstream-atlas-nav-logo.webp 80000
@@ -460,63 +547,83 @@ check_image_has_no_opaque_white_fringe public/assets/images/upstream-atlas-nav-l
 check_file_size_at_most public/assets/images/prototype-hero.jpg 120000
 check_file_size_at_most public/assets/images/prototype-hero-graywhite-left.webp 25000
 check_file_size_at_most public/assets/images/prototype-hero-graywhite-right.webp 25000
-check_contains assets/css/landing.css '--page-bg: #f7f8f9;'
-check_contains assets/css/landing.css '--surface-muted: #eef2f4;'
-check_contains assets/css/landing.css '--ink-primary: #0b1f33;'
-check_contains assets/css/landing.css '--brand-blue: #3163c2;'
-check_contains assets/css/landing.css '--brand-blue-deep: #264d97;'
-check_contains assets/css/landing.css '--footer-bg: #0b1f33;'
-check_contains assets/css/landing.css '--secondary: #d88a1d;'
-check_contains assets/css/landing.css '--text: var(--ink-primary);'
-check_contains assets/css/landing.css 'opacity: 0.28;'
-check_contains assets/css/landing.css 'background: linear-gradient(135deg, rgba(38, 77, 151, 0.82) 0%, rgba(11, 31, 51, 0.84) 100%);'
-check_contains assets/css/landing.css 'background: var(--brand-blue-deep);'
-check_contains assets/css/landing.css 'background: url("../images/prototype-hero.jpg") center right / cover;'
-check_contains assets/css/landing.css 'background: url("../images/west-africa-intelligence-overlay.svg") center / cover no-repeat;'
-check_contains assets/css/landing.css 'opacity: 0.09;'
-check_not_contains assets/css/landing.css '--primary: #264d97;'
-check_contains assets/css/landing.css '@media (min-width: 901px) {'
-check_contains assets/css/landing.css '.hero-signal-panel {'
-check_contains assets/css/landing.css 'margin-top: clamp(17rem, 30vw, 20.5rem);'
-check_contains assets/css/landing.css '.chapters-link-row {'
-check_contains assets/css/landing.css 'width: min(76rem, calc(100% - 2rem));'
-check_contains assets/css/landing.css '.chapters-link {'
-check_contains assets/css/landing.css 'margin: 0;'
-check_contains assets/css/landing.css 'border-radius: 0.5rem;'
-check_contains assets/css/landing.css 'font-weight: 500;'
-check_contains assets/css/landing.css '.brand-mark-image {'
-check_contains assets/css/landing.css '.brand-mark-image-compact {'
-check_not_contains assets/css/landing.css '.footer-brand-surface {'
-check_contains assets/css/landing.css 'font-family: "Manrope", "Inter", sans-serif;'
-check_contains assets/css/landing.css '.mobile-nav-toggle {'
-check_contains assets/css/landing.css '.mobile-nav-toggle .mobile-nav-icon-close {'
-check_contains assets/css/landing.css '.header-actions {'
-check_contains assets/css/landing.css '.header-contact-link::after {'
-check_contains assets/css/landing.css '.mobile-nav-contact {'
-node -e 'const fs=require("fs");const css=fs.readFileSync("assets/css/landing.css","utf8");const compactLogoRule=/@media \(max-width: 767px\) \{[\s\S]*?\.brand-mark-image-full \{[^}]*display: none;[^}]*\}[\s\S]*?\.brand-mark-image-compact \{[^}]*display: block;[^}]*\}/;if(!compactLogoRule.test(css)){console.error("Expected landing header to switch to the compact logo below 768px.");process.exit(1);}'
-node -e 'const fs=require("fs");const css=fs.readFileSync("assets/css/landing.css","utf8");const start=css.indexOf("@media (max-width: 767px) {");const end=css.indexOf("@media (max-width: 640px) {", start);if(start===-1||end===-1){console.error("Expected narrow landing header media blocks in assets/css/landing.css.");process.exit(1);}const block=css.slice(start,end);for(const expected of [".site-header .brand-mark {","min-width: 2.75rem;","min-height: 2.75rem;","justify-content: center;",".site-header .brand-mark-image-compact {","width: 2rem;"]){if(!block.includes(expected)){console.error("Expected narrow landing header logo CSS to include "+expected);process.exit(1);}}'
-node -e 'const fs=require("fs");const css=fs.readFileSync("assets/css/landing.css","utf8");const start=css.indexOf("@media (max-width: 767px) {");const end=css.indexOf("@media (max-width: 640px) {", start);if(start===-1||end===-1){console.error("Expected narrow landing header media blocks in assets/css/landing.css.");process.exit(1);}const block=css.slice(start,end);for(const expected of [".site-header .header-actions > .site-language-switch {","min-height: 2.75rem;","gap: 0;","padding: 0 0.125rem;","background: transparent;","border-color: transparent;","isolation: isolate;",".site-header .header-actions > .site-language-switch::before {","inset: 0.1875rem 0;","content: \"\";",".site-header .header-actions > .site-language-switch .site-language-option {","min-width: 2.75rem;","min-height: 2.75rem;","padding: 0 0.4rem;","font-size: 0.78rem;",".site-header .header-actions > .site-language-switch .site-language-option.is-current::before,",".site-header .header-actions > .site-language-switch a.site-language-option:hover::before,","inset: 0.25rem 0.16rem;",".site-header .header-actions > .header-contact-link::before {","inset: 0.1875rem 0.2rem;",".site-header .header-actions > .header-contact-link > svg {","width: 1rem;","height: 1rem;",".site-header .header-actions > .mobile-nav-menu .mobile-nav-toggle {","gap: 0.35rem;","padding: 0 0.75rem;","font-size: 0.82rem;",".site-header .header-actions > .mobile-nav-menu .mobile-nav-toggle::before {"]){if(!block.includes(expected)){console.error("Expected narrow landing header CSS to include "+expected);process.exit(1);}}'
-node -e 'const fs=require("fs");const css=fs.readFileSync("assets/css/landing.css","utf8");const marker="@media (min-width: 768px) and (max-width: 1023px) {";const start=css.indexOf(marker);if(start===-1){console.error("Expected landing tablet header logo media block in assets/css/landing.css.");process.exit(1);}const next=css.indexOf("\n\n@media",start + marker.length);const block=(next===-1?css.slice(start):css.slice(start,next));for(const expected of [".site-header .brand-mark {","width: auto;","height: 44px;","flex: 0 0 auto;",".site-header .brand-mark-image-full {","width: auto;","height: 36px;",".site-header .brand-mark-image-compact {","display: none;"]){if(!block.includes(expected)){console.error("Expected landing tablet header logo CSS to include "+expected);process.exit(1);}}'
-node -e 'const fs=require("fs");const css=fs.readFileSync("assets/css/landing.css","utf8");const marker="@media (min-width: 1024px) {";const start=css.indexOf(marker);if(start===-1){console.error("Expected landing desktop header media block in assets/css/landing.css.");process.exit(1);}const next=css.indexOf("\n\n@media",start + marker.length);const block=(next===-1?css.slice(start):css.slice(start,next));for(const expected of [".site-header .brand-mark-image-full {","width: auto;","height: 36px;"]){if(!block.includes(expected)){console.error("Expected landing desktop header CSS to include "+expected);process.exit(1);}}'
-node -e 'const fs=require("fs");const css=fs.readFileSync("assets/css/landing.css","utf8");const compactStart=css.indexOf("@media (max-width: 360px) {");if(compactStart===-1){console.error("Expected extra-narrow landing header media block in assets/css/landing.css.");process.exit(1);}const compactBlock=css.slice(compactStart);for(const removed of ["min-width: 1.85rem;","width: 2.5rem;"]){if(compactBlock.includes(removed)){console.error("Expected extra-narrow landing header to keep the compact logo touch target while avoiding oversized visual overrides: "+removed);process.exit(1);}}'
-check_contains assets/css/landing.css '.ua-icon {'
-check_contains assets/css/landing.css '.ua-icon-image {'
-check_contains assets/css/landing.css '.ua-icon--feature {'
-check_contains assets/css/landing.css '.ua-icon-image--feature {'
-check_contains assets/css/landing.css '.ua-icon-image--signal {'
-check_contains assets/css/landing.css '.feature-card-icon {'
-check_contains assets/css/landing.css '.button-icon {'
-check_contains assets/css/landing.css '.mobile-nav-icon-close {'
-check_contains assets/css/landing.css '.mobile-nav-menu\[open\] .mobile-nav-toggle .mobile-nav-icon-close {'
-check_contains assets/css/landing.css '.country-signal-icon {'
-check_contains assets/css/landing.css '.country-signal-copy {'
-check_contains assets/css/landing.css '.ua-icon--audience {'
-check_contains assets/css/landing.css '@media (max-width: 700px) {'
-check_contains assets/css/landing.css '.site-header-inner {'
-check_contains assets/css/landing.css 'grid-template-columns: auto auto;'
-check_contains assets/css/landing.css '@media (max-width: 360px) {'
-check_contains assets/css/landing.css '.brand-mark-image-full {'
-check_contains assets/css/landing.css '.mobile-nav-toggle .button-label {'
+LANDING_CSS_ASSERT_FILE="$(create_temp_file "landing-css-check." ".css")"
+build_expanded_landing_css_check_file "$LANDING_CSS_ASSERT_FILE"
+check_contains assets/css/landing.css '@import "./landing.base.css";'
+check_contains assets/css/landing.css '@import "./landing.header.css";'
+check_contains assets/css/landing.css '@import "./landing.hero.css";'
+check_contains assets/css/landing.css '@import "./landing.sections.css";'
+check_contains assets/css/landing.css '@import "./landing.components.css";'
+check_contains assets/css/landing.css '@import "./landing.footer.css";'
+check_contains assets/css/landing.css '@import "./landing.homepage-v2.css";'
+check_contains assets/css/landing.css '@import "./landing.discovery.css";'
+check_contains assets/css/landing.css '@import "./landing.modules.css";'
+check_contains assets/css/landing.css '@import "./landing.responsive-tablet.css";'
+check_contains assets/css/landing.css '@import "./landing.responsive-mobile.css";'
+check_contains "$LANDING_CSS_ASSERT_FILE" '--page-bg: #f7f8f9;'
+check_contains "$LANDING_CSS_ASSERT_FILE" '--surface-muted: #eef2f4;'
+check_contains "$LANDING_CSS_ASSERT_FILE" '--ink-primary: #0b1f33;'
+check_contains "$LANDING_CSS_ASSERT_FILE" '--brand-blue: #3163c2;'
+check_contains "$LANDING_CSS_ASSERT_FILE" '--brand-blue-deep: #264d97;'
+check_contains "$LANDING_CSS_ASSERT_FILE" '--footer-bg: #0b1f33;'
+check_contains "$LANDING_CSS_ASSERT_FILE" '--secondary: #d88a1d;'
+check_contains "$LANDING_CSS_ASSERT_FILE" '--text: var(--ink-primary);'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'background: url("../images/upstream-atlas-hero-v7-clean-left.webp") center center / cover no-repeat;'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'filter: saturate(1.08) contrast(1.1) brightness(1.08);'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'background: #0a213a;'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'circle at 85% 50%'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'rgba(10, 33, 58, 1) 50%'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'width: min(100%, 54rem);'
+check_not_contains "$LANDING_CSS_ASSERT_FILE" '--primary: #264d97;'
+check_contains "$LANDING_CSS_ASSERT_FILE" '@media (min-width: 901px) {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.hero-signal-panel {'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'margin-top: clamp(17rem, 30vw, 20.5rem);'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.chapters-link-row {'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'width: min(90rem, calc(100% - 4rem));'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const start=css.indexOf(".decision-strip-inner {");if(start===-1){console.error("Expected .decision-strip-inner rule block in expanded landing CSS.");process.exit(1);}const end=css.indexOf("}", start);if(end===-1){console.error("Expected closing brace for .decision-strip-inner rule block.");process.exit(1);}const block=css.slice(start, end + 1);if(!block.includes("width: min(90rem, calc(100% - 4rem));")){console.error("Expected .decision-strip-inner to match the shared 90rem content width aligned with the hero call-to-action baseline.");process.exit(1);}if(!block.includes("grid-template-columns: minmax(0, 1.105fr) minmax(0, 1.195fr);")){console.error("Expected .decision-strip-inner to use the 3-line-title compromise proportions.");process.exit(1);}for(const removed of ["width: min(76rem, calc(100% - 2rem));","width: min(84rem, calc(100% - 2rem));","grid-template-columns: minmax(0, 1.06fr) minmax(0, 1.24fr);","grid-template-columns: minmax(0, 1.18fr) minmax(0, 1.12fr);"]){if(block.includes(removed)){console.error(`Expected .decision-strip-inner to stop using ${removed}.`);process.exit(1);}}'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const start=css.indexOf(".decision-strip-copy {");if(start===-1){console.error("Expected .decision-strip-copy rule block in expanded landing CSS.");process.exit(1);}const end=css.indexOf("}", start);if(end===-1){console.error("Expected closing brace for .decision-strip-copy rule block.");process.exit(1);}const block=css.slice(start, end + 1);for(const expected of ["grid-template-columns: max-content minmax(15rem, 1fr);","column-gap: 2rem;","row-gap: 0;"]){if(!block.includes(expected)){console.error(`Expected .decision-strip-copy to include ${expected} so the supporting copy starts from the true rendered title-column width with doubled spacing.`);process.exit(1);}}for(const removed of ["column-gap: 1rem;","column-gap: 0.5rem;","grid-template-columns: minmax(17.15rem, 17.85rem) minmax(15rem, 1fr);","grid-template-columns: minmax(17.9rem, 18.6rem) minmax(15rem, 1fr);","grid-template-columns: minmax(15.85rem, 17.1rem) minmax(14.7rem, 1fr);","grid-template-columns: minmax(15.25rem, 16.5rem) minmax(15rem, 1fr);","gap: 0.72rem;","gap: 0.8rem;","grid-template-columns: minmax(17rem, 18.5rem) minmax(16.5rem, 1fr);","gap: 0.95rem;","gap: 0.86rem;"]){if(block.includes(removed)){console.error(`Expected .decision-strip-copy to stop using ${removed}.`);process.exit(1);}}'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const start=css.indexOf(".decision-strip-copy h2 {");if(start===-1){console.error("Expected .decision-strip-copy h2 rule block in expanded landing CSS.");process.exit(1);}const end=css.indexOf("}", start);if(end===-1){console.error("Expected closing brace for .decision-strip-copy h2 rule block.");process.exit(1);}const block=css.slice(start, end + 1);for(const expected of ["width: max-content;","max-width: none;","font-size: clamp(1.58rem, 1.64vw, 1.9rem);","line-height: 1.08;","letter-spacing: 0;"]){if(!block.includes(expected)){console.error(`Expected .decision-strip-copy h2 to include ${expected} so the title column matches its actual content width.`);process.exit(1);}}for(const removed of ["max-width: 18rem;","max-width: 16.6rem;","font-size: clamp(1.64rem, 1.76vw, 2rem);","letter-spacing: -0.04em;","text-wrap: balance;"]){if(block.includes(removed)){console.error(`Expected .decision-strip-copy h2 to stop using ${removed}.`);process.exit(1);}}'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const start=css.indexOf(".decision-strip-title-line {");if(start===-1){console.error("Expected .decision-strip-title-line rule block in expanded landing CSS.");process.exit(1);}const end=css.indexOf("}", start);if(end===-1){console.error("Expected closing brace for .decision-strip-title-line rule block.");process.exit(1);}const block=css.slice(start, end + 1);for(const expected of ["display: block;","white-space: nowrap;"]){if(!block.includes(expected)){console.error(`Expected .decision-strip-title-line to include ${expected} for a fixed two-line title layout.`);process.exit(1);}}'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const start=css.indexOf(".decision-strip-copy p {");if(start===-1){console.error("Expected .decision-strip-copy p rule block in expanded landing CSS.");process.exit(1);}const end=css.indexOf("}", start);if(end===-1){console.error("Expected closing brace for .decision-strip-copy p rule block.");process.exit(1);}const block=css.slice(start, end + 1);for(const expected of ["max-width: 21rem;","padding-top: 0;","font-size: 0.875rem;","line-height: 1.54;"]){if(!block.includes(expected)){console.error(`Expected .decision-strip-copy p to include ${expected} so the supporting copy sits closer to the design density.`);process.exit(1);}}for(const removed of ["padding-top: 0.25rem;","font-size: 0.94rem;","font-size: 0.9rem;","line-height: 1.68;","line-height: 1.6;"]){if(block.includes(removed)){console.error(`Expected .decision-strip-copy p to stop using ${removed}.`);process.exit(1);}}'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const start=css.indexOf(".stakeholder-grid {");if(start===-1){console.error("Expected .stakeholder-grid rule block in expanded landing CSS.");process.exit(1);}const end=css.indexOf("}", start);if(end===-1){console.error("Expected closing brace for .stakeholder-grid rule block.");process.exit(1);}const block=css.slice(start, end + 1);for(const expected of ["grid-template-columns: repeat(6, 120px);","justify-content: end;","justify-items: center;","align-items: start;","gap: 12px;"]){if(!block.includes(expected)){console.error(`Expected .stakeholder-grid to include ${expected} so fixed-width cards keep a true 12px visual gap.`);process.exit(1);}}for(const removed of ["grid-template-columns: repeat(6, minmax(0, 1fr));","grid-template-columns: repeat(6, minmax(7.4rem, 1fr));","gap: 8px;","gap: 0.96rem;","gap: 0.885rem;","gap: 0.84rem;","gap: 0.82rem;"]){if(block.includes(removed)){console.error(`Expected .stakeholder-grid to stop using ${removed}.`);process.exit(1);}}'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");function getBlock(selector){const start=css.indexOf(selector+" {");if(start===-1){console.error(`Expected ${selector} rule block in expanded landing CSS.`);process.exit(1);}const end=css.indexOf("}", start);if(end===-1){console.error(`Expected closing brace for ${selector} rule block.`);process.exit(1);}return css.slice(start, end + 1);}const stakeholderCard=getBlock(".stakeholder-card");for(const expected of ["--stakeholder-icon-color: #2d5cb3;","--stakeholder-icon-offset-x: 0rem;","--stakeholder-icon-offset-y: 0rem;","--stakeholder-icon-scale: 1;","--stakeholder-text-color: #214484;","align-self: start;","box-sizing: border-box;","grid-template-rows: 3rem 2.32rem;","align-content: center;","width: 120px;","min-width: 120px;","max-width: 120px;","height: 120px;","min-height: 120px;","max-height: 120px;","row-gap: 0.34rem;","padding: 0.82rem 0.56rem 0.68rem;","border-radius: 0.96rem;","box-shadow: 0 8px 20px rgba(11, 31, 51, 0.045);","color: var(--stakeholder-text-color);"]){if(!stakeholderCard.includes(expected)){console.error(`Expected .stakeholder-card to include ${expected} so stakeholder cards stay fixed at 120px by 120px.`);process.exit(1);}}for(const removed of ["aspect-ratio: 1 / 1;","gap: 0.48rem;","gap: 0.84rem;","gap: 0.78rem;","gap: 0.72rem;","gap: 0.82rem;","max-width: 100%;","min-height: auto;","min-height: 9.55rem;","min-height: 9.35rem;","min-height: 9.45rem;","padding: 1.02rem 0.62rem 0.98rem;","padding: 1.14rem 0.64rem 0.96rem;","padding: 1.18rem 0.7rem 0.9rem;","padding: 1.28rem 0.75rem 0.95rem;","border-radius: 0.92rem;","border-radius: 1rem;","box-shadow: 0 6px 18px rgba(11, 31, 51, 0.045);","color: var(--brand-blue-deep);"]){if(stakeholderCard.includes(removed)){console.error(`Expected .stakeholder-card to stop using ${removed}.`);process.exit(1);}}const iconSlot=getBlock(".stakeholder-icon-slot");for(const expected of ["display: grid;","place-items: center;","align-self: stretch;","justify-self: stretch;","min-height: 3rem;"]){if(!iconSlot.includes(expected)){console.error(`Expected .stakeholder-icon-slot to include ${expected} so icons share one fixed container.`);process.exit(1);}}const stakeholderIcon=getBlock(".stakeholder-icon");for(const expected of ["display: block;","align-self: center;","justify-self: center;","width: 2rem;","height: 2rem;","margin-top: 0;","color: var(--stakeholder-icon-color);","transform: translate(var(--stakeholder-icon-offset-x), var(--stakeholder-icon-offset-y))","scale(var(--stakeholder-icon-scale));","transform-origin: center center;"]){if(!stakeholderIcon.includes(expected)){console.error(`Expected .stakeholder-icon to include ${expected} for icon-slot centering.`);process.exit(1);}}for(const removed of ["width: 1.96rem;","width: 2.34rem;","width: 2.2rem;","width: 2.12rem;","height: 1.96rem;","height: 2.34rem;","height: 2.2rem;","height: 2.12rem;","margin-top: -0.04rem;","margin-top: -0.08rem;","transform: translateY(var(--stakeholder-icon-offset-y));"]){if(stakeholderIcon.includes(removed)){console.error(`Expected .stakeholder-icon to stop using ${removed}.`);process.exit(1);}}const stakeholderImage=getBlock(".stakeholder-icon-image");for(const expected of ["display: block;","object-fit: contain;","object-position: center center;"]){if(!stakeholderImage.includes(expected)){console.error(`Expected .stakeholder-icon-image to include ${expected} so standalone SVG assets align like sprite icons.`);process.exit(1);}}const copySlot=getBlock(".stakeholder-copy-slot");for(const expected of ["display: grid;","align-self: stretch;","justify-self: stretch;","align-content: start;","min-height: 2.32rem;"]){if(!copySlot.includes(expected)){console.error(`Expected .stakeholder-copy-slot to include ${expected} so labels share one fixed container.`);process.exit(1);}}const stakeholderLabel=getBlock(".stakeholder-label");for(const expected of ["gap: 0.02rem;","align-content: start;","min-height: 100%;","color: var(--stakeholder-text-color);","font-size: 0.72rem;","font-weight: 600;","line-height: 1.08;"]){if(!stakeholderLabel.includes(expected)){console.error(`Expected .stakeholder-label to include ${expected} so multi-line labels top-align within the copy slot.`);process.exit(1);}}for(const removed of ["gap: 0.06rem;","gap: 0.04rem;","min-height: auto;","min-height: 2.32rem;","min-height: 2.34rem;","min-height: 2.42rem;","min-height: 2.26rem;","font-size: 0.79rem;","font-size: 0.76rem;","line-height: 1.18;","line-height: 1.2;","line-height: 1.22;"]){if(stakeholderLabel.includes(removed)){console.error(`Expected .stakeholder-label to stop using ${removed}.`);process.exit(1);}}const governmentsCard=getBlock(".stakeholder-card--governments");if(!governmentsCard.includes("--stakeholder-icon-scale: 0.98;")){console.error("Expected .stakeholder-card--governments to include the smaller optical scale.");process.exit(1);}const regulatorsCard=getBlock(".stakeholder-card--regulators");if(!regulatorsCard.includes("--stakeholder-icon-scale: 1.02;")){console.error("Expected .stakeholder-card--regulators to include the larger optical scale.");process.exit(1);}const operatorsCard=getBlock(".stakeholder-card--operators");for(const expected of ["--stakeholder-icon-offset-x: -0.075rem;","--stakeholder-icon-offset-y: -0.04rem;"]){if(!operatorsCard.includes(expected)){console.error(`Expected .stakeholder-card--operators to include ${expected} for optical centering.`);process.exit(1);}}const investorsCard=getBlock(".stakeholder-card--investors");for(const expected of ["--stakeholder-icon-offset-x: -0.1rem;","--stakeholder-icon-offset-y: -0.08rem;","--stakeholder-icon-scale: 1.06;"]){if(!investorsCard.includes(expected)){console.error(`Expected .stakeholder-card--investors to include ${expected} for optical centering and size alignment.`);process.exit(1);}}const universitiesCard=getBlock(".stakeholder-card--universities-researchers");for(const expected of ["--stakeholder-icon-offset-x: -0.05rem;","--stakeholder-icon-offset-y: 0rem;","--stakeholder-icon-scale: 0.95;"]){if(!universitiesCard.includes(expected)){console.error(`Expected .stakeholder-card--universities-researchers to include ${expected} for optical centering.`);process.exit(1);}}'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.chapters-link {'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'margin: 0;'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'border-radius: 0.5rem;'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'font-weight: 500;'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.brand-mark-image {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.brand-mark-image-compact {'
+check_not_contains "$LANDING_CSS_ASSERT_FILE" '.footer-brand-surface {'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'font-family: "Manrope", "Inter", sans-serif;'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.mobile-nav-toggle {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.mobile-nav-toggle .mobile-nav-icon-close {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.header-actions {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.header-contact-link::after {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.mobile-nav-contact {'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const compactLogoRule=/@media \(max-width: 767px\) \{[\s\S]*?\.brand-mark-image-full \{[^}]*display: none;[^}]*\}[\s\S]*?\.brand-mark-image-compact \{[^}]*display: block;[^}]*\}/;if(!compactLogoRule.test(css)){console.error("Expected landing header to switch to the compact logo below 768px.");process.exit(1);}'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const start=css.indexOf("@media (max-width: 767px) {");const end=css.indexOf("@media (max-width: 640px) {", start);if(start===-1||end===-1){console.error("Expected narrow landing header media blocks in expanded landing CSS.");process.exit(1);}const block=css.slice(start,end);for(const expected of [".site-header .brand-mark {","min-width: 2.75rem;","min-height: 2.75rem;","justify-content: center;",".site-header .brand-mark-image-compact {","width: 2rem;"]){if(!block.includes(expected)){console.error("Expected narrow landing header logo CSS to include "+expected);process.exit(1);}}'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const start=css.indexOf("@media (max-width: 767px) {");const end=css.indexOf("@media (max-width: 640px) {", start);if(start===-1||end===-1){console.error("Expected narrow landing header media blocks in expanded landing CSS.");process.exit(1);}const block=css.slice(start,end);for(const expected of [".site-header .header-actions > .site-language-switch {","min-height: 2.75rem;","gap: 0;","padding: 0 0.125rem;","background: transparent;","border-color: transparent;","isolation: isolate;",".site-header .header-actions > .site-language-switch::before {","inset: 0.1875rem 0;","content: \"\";",".site-header .header-actions > .site-language-switch .site-language-option {","min-width: 2.75rem;","min-height: 2.75rem;","padding: 0 0.4rem;","font-size: 0.78rem;",".site-language-option.is-current::before,","a.site-language-option:hover::before,","inset: 0.25rem 0.16rem;",".site-header .header-actions > .mobile-nav-menu .mobile-nav-toggle {","gap: 0.35rem;","padding: 0 0.75rem;","font-size: 0.82rem;",".site-header .header-actions > .mobile-nav-menu .mobile-nav-toggle::before {"]){if(!block.includes(expected)){console.error("Expected narrow landing header CSS to include "+expected);process.exit(1);}}'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const marker="@media (min-width: 768px) and (max-width: 1023px) {";const start=css.indexOf(marker);if(start===-1){console.error("Expected landing tablet header logo media block in expanded landing CSS.");process.exit(1);}const next=css.indexOf("\n\n@media",start + marker.length);const block=(next===-1?css.slice(start):css.slice(start,next));for(const expected of [".site-header .brand-mark {","width: auto;","height: 44px;","flex: 0 0 auto;",".site-header .brand-mark-image-full {","width: auto;","height: 36px;",".site-header .brand-mark-image-compact {","display: none;"]){if(!block.includes(expected)){console.error("Expected landing tablet header logo CSS to include "+expected);process.exit(1);}}'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const marker="@media (min-width: 1024px) {";const start=css.indexOf(marker);if(start===-1){console.error("Expected landing desktop header media block in expanded landing CSS.");process.exit(1);}const next=css.indexOf("\n\n@media",start + marker.length);const block=(next===-1?css.slice(start):css.slice(start,next));for(const expected of [".site-header .brand-mark-image-full {","width: auto;","height: 36px;"]){if(!block.includes(expected)){console.error("Expected landing desktop header CSS to include "+expected);process.exit(1);}}'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const compactStart=css.indexOf("@media (max-width: 360px) {");if(compactStart===-1){console.error("Expected extra-narrow landing header media block in expanded landing CSS.");process.exit(1);}const compactBlock=css.slice(compactStart);for(const removed of ["min-width: 1.85rem;","width: 2.5rem;"]){if(compactBlock.includes(removed)){console.error("Expected extra-narrow landing header to keep the compact logo touch target while avoiding oversized visual overrides: "+removed);process.exit(1);}}'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.ua-icon {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.ua-icon-image {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.ua-icon--feature {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.ua-icon-image--feature {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.ua-icon-image--signal {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.feature-card-icon {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.button-icon {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.mobile-nav-icon-close {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.mobile-nav-menu[open] .mobile-nav-toggle .mobile-nav-icon-close {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.country-signal-icon {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.country-signal-copy {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.ua-icon--audience {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '@media (max-width: 700px) {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.site-header-inner {'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'grid-template-columns: auto auto;'
+check_contains "$LANDING_CSS_ASSERT_FILE" '@media (max-width: 360px) {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.brand-mark-image-full {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.mobile-nav-toggle .button-label {'
 check_not_contains assets/css/landing.css '@import url("https://fonts.googleapis.com'
 check_not_contains scripts/generate-chapters-page.mjs 'replaceAll('
 check_not_contains assets/css/chapters.css 'var(--primary)'
@@ -538,11 +645,10 @@ check_not_contains public/chapters/index.html '../assets/icons/homepage-cropped/
 check_not_contains public/chapters/index.html '../assets/icons/homepage-cropped/icon-close.png'
 check_contains public/chapters/index.html 'class="current-link" href="/chapters/">Chapters</a>'
 check_contains public/chapters/index.html 'href="/#countries">Countries</a>'
-check_contains public/chapters/index.html 'href="/#about">About</a>'
-check_contains public/chapters/index.html 'href="/#resources">Resources</a>'
-check_order public/chapters/index.html 'href="/#about">About</a>' 'href="/#resources">Resources</a>'
-check_contains public/chapters/index.html 'class="header-contact-link"'
-check_contains public/chapters/index.html 'mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas'
+check_contains public/chapters/index.html 'href="/#search">Search</a>'
+check_not_contains public/chapters/index.html 'href="/#about">About</a>'
+check_not_contains public/chapters/index.html 'href="/#resources">Resources</a>'
+check_contains public/chapters/index.html 'mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas%20Enquiry'
 check_not_contains public/chapters/index.html 'class="mobile-nav-contact"'
 check_not_contains public/chapters/index.html '>Contact Us</a>'
 node -e 'const fs=require("fs");for(const file of ["public/index.html","public/chapters/index.html","public/fr/index.html","public/fr/chapters/index.html"]){const html=fs.readFileSync(file,"utf8");if(/<nav class="mobile-nav-panel"[\s\S]*?class="site-language-switch"/.test(html)){console.error(`Expected ${file} to remove the language switch from the mobile navigation panel.`);process.exit(1);}}'
@@ -598,7 +704,7 @@ check_not_contains public/terms-of-use.html 'legal-page-brand-copy'
 check_not_contains public/privacy-policy.html 'legal-page-brand-copy'
 check_not_contains public/cookie-policy.html 'legal-page-brand-copy'
 check_contains public/terms-of-use.html 'href="/"'
-check_order public/terms-of-use.html '<a href="/#about">About</a>' '<p class="site-footer-heading">Resources</p>'
+check_order public/terms-of-use.html '<p class="site-footer-heading">Coverage</p>' '<p class="site-footer-heading">Legal</p>'
 
 check_contains public/book/index.html 'id="mdbook-sidebar"'
 check_contains public/book/index.html 'class="light sidebar-visible"'
@@ -727,17 +833,16 @@ check_exists public/fr/cookie-policy.html
 check_exists public/fr/book/index.html
 check_exists public/fr/book/reader-page-meta.json
 check_exists public/fr/assets/images/upstream-atlas-nav-logo.webp
-check_contains public/fr/index.html 'assets/css/landing.css?v=20260616'
+check_contains public/fr/index.html 'assets/css/landing.css?v=20260703'
 check_contains public/fr/index.html 'class="site-language-switch"'
 check_contains public/fr/index.html 'href="/?lang=en"'
 check_contains public/fr/index.html '<span class="button-label">Commencer la lecture</span>'
 check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-research.webp'
 check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-industry-monitoring.webp'
 check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-intelligence.webp'
-check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-production.webp'
-check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-exploration.webp'
-check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-fiscal.webp'
-check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-regulation.webp'
+check_contains public/fr/index.html 'assets/icons/homepage-sprite.svg#icon-start-reading'
+check_contains public/fr/index.html 'assets/icons/homepage-sprite.svg#icon-menu'
+check_contains public/fr/index.html 'assets/icons/homepage-sprite.svg#icon-close'
 check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-audience-research.webp'
 check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-audience-policy.webp'
 check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-audience-operators.webp'
@@ -1822,11 +1927,22 @@ check_contains scripts/preview.sh 'PREVIEW_DISPLAY_HOST'
 check_contains scripts/preview.sh '["route", "-n", "get", "default"]'
 check_contains scripts/preview.sh '["ipconfig", "getifaddr", default_interface]'
 check_contains scripts/preview.sh 'DISPLAY_HOST="$(resolve_display_host "$HOST")"'
+check_contains scripts/preview.sh 'RELOAD_TOKEN_FILE='
+check_contains scripts/preview.sh 'scripts/preview_watch.mjs'
 check_contains scripts/preview.sh 'French site:  http://$DISPLAY_HOST:$PORT/fr/'
 check_contains scripts/preview.sh 'French book:  http://$DISPLAY_HOST:$PORT/fr/book/'
 check_contains scripts/preview.sh '--display-host "$DISPLAY_HOST"'
+check_contains scripts/preview.sh '--reload-token-file "$RELOAD_TOKEN_FILE"'
+check_exists scripts/preview_watch.mjs
+check_contains scripts/preview_watch.mjs 'const DEFAULT_WATCH_ROOTS = ["assets", "config", "editions", "scripts", "theme"];'
+check_contains scripts/preview_watch.mjs 'function scheduleBuild(reason) {'
+check_contains scripts/preview_watch.mjs 'async function runBuild() {'
+check_contains scripts/preview_watch.mjs 'writeReloadToken(reloadTokenFile);'
 check_contains scripts/preview_server.py 'parser.add_argument("--display-host")'
+check_contains scripts/preview_server.py 'parser.add_argument("--reload-token-file")'
 check_contains scripts/preview_server.py 'display_host = args.display_host or args.host'
+check_contains scripts/preview_server.py 'if request_path == "/__preview/reload-token":'
+check_contains scripts/preview_server.py 'data-preview-reload'
 check_contains scripts/preview_server.py 'Serving preview on http://{display_host}:{args.port}/ from {args.directory}'
 node -e 'const fs=require("fs");const hbs=fs.readFileSync("theme/index.hbs","utf8");for(const expected of ["<body class=\"book-layout-booting\">","sessionStorage.getItem(\"reader-sidebar-scroll-top\")","sessionStorage.setItem(\"reader-sidebar-scroll-top\"","document.body.classList.remove(\"book-layout-booting\");"]){if(!hbs.includes(expected)){console.error(`Expected theme/index.hbs to include ${expected}`);process.exit(1);}}for(const forbidden of ["window.bookPageVariants","applyInitialBookPageVariant","reader-sidebar-scroll-offset","customElements.whenDefined(\"mdbook-sidebar-scrollbox\")"]){if(hbs.includes(forbidden)){console.error(`Expected theme/index.hbs to stop including ${forbidden}`);process.exit(1);}}'
 check_contains scripts/localize_reader_shell.mjs 'import { getBookPageBodyClasses } from "./shared/book-page-variants.mjs";'
@@ -2332,8 +2448,8 @@ check_contains theme/custom.js 'element.closest(".figure-card, .table-anchor-tar
 check_contains theme/custom.js 'installCrossReferenceLinks();'
 node -e 'const fs=require("fs");const js=fs.readFileSync("theme/custom.js","utf8");const expected=`document.querySelectorAll(".reader-sidebar-row--chapter[href]")`;if(!js.includes(expected)){console.error("Expected chapter-route lookup in theme/custom.js");process.exit(1);}'
 check_contains theme/custom.js 'document.getElementById("formula-" + formulaAnchorLabel)'
-check_contains editions/en/book.toml 'additional-js = \["theme/ga.js", "theme/custom.js"\]'
-check_contains editions/fr/book.toml 'additional-js = \["theme/ga.js", "theme/custom.js"\]'
+check_contains editions/en/book.toml 'additional-js = ["theme/ga.js", "theme/custom.js"]'
+check_contains editions/fr/book.toml 'additional-js = ["theme/ga.js", "theme/custom.js"]'
 check_not_contains editions/en/book.toml 'theme/vendor/panzoom.min.js'
 check_not_contains editions/fr/book.toml 'theme/vendor/panzoom.min.js'
 check_contains theme/custom.js 'function installFigureImageOpenLinks()'

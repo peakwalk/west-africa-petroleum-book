@@ -1,4 +1,12 @@
 import { getPeerSiteEdition } from "./site-editions.mjs";
+import {
+  CONTACT_EMAIL,
+  CONTACT_HREF,
+  getFooterCoverageItems,
+  resolveHomepageLinks,
+} from "./homepage-content.mjs";
+
+export { CONTACT_EMAIL, CONTACT_HREF };
 
 function escapeHtml(value) {
   return String(value)
@@ -95,20 +103,6 @@ function renderSpriteIcon({ className, href }) {
   return `<svg class="${escapeHtml(className)}" aria-hidden="true" focusable="false"><use href="${escapeHtml(href)}"></use></svg>`;
 }
 
-function renderHeaderContactLink(localeStrings) {
-  return `        <a
-          class="header-contact-link"
-          href="${escapeHtml(CONTACT_HREF)}"
-          aria-label="${escapeHtml(localeStrings.buttons.contact)}"
-          data-tooltip="${escapeHtml(localeStrings.buttons.contact)}"
-        >
-          <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
-            <path d="M4 7.5h16v9H4z"></path>
-            <path d="m4.75 8 7.25 6 7.25-6"></path>
-          </svg>
-        </a>`;
-}
-
 function renderLanguageSwitch({ edition, currentPage, currentLegalPage = null, localeStrings }) {
   const peerEdition = getPeerSiteEdition(edition.locale);
   if (!peerEdition) {
@@ -140,8 +134,6 @@ function renderLanguageSwitch({ edition, currentPage, currentLegalPage = null, l
         </nav>`;
 }
 
-export const CONTACT_HREF = "mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas";
-export const CONTACT_EMAIL = "matt@operatorassetexchange.com";
 export const WEBSITE_LEGAL_LINKS = {
   cookie: "cookie-policy.html",
   privacy: "privacy-policy.html",
@@ -150,22 +142,26 @@ export const WEBSITE_LEGAL_LINKS = {
 
 const ICON_LOGO_PATH = "assets/images/upstream-atlas-icon.png";
 const NAV_LOGO_PATH = "assets/images/upstream-atlas-nav-logo.webp";
-const LANDING_CSS_VERSION = "20260616";
+const LANDING_CSS_VERSION = "20260703";
 
 export function resolveShellLinks(currentPage, edition, currentLegalPage = null) {
   const baseHref = editionBaseHref(edition);
+  const homepageLinks = resolveHomepageLinks(currentPage, edition);
 
   return {
-    aboutHref: `${baseHref}#about`,
-    brandHref: baseHref,
-    chaptersHref: `${baseHref}chapters/`,
-    countriesHref: `${baseHref}#countries`,
-    ctaHref: `${baseHref}book/`,
-    homeHref: baseHref,
+    brandHref: homepageLinks.brandHref,
+    chapterLibraryHref: homepageLinks.chapterLibraryHref,
+    chaptersHref: homepageLinks.chaptersHref,
+    contactHref: homepageLinks.contactHref,
+    countriesHref: homepageLinks.countriesHref,
+    ctaHref: homepageLinks.ctaHref,
+    homeHref: homepageLinks.homeHref,
     cookieHref: `${baseHref}${WEBSITE_LEGAL_LINKS.cookie}`,
     privacyHref: `${baseHref}${WEBSITE_LEGAL_LINKS.privacy}`,
-    resourcesHref: `${baseHref}#resources`,
+    searchHref: homepageLinks.searchHref,
     termsHref: `${baseHref}${WEBSITE_LEGAL_LINKS.terms}`,
+    topicsHref: homepageLinks.topicsHref,
+    viewAllCountriesHref: homepageLinks.viewAllCountriesHref,
     peerHref: buildLanguageSwitchHref(
       getPeerSiteEdition(edition.locale),
       currentPage,
@@ -250,13 +246,20 @@ function renderResponsiveBrandLink({
   ariaLabel,
   brandHref,
   indent = "",
+  localeStrings,
   logoBasePath = "",
 } = {}) {
   const fullLogoSrc = resolveAssetPath(logoBasePath, NAV_LOGO_PATH);
   const compactLogoSrc = resolveAssetPath(logoBasePath, ICON_LOGO_PATH);
   const markup = `<a class="brand-mark" href="${escapeHtml(brandHref)}" aria-label="${escapeHtml(ariaLabel)}">
-  <img class="brand-mark-image brand-mark-image-full" src="${escapeHtml(fullLogoSrc)}" alt="" width="208" height="55">
-  <img class="brand-mark-image brand-mark-image-compact" src="${escapeHtml(compactLogoSrc)}" alt="" width="48" height="48">
+  <span class="brand-mark-logo" aria-hidden="true">
+    <img class="brand-mark-image brand-mark-image-full" src="${escapeHtml(fullLogoSrc)}" alt="" width="208" height="55">
+    <img class="brand-mark-image brand-mark-image-compact" src="${escapeHtml(compactLogoSrc)}" alt="" width="48" height="48">
+  </span>
+  <span class="brand-reference-copy" aria-hidden="true">
+    <span class="brand-reference-line">${escapeHtml(localeStrings.nav.brandTitleLine1)}</span>
+    <span class="brand-reference-line">${escapeHtml(localeStrings.nav.brandTitleLine2)}</span>
+  </span>
 </a>`;
 
   return markup
@@ -298,6 +301,7 @@ ${renderResponsiveBrandLink({
   ariaLabel: localeStrings.legal.homeAriaLabel,
   brandHref: links.brandHref,
   indent: "        ",
+  localeStrings,
   logoBasePath,
 })}
         <nav class="primary-nav" aria-label="Primary navigation">
@@ -306,14 +310,11 @@ ${renderResponsiveBrandLink({
           <a${chaptersClass} href="${escapeHtml(links.chaptersHref)}">${escapeHtml(
             localeStrings.nav.chapters
           )}</a>
-          <a href="${escapeHtml(links.aboutHref)}">${escapeHtml(localeStrings.nav.about)}</a>
-          <a href="${escapeHtml(links.resourcesHref)}">${escapeHtml(
-            localeStrings.nav.resources
-          )}</a>
+          <a href="${escapeHtml(links.searchHref)}">${escapeHtml(localeStrings.nav.search)}</a>
+          <a href="${escapeHtml(links.contactHref)}">${escapeHtml(localeStrings.nav.contact)}</a>
         </nav>
         <div class="header-actions">
 ${renderLanguageSwitch({ currentLegalPage, currentPage, edition, localeStrings })}
-${renderHeaderContactLink(localeStrings)}
           <a class="button button-header" href="${escapeHtml(links.ctaHref)}">
             ${renderSpriteIcon({ className: "button-icon ua-icon ua-icon--sm", href: startReadingIconHref })}
             <span class="button-label">${escapeHtml(localeStrings.buttons.startReading)}</span>
@@ -330,10 +331,8 @@ ${renderHeaderContactLink(localeStrings)}
               <a${chaptersClass} href="${escapeHtml(links.chaptersHref)}">${escapeHtml(
                 localeStrings.nav.chapters
               )}</a>
-              <a href="${escapeHtml(links.aboutHref)}">${escapeHtml(localeStrings.nav.about)}</a>
-              <a href="${escapeHtml(links.resourcesHref)}">${escapeHtml(
-                localeStrings.nav.resources
-              )}</a>
+              <a href="${escapeHtml(links.searchHref)}">${escapeHtml(localeStrings.nav.search)}</a>
+              <a href="${escapeHtml(links.contactHref)}">${escapeHtml(localeStrings.nav.contact)}</a>
               <a class="button button-header mobile-nav-cta" href="${escapeHtml(links.ctaHref)}">
                 ${renderSpriteIcon({ className: "button-icon ua-icon ua-icon--sm", href: startReadingIconHref })}
                 <span class="button-label">${escapeHtml(localeStrings.buttons.startReading)}</span>
@@ -353,8 +352,9 @@ export function renderLandingFooter({
 } = {}) {
   const links = resolveShellLinks(currentPage, edition, currentLegalPage);
   const localeStrings = edition.localeStrings;
-  const legalLinks = localeStrings.legal.links;
   const footerStrings = localeStrings.footer;
+  const legalLinks = localeStrings.legal.links;
+  const coverageItems = getFooterCoverageItems();
 
   return `    <footer class="site-footer site-footer-detailed">
       <div class="site-footer-inner">
@@ -364,35 +364,43 @@ ${renderFooterBrand(links.brandHref, logoBasePath, localeStrings.legal.homeAriaL
             ${escapeHtml(footerStrings.intro)}
           </p>
         </section>
+        <section class="site-footer-column" aria-label="${escapeHtml(footerStrings.coverageHeading)}">
+          <p class="site-footer-heading">${escapeHtml(footerStrings.coverageHeading)}</p>
+          <ul class="site-footer-coverage-list">
+${coverageItems
+  .map((item) => `            <li>${escapeHtml(item)}</li>`)
+  .join("\n")}
+          </ul>
+        </section>
         <section class="site-footer-column" aria-label="${escapeHtml(footerStrings.exploreHeading)}">
           <p class="site-footer-heading">${escapeHtml(footerStrings.exploreHeading)}</p>
           <div class="site-footer-column-links">
             <a href="${escapeHtml(links.homeHref)}">${escapeHtml(localeStrings.nav.home)}</a>
-            <a href="${escapeHtml(links.aboutHref)}">${escapeHtml(localeStrings.nav.about)}</a>
             <a href="${escapeHtml(links.countriesHref)}">${escapeHtml(localeStrings.nav.countries)}</a>
-            <a href="${escapeHtml(links.chaptersHref)}">${escapeHtml(footerStrings.bookContents)}</a>
-            <a href="${escapeHtml(CONTACT_HREF)}">${escapeHtml(footerStrings.contact)}</a>
+            <a href="${escapeHtml(links.topicsHref)}">${escapeHtml(localeStrings.nav.chapters)}</a>
+            <a href="${escapeHtml(links.searchHref)}">${escapeHtml(footerStrings.search)}</a>
+            <a href="${escapeHtml(links.chapterLibraryHref)}">${escapeHtml(
+    footerStrings.bookContents
+  )}</a>
           </div>
         </section>
-        <section class="site-footer-column" aria-label="${escapeHtml(footerStrings.resourcesHeading)}">
-          <p class="site-footer-heading">${escapeHtml(footerStrings.resourcesHeading)}</p>
+        <section class="site-footer-column" aria-label="${escapeHtml(footerStrings.supportHeading)}">
+          <p class="site-footer-heading">${escapeHtml(footerStrings.supportHeading)}</p>
           <div class="site-footer-column-links">
-            <span class="site-footer-future-item">${escapeHtml(footerStrings.latestUpdates)} <small>${escapeHtml(
-    footerStrings.comingSoon
-  )}</small></span>
-            <span class="site-footer-future-item">${escapeHtml(footerStrings.industryNews)} <small>${escapeHtml(
-    footerStrings.comingSoon
-  )}</small></span>
+            <a href="${escapeHtml(links.contactHref)}">${escapeHtml(footerStrings.contact)}</a>
+            <a href="${escapeHtml(links.searchHref)}">${escapeHtml(footerStrings.latestUpdates)}</a>
+            <span class="site-footer-future-item">${escapeHtml(footerStrings.currentEdition)}</span>
+            <a class="site-footer-email" href="${escapeHtml(links.contactHref)}">${escapeHtml(
+    CONTACT_EMAIL
+  )}</a>
+          </div>
+        </section>
+        <section class="site-footer-column" aria-label="${escapeHtml(footerStrings.legalHeading)}">
+          <p class="site-footer-heading">${escapeHtml(footerStrings.legalHeading)}</p>
+          <div class="site-footer-column-links">
             <a href="${escapeHtml(links.termsHref)}">${escapeHtml(legalLinks.terms)}</a>
             <a href="${escapeHtml(links.privacyHref)}">${escapeHtml(legalLinks.privacy)}</a>
             <a href="${escapeHtml(links.cookieHref)}">${escapeHtml(legalLinks.cookie)}</a>
-          </div>
-        </section>
-        <section class="site-footer-column" aria-label="${escapeHtml(footerStrings.contactHeading)}">
-          <p class="site-footer-heading">${escapeHtml(footerStrings.contactHeading)}</p>
-          <div class="site-footer-contact-list">
-            <span class="site-footer-contact-label">${escapeHtml(footerStrings.email)}</span>
-            <a class="site-footer-email" href="${escapeHtml(CONTACT_HREF)}">${escapeHtml(CONTACT_EMAIL)}</a>
           </div>
         </section>
       </div>

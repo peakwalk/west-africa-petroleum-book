@@ -1,0 +1,490 @@
+.decision-strip {
+  padding-block: 2.2rem 2.65rem;
+}
+
+.decision-strip-inner {
+  width: min(90rem, calc(100% - 4rem));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.105fr) minmax(0, 1.195fr);
+  gap: clamp(1.5rem, 2vw, 2.4rem);
+  align-items: center;
+}
+
+.decision-strip-copy {
+  display: grid;
+  grid-template-columns: max-content minmax(15rem, 1fr);
+  column-gap: 2rem;
+  row-gap: 0;
+  align-items: start;
+}
+
+.decision-strip-copy h2 {
+  margin: 0;
+  font-family: "Manrope", "Inter", sans-serif;
+  width: max-content;
+  max-width: none;
+  font-size: clamp(1.58rem, 1.64vw, 1.9rem);
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+
+.decision-strip-title-line {
+  display: block;
+  white-space: nowrap;
+}
+
+.decision-strip-copy p {
+  margin: 0;
+  color: var(--text-muted);
+  max-width: 21rem;
+  padding-top: 0;
+  font-size: 0.875rem;
+  line-height: 1.54;
+}
+
+.stakeholder-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 120px);
+  justify-content: end;
+  justify-items: center;
+  align-items: start;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stakeholder-card {
+  --stakeholder-icon-color: #2d5cb3;
+  --stakeholder-icon-offset-x: 0rem;
+  --stakeholder-icon-offset-y: 0rem;
+  --stakeholder-icon-scale: 1;
+  --stakeholder-text-color: #214484;
+  align-self: start;
+  box-sizing: border-box;
+  display: grid;
+  justify-items: center;
+  grid-template-rows: 3rem 2.32rem;
+  align-content: center;
+  width: 120px;
+  min-width: 120px;
+  max-width: 120px;
+  height: 120px;
+  min-height: 120px;
+  max-height: 120px;
+  row-gap: 0.34rem;
+  padding: 0.82rem 0.56rem 0.68rem;
+  border: 1px solid rgba(11, 31, 51, 0.08);
+  border-radius: 0.96rem;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 8px 20px rgba(11, 31, 51, 0.045);
+  color: var(--stakeholder-text-color);
+  font-family: "Manrope", "Inter", sans-serif;
+  text-align: center;
+}
+
+.stakeholder-icon-slot {
+  display: grid;
+  place-items: center;
+  align-self: stretch;
+  justify-self: stretch;
+  min-height: 3rem;
+}
+
+.stakeholder-icon {
+  display: block;
+  align-self: center;
+  justify-self: center;
+  width: 2rem;
+  height: 2rem;
+  margin-top: 0;
+  color: var(--stakeholder-icon-color);
+  transform: translate(var(--stakeholder-icon-offset-x), var(--stakeholder-icon-offset-y))
+    scale(var(--stakeholder-icon-scale));
+  transform-origin: center center;
+}
+
+.stakeholder-icon-image {
+  display: block;
+  object-fit: contain;
+  object-position: center center;
+}
+
+.stakeholder-copy-slot {
+  display: grid;
+  align-self: stretch;
+  justify-self: stretch;
+  align-content: start;
+  min-height: 2.32rem;
+}
+
+.stakeholder-label {
+  display: grid;
+  gap: 0.02rem;
+  justify-items: center;
+  align-content: start;
+  min-height: 100%;
+  color: var(--stakeholder-text-color);
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.stakeholder-card--governments {
+  --stakeholder-icon-scale: 0.98;
+}
+
+.stakeholder-card--regulators {
+  --stakeholder-icon-scale: 1.02;
+}
+
+.stakeholder-card--operators {
+  --stakeholder-icon-offset-x: -0.075rem;
+  --stakeholder-icon-offset-y: -0.04rem;
+}
+
+.stakeholder-card--investors {
+  --stakeholder-icon-offset-x: -0.1rem;
+  --stakeholder-icon-offset-y: -0.08rem;
+  --stakeholder-icon-scale: 1.06;
+}
+
+.stakeholder-card--universities-researchers {
+  --stakeholder-icon-offset-x: -0.05rem;
+  --stakeholder-icon-offset-y: 0rem;
+  --stakeholder-icon-scale: 0.95;
+}
+
+.stakeholder-label-line {
+  display: block;
+}
+
+.section-country-discovery,
+.section-map-overview,
+.section-search-surface,
+.section-topic-discovery,
+.section-summary-modules {
+  padding-top: 2rem;
+}
+
+.country-grid-v2 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.country-card-v2 {
+  display: grid;
+  gap: 0.85rem;
+  min-height: 18.4rem;
+  padding: 1.15rem;
+  border: 1px solid rgba(11, 31, 51, 0.1);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 16px 36px rgba(11, 31, 51, 0.08);
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.country-card-v2:hover,
+.country-card-v2:focus-within {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 44px rgba(11, 31, 51, 0.11);
+}
+
+.country-card-v2-top {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.country-status-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.55rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  color: #fff;
+  font-family: "Manrope", "Inter", sans-serif;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.country-status-badge.status-producing {
+  background: #1d8f4a;
+}
+
+.country-status-badge.status-exploration {
+  background: #2d6cdf;
+}
+
+.country-status-badge.status-noCommercialProduction {
+  background: #5f6674;
+}
+
+.country-card-v2-heading {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.country-identity,
+.country-meta,
+.country-hydrocarbons,
+.summary-card-copy,
+.edition-card-copy p,
+.edition-card-date {
+  margin: 0;
+}
+
+.country-identity {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.country-flag {
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+.country-name {
+  color: var(--text);
+  font-family: "Manrope", "Inter", sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.country-meta {
+  color: #5e6880;
+  font-family: "Manrope", "Inter", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.country-hydrocarbons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}
+
+.country-hydrocarbons span::before {
+  content: "●";
+  margin-right: 0.35rem;
+  color: #1d8f4a;
+  font-size: 0.72rem;
+}
+
+.country-hydrocarbons-empty {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.country-metrics {
+  display: grid;
+  gap: 0.65rem;
+  margin: 0;
+}
+
+.country-metrics div {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.55rem;
+  align-items: baseline;
+}
+
+.country-metrics dt {
+  color: var(--text);
+  font-family: "Manrope", "Inter", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.country-metrics dd {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.country-analysis-link {
+  margin-top: auto;
+  padding-top: 0.35rem;
+}
+
+.map-overview-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.45fr);
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.map-overview-copy {
+  display: grid;
+  gap: 0.95rem;
+}
+
+.map-overview-copy h2 {
+  margin: 0;
+  font-family: "Manrope", "Inter", sans-serif;
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+}
+
+.map-overview-copy p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.72;
+}
+
+.west-africa-map-card {
+  position: relative;
+  min-height: 25rem;
+  padding: 1rem;
+  border: 1px solid rgba(11, 31, 51, 0.08);
+  border-radius: 1.2rem;
+  background: linear-gradient(
+    180deg,
+    rgba(237, 244, 251, 0.9),
+    rgba(247, 248, 249, 0.98)
+  );
+  box-shadow: var(--card-shadow);
+}
+
+.west-africa-map-canvas {
+  position: relative;
+  height: 100%;
+  min-height: 23rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 50% 15%,
+      rgba(216, 178, 74, 0.08),
+      transparent 28%
+    ),
+    linear-gradient(180deg, #e7f0fb, #f7f8f9);
+}
+
+.west-africa-map-mainland,
+.west-africa-map-islands {
+  position: absolute;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 249, 235, 0.95),
+    rgba(247, 239, 219, 0.96)
+  );
+  border: 1px solid rgba(191, 166, 108, 0.35);
+}
+
+.west-africa-map-mainland {
+  inset: 14% 7% 8% 14%;
+  clip-path: polygon(
+    8% 30%,
+    19% 15%,
+    34% 8%,
+    53% 10%,
+    66% 18%,
+    82% 28%,
+    92% 44%,
+    90% 59%,
+    83% 72%,
+    72% 81%,
+    57% 88%,
+    43% 90%,
+    27% 85%,
+    17% 74%,
+    11% 60%,
+    8% 43%
+  );
+}
+
+.west-africa-map-islands {
+  width: 7rem;
+  height: 7rem;
+  left: 4%;
+  top: 54%;
+  border-radius: 50%;
+}
+
+.west-africa-map-flag {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  border: 1px solid rgba(11, 31, 51, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 10px 24px rgba(11, 31, 51, 0.12);
+  font-size: 1.1rem;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.west-africa-map-flag:hover,
+.west-africa-map-flag:focus-visible {
+  transform: translate(-50%, -56%);
+  box-shadow: 0 14px 26px rgba(11, 31, 51, 0.16);
+}
+
+.homepage-search-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.85rem;
+  align-items: center;
+}
+
+.homepage-search-form input {
+  min-height: 4rem;
+  padding: 0 1.15rem;
+  border: 1px solid rgba(49, 99, 194, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 14px 32px rgba(11, 31, 51, 0.06);
+  color: var(--text);
+  font: inherit;
+}
+
+.homepage-search-form input::placeholder {
+  color: rgba(82, 97, 113, 0.72);
+}
+
+.search-scope-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.search-scope-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.6rem;
+  padding: 0.6rem 0.95rem;
+  border: 1px solid rgba(49, 99, 194, 0.14);
+  border-radius: 0.85rem;
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--brand-blue-deep);
+  font-family: "Manrope", "Inter", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+}

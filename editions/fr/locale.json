@@ -11,8 +11,12 @@
     "home": "Accueil",
     "countries": "Pays",
     "chapters": "Chapitres",
+    "search": "Recherche",
+    "contact": "Contact",
     "about": "À propos",
-    "resources": "Ressources"
+    "resources": "Ressources",
+    "brandTitleLine1": "West Africa Petroleum",
+    "brandTitleLine2": "Reference Resource"
   },
   "buttons": {
     "startReading": "Commencer la lecture",
@@ -29,12 +33,17 @@
   },
   "footer": {
     "intro": "Des repères pratiques sur les dimensions techniques, commerciales, fiscales, réglementaires et de gouvernance de l’industrie pétrolière et gazière ouest-africaine.",
+    "coverageHeading": "Couverture",
     "exploreHeading": "Explorer",
+    "supportHeading": "Support",
+    "legalHeading": "Juridique",
     "resourcesHeading": "Ressources",
     "contactHeading": "Nous contacter",
     "bookContents": "Sommaire du livre",
+    "search": "Rechercher dans le livre",
     "contact": "Contact",
     "latestUpdates": "Dernières mises à jour",
+    "currentEdition": "Édition en cours",
     "industryNews": "Actualités du secteur",
     "comingSoon": "Bientôt disponible",
     "email": "E-mail",

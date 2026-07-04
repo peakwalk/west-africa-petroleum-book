@@ -20,6 +20,14 @@
 - `mdbook` should resolve from `PATH`; on this machine the Homebrew binary is `/opt/homebrew/bin/mdbook`.
 - WebP output from the PDF figure pipeline is optional. `png` is the acceptable fallback when no writable WebP encoder is available.
 
+## File Size Guidance
+- Keep handwritten source files small enough to review and reason about.
+- New handwritten source files should normally stay under 600 lines.
+- Landing-page stylesheets, site templates, and page-generation scripts should normally stay under 500 lines by extracting focused partials, helpers, content modules, or smaller generator units.
+- Do not introduce a new handwritten source file over 800 lines without a clear reason documented in the change summary.
+- When editing an existing handwritten source file that already exceeds these limits, avoid increasing its line count. If the change is non-trivial, extract at least one coherent helper, partial, content module, or script split unless doing so would create churn unrelated to the task.
+- Generated files, lockfiles, snapshots, fixture data, vendored references, and migration-style artifacts are exempt.
+
 ## OpenSpec and Superpowers Workflow
 
 ### Roles and Boundaries

@@ -5,6 +5,8 @@ HOST="${HOST:-0.0.0.0}"
 PORT="${1:-${PORT:-3002}}"
 ROOT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
 PUBLIC_DIR="$ROOT_DIR/public"
+RELOAD_TOKEN_FILE=""
+WATCH_PID=""
 
 require_command() {
   if ! command -v "$1" >/dev/null 2>&1; then
@@ -13,6 +15,20 @@ require_command() {
   fi
 }
 
+cleanup() {
+  if [ -n "$WATCH_PID" ] && kill -0 "$WATCH_PID" 2>/dev/null; then
+    kill "$WATCH_PID" >/dev/null 2>&1 || true
+    wait "$WATCH_PID" 2>/dev/null || true
+  fi
+
+  if [ -n "$RELOAD_TOKEN_FILE" ] && [ -f "$RELOAD_TOKEN_FILE" ]; then
+    rm -f "$RELOAD_TOKEN_FILE"
+  fi
+}
+
+trap cleanup EXIT INT TERM
+
+require_command node
 require_command python3
 
 resolve_display_host() {
@@ -122,6 +138,8 @@ cd "$ROOT_DIR"
 
 npm run build:site >/dev/null
 DISPLAY_HOST="$(resolve_display_host "$HOST")"
+RELOAD_TOKEN_FILE="$(mktemp "${TMPDIR:-/tmp}/africa-book-preview-reload.XXXXXX")"
+date +%s >"$RELOAD_TOKEN_FILE"
 
 cat <<EOF
 
@@ -135,4 +153,7 @@ Press Ctrl+C to stop the server.
 
 EOF
 
-python3 "$ROOT_DIR/scripts/preview_server.py" --host "$HOST" --display-host "$DISPLAY_HOST" --port "$PORT" --directory "$PUBLIC_DIR"
+node "$ROOT_DIR/scripts/preview_watch.mjs" --reload-token-file "$RELOAD_TOKEN_FILE" -- npm run build:site &
+WATCH_PID="$!"
+
+python3 "$ROOT_DIR/scripts/preview_server.py" --host "$HOST" --display-host "$DISPLAY_HOST" --port "$PORT" --directory "$PUBLIC_DIR" --reload-token-file "$RELOAD_TOKEN_FILE"

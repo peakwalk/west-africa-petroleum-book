@@ -1,0 +1,994 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="A professional online edition of Exploration and Production of Petroleum Resources in West Africa: Roles and Responsibilities of Governments and Analysis of Fiscal Regimes."
+    >
+    <title>Exploration and Production of Petroleum Resources in West Africa: Roles and Responsibilities of Governments and Analysis of Fiscal Regimes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap"
+    >
+    <link rel="stylesheet" href="assets/css/landing.css?v=20260703">
+    <link rel="icon" href="assets/images/upstream-atlas-favicon.png?v=2" type="image/png" sizes="32x32">
+    <link rel="shortcut icon" href="assets/images/upstream-atlas-favicon.png?v=2" type="image/png">
+    <link rel="apple-touch-icon" href="assets/images/upstream-atlas-favicon.png?v=2">
+    <link rel="alternate" hreflang="en" href="/">
+    <link rel="alternate" hreflang="fr" href="/fr/">
+    <script src="assets/js/ga.js" defer></script>
+    <script>
+      (function () {
+        const params = new URLSearchParams(window.location.search);
+        const explicit = params.get("lang");
+        const storageKey = "upstream-atlas-edition";
+
+        if (explicit === "en" || explicit === "fr") {
+          try {
+            window.localStorage.setItem(storageKey, explicit);
+          } catch (error) {
+            // Ignore storage failures and keep the explicit route.
+          }
+          return;
+        }
+
+        let preferredEdition = "";
+        try {
+          preferredEdition = window.localStorage.getItem(storageKey) || "";
+        } catch (error) {
+          preferredEdition = "";
+        }
+
+        if (preferredEdition === "en") {
+          return;
+        }
+
+        if (preferredEdition === "fr") {
+          window.location.replace("/fr/");
+          return;
+        }
+
+        const browserLanguages = []
+          .concat(window.navigator.languages || [])
+          .concat(window.navigator.language || [])
+          .filter(Boolean)
+          .map((value) => String(value).toLowerCase());
+
+        if (browserLanguages.some((value) => value.startsWith("fr"))) {
+          window.location.replace("/fr/");
+        }
+      })();
+    </script>
+  </head>
+  <body class="landing-shell">
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="brand-mark" href="/" aria-label="Upstream Atlas home">
+          <span class="brand-mark-logo" aria-hidden="true">
+            <img class="brand-mark-image brand-mark-image-full" src="assets/images/upstream-atlas-nav-logo.webp" alt="" width="208" height="55">
+            <img class="brand-mark-image brand-mark-image-compact" src="assets/images/upstream-atlas-icon.png" alt="" width="48" height="48">
+          </span>
+          <span class="brand-reference-copy" aria-hidden="true">
+            <span class="brand-reference-line">West Africa Petroleum</span>
+            <span class="brand-reference-line">Reference Resource</span>
+          </span>
+        </a>
+        <nav class="primary-nav" aria-label="Primary navigation">
+          <a class="current-link" href="/">Home</a>
+          <a href="/#countries">Countries</a>
+          <a href="/#topics">Chapters</a>
+          <a href="/#search">Search</a>
+          <a href="mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas%20Enquiry">Contact</a>
+        </nav>
+        <div class="header-actions">
+        <nav class="site-language-switch" aria-label="Switch language">
+          <span class="site-language-option is-current" aria-current="page">EN</span>
+          <a class="site-language-option" href="/fr/?lang=fr" lang="fr" hreflang="fr">FR</a>
+        </nav>
+          <a class="button button-header" href="/book/">
+            <svg class="button-icon ua-icon ua-icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/homepage-sprite.svg#icon-start-reading"></use></svg>
+            <span class="button-label">Start Reading</span>
+          </a>
+          <details class="mobile-nav-menu">
+            <summary class="mobile-nav-toggle">
+              <svg class="mobile-nav-icon mobile-nav-icon-menu ua-icon ua-icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/homepage-sprite.svg#icon-menu"></use></svg>
+              <svg class="mobile-nav-icon mobile-nav-icon-close ua-icon ua-icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/homepage-sprite.svg#icon-close"></use></svg>
+              <span class="button-label">Menu</span>
+            </summary>
+            <nav class="mobile-nav-panel" aria-label="Mobile navigation">
+              <a class="current-link" href="/">Home</a>
+              <a href="/#countries">Countries</a>
+              <a href="/#topics">Chapters</a>
+              <a href="/#search">Search</a>
+              <a href="mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas%20Enquiry">Contact</a>
+              <a class="button button-header mobile-nav-cta" href="/book/">
+                <svg class="button-icon ua-icon ua-icon--sm" aria-hidden="true" focusable="false"><use href="assets/icons/homepage-sprite.svg#icon-start-reading"></use></svg>
+                <span class="button-label">Start Reading</span>
+              </a>
+            </nav>
+          </details>
+        </div>
+      </div>
+    </header>
+
+<main>
+  <section class="hero-panel hero-panel-v2">
+    <div class="hero-media" aria-hidden="true"></div>
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-content">
+      <div class="hero-layout hero-layout-v2">
+        <div class="hero-copy-block hero-copy-block-v2">
+          
+          <h1><span class="hero-title-line">West Africa&#39;s</span><span class="hero-title-line">Independent Petroleum Reference</span></h1>
+          <p class="hero-copy">Independent reference material covering petroleum systems, fiscal regimes, governance frameworks, national oil companies, upstream operations, and country-specific petroleum sectors across West Africa.</p>
+          <div class="hero-stat-grid">
+            <div class="hero-stat-card hero-stat-card--countries">
+              <span class="hero-stat-icon hero-stat-icon--countries" aria-hidden="true"></span>
+              <span class="hero-stat-value">16</span>
+              <span class="hero-stat-label"><span class="hero-stat-label-line">Countries</span></span>
+            </div>
+            <div class="hero-stat-card hero-stat-card--discoveries">
+              <span class="hero-stat-icon hero-stat-icon--discoveries" aria-hidden="true"></span>
+              <span class="hero-stat-value">1000+</span>
+              <span class="hero-stat-label"><span class="hero-stat-label-line">Fields &amp;</span><span class="hero-stat-label-line">Discoveries</span></span>
+            </div>
+            <div class="hero-stat-card hero-stat-card--basins">
+              <span class="hero-stat-icon hero-stat-icon--basins" aria-hidden="true"></span>
+              <span class="hero-stat-value">20+</span>
+              <span class="hero-stat-label"><span class="hero-stat-label-line">Sedimentary</span><span class="hero-stat-label-line">Basins</span></span>
+            </div>
+            <div class="hero-stat-card hero-stat-card--chapters">
+              <span class="hero-stat-icon hero-stat-icon--chapters" aria-hidden="true"></span>
+              <span class="hero-stat-value">12</span>
+              <span class="hero-stat-label"><span class="hero-stat-label-line">Reference</span><span class="hero-stat-label-line">Chapters</span></span>
+            </div>
+            <div class="hero-stat-card hero-stat-card--exploration">
+              <span class="hero-stat-icon hero-stat-icon--exploration" aria-hidden="true"></span>
+              <span class="hero-stat-value">70+</span>
+              <span class="hero-stat-label"><span class="hero-stat-label-line">Years of</span><span class="hero-stat-label-line">Exploration</span></span>
+            </div>
+            <div class="hero-stat-card hero-stat-card--figures">
+              <span class="hero-stat-icon hero-stat-icon--figures" aria-hidden="true"></span>
+              <span class="hero-stat-value">50+</span>
+              <span class="hero-stat-label"><span class="hero-stat-label-line">Figures &amp;</span><span class="hero-stat-label-line">Tables</span></span>
+            </div>
+          </div>
+          <div class="hero-actions">
+            <a class="button button-primary" href="/book/">Start Reading</a>
+            <a class="button button-secondary" href="/#countries">Browse Countries</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-platform decision-strip">
+    <div class="decision-strip-inner">
+      <div class="decision-strip-copy">
+        <h2 aria-label="Built for informed decision-making"><span class="decision-strip-title-line">Built for informed</span><span class="decision-strip-title-line">decision-making</span></h2>
+        <p>Upstream Atlas is designed as a long-term reference resource for stakeholders across the petroleum value chain.</p>
+      </div>
+      <ul class="stakeholder-grid">
+          <li class="stakeholder-card stakeholder-card--governments">
+            <span class="stakeholder-icon-slot">
+              <img class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/governments.svg" alt="" aria-hidden="true" decoding="async">
+            </span>
+            <span class="stakeholder-copy-slot">
+              <span class="stakeholder-label"><span class="stakeholder-label-line">Governments</span></span>
+            </span>
+          </li>
+          <li class="stakeholder-card stakeholder-card--regulators">
+            <span class="stakeholder-icon-slot">
+              <img class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/regulators.svg" alt="" aria-hidden="true" decoding="async">
+            </span>
+            <span class="stakeholder-copy-slot">
+              <span class="stakeholder-label"><span class="stakeholder-label-line">Regulators</span></span>
+            </span>
+          </li>
+          <li class="stakeholder-card stakeholder-card--national-oil-companies">
+            <span class="stakeholder-icon-slot">
+              <img class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/national-oil-companies.svg" alt="" aria-hidden="true" decoding="async">
+            </span>
+            <span class="stakeholder-copy-slot">
+              <span class="stakeholder-label"><span class="stakeholder-label-line">National Oil</span><span class="stakeholder-label-line">Companies</span></span>
+            </span>
+          </li>
+          <li class="stakeholder-card stakeholder-card--operators">
+            <span class="stakeholder-icon-slot">
+              <img class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/operators.svg" alt="" aria-hidden="true" decoding="async">
+            </span>
+            <span class="stakeholder-copy-slot">
+              <span class="stakeholder-label"><span class="stakeholder-label-line">Operators</span></span>
+            </span>
+          </li>
+          <li class="stakeholder-card stakeholder-card--investors">
+            <span class="stakeholder-icon-slot">
+              <img class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/investors.svg" alt="" aria-hidden="true" decoding="async">
+            </span>
+            <span class="stakeholder-copy-slot">
+              <span class="stakeholder-label"><span class="stakeholder-label-line">Investors</span></span>
+            </span>
+          </li>
+          <li class="stakeholder-card stakeholder-card--universities-researchers">
+            <span class="stakeholder-icon-slot">
+              <img class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/universities-researchers.svg" alt="" aria-hidden="true" decoding="async">
+            </span>
+            <span class="stakeholder-copy-slot">
+              <span class="stakeholder-label"><span class="stakeholder-label-line">Universities &amp;</span><span class="stakeholder-label-line">Researchers</span></span>
+            </span>
+          </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="countries" class="section section-country-discovery">
+    <div class="section-heading section-heading-wide">
+      <div>
+        <p class="eyebrow">Coverage Across West Africa</p>
+        <h2>Coverage Across West Africa</h2>
+        <p class="section-lead">A country-first entry layer with consistent signals on producing status, ministries, national oil companies, discoveries, and producing fields.</p>
+      </div>
+      <a class="section-link" href="/book/chapters/chapter-03-west-africa-country-analysis.html">View All Countries <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="country-grid-v2">
+        <article class="country-card-v2 status-producing">
+          <div class="country-card-v2-top">
+            <span class="country-status-badge status-producing">Producing</span>
+          </div>
+          <div class="country-card-v2-heading">
+            <p class="country-identity">
+              <span class="country-flag" aria-hidden="true">🇳🇬</span>
+              <span class="country-name">Nigeria</span>
+            </p>
+            <p class="country-meta">FMPR | NNPC Ltd</p>
+          </div>
+          <p class="country-hydrocarbons"><span>Oil</span><span>Gas</span><span>Condensate</span></p>
+          <dl class="country-metrics">
+            <div>
+              <dt>140</dt>
+              <dd>Producing Fields</dd>
+            </div>
+            <div>
+              <dt>620</dt>
+              <dd>Discoveries</dd>
+            </div>
+          </dl>
+          <a class="country-analysis-link" href="/book/chapters/chapter-03-west-africa-country-analysis.html#31--nigeria">Country Analysis <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="country-card-v2 status-producing">
+          <div class="country-card-v2-top">
+            <span class="country-status-badge status-producing">Producing</span>
+          </div>
+          <div class="country-card-v2-heading">
+            <p class="country-identity">
+              <span class="country-flag" aria-hidden="true">🇬🇭</span>
+              <span class="country-name">Ghana</span>
+            </p>
+            <p class="country-meta">MEGT | GNPC</p>
+          </div>
+          <p class="country-hydrocarbons"><span>Oil</span><span>Gas</span><span>Condensate</span></p>
+          <dl class="country-metrics">
+            <div>
+              <dt>5</dt>
+              <dd>Producing Fields</dd>
+            </div>
+            <div>
+              <dt>19</dt>
+              <dd>Discoveries</dd>
+            </div>
+          </dl>
+          <a class="country-analysis-link" href="/book/chapters/chapter-03-west-africa-country-analysis.html#32--ghana">Country Analysis <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="country-card-v2 status-producing">
+          <div class="country-card-v2-top">
+            <span class="country-status-badge status-producing">Producing</span>
+          </div>
+          <div class="country-card-v2-heading">
+            <p class="country-identity">
+              <span class="country-flag" aria-hidden="true">🇨🇮</span>
+              <span class="country-name">Cote d&#39;Ivoire</span>
+            </p>
+            <p class="country-meta">MMPE | PETROCI</p>
+          </div>
+          <p class="country-hydrocarbons"><span>Oil</span><span>Gas</span><span>Condensate</span></p>
+          <dl class="country-metrics">
+            <div>
+              <dt>10</dt>
+              <dd>Producing Fields</dd>
+            </div>
+            <div>
+              <dt>35</dt>
+              <dd>Discoveries</dd>
+            </div>
+          </dl>
+          <a class="country-analysis-link" href="/book/chapters/chapter-03-west-africa-country-analysis.html#33--côte-divoire">Country Analysis <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="country-card-v2 status-producing">
+          <div class="country-card-v2-top">
+            <span class="country-status-badge status-producing">Producing</span>
+          </div>
+          <div class="country-card-v2-heading">
+            <p class="country-identity">
+              <span class="country-flag" aria-hidden="true">🇸🇳</span>
+              <span class="country-name">Senegal</span>
+            </p>
+            <p class="country-meta">MEPM | PETROSEN</p>
+          </div>
+          <p class="country-hydrocarbons"><span>Oil</span><span>Gas</span><span>Condensate</span></p>
+          <dl class="country-metrics">
+            <div>
+              <dt>2</dt>
+              <dd>Producing Fields</dd>
+            </div>
+            <div>
+              <dt>7</dt>
+              <dd>Discoveries</dd>
+            </div>
+          </dl>
+          <a class="country-analysis-link" href="/book/chapters/chapter-03-west-africa-country-analysis.html#34--senegal">Country Analysis <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="country-card-v2 status-producing">
+          <div class="country-card-v2-top">
+            <span class="country-status-badge status-producing">Producing</span>
+          </div>
+          <div class="country-card-v2-heading">
+            <p class="country-identity">
+              <span class="country-flag" aria-hidden="true">🇲🇷</span>
+              <span class="country-name">Mauritania</span>
+            </p>
+            <p class="country-meta">MEP | SMH</p>
+          </div>
+          <p class="country-hydrocarbons"><span>Gas</span><span>Condensate</span><span>Oil</span></p>
+          <dl class="country-metrics">
+            <div>
+              <dt>2</dt>
+              <dd>Producing Fields</dd>
+            </div>
+            <div>
+              <dt>22</dt>
+              <dd>Discoveries</dd>
+            </div>
+          </dl>
+          <a class="country-analysis-link" href="/book/chapters/chapter-03-west-africa-country-analysis.html#35--mauritania">Country Analysis <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="country-card-v2 status-producing">
+          <div class="country-card-v2-top">
+            <span class="country-status-badge status-producing">Producing</span>
+          </div>
+          <div class="country-card-v2-heading">
+            <p class="country-identity">
+              <span class="country-flag" aria-hidden="true">🇳🇪</span>
+              <span class="country-name">Niger</span>
+            </p>
+            <p class="country-meta">MP | SONIDEP</p>
+          </div>
+          <p class="country-hydrocarbons"><span>Oil</span></p>
+          <dl class="country-metrics">
+            <div>
+              <dt>2</dt>
+              <dd>Producing Fields</dd>
+            </div>
+            <div>
+              <dt>8</dt>
+              <dd>Discoveries</dd>
+            </div>
+          </dl>
+          <a class="country-analysis-link" href="/book/chapters/chapter-03-west-africa-country-analysis.html#36--niger">Country Analysis <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="country-card-v2 status-producing">
+          <div class="country-card-v2-top">
+            <span class="country-status-badge status-producing">Producing</span>
+          </div>
+          <div class="country-card-v2-heading">
+            <p class="country-identity">
+              <span class="country-flag" aria-hidden="true">🇧🇯</span>
+              <span class="country-name">Benin</span>
+            </p>
+            <p class="country-meta">MEEM | SNH-Bénin</p>
+          </div>
+          <p class="country-hydrocarbons"><span>Oil</span></p>
+          <dl class="country-metrics">
+            <div>
+              <dt>1</dt>
+              <dd>Producing Fields</dd>
+            </div>
+            <div>
+              <dt>5</dt>
+              <dd>Discoveries</dd>
+            </div>
+          </dl>
+          <a class="country-analysis-link" href="/book/chapters/chapter-03-west-africa-country-analysis.html#37--benin">Country Analysis <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="country-card-v2 status-exploration">
+          <div class="country-card-v2-top">
+            <span class="country-status-badge status-exploration">Exploration</span>
+          </div>
+          <div class="country-card-v2-heading">
+            <p class="country-identity">
+              <span class="country-flag" aria-hidden="true">🇱🇷</span>
+              <span class="country-name">Liberia</span>
+            </p>
+            <p class="country-meta">MME | NOCAL</p>
+          </div>
+          <p class="country-hydrocarbons country-hydrocarbons-empty">No Hydrocarbons Produced</p>
+          <dl class="country-metrics">
+            <div>
+              <dt>0</dt>
+              <dd>Producing Fields</dd>
+            </div>
+            <div>
+              <dt>2</dt>
+              <dd>Discoveries</dd>
+            </div>
+          </dl>
+          <a class="country-analysis-link" href="/book/chapters/chapter-03-west-africa-country-analysis.html#38--liberia">Country Analysis <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="country-card-v2 status-exploration">
+          <div class="country-card-v2-top">
+            <span class="country-status-badge status-exploration">Exploration</span>
+          </div>
+          <div class="country-card-v2-heading">
+            <p class="country-identity">
+              <span class="country-flag" aria-hidden="true">🇸🇱</span>
+              <span class="country-name">Sierra Leone</span>
+            </p>
+            <p class="country-meta">PDSL | PDSL</p>
+          </div>
+          <p class="country-hydrocarbons country-hydrocarbons-empty">No Hydrocarbons Produced</p>
+          <dl class="country-metrics">
+            <div>
+              <dt>0</dt>
+              <dd>Producing Fields</dd>
+            </div>
+            <div>
+              <dt>2</dt>
+              <dd>Discoveries</dd>
+            </div>
+          </dl>
+          <a class="country-analysis-link" href="/book/chapters/chapter-03-west-africa-country-analysis.html#39--sierra-leone">Country Analysis <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="country-card-v2 status-exploration">
+          <div class="country-card-v2-top">
+            <span class="country-status-badge status-exploration">Exploration</span>
+          </div>
+          <div class="country-card-v2-heading">
+            <p class="country-identity">
+              <span class="country-flag" aria-hidden="true">🇬🇳</span>
+              <span class="country-name">Guinea</span>
+            </p>
+            <p class="country-meta">MEHH | SONAP</p>
+          </div>
+          <p class="country-hydrocarbons country-hydrocarbons-empty">No Hydrocarbons Produced</p>
+          <dl class="country-metrics">
+            <div>
+              <dt>0</dt>
+              <dd>Producing Fields</dd>
+            </div>
+            <div>
+              <dt>1</dt>
+              <dd>Discoveries</dd>
+            </div>
+          </dl>
+          <a class="country-analysis-link" href="/book/chapters/chapter-03-west-africa-country-analysis.html#310--guinea">Country Analysis <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="country-card-v2 status-exploration">
+          <div class="country-card-v2-top">
+            <span class="country-status-badge status-exploration">Exploration</span>
+          </div>
+          <div class="country-card-v2-heading">
+            <p class="country-identity">
+              <span class="country-flag" aria-hidden="true">🇬🇼</span>
+              <span class="country-name">Guinea-Bissau</span>
+            </p>
+            <p class="country-meta">MRN | PETROGUIN</p>
+          </div>
+          <p class="country-hydrocarbons country-hydrocarbons-empty">No Hydrocarbons Produced</p>
+          <dl class="country-metrics">
+            <div>
+              <dt>0</dt>
+              <dd>Producing Fields</dd>
+            </div>
+            <div>
+              <dt>2</dt>
+              <dd>Discoveries</dd>
+            </div>
+          </dl>
+          <a class="country-analysis-link" href="/book/chapters/chapter-03-west-africa-country-analysis.html#311--guinea-bissau">Country Analysis <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="country-card-v2 status-exploration">
+          <div class="country-card-v2-top">
+            <span class="country-status-badge status-exploration">Exploration</span>
+          </div>
+          <div class="country-card-v2-heading">
+            <p class="country-identity">
+              <span class="country-flag" aria-hidden="true">🇬🇲</span>
+              <span class="country-name">The Gambia</span>
+            </p>
+            <p class="country-meta">MPEM | GAMNPC</p>
+          </div>
+          <p class="country-hydrocarbons country-hydrocarbons-empty">No Hydrocarbons Produced</p>
+          <dl class="country-metrics">
+            <div>
+              <dt>0</dt>
+              <dd>Producing Fields</dd>
+            </div>
+            <div>
+              <dt>2</dt>
+              <dd>Discoveries</dd>
+            </div>
+          </dl>
+          <a class="country-analysis-link" href="/book/chapters/chapter-03-west-africa-country-analysis.html#312--the-gambia">Country Analysis <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="country-card-v2 status-noCommercialProduction">
+          <div class="country-card-v2-top">
+            <span class="country-status-badge status-noCommercialProduction">No Commercial Production</span>
+          </div>
+          <div class="country-card-v2-heading">
+            <p class="country-identity">
+              <span class="country-flag" aria-hidden="true">🇹🇬</span>
+              <span class="country-name">Togo</span>
+            </p>
+            <p class="country-meta">MME | —</p>
+          </div>
+          <p class="country-hydrocarbons country-hydrocarbons-empty">No Hydrocarbons Produced</p>
+          <dl class="country-metrics">
+            <div>
+              <dt>0</dt>
+              <dd>Producing Fields</dd>
+            </div>
+            <div>
+              <dt>0</dt>
+              <dd>Discoveries</dd>
+            </div>
+          </dl>
+          <a class="country-analysis-link" href="/book/chapters/chapter-03-west-africa-country-analysis.html#313--togo">Country Analysis <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="country-card-v2 status-noCommercialProduction">
+          <div class="country-card-v2-top">
+            <span class="country-status-badge status-noCommercialProduction">No Commercial Production</span>
+          </div>
+          <div class="country-card-v2-heading">
+            <p class="country-identity">
+              <span class="country-flag" aria-hidden="true">🇧🇫</span>
+              <span class="country-name">Burkina Faso</span>
+            </p>
+            <p class="country-meta">MEMC | —</p>
+          </div>
+          <p class="country-hydrocarbons country-hydrocarbons-empty">No Hydrocarbons Produced</p>
+          <dl class="country-metrics">
+            <div>
+              <dt>0</dt>
+              <dd>Producing Fields</dd>
+            </div>
+            <div>
+              <dt>0</dt>
+              <dd>Discoveries</dd>
+            </div>
+          </dl>
+          <a class="country-analysis-link" href="/book/chapters/chapter-03-west-africa-country-analysis.html#314--burkina-faso">Country Analysis <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="country-card-v2 status-noCommercialProduction">
+          <div class="country-card-v2-top">
+            <span class="country-status-badge status-noCommercialProduction">No Commercial Production</span>
+          </div>
+          <div class="country-card-v2-heading">
+            <p class="country-identity">
+              <span class="country-flag" aria-hidden="true">🇲🇱</span>
+              <span class="country-name">Mali</span>
+            </p>
+            <p class="country-meta">MM | AUREP</p>
+          </div>
+          <p class="country-hydrocarbons country-hydrocarbons-empty">No Hydrocarbons Produced</p>
+          <dl class="country-metrics">
+            <div>
+              <dt>0</dt>
+              <dd>Producing Fields</dd>
+            </div>
+            <div>
+              <dt>0</dt>
+              <dd>Discoveries</dd>
+            </div>
+          </dl>
+          <a class="country-analysis-link" href="/book/chapters/chapter-03-west-africa-country-analysis.html#315--mali">Country Analysis <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="country-card-v2 status-noCommercialProduction">
+          <div class="country-card-v2-top">
+            <span class="country-status-badge status-noCommercialProduction">No Commercial Production</span>
+          </div>
+          <div class="country-card-v2-heading">
+            <p class="country-identity">
+              <span class="country-flag" aria-hidden="true">🇨🇻</span>
+              <span class="country-name">Cabo Verde</span>
+            </p>
+            <p class="country-meta">MITE | ENACOL</p>
+          </div>
+          <p class="country-hydrocarbons country-hydrocarbons-empty">No Hydrocarbons Produced</p>
+          <dl class="country-metrics">
+            <div>
+              <dt>0</dt>
+              <dd>Producing Fields</dd>
+            </div>
+            <div>
+              <dt>0</dt>
+              <dd>Discoveries</dd>
+            </div>
+          </dl>
+          <a class="country-analysis-link" href="/book/chapters/chapter-03-west-africa-country-analysis.html#316--cabo-verde">Country Analysis <span aria-hidden="true">→</span></a>
+        </article>
+    </div>
+  </section>
+
+  <section class="section section-map-overview">
+    <div class="map-overview-grid">
+      <div class="map-overview-copy">
+        <p class="eyebrow">West African Petroleum Provinces</p>
+        <h2>A clickable geographic layer for country entry.</h2>
+        <p>Explore the political landscape of West Africa and jump from geography into the current country analysis surface.</p>
+        <a class="button button-primary" href="/book/chapters/chapter-02-emerging-petroleum-provinces-in-west-africa.html">Explore the Map</a>
+      </div>
+      <div class="west-africa-map-card">
+        <div class="west-africa-map-canvas" role="img" aria-label="Clickable West Africa country map">
+          <div class="west-africa-map-mainland" aria-hidden="true"></div>
+          <div class="west-africa-map-islands" aria-hidden="true"></div>
+            <a
+              class="west-africa-map-flag status-producing"
+              href="/book/chapters/chapter-03-west-africa-country-analysis.html#31--nigeria"
+              style="left: 78%; top: 54%;"
+              title="Nigeria"
+              aria-label="Nigeria"
+            >
+              <span aria-hidden="true">🇳🇬</span>
+            </a>
+            <a
+              class="west-africa-map-flag status-producing"
+              href="/book/chapters/chapter-03-west-africa-country-analysis.html#32--ghana"
+              style="left: 62%; top: 63%;"
+              title="Ghana"
+              aria-label="Ghana"
+            >
+              <span aria-hidden="true">🇬🇭</span>
+            </a>
+            <a
+              class="west-africa-map-flag status-producing"
+              href="/book/chapters/chapter-03-west-africa-country-analysis.html#33--côte-divoire"
+              style="left: 55%; top: 66%;"
+              title="Cote d&#39;Ivoire"
+              aria-label="Cote d&#39;Ivoire"
+            >
+              <span aria-hidden="true">🇨🇮</span>
+            </a>
+            <a
+              class="west-africa-map-flag status-producing"
+              href="/book/chapters/chapter-03-west-africa-country-analysis.html#34--senegal"
+              style="left: 28%; top: 38%;"
+              title="Senegal"
+              aria-label="Senegal"
+            >
+              <span aria-hidden="true">🇸🇳</span>
+            </a>
+            <a
+              class="west-africa-map-flag status-producing"
+              href="/book/chapters/chapter-03-west-africa-country-analysis.html#35--mauritania"
+              style="left: 24%; top: 22%;"
+              title="Mauritania"
+              aria-label="Mauritania"
+            >
+              <span aria-hidden="true">🇲🇷</span>
+            </a>
+            <a
+              class="west-africa-map-flag status-producing"
+              href="/book/chapters/chapter-03-west-africa-country-analysis.html#36--niger"
+              style="left: 68%; top: 36%;"
+              title="Niger"
+              aria-label="Niger"
+            >
+              <span aria-hidden="true">🇳🇪</span>
+            </a>
+            <a
+              class="west-africa-map-flag status-producing"
+              href="/book/chapters/chapter-03-west-africa-country-analysis.html#37--benin"
+              style="left: 72%; top: 61%;"
+              title="Benin"
+              aria-label="Benin"
+            >
+              <span aria-hidden="true">🇧🇯</span>
+            </a>
+            <a
+              class="west-africa-map-flag status-exploration"
+              href="/book/chapters/chapter-03-west-africa-country-analysis.html#38--liberia"
+              style="left: 45%; top: 73%;"
+              title="Liberia"
+              aria-label="Liberia"
+            >
+              <span aria-hidden="true">🇱🇷</span>
+            </a>
+            <a
+              class="west-africa-map-flag status-exploration"
+              href="/book/chapters/chapter-03-west-africa-country-analysis.html#39--sierra-leone"
+              style="left: 39%; top: 67%;"
+              title="Sierra Leone"
+              aria-label="Sierra Leone"
+            >
+              <span aria-hidden="true">🇸🇱</span>
+            </a>
+            <a
+              class="west-africa-map-flag status-exploration"
+              href="/book/chapters/chapter-03-west-africa-country-analysis.html#310--guinea"
+              style="left: 34%; top: 60%;"
+              title="Guinea"
+              aria-label="Guinea"
+            >
+              <span aria-hidden="true">🇬🇳</span>
+            </a>
+            <a
+              class="west-africa-map-flag status-exploration"
+              href="/book/chapters/chapter-03-west-africa-country-analysis.html#311--guinea-bissau"
+              style="left: 28%; top: 48%;"
+              title="Guinea-Bissau"
+              aria-label="Guinea-Bissau"
+            >
+              <span aria-hidden="true">🇬🇼</span>
+            </a>
+            <a
+              class="west-africa-map-flag status-exploration"
+              href="/book/chapters/chapter-03-west-africa-country-analysis.html#312--the-gambia"
+              style="left: 27%; top: 42%;"
+              title="The Gambia"
+              aria-label="The Gambia"
+            >
+              <span aria-hidden="true">🇬🇲</span>
+            </a>
+            <a
+              class="west-africa-map-flag status-noCommercialProduction"
+              href="/book/chapters/chapter-03-west-africa-country-analysis.html#313--togo"
+              style="left: 67%; top: 65%;"
+              title="Togo"
+              aria-label="Togo"
+            >
+              <span aria-hidden="true">🇹🇬</span>
+            </a>
+            <a
+              class="west-africa-map-flag status-noCommercialProduction"
+              href="/book/chapters/chapter-03-west-africa-country-analysis.html#314--burkina-faso"
+              style="left: 57%; top: 47%;"
+              title="Burkina Faso"
+              aria-label="Burkina Faso"
+            >
+              <span aria-hidden="true">🇧🇫</span>
+            </a>
+            <a
+              class="west-africa-map-flag status-noCommercialProduction"
+              href="/book/chapters/chapter-03-west-africa-country-analysis.html#315--mali"
+              style="left: 43%; top: 37%;"
+              title="Mali"
+              aria-label="Mali"
+            >
+              <span aria-hidden="true">🇲🇱</span>
+            </a>
+            <a
+              class="west-africa-map-flag status-noCommercialProduction"
+              href="/book/chapters/chapter-03-west-africa-country-analysis.html#316--cabo-verde"
+              style="left: 10%; top: 56%;"
+              title="Cabo Verde"
+              aria-label="Cabo Verde"
+            >
+              <span aria-hidden="true">🇨🇻</span>
+            </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="search" class="section section-search-surface">
+    <div class="section-heading section-heading-centered">
+      <p class="eyebrow">Search Upstream Atlas</p>
+      <h2>Search Upstream Atlas</h2>
+    </div>
+    <form class="homepage-search-form" action="/book/" method="get" role="search">
+      <label class="sr-only" for="homepage-search-input">Search Upstream Atlas</label>
+      <input
+        id="homepage-search-input"
+        type="search"
+        name="search"
+        placeholder="Search West African petroleum knowledge..."
+      >
+      <button class="button button-primary" type="submit">Search the Book</button>
+    </form>
+    <div class="search-scope-grid">
+          <a class="search-scope-chip" href="/book/?search=Countries">Countries</a>
+          <a class="search-scope-chip" href="/book/?search=National%20Oil%20Companies">National Oil Companies</a>
+          <a class="search-scope-chip" href="/book/?search=Ministries">Ministries</a>
+          <a class="search-scope-chip" href="/book/?search=Fields">Fields</a>
+          <a class="search-scope-chip" href="/book/?search=Discoveries">Discoveries</a>
+          <a class="search-scope-chip" href="/book/?search=Basins">Basins</a>
+          <a class="search-scope-chip" href="/book/?search=Fiscal%20Systems">Fiscal Systems</a>
+          <a class="search-scope-chip" href="/book/?search=Chapters">Chapters</a>
+    </div>
+  </section>
+
+  <section id="topics" class="section section-topic-discovery">
+    <div class="section-heading">
+      <p class="eyebrow">Browse by Topic</p>
+      <h2>Move from basin context to governance, fiscal systems, and operations.</h2>
+    </div>
+    <div class="topic-grid">
+        <article class="topic-card">
+          <p class="topic-card-kicker">Regional context</p>
+          <h3>Emerging Petroleum Provinces</h3>
+          <p>Frontier geology, basin context, and the regional exploration picture across West Africa.</p>
+          <a class="topic-card-link" href="/book/chapters/chapter-02-emerging-petroleum-provinces-in-west-africa.html">Explore <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="topic-card">
+          <p class="topic-card-kicker">Country intelligence</p>
+          <h3>Country Analysis</h3>
+          <p>In-depth country-by-country petroleum sector reviews and regional comparisons.</p>
+          <a class="topic-card-link" href="/book/chapters/chapter-03-west-africa-country-analysis.html">Explore <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="topic-card">
+          <p class="topic-card-kicker">State participation</p>
+          <h3>National Oil Companies</h3>
+          <p>State-owned company structures, governance roles, and commercial performance models.</p>
+          <a class="topic-card-link" href="/book/chapters/chapter-04-national-oil-companies-in-west-africa.html">Explore <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="topic-card">
+          <p class="topic-card-kicker">Systems view</p>
+          <h3>Petroleum Value Chain</h3>
+          <p>From exploration through development, production, and abandonment across the value chain.</p>
+          <a class="topic-card-link" href="/book/chapters/chapter-05-hydrocarbon-value-chain.html">Explore <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="topic-card">
+          <p class="topic-card-kicker">Operations</p>
+          <h3>Upstream Operations</h3>
+          <p>Drilling, completions, production, facilities, and operational excellence in the upstream.</p>
+          <a class="topic-card-link" href="/book/chapters/chapter-06-upstream-operations-and-government-roles.html">Explore <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="topic-card">
+          <p class="topic-card-kicker">Commercial terms</p>
+          <h3>Petroleum Fiscal Systems</h3>
+          <p>Royalties, cost oil, taxation, and production-sharing mechanics in petroleum agreements.</p>
+          <a class="topic-card-link" href="/book/chapters/chapter-07-petroleum-fiscal-regimes.html">Explore <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="topic-card">
+          <p class="topic-card-kicker">Regional comparison</p>
+          <h3>West African Fiscal Regimes</h3>
+          <p>Comparative fiscal design across West African producers and emerging jurisdictions.</p>
+          <a class="topic-card-link" href="/book/chapters/chapter-08-west-african-fiscal-regimes.html">Explore <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="topic-card">
+          <p class="topic-card-kicker">Governance</p>
+          <h3>Governance &amp; Regulation</h3>
+          <p>Institutions, licensing systems, policy choices, and regulatory capacity across the region.</p>
+          <a class="topic-card-link" href="/book/chapters/chapter-09-socio-political-determinants.html">Explore <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="topic-card">
+          <p class="topic-card-kicker">Information systems</p>
+          <h3>Data Management</h3>
+          <p>Petroleum data systems, technical records, and information-management discipline.</p>
+          <a class="topic-card-link" href="/book/chapters/chapter-10-petroleum-data-management-in-west-africa.html">Explore <span aria-hidden="true">→</span></a>
+        </article>
+        <article class="topic-card">
+          <p class="topic-card-kicker">Long view</p>
+          <h3>Africa&#39;s Vision</h3>
+          <p>Long-range thinking about energy strategy, investment, and regional futures through 2050.</p>
+          <a class="topic-card-link" href="/book/chapters/chapter-12-vision-for-west-africa-2050.html">Explore <span aria-hidden="true">→</span></a>
+        </article>
+    </div>
+  </section>
+
+  <section class="section section-summary-modules">
+    <div class="summary-grid">
+      <article class="summary-card">
+        <p class="summary-card-eyebrow">Latest Updates</p>
+        <ul class="update-list">
+            <li>
+              <span class="update-label">English Edition released</span>
+              <span class="update-date">June 2026</span>
+            </li>
+            <li>
+              <span class="update-label">Chapter 7 revised</span>
+              <span class="update-date">May 2025</span>
+            </li>
+            <li>
+              <span class="update-label">Ghana production data revised</span>
+              <span class="update-date">May 2025</span>
+            </li>
+            <li>
+              <span class="update-label">Cote d&#39;Ivoire fiscal terms updated</span>
+              <span class="update-date">April 2025</span>
+            </li>
+        </ul>
+      </article>
+      <article class="summary-card summary-card-edition">
+        <p class="summary-card-eyebrow">Current Edition</p>
+        <div class="edition-card">
+          <div class="edition-card-copy">
+            <h3>English Edition</h3>
+            <p>Based on the original French publication.</p>
+            <p class="edition-card-date">Updated June 2026.</p>
+          </div>
+          <img src="assets/images/upstream-atlas-hero-book.png" alt="Upstream Atlas English edition cover" width="240" height="360">
+        </div>
+      </article>
+      <article class="summary-card">
+        <p class="summary-card-eyebrow">Topics Covered</p>
+        <ul class="topics-covered-list">
+            <li>Petroleum systems &amp; basin analysis</li>
+            <li>Fiscal regimes &amp; economics terms</li>
+            <li>National oil companies</li>
+            <li>Governance frameworks</li>
+            <li>Upstream operations</li>
+            <li>Country-specific analysis</li>
+        </ul>
+      </article>
+      <article class="summary-card">
+        <p class="summary-card-eyebrow">Future Development</p>
+        <p class="summary-card-copy">Future editions may include structured country-level petroleum intelligence summaries and sector updates.</p>
+      </article>
+    </div>
+  </section>
+</main>
+
+    <footer class="site-footer site-footer-detailed">
+      <div class="site-footer-inner">
+        <section class="site-footer-column site-footer-column-brand" aria-label="Upstream Atlas">
+        <a class="footer-brand" href="/" aria-label="Upstream Atlas home">
+          <img class="footer-brand-image" src="assets/images/upstream-atlas-nav-logo.webp" alt="" width="196" height="52">
+        </a>
+          <p class="site-footer-intro">
+            Practical insights into the technical, commercial, fiscal, regulatory, and governance aspects of the West African oil and gas industry.
+          </p>
+        </section>
+        <section class="site-footer-column" aria-label="Coverage">
+          <p class="site-footer-heading">Coverage</p>
+          <ul class="site-footer-coverage-list">
+            <li>16 Countries</li>
+            <li>1000+ Discoveries</li>
+            <li>140+ Producing Fields</li>
+            <li>20+ Sedimentary Basins</li>
+            <li>12 Chapters</li>
+            <li>National Oil Companies</li>
+            <li>Government Ministries</li>
+            <li>Fiscal Systems</li>
+            <li>Country Analysis</li>
+          </ul>
+        </section>
+        <section class="site-footer-column" aria-label="Explore">
+          <p class="site-footer-heading">Explore</p>
+          <div class="site-footer-column-links">
+            <a href="/">Home</a>
+            <a href="/#countries">Countries</a>
+            <a href="/#topics">Chapters</a>
+            <a href="/#search">Search the Book</a>
+            <a href="/chapters/">Book Contents</a>
+          </div>
+        </section>
+        <section class="site-footer-column" aria-label="Support">
+          <p class="site-footer-heading">Support</p>
+          <div class="site-footer-column-links">
+            <a href="mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas%20Enquiry">Contact</a>
+            <a href="/#search">Latest Updates</a>
+            <span class="site-footer-future-item">Current Edition</span>
+            <a class="site-footer-email" href="mailto:matt@operatorassetexchange.com?subject=Upstream%20Atlas%20Enquiry">matt@operatorassetexchange.com</a>
+          </div>
+        </section>
+        <section class="site-footer-column" aria-label="Legal">
+          <p class="site-footer-heading">Legal</p>
+          <div class="site-footer-column-links">
+            <a href="/terms-of-use.html">Terms of Use</a>
+            <a href="/privacy-policy.html">Privacy Policy</a>
+            <a href="/cookie-policy.html">Cookie Policy</a>
+          </div>
+        </section>
+      </div>
+      <div class="site-footer-bottom">
+        <p>© 2026 Upstream Atlas. All Rights Reserved.</p>
+        <p>West Africa Oil &amp; Gas Intelligence</p>
+      </div>
+    </footer>
+  </body>
+</html>
