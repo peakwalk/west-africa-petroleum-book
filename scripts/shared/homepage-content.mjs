@@ -222,9 +222,8 @@ const EN_HOMEPAGE_COPY = {
   audiencesTitle: "Built for informed decision-making",
   audiencesTitleLines: ["Built for informed", "decision-making"],
   countriesAllLabel: "View All Countries",
-  countriesEyebrow: "Coverage Across West Africa",
-  countriesLead:
-    "A country-first entry layer with consistent signals on producing status, ministries, national oil companies, discoveries, and producing fields.",
+  countriesEyebrow: "",
+  countriesLead: "",
   countriesTitle: "Coverage Across West Africa",
   currentEditionBody: "Based on the original French publication.",
   currentEditionDate: "Updated June 2026.",
@@ -792,9 +791,17 @@ ${STAKEHOLDER_GROUPS.map((stakeholder) => renderStakeholder(stakeholder, edition
   <section id="${HOMEPAGE_SECTION_IDS.countries}" class="section section-country-discovery">
     <div class="section-heading section-heading-wide">
       <div>
-        <p class="eyebrow">${escapeHtml(copy.countriesEyebrow)}</p>
-        <h2>${escapeHtml(copy.countriesTitle)}</h2>
-        <p class="section-lead">${escapeHtml(copy.countriesLead)}</p>
+        ${[
+          copy.countriesEyebrow
+            ? `<p class="eyebrow">${escapeHtml(copy.countriesEyebrow)}</p>`
+            : "",
+          `<h2>${escapeHtml(copy.countriesTitle)}</h2>`,
+          copy.countriesLead
+            ? `<p class="section-lead">${escapeHtml(copy.countriesLead)}</p>`
+            : "",
+        ]
+          .filter(Boolean)
+          .join("\n        ")}
       </div>
       <a class="section-link" href="${escapeHtml(links.viewAllCountriesHref)}">${escapeHtml(
         copy.countriesAllLabel

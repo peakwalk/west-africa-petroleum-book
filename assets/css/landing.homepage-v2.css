@@ -21,6 +21,21 @@
   gap: 0.9rem;
 }
 
+.section-country-discovery .section-heading-wide h2 {
+  max-width: none;
+  color: var(--brand-blue-deep);
+  font-size: clamp(2.2rem, 2.45vw, 2.7rem);
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+}
+
+.section-country-discovery .section-link {
+  color: #2f67f6;
+  font-size: 1.125rem;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
 .section-heading-centered {
   text-align: center;
   justify-items: center;
