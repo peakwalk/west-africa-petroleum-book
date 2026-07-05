@@ -140,7 +140,7 @@
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 767px) {
   .site-header-inner,
   .hero-content,
   .section-heading,
@@ -222,9 +222,9 @@
     width: 120px;
     min-width: 120px;
     max-width: 120px;
-    height: 120px;
-    min-height: 120px;
-    max-height: 120px;
+    height: 154px;
+    min-height: 154px;
+    max-height: 154px;
     padding-inline: 0.56rem;
   }
 

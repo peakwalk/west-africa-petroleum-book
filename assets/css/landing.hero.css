@@ -222,7 +222,7 @@
   backdrop-filter: blur(18px);
 }
 
-@media (min-width: 901px) {
+@media (min-width: 1024px) {
   .hero-signal-panel {
     margin-top: clamp(17rem, 30vw, 20.5rem);
   }

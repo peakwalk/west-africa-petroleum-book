@@ -357,12 +357,12 @@ check_exists assets/icons/homepage/icon-audience-research.svg
 check_exists assets/icons/homepage/icon-audience-policy.svg
 check_exists assets/icons/homepage/icon-audience-operators.svg
 check_exists assets/icons/homepage-sprite.svg
-check_exists assets/icons/stakeholders/governments.svg
-check_exists assets/icons/stakeholders/regulators.svg
-check_exists assets/icons/stakeholders/national-oil-companies.svg
-check_exists assets/icons/stakeholders/operators.svg
-check_exists assets/icons/stakeholders/investors.svg
-check_exists assets/icons/stakeholders/universities-researchers.svg
+check_exists assets/icons/stakeholders/governments.png
+check_exists assets/icons/stakeholders/regulators.png
+check_exists assets/icons/stakeholders/national-oil-companies.png
+check_exists assets/icons/stakeholders/operators.png
+check_exists assets/icons/stakeholders/investors.png
+check_exists assets/icons/stakeholders/universities-researchers.png
 check_exists scripts/build_reader_page_meta.mjs
 check_exists scripts/check_reader_runtime_build_contract.mjs
 check_exists scripts/check_reader_runtime_outline.mjs
@@ -444,12 +444,12 @@ check_contains public/index.html 'class="stakeholder-grid"'
 check_contains public/index.html 'class="stakeholder-card stakeholder-card--governments"'
 check_contains public/index.html 'class="stakeholder-icon-slot"'
 check_contains public/index.html 'class="stakeholder-copy-slot"'
-check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/governments.svg"'
-check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/regulators.svg"'
-check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/national-oil-companies.svg"'
-check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/operators.svg"'
-check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/investors.svg"'
-check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/universities-researchers.svg"'
+check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/governments.png"'
+check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/regulators.png"'
+check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/national-oil-companies.png"'
+check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/operators.png"'
+check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/investors.png"'
+check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/universities-researchers.png"'
 check_not_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-audience-policy'
 check_not_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-audience-national-oil-companies'
 check_not_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-industry-monitoring'
@@ -462,6 +462,17 @@ check_contains public/index.html 'class="country-grid-v2"'
 check_contains public/index.html 'class="country-card-v2 status-producing"'
 check_contains public/index.html 'class="country-card-v2 status-exploration"'
 check_contains public/index.html 'class="country-card-v2 status-noCommercialProduction"'
+check_contains public/index.html '<symbol id="nigeria"'
+check_contains public/index.html '<symbol id="ghana"'
+check_contains public/index.html 'class="country-flag-media country-flag-media-card"'
+check_contains public/index.html '<use href="#nigeria"></use>'
+check_contains public/index.html '<use href="#ghana"></use>'
+check_not_contains public/index.html '/assets/icons/country-flags.svg#nigeria'
+check_not_contains public/index.html '/assets/icons/country-flags.svg#ghana'
+check_contains public/index.html 'assets/images/homepage-west-africa-map-panel.png'
+check_contains public/index.html 'assets/images/homepage-west-africa-map-panel@2x.png 2x'
+check_not_contains public/index.html 'assets/images/homepage-west-africa-map-panel.webp'
+check_not_contains public/index.html '🇳🇬'
 check_contains public/index.html 'View All Countries'
 check_contains public/index.html 'Country Analysis <span aria-hidden="true">→</span></a>'
 check_contains public/index.html 'class="section-heading section-heading-centered"'
@@ -508,14 +519,20 @@ check_exists public/assets/icons/homepage/icon-audience-research.svg
 check_exists public/assets/icons/homepage/icon-audience-policy.svg
 check_exists public/assets/icons/homepage/icon-audience-operators.svg
 check_exists public/assets/icons/homepage-sprite.svg
-check_exists public/assets/icons/stakeholders/governments.svg
-check_exists public/assets/icons/stakeholders/regulators.svg
-check_exists public/assets/icons/stakeholders/national-oil-companies.svg
-check_exists public/assets/icons/stakeholders/operators.svg
-check_exists public/assets/icons/stakeholders/investors.svg
-check_exists public/assets/icons/stakeholders/universities-researchers.svg
+check_exists public/assets/icons/stakeholders/governments.png
+check_exists public/assets/icons/stakeholders/regulators.png
+check_exists public/assets/icons/stakeholders/national-oil-companies.png
+check_exists public/assets/icons/stakeholders/operators.png
+check_exists public/assets/icons/stakeholders/investors.png
+check_exists public/assets/icons/stakeholders/universities-researchers.png
+python3 scripts/check_stakeholder_icon_geometry.py
+check_exists public/assets/icons/country-flags.svg
 check_exists public/assets/images/upstream-atlas-nav-logo.webp
 check_exists public/assets/images/upstream-atlas-hero-v7-clean-left.webp
+check_exists assets/images/homepage-west-africa-map-panel.png
+check_exists assets/images/homepage-west-africa-map-panel@2x.png
+check_exists public/assets/images/homepage-west-africa-map-panel.png
+check_exists public/assets/images/homepage-west-africa-map-panel@2x.png
 check_exists public/assets/images/prototype-hero-graywhite-left.webp
 check_exists public/assets/images/prototype-hero-graywhite-right.webp
 check_exists assets/css/landing.base.css
@@ -584,7 +601,7 @@ check_contains "$LANDING_CSS_ASSERT_FILE" 'margin-block: 24px;'
 check_contains "$LANDING_CSS_ASSERT_FILE" 'border-top: 1px solid var(--line);'
 check_not_contains "$LANDING_CSS_ASSERT_FILE" '.section-country-discovery .section-heading-wide {'
 check_not_contains "$LANDING_CSS_ASSERT_FILE" '--primary: #264d97;'
-check_contains "$LANDING_CSS_ASSERT_FILE" '@media (min-width: 901px) {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '@media (min-width: 1024px) {'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.hero-signal-panel {'
 check_contains "$LANDING_CSS_ASSERT_FILE" 'margin-top: clamp(17rem, 30vw, 20.5rem);'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.chapters-link-row {'
@@ -595,7 +612,247 @@ LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs
 LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const start=css.indexOf(".decision-strip-title-line {");if(start===-1){console.error("Expected .decision-strip-title-line rule block in expanded landing CSS.");process.exit(1);}const end=css.indexOf("}", start);if(end===-1){console.error("Expected closing brace for .decision-strip-title-line rule block.");process.exit(1);}const block=css.slice(start, end + 1);for(const expected of ["display: block;","white-space: nowrap;"]){if(!block.includes(expected)){console.error(`Expected .decision-strip-title-line to include ${expected} for a fixed two-line title layout.`);process.exit(1);}}'
 LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const start=css.indexOf(".decision-strip-copy p {");if(start===-1){console.error("Expected .decision-strip-copy p rule block in expanded landing CSS.");process.exit(1);}const end=css.indexOf("}", start);if(end===-1){console.error("Expected closing brace for .decision-strip-copy p rule block.");process.exit(1);}const block=css.slice(start, end + 1);for(const expected of ["max-width: 21rem;","padding-top: 0;","font-size: 0.875rem;","line-height: 1.54;"]){if(!block.includes(expected)){console.error(`Expected .decision-strip-copy p to include ${expected} so the supporting copy sits closer to the design density.`);process.exit(1);}}for(const removed of ["padding-top: 0.25rem;","font-size: 0.94rem;","font-size: 0.9rem;","line-height: 1.68;","line-height: 1.6;"]){if(block.includes(removed)){console.error(`Expected .decision-strip-copy p to stop using ${removed}.`);process.exit(1);}}'
 LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const start=css.indexOf(".stakeholder-grid {");if(start===-1){console.error("Expected .stakeholder-grid rule block in expanded landing CSS.");process.exit(1);}const end=css.indexOf("}", start);if(end===-1){console.error("Expected closing brace for .stakeholder-grid rule block.");process.exit(1);}const block=css.slice(start, end + 1);for(const expected of ["grid-template-columns: repeat(6, 120px);","justify-content: end;","justify-items: center;","align-items: start;","gap: 12px;"]){if(!block.includes(expected)){console.error(`Expected .stakeholder-grid to include ${expected} so fixed-width cards keep a true 12px visual gap.`);process.exit(1);}}for(const removed of ["grid-template-columns: repeat(6, minmax(0, 1fr));","grid-template-columns: repeat(6, minmax(7.4rem, 1fr));","gap: 8px;","gap: 0.96rem;","gap: 0.885rem;","gap: 0.84rem;","gap: 0.82rem;"]){if(block.includes(removed)){console.error(`Expected .stakeholder-grid to stop using ${removed}.`);process.exit(1);}}'
-LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");function getBlock(selector){const start=css.indexOf(selector+" {");if(start===-1){console.error(`Expected ${selector} rule block in expanded landing CSS.`);process.exit(1);}const end=css.indexOf("}", start);if(end===-1){console.error(`Expected closing brace for ${selector} rule block.`);process.exit(1);}return css.slice(start, end + 1);}const stakeholderCard=getBlock(".stakeholder-card");for(const expected of ["--stakeholder-icon-color: #2d5cb3;","--stakeholder-icon-offset-x: 0rem;","--stakeholder-icon-offset-y: 0rem;","--stakeholder-icon-scale: 1;","--stakeholder-text-color: #214484;","align-self: start;","box-sizing: border-box;","grid-template-rows: 3rem 2.32rem;","align-content: center;","width: 120px;","min-width: 120px;","max-width: 120px;","height: 120px;","min-height: 120px;","max-height: 120px;","row-gap: 0.34rem;","padding: 0.82rem 0.56rem 0.68rem;","border-radius: 0.96rem;","box-shadow: 0 8px 20px rgba(11, 31, 51, 0.045);","color: var(--stakeholder-text-color);"]){if(!stakeholderCard.includes(expected)){console.error(`Expected .stakeholder-card to include ${expected} so stakeholder cards stay fixed at 120px by 120px.`);process.exit(1);}}for(const removed of ["aspect-ratio: 1 / 1;","gap: 0.48rem;","gap: 0.84rem;","gap: 0.78rem;","gap: 0.72rem;","gap: 0.82rem;","max-width: 100%;","min-height: auto;","min-height: 9.55rem;","min-height: 9.35rem;","min-height: 9.45rem;","padding: 1.02rem 0.62rem 0.98rem;","padding: 1.14rem 0.64rem 0.96rem;","padding: 1.18rem 0.7rem 0.9rem;","padding: 1.28rem 0.75rem 0.95rem;","border-radius: 0.92rem;","border-radius: 1rem;","box-shadow: 0 6px 18px rgba(11, 31, 51, 0.045);","color: var(--brand-blue-deep);"]){if(stakeholderCard.includes(removed)){console.error(`Expected .stakeholder-card to stop using ${removed}.`);process.exit(1);}}const iconSlot=getBlock(".stakeholder-icon-slot");for(const expected of ["display: grid;","place-items: center;","align-self: stretch;","justify-self: stretch;","min-height: 3rem;"]){if(!iconSlot.includes(expected)){console.error(`Expected .stakeholder-icon-slot to include ${expected} so icons share one fixed container.`);process.exit(1);}}const stakeholderIcon=getBlock(".stakeholder-icon");for(const expected of ["display: block;","align-self: center;","justify-self: center;","width: 2rem;","height: 2rem;","margin-top: 0;","color: var(--stakeholder-icon-color);","transform: translate(var(--stakeholder-icon-offset-x), var(--stakeholder-icon-offset-y))","scale(var(--stakeholder-icon-scale));","transform-origin: center center;"]){if(!stakeholderIcon.includes(expected)){console.error(`Expected .stakeholder-icon to include ${expected} for icon-slot centering.`);process.exit(1);}}for(const removed of ["width: 1.96rem;","width: 2.34rem;","width: 2.2rem;","width: 2.12rem;","height: 1.96rem;","height: 2.34rem;","height: 2.2rem;","height: 2.12rem;","margin-top: -0.04rem;","margin-top: -0.08rem;","transform: translateY(var(--stakeholder-icon-offset-y));"]){if(stakeholderIcon.includes(removed)){console.error(`Expected .stakeholder-icon to stop using ${removed}.`);process.exit(1);}}const stakeholderImage=getBlock(".stakeholder-icon-image");for(const expected of ["display: block;","object-fit: contain;","object-position: center center;"]){if(!stakeholderImage.includes(expected)){console.error(`Expected .stakeholder-icon-image to include ${expected} so standalone SVG assets align like sprite icons.`);process.exit(1);}}const copySlot=getBlock(".stakeholder-copy-slot");for(const expected of ["display: grid;","align-self: stretch;","justify-self: stretch;","align-content: start;","min-height: 2.32rem;"]){if(!copySlot.includes(expected)){console.error(`Expected .stakeholder-copy-slot to include ${expected} so labels share one fixed container.`);process.exit(1);}}const stakeholderLabel=getBlock(".stakeholder-label");for(const expected of ["gap: 0.02rem;","align-content: start;","min-height: 100%;","color: var(--stakeholder-text-color);","font-size: 0.72rem;","font-weight: 600;","line-height: 1.08;"]){if(!stakeholderLabel.includes(expected)){console.error(`Expected .stakeholder-label to include ${expected} so multi-line labels top-align within the copy slot.`);process.exit(1);}}for(const removed of ["gap: 0.06rem;","gap: 0.04rem;","min-height: auto;","min-height: 2.32rem;","min-height: 2.34rem;","min-height: 2.42rem;","min-height: 2.26rem;","font-size: 0.79rem;","font-size: 0.76rem;","line-height: 1.18;","line-height: 1.2;","line-height: 1.22;"]){if(stakeholderLabel.includes(removed)){console.error(`Expected .stakeholder-label to stop using ${removed}.`);process.exit(1);}}const governmentsCard=getBlock(".stakeholder-card--governments");if(!governmentsCard.includes("--stakeholder-icon-scale: 0.98;")){console.error("Expected .stakeholder-card--governments to include the smaller optical scale.");process.exit(1);}const regulatorsCard=getBlock(".stakeholder-card--regulators");if(!regulatorsCard.includes("--stakeholder-icon-scale: 1.02;")){console.error("Expected .stakeholder-card--regulators to include the larger optical scale.");process.exit(1);}const operatorsCard=getBlock(".stakeholder-card--operators");for(const expected of ["--stakeholder-icon-offset-x: -0.075rem;","--stakeholder-icon-offset-y: -0.04rem;"]){if(!operatorsCard.includes(expected)){console.error(`Expected .stakeholder-card--operators to include ${expected} for optical centering.`);process.exit(1);}}const investorsCard=getBlock(".stakeholder-card--investors");for(const expected of ["--stakeholder-icon-offset-x: -0.1rem;","--stakeholder-icon-offset-y: -0.08rem;","--stakeholder-icon-scale: 1.06;"]){if(!investorsCard.includes(expected)){console.error(`Expected .stakeholder-card--investors to include ${expected} for optical centering and size alignment.`);process.exit(1);}}const universitiesCard=getBlock(".stakeholder-card--universities-researchers");for(const expected of ["--stakeholder-icon-offset-x: -0.05rem;","--stakeholder-icon-offset-y: 0rem;","--stakeholder-icon-scale: 0.95;"]){if(!universitiesCard.includes(expected)){console.error(`Expected .stakeholder-card--universities-researchers to include ${expected} for optical centering.`);process.exit(1);}}'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e '
+const fs = require("fs");
+const css = fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE, "utf8");
+
+function getBlock(selector) {
+  const start = css.indexOf(selector + " {");
+  if (start === -1) {
+    console.error(`Expected ${selector} rule block in expanded landing CSS.`);
+    process.exit(1);
+  }
+  const end = css.indexOf("}", start);
+  if (end === -1) {
+    console.error(`Expected closing brace for ${selector} rule block.`);
+    process.exit(1);
+  }
+  return css.slice(start, end + 1);
+}
+
+const stakeholderCard = getBlock(".stakeholder-card");
+for (const expected of [
+  "--stakeholder-icon-color: #2d5cb3;",
+  "--stakeholder-icon-size: 78px;",
+  "--stakeholder-icon-offset-x: 0px;",
+  "--stakeholder-icon-offset-y: 0px;",
+  "--stakeholder-icon-scale: 1;",
+  "--stakeholder-text-color: #214484;",
+  "align-self: start;",
+  "box-sizing: border-box;",
+  "grid-template-rows: 82px 37px;",
+  "align-content: center;",
+  "width: 120px;",
+  "min-width: 120px;",
+  "max-width: 120px;",
+  "height: 154px;",
+  "min-height: 154px;",
+  "max-height: 154px;",
+  "row-gap: 9px;",
+  "padding: 15px 9px 11px;",
+  "border-radius: 0.96rem;",
+  "box-shadow: 0 8px 20px rgba(11, 31, 51, 0.045);",
+  "color: var(--stakeholder-text-color);",
+]) {
+  if (!stakeholderCard.includes(expected)) {
+    console.error(
+      `Expected .stakeholder-card to include ${expected} so the stakeholder icons stay optically aligned within fixed cards.`,
+    );
+    process.exit(1);
+  }
+}
+
+for (const removed of [
+  "aspect-ratio: 1 / 1;",
+  "gap: 0.48rem;",
+  "gap: 0.84rem;",
+  "gap: 0.78rem;",
+  "gap: 0.72rem;",
+  "gap: 0.82rem;",
+  "max-width: 100%;",
+  "min-height: auto;",
+  "min-height: 9.55rem;",
+  "min-height: 9.35rem;",
+  "min-height: 9.45rem;",
+  "padding: 0.25rem 0.56rem 0.5rem;",
+  "padding: 1.02rem 0.62rem 0.98rem;",
+  "padding: 1.14rem 0.64rem 0.96rem;",
+  "padding: 1.18rem 0.7rem 0.9rem;",
+  "padding: 1.28rem 0.75rem 0.95rem;",
+  "border-radius: 0.92rem;",
+  "border-radius: 1rem;",
+  "box-shadow: 0 6px 18px rgba(11, 31, 51, 0.045);",
+  "color: var(--brand-blue-deep);",
+]) {
+  if (stakeholderCard.includes(removed)) {
+    console.error(`Expected .stakeholder-card to stop using ${removed}.`);
+    process.exit(1);
+  }
+}
+
+const iconSlot = getBlock(".stakeholder-icon-slot");
+for (const expected of [
+  "display: grid;",
+  "place-items: center;",
+  "align-self: stretch;",
+  "justify-self: stretch;",
+  "min-height: 82px;",
+]) {
+  if (!iconSlot.includes(expected)) {
+    console.error(`Expected .stakeholder-icon-slot to include ${expected} so icons share one fixed container.`);
+    process.exit(1);
+  }
+}
+
+const stakeholderIcon = getBlock(".stakeholder-icon");
+for (const expected of [
+  "display: block;",
+  "align-self: center;",
+  "justify-self: center;",
+  "width: var(--stakeholder-icon-size);",
+  "height: var(--stakeholder-icon-size);",
+  "margin-top: 0;",
+  "color: var(--stakeholder-icon-color);",
+  "transform: translate(var(--stakeholder-icon-offset-x), var(--stakeholder-icon-offset-y))",
+  "scale(var(--stakeholder-icon-scale));",
+  "transform-origin: center center;",
+]) {
+  if (!stakeholderIcon.includes(expected)) {
+    console.error(`Expected .stakeholder-icon to include ${expected} for per-icon centering.`);
+    process.exit(1);
+  }
+}
+
+for (const removed of [
+  "width: 4rem;",
+  "height: 4rem;",
+  "width: 2rem;",
+  "height: 2rem;",
+  "margin-top: -0.04rem;",
+  "margin-top: -0.08rem;",
+  "transform: translateY(var(--stakeholder-icon-offset-y));",
+]) {
+  if (stakeholderIcon.includes(removed)) {
+    console.error(`Expected .stakeholder-icon to stop using ${removed}.`);
+    process.exit(1);
+  }
+}
+
+const stakeholderImage = getBlock(".stakeholder-icon-image");
+for (const expected of [
+  "display: block;",
+  "object-fit: contain;",
+  "object-position: center center;",
+]) {
+  if (!stakeholderImage.includes(expected)) {
+    console.error(
+      `Expected .stakeholder-icon-image to include ${expected} so standalone PNG assets align like sprite icons.`,
+    );
+    process.exit(1);
+  }
+}
+
+const copySlot = getBlock(".stakeholder-copy-slot");
+for (const expected of [
+  "display: grid;",
+  "align-self: stretch;",
+  "justify-self: stretch;",
+  "align-content: start;",
+  "min-height: 2.32rem;",
+]) {
+  if (!copySlot.includes(expected)) {
+    console.error(`Expected .stakeholder-copy-slot to include ${expected} so labels share one fixed container.`);
+    process.exit(1);
+  }
+}
+
+const stakeholderLabel = getBlock(".stakeholder-label");
+for (const expected of [
+  "gap: 0.02rem;",
+  "align-content: start;",
+  "min-height: 100%;",
+  "color: var(--stakeholder-text-color);",
+  "font-size: 0.72rem;",
+  "font-weight: 600;",
+  "line-height: 1.08;",
+]) {
+  if (!stakeholderLabel.includes(expected)) {
+    console.error(`Expected .stakeholder-label to include ${expected} so multi-line labels top-align within the copy slot.`);
+    process.exit(1);
+  }
+}
+
+for (const removed of [
+  "gap: 0.06rem;",
+  "gap: 0.04rem;",
+  "min-height: auto;",
+  "min-height: 2.34rem;",
+  "min-height: 2.42rem;",
+  "min-height: 2.26rem;",
+  "font-size: 0.79rem;",
+  "font-size: 0.76rem;",
+  "line-height: 1.18;",
+  "line-height: 1.2;",
+  "line-height: 1.22;",
+]) {
+  if (stakeholderLabel.includes(removed)) {
+    console.error(`Expected .stakeholder-label to stop using ${removed}.`);
+    process.exit(1);
+  }
+}
+
+const governmentsCard = getBlock(".stakeholder-card--governments");
+for (const expected of ["--stakeholder-icon-size: 80px;"]) {
+  if (!governmentsCard.includes(expected)) {
+    console.error(`Expected .stakeholder-card--governments to include ${expected} for optical centering.`);
+    process.exit(1);
+  }
+}
+
+const regulatorsCard = getBlock(".stakeholder-card--regulators");
+for (const expected of ["--stakeholder-icon-size: 74px;"]) {
+  if (!regulatorsCard.includes(expected)) {
+    console.error(`Expected .stakeholder-card--regulators to include ${expected} for optical centering.`);
+    process.exit(1);
+  }
+}
+
+const nocCard = getBlock(".stakeholder-card--national-oil-companies");
+for (const expected of ["--stakeholder-icon-size: 76px;"]) {
+  if (!nocCard.includes(expected)) {
+    console.error(
+      `Expected .stakeholder-card--national-oil-companies to include ${expected} for optical centering.`,
+    );
+    process.exit(1);
+  }
+}
+
+const operatorsCard = getBlock(".stakeholder-card--operators");
+for (const expected of ["--stakeholder-icon-size: 80px;"]) {
+  if (!operatorsCard.includes(expected)) {
+    console.error(`Expected .stakeholder-card--operators to include ${expected} for optical centering.`);
+    process.exit(1);
+  }
+}
+
+const investorsCard = getBlock(".stakeholder-card--investors");
+for (const expected of ["--stakeholder-icon-size: 78px;"]) {
+  if (!investorsCard.includes(expected)) {
+    console.error(`Expected .stakeholder-card--investors to include ${expected} for optical centering.`);
+    process.exit(1);
+  }
+}
+
+const universitiesCard = getBlock(".stakeholder-card--universities-researchers");
+for (const expected of ["--stakeholder-icon-size: 78px;"]) {
+  if (!universitiesCard.includes(expected)) {
+    console.error(
+      `Expected .stakeholder-card--universities-researchers to include ${expected} for optical centering.`,
+    );
+    process.exit(1);
+  }
+}
+'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.chapters-link {'
 check_contains "$LANDING_CSS_ASSERT_FILE" 'margin: 0;'
 check_contains "$LANDING_CSS_ASSERT_FILE" 'border-radius: 0.5rem;'
@@ -610,10 +867,10 @@ check_contains "$LANDING_CSS_ASSERT_FILE" '.header-actions {'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.header-contact-link::after {'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.mobile-nav-contact {'
 LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const compactLogoRule=/@media \(max-width: 767px\) \{[\s\S]*?\.brand-mark-image-full \{[^}]*display: none;[^}]*\}[\s\S]*?\.brand-mark-image-compact \{[^}]*display: block;[^}]*\}/;if(!compactLogoRule.test(css)){console.error("Expected landing header to switch to the compact logo below 768px.");process.exit(1);}'
-LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const start=css.indexOf("@media (max-width: 767px) {");const end=css.indexOf("@media (max-width: 640px) {", start);if(start===-1||end===-1){console.error("Expected narrow landing header media blocks in expanded landing CSS.");process.exit(1);}const block=css.slice(start,end);for(const expected of [".site-header .brand-mark {","min-width: 2.75rem;","min-height: 2.75rem;","justify-content: center;",".site-header .brand-mark-image-compact {","width: 2rem;"]){if(!block.includes(expected)){console.error("Expected narrow landing header logo CSS to include "+expected);process.exit(1);}}'
-LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const start=css.indexOf("@media (max-width: 767px) {");const end=css.indexOf("@media (max-width: 640px) {", start);if(start===-1||end===-1){console.error("Expected narrow landing header media blocks in expanded landing CSS.");process.exit(1);}const block=css.slice(start,end);for(const expected of [".site-header .header-actions > .site-language-switch {","min-height: 2.75rem;","gap: 0;","padding: 0 0.125rem;","background: transparent;","border-color: transparent;","isolation: isolate;",".site-header .header-actions > .site-language-switch::before {","inset: 0.1875rem 0;","content: \"\";",".site-header .header-actions > .site-language-switch .site-language-option {","min-width: 2.75rem;","min-height: 2.75rem;","padding: 0 0.4rem;","font-size: 0.78rem;",".site-language-option.is-current::before,","a.site-language-option:hover::before,","inset: 0.25rem 0.16rem;",".site-header .header-actions > .mobile-nav-menu .mobile-nav-toggle {","gap: 0.35rem;","padding: 0 0.75rem;","font-size: 0.82rem;",".site-header .header-actions > .mobile-nav-menu .mobile-nav-toggle::before {"]){if(!block.includes(expected)){console.error("Expected narrow landing header CSS to include "+expected);process.exit(1);}}'
-LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const marker="@media (min-width: 768px) and (max-width: 1023px) {";const start=css.indexOf(marker);if(start===-1){console.error("Expected landing tablet header logo media block in expanded landing CSS.");process.exit(1);}const next=css.indexOf("\n\n@media",start + marker.length);const block=(next===-1?css.slice(start):css.slice(start,next));for(const expected of [".site-header .brand-mark {","width: auto;","height: 44px;","flex: 0 0 auto;",".site-header .brand-mark-image-full {","width: auto;","height: 36px;",".site-header .brand-mark-image-compact {","display: none;"]){if(!block.includes(expected)){console.error("Expected landing tablet header logo CSS to include "+expected);process.exit(1);}}'
-LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const marker="@media (min-width: 1024px) {";const start=css.indexOf(marker);if(start===-1){console.error("Expected landing desktop header media block in expanded landing CSS.");process.exit(1);}const next=css.indexOf("\n\n@media",start + marker.length);const block=(next===-1?css.slice(start):css.slice(start,next));for(const expected of [".site-header .brand-mark-image-full {","width: auto;","height: 36px;"]){if(!block.includes(expected)){console.error("Expected landing desktop header CSS to include "+expected);process.exit(1);}}'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const match=css.match(/@media \(max-width: 767px\) \{[\s\S]*?\.site-header \.brand-mark \{[\s\S]*?\.site-header[\s\S]*?\.mobile-nav-toggle[\s\S]*?\.ua-icon--sm \{[\s\S]*?\}/);if(!match){console.error("Expected phone landing header media block with compact-brand and nav-toggle rules.");process.exit(1);}const block=match[0];for(const expected of [".site-header .brand-mark {","min-width: 2.75rem;","min-height: 2.75rem;","justify-content: center;",".site-header .brand-mark-image-compact {","width: 2rem;"]){if(!block.includes(expected)){console.error("Expected narrow landing header logo CSS to include "+expected);process.exit(1);}}'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const match=css.match(/@media \(max-width: 767px\) \{[\s\S]*?\.site-header \.brand-mark \{[\s\S]*?\.site-header[\s\S]*?\.mobile-nav-toggle[\s\S]*?\.ua-icon--sm \{[\s\S]*?\}/);if(!match){console.error("Expected phone landing header media block with compact-brand and nav-toggle rules.");process.exit(1);}const block=match[0];for(const expected of [".site-header .header-actions > .site-language-switch {","min-height: 2.75rem;","gap: 0;","padding: 0 0.125rem;","background: transparent;","border-color: transparent;","isolation: isolate;",".site-header .header-actions > .site-language-switch::before {","inset: 0.1875rem 0;","content: \"\";",".site-header .header-actions > .site-language-switch .site-language-option {","min-width: 2.75rem;","min-height: 2.75rem;","padding: 0 0.4rem;","font-size: 0.78rem;",".site-language-option.is-current::before,","a.site-language-option:hover::before,","inset: 0.25rem 0.16rem;",".site-header .header-actions > .mobile-nav-menu .mobile-nav-toggle {","gap: 0.35rem;","padding: 0 0.75rem;","font-size: 0.82rem;",".site-header .header-actions > .mobile-nav-menu .mobile-nav-toggle::before {"]){if(!block.includes(expected)){console.error("Expected narrow landing header CSS to include "+expected);process.exit(1);}}'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const match=css.match(/@media \(min-width: 768px\) and \(max-width: 1023px\) \{[\s\S]*?\.site-header \.brand-mark \{[\s\S]*?\.site-header \.brand-mark-image-compact \{[\s\S]*?display: none;[\s\S]*?\}/);if(!match){console.error("Expected landing tablet header logo media block in expanded landing CSS.");process.exit(1);}const block=match[0];for(const expected of [".site-header .brand-mark {","width: auto;","height: 44px;","flex: 0 0 auto;",".site-header .brand-mark-image-full {","width: auto;","height: 36px;",".site-header .brand-mark-image-compact {","display: none;"]){if(!block.includes(expected)){console.error("Expected landing tablet header logo CSS to include "+expected);process.exit(1);}}'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const match=css.match(/@media \(min-width: 1024px\) and \(max-width: 1439px\) \{[\s\S]*?\.site-header \.brand-mark-image-full \{[\s\S]*?height: 36px;[\s\S]*?\}/);if(!match){console.error("Expected landing small-desktop header media block in expanded landing CSS.");process.exit(1);}const block=match[0];for(const expected of [".site-header .brand-mark-image-full {","width: auto;","height: 36px;"]){if(!block.includes(expected)){console.error("Expected landing small-desktop header CSS to include "+expected);process.exit(1);}}'
 LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const compactStart=css.indexOf("@media (max-width: 360px) {");if(compactStart===-1){console.error("Expected extra-narrow landing header media block in expanded landing CSS.");process.exit(1);}const compactBlock=css.slice(compactStart);for(const removed of ["min-width: 1.85rem;","width: 2.5rem;"]){if(compactBlock.includes(removed)){console.error("Expected extra-narrow landing header to keep the compact logo touch target while avoiding oversized visual overrides: "+removed);process.exit(1);}}'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.ua-icon {'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.ua-icon-image {'
@@ -627,7 +884,7 @@ check_contains "$LANDING_CSS_ASSERT_FILE" '.mobile-nav-menu[open] .mobile-nav-to
 check_contains "$LANDING_CSS_ASSERT_FILE" '.country-signal-icon {'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.country-signal-copy {'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.ua-icon--audience {'
-check_contains "$LANDING_CSS_ASSERT_FILE" '@media (max-width: 700px) {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '@media (max-width: 767px) {'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.site-header-inner {'
 check_contains "$LANDING_CSS_ASSERT_FILE" 'grid-template-columns: auto auto;'
 check_contains "$LANDING_CSS_ASSERT_FILE" '@media (max-width: 360px) {'

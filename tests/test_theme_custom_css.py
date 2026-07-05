@@ -214,6 +214,7 @@ class ThemeCustomCssTest(unittest.TestCase):
         )
 
         self.assertIn("node scripts/check_reader_runtime_build_contract.mjs", script)
+        self.assertIn("python3 scripts/check_stakeholder_icon_geometry.py", script)
         self.assertIn('from "./shared/book-page-variants.mjs";', build_contract_checker)
         self.assertIn("book-layout-booting", build_contract_checker)
         self.assertIn("book-outline-empty", build_contract_checker)

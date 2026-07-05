@@ -203,6 +203,214 @@
   color: var(--accent);
 }
 
+.country-card-v2 {
+  display: grid;
+  align-content: start;
+  gap: 0.82rem;
+  min-height: 18.4rem;
+  padding: 1.1rem 1.1rem 1.05rem;
+  border: 1px solid rgba(11, 31, 51, 0.1);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 16px 36px rgba(11, 31, 51, 0.08);
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.country-card-v2:hover,
+.country-card-v2:focus-within {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 44px rgba(11, 31, 51, 0.11);
+}
+
+.country-card-v2-top {
+  display: flex;
+  justify-content: flex-start;
+  min-height: 1.45rem;
+}
+
+.country-status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.45rem;
+  padding: 0.16rem 0.52rem 0.14rem;
+  border-radius: 0.38rem;
+  color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+  font-family: "Manrope", "Inter", sans-serif;
+  font-size: 0.62rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.country-status-badge.status-producing {
+  background: #1d8f4a;
+}
+
+.country-status-badge.status-exploration {
+  background: #2d6cdf;
+}
+
+.country-status-badge.status-noCommercialProduction {
+  background: #5f6674;
+}
+
+.country-card-v2-heading {
+  display: grid;
+  align-content: start;
+  gap: 0.28rem;
+}
+
+.country-identity,
+.country-meta,
+.country-hydrocarbons {
+  margin: 0;
+}
+
+.country-identity {
+  display: flex;
+  align-items: center;
+  gap: 0.62rem;
+  min-width: 0;
+}
+
+.country-flag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  overflow: hidden;
+}
+
+.country-flag-card {
+  width: 3.25rem;
+  height: 2.18rem;
+  border-radius: 0.28rem;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow:
+    0 0 0 1px rgba(11, 31, 51, 0.08),
+    0 8px 18px rgba(11, 31, 51, 0.08);
+}
+
+.country-flag-map {
+  width: 1.52rem;
+  height: 1rem;
+  border-radius: 0.18rem;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow:
+    0 0 0 1px rgba(11, 31, 51, 0.1),
+    0 6px 12px rgba(11, 31, 51, 0.12);
+}
+
+.country-flag-media {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.country-name {
+  color: var(--text);
+  display: block;
+  font-family: "Manrope", "Inter", sans-serif;
+  font-size: 1.26rem;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.028em;
+}
+
+.country-meta {
+  color: #61708a;
+  font-family: "Manrope", "Inter", sans-serif;
+  font-size: 0.74rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+}
+
+.country-hydrocarbons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.72rem;
+  min-height: 1.25rem;
+  align-items: center;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.25;
+}
+
+.country-hydrocarbon-item {
+  display: inline-flex;
+  align-items: center;
+}
+
+.country-hydrocarbon-item::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-right: 0.35rem;
+  border-radius: 999px;
+  background: #1d8f4a;
+  box-shadow: 0 0 0 2px rgba(29, 143, 74, 0.12);
+}
+
+.country-hydrocarbon-item--gas::before {
+  background: #ea4e5a;
+  box-shadow: 0 0 0 2px rgba(234, 78, 90, 0.12);
+}
+
+.country-hydrocarbon-item--condensate::before {
+  background: #e0a31a;
+  box-shadow: 0 0 0 2px rgba(224, 163, 26, 0.12);
+}
+
+.country-hydrocarbons-empty {
+  color: var(--text-muted);
+  min-height: 1.25rem;
+  font-size: 0.84rem;
+  line-height: 1.4;
+}
+
+.country-metrics {
+  display: grid;
+  gap: 0.52rem;
+  margin: 0;
+}
+
+.country-metrics div {
+  display: grid;
+  grid-template-columns: minmax(2ch, max-content) minmax(0, 1fr);
+  gap: 0.62rem;
+  align-items: baseline;
+}
+
+.country-metrics dt {
+  color: var(--text);
+  font-family: "Manrope", "Inter", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.country-metrics dd {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.93rem;
+  font-weight: 700;
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+}
+
+.country-analysis-link {
+  margin-top: auto;
+  padding-top: 0.25rem;
+  font-size: 0.92rem;
+  line-height: 1.1;
+}
+
 .chapter-part {
   font-size: 1.08rem;
   line-height: 1.2;

@@ -1,4 +1,4 @@
-@media (max-width: 1100px) {
+@media (min-width: 768px) and (max-width: 1023px) {
   .hero-layout,
   .editorial-panel,
   .reference-evidence-grid,
@@ -50,7 +50,10 @@
   }
 
   .decision-strip-copy h2,
-  .decision-strip-copy p {
+  .decision-strip-copy p,
+  .map-overview-copy,
+  .map-overview-copy h2,
+  .map-overview-copy p {
     max-width: none;
   }
 
@@ -67,7 +70,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@media (min-width: 768px) and (max-width: 1023px) {
   .site-header-inner {
     width: min(76rem, calc(100% - 2rem));
     grid-template-columns: auto auto;
@@ -226,14 +229,14 @@
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1024px) and (max-width: 1439px) {
   .site-header .brand-mark-image-full {
     width: auto;
     height: 36px;
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 767px) {
   .site-header-inner {
     grid-template-columns: auto auto;
     min-height: 4.6rem;
