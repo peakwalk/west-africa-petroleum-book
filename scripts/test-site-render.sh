@@ -477,13 +477,32 @@ check_contains public/index.html 'View All Countries'
 check_contains public/index.html 'Country Analysis <span aria-hidden="true">→</span></a>'
 check_contains public/index.html 'class="section-heading section-heading-centered"'
 check_contains public/index.html 'Search Upstream Atlas'
+check_contains public/index.html '<h3>Search Upstream Atlas</h3>'
+check_not_contains public/index.html '<h2>Search Upstream Atlas</h2>'
+check_contains public/index.html 'class="homepage-search-shell"'
+check_contains public/index.html 'class="homepage-search-submit" type="submit" aria-label="Search the Book"'
+check_not_contains public/index.html 'class="button button-primary" type="submit">Search the Book</button>'
 check_contains public/index.html 'class="search-scope-chip" href="/book/?search=Fiscal%20Systems"'
-check_contains public/index.html 'class="topic-grid"'
+check_contains public/index.html 'class="search-scope-chip-icon search-scope-chip-icon--countries"'
+check_contains public/index.html 'class="search-scope-chip-icon search-scope-chip-icon--chapters"'
+check_contains public/index.html 'class="search-scope-chip-label">National Oil Companies</span>'
+check_contains public/index.html 'class="section-heading section-heading-topic-reference"'
+check_contains public/index.html 'class="topic-grid topic-grid-reference"'
+check_contains public/index.html 'class="topic-card topic-card-reference"'
+check_contains public/index.html '<h4>Petroleum Value Chain</h4>'
+check_contains public/index.html '<h4>West African Fiscal Regimes</h4>'
+check_contains public/index.html 'class="topic-card-icon topic-card-icon--petroleum-value-chain"'
+check_contains public/index.html 'class="topic-card-icon topic-card-icon--country-analysis"'
+check_contains public/index.html 'West African Fiscal Regimes'
 check_contains public/index.html 'Governance &amp; Regulation'
+check_not_contains public/index.html 'Move from basin context to governance, fiscal systems, and operations.'
 check_contains public/index.html 'class="summary-card-eyebrow">Latest Updates</p>'
 check_contains public/index.html 'class="summary-card-eyebrow">Current Edition</p>'
 check_contains public/index.html 'class="summary-card-eyebrow">Topics Covered</p>'
 check_contains public/index.html 'class="summary-card-eyebrow">Future Development</p>'
+check_contains public/index.html 'class="summary-card-link" href="/chapters/">View all updates'
+check_contains public/index.html 'class="summary-card-link" href="/#topics">View all topics'
+check_not_contains public/index.html 'class="summary-card-link" href="/chapters/">Learn more'
 check_contains public/index.html 'class="site-footer site-footer-detailed"'
 check_contains public/index.html 'class="brand-mark-image brand-mark-image-full"'
 check_contains public/index.html 'class="brand-mark-image brand-mark-image-compact"'
@@ -583,6 +602,8 @@ check_contains "$LANDING_CSS_ASSERT_FILE" '--surface-muted: #eef2f4;'
 check_contains "$LANDING_CSS_ASSERT_FILE" '--ink-primary: #0b1f33;'
 check_contains "$LANDING_CSS_ASSERT_FILE" '--brand-blue: #3163c2;'
 check_contains "$LANDING_CSS_ASSERT_FILE" '--brand-blue-deep: #264d97;'
+check_contains "$LANDING_CSS_ASSERT_FILE" '--homepage-heading-text: #112c59;'
+check_contains "$LANDING_CSS_ASSERT_FILE" '--homepage-primary-text: #214484;'
 check_contains "$LANDING_CSS_ASSERT_FILE" '--footer-bg: #0b1f33;'
 check_contains "$LANDING_CSS_ASSERT_FILE" '--secondary: #d88a1d;'
 check_contains "$LANDING_CSS_ASSERT_FILE" '--text: var(--ink-primary);'
@@ -594,8 +615,308 @@ check_contains "$LANDING_CSS_ASSERT_FILE" 'rgba(10, 33, 58, 1) 50%'
 check_contains "$LANDING_CSS_ASSERT_FILE" 'width: min(100%, 54rem);'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.section-country-discovery {'
 check_contains "$LANDING_CSS_ASSERT_FILE" 'padding-top: 0;'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.section-map-overview {'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'margin-top: 2rem;'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'padding-top: 0;'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'padding-bottom: 0;'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.section-search-surface {'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'margin-top: 24px;'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'margin-bottom: 0;'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'padding-top: 0;'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'padding-bottom: 0;'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.section-heading.section-heading-centered {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.section-search-surface .section-heading h3 {'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'margin-block: 0;'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.search-scope-chip-icon {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.search-scope-chip-label {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.section.section-topic-reference {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.section-heading.section-heading-topic-reference {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.topic-grid-reference {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.topic-card-reference {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.topic-card.topic-card-reference h4 {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.topic-card-icon {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.section.section-summary-modules {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.section-summary-modules .summary-grid {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.summary-card .summary-card-link {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.summary-card-edition h3 {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.section-heading.section-heading-wide {'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'margin-bottom: 0;'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.decision-strip {'
-check_contains "$LANDING_CSS_ASSERT_FILE" 'padding-block: 2.2rem 0;'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.section.section-platform.decision-strip {'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'margin-top: 2.2rem;'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'padding-top: 0;'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'padding-bottom: 0;'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e '
+const fs = require("fs");
+const css = fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE, "utf8");
+
+function block(selector) {
+  const start = css.indexOf(selector);
+  if (start === -1) {
+    console.error(`Expected selector block: ${selector}`);
+    process.exit(1);
+  }
+  const end = css.indexOf("}", start);
+  if (end === -1) {
+    console.error(`Expected closing brace for selector block: ${selector}`);
+    process.exit(1);
+  }
+  return css.slice(start, end + 1);
+}
+
+const grid = block(".country-grid-v2 {");
+if (!grid.includes("margin-top: 2.5rem;")) {
+  console.error("Expected .country-grid-v2 to own the transferred top spacing via margin-top: 2.5rem;");
+  process.exit(1);
+}
+
+const search = block(".section-search-surface {");
+for (const expected of ["margin-top: 24px;", "margin-bottom: 0;", "padding-top: 0;", "padding-bottom: 0;"]) {
+  if (!search.includes(expected)) {
+    console.error(`Expected .section-search-surface to include ${expected}.`);
+    process.exit(1);
+  }
+}
+if (search.includes("padding-top: 2.55rem;")) {
+  console.error("Expected .section-search-surface to stop using desktop padding-top: 2.55rem.");
+  process.exit(1);
+}
+
+const centeredHeading = block(".section-heading.section-heading-centered {");
+for (const expected of ["margin-bottom: 12px;","text-align: center;","justify-items: center;"]) {
+  if (!centeredHeading.includes(expected)) {
+    console.error(`Expected .section-heading.section-heading-centered to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const searchHeadingWrap = block(".section-search-surface .section-heading {");
+if (!searchHeadingWrap.includes("margin-bottom: 12px;")) {
+  console.error("Expected .section-search-surface .section-heading to use margin-bottom: 12px.");
+  process.exit(1);
+}
+
+const searchHeading = block(".section-search-surface .section-heading h3 {");
+for (const expected of ["margin-block: 0;","color: var(--homepage-heading-text);","font-size: clamp(1.9rem, 2.15vw, 2.2rem);"]) {
+  if (!searchHeading.includes(expected)) {
+    console.error(`Expected .section-search-surface .section-heading h3 to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const mobileStart = css.indexOf("@media (max-width: 767px) {");
+const mobileEnd = css.indexOf("@media (max-width: 480px) {", mobileStart);
+const mobileSegment =
+  mobileStart === -1 ? "" : css.slice(mobileStart, mobileEnd === -1 ? undefined : mobileEnd);
+const mobileSearchStart = mobileSegment.indexOf(".section-search-surface {");
+const mobileSearchEnd =
+  mobileSearchStart === -1 ? -1 : mobileSegment.indexOf("}", mobileSearchStart);
+const mobileSearchBlock =
+  mobileSearchStart === -1 || mobileSearchEnd === -1
+    ? ""
+    : mobileSegment.slice(mobileSearchStart, mobileSearchEnd + 1);
+
+for (const expected of ["margin-top: 24px;", "margin-bottom: 0;", "padding-top: 0;", "padding-bottom: 0;"]) {
+  if (!mobileSearchBlock.includes(expected)) {
+    console.error("Expected mobile .section-search-surface to use margin-top: 24px while keeping bottom margin and padding cleared.");
+    process.exit(1);
+  }
+}
+
+const chip = block(".search-scope-chip {");
+for (const expected of ["gap: 0.62rem;", "min-height: 3.05rem;", "border-radius: 1rem;", "font-size: 0.87rem;"]) {
+  if (!chip.includes(expected)) {
+    console.error(`Expected .search-scope-chip to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const icon = block(".search-scope-chip-icon {");
+for (const expected of ["width: 1.18rem;", "height: 1.18rem;", "stroke-width: 1.9;"]) {
+  if (!icon.includes(expected)) {
+    console.error(`Expected .search-scope-chip-icon to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const topicSection = block(".section.section-topic-reference {");
+for (const expected of ["margin-top: 24px;","padding-top: 0;","padding-bottom: 0;"]) {
+  if (!topicSection.includes(expected)) {
+    console.error(`Expected .section.section-topic-reference to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const topicHeading = block(".section-heading.section-heading-topic-reference {");
+for (const expected of ["gap: 0;","margin-bottom: 1.15rem;"]) {
+  if (!topicHeading.includes(expected)) {
+    console.error(`Expected .section-heading.section-heading-topic-reference to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const topicGrid = block(".topic-grid-reference {");
+for (const expected of ["grid-template-columns: repeat(6, minmax(0, 1fr));","align-items: stretch;"]) {
+  if (!topicGrid.includes(expected)) {
+    console.error(`Expected .topic-grid-reference to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const topicCard = block(".topic-card-reference {");
+for (const expected of ["grid-template-rows: auto auto 1fr auto;","min-height: 14.9rem;","padding: 1.28rem 1.12rem 0.98rem;","gap: 0.68rem;"]) {
+  if (!topicCard.includes(expected)) {
+    console.error(`Expected .topic-card-reference to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const topicTitle = block(".topic-card.topic-card-reference h4 {");
+for (const expected of ["font-size: 0.92rem;","line-height: 1.22;","letter-spacing: -0.015em;"]) {
+  if (!topicTitle.includes(expected)) {
+    console.error(`Expected .topic-card.topic-card-reference h4 to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const topicCopy = block(".topic-card.topic-card-reference p {");
+for (const expected of ["font-size: 0.81rem;","line-height: 1.54;"]) {
+  if (!topicCopy.includes(expected)) {
+    console.error(`Expected .topic-card.topic-card-reference p to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const topicLink = block(".topic-card-reference .topic-card-link {");
+for (const expected of ["font-size: 0.85rem;","line-height: 1;"]) {
+  if (!topicLink.includes(expected)) {
+    console.error(`Expected .topic-card-reference .topic-card-link to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const topicIcon = block(".topic-card-icon {");
+for (const expected of ["width: 2.95rem;","height: 2.95rem;","color: #244da3;"]) {
+  if (!topicIcon.includes(expected)) {
+    console.error(`Expected .topic-card-icon to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const summarySection = block(".section.section-summary-modules {");
+for (const expected of ["margin-top: 24px;","margin-bottom: 24px;","padding-top: 0;","padding-bottom: 0;"]) {
+  if (!summarySection.includes(expected)) {
+    console.error(`Expected .section.section-summary-modules to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const decisionStripSection = block(".section.section-platform.decision-strip {");
+if (!decisionStripSection.includes("background: transparent;")) {
+  console.error("Expected .section.section-platform.decision-strip to remove the inherited platform background.");
+  process.exit(1);
+}
+
+const summaryGrid = block(".section-summary-modules .summary-grid {");
+for (const expected of ["grid-template-columns:","minmax(0, 1.14fr)","minmax(0, 1.34fr)","minmax(0, 1.15fr)","gap: 0.95rem;","align-items: stretch;"]) {
+  if (!summaryGrid.includes(expected)) {
+    console.error(`Expected .summary-grid to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const summaryCard = block(".summary-card {");
+for (const expected of ["grid-template-rows: auto 1fr auto;","min-height: 17.4rem;","padding: 1.45rem 1.35rem 1.2rem;"]) {
+  if (!summaryCard.includes(expected)) {
+    console.error(`Expected .summary-card to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const summaryEyebrow = block(".summary-card-eyebrow {");
+for (const expected of ["font-size: 1rem;","line-height: 1.14;","letter-spacing: -0.025em;"]) {
+  if (!summaryEyebrow.includes(expected)) {
+    console.error(`Expected .summary-card-eyebrow to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const updateLabel = block(".update-label {");
+for (const expected of ["font-size: 0.86rem;","line-height: 1.34;","letter-spacing: -0.01em;"]) {
+  if (!updateLabel.includes(expected)) {
+    console.error(`Expected .update-label to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const firstUpdateDateStart = css.indexOf(".update-date {");
+const updateDateStart =
+  firstUpdateDateStart === -1 ? -1 : css.indexOf(".update-date {", firstUpdateDateStart + 1);
+if (updateDateStart === -1) {
+  console.error("Expected the standalone .update-date rule block in expanded landing CSS.");
+  process.exit(1);
+}
+const updateDateEnd = css.indexOf("}", updateDateStart);
+if (updateDateEnd === -1) {
+  console.error("Expected closing brace for the standalone .update-date rule block.");
+  process.exit(1);
+}
+const updateDate = css.slice(updateDateStart, updateDateEnd + 1);
+for (const expected of ["font-size: 0.79rem;","line-height: 1.28;","color: var(--homepage-primary-text);"]) {
+  if (!updateDate.includes(expected)) {
+    console.error(`Expected .update-date to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const summaryLink = block(".summary-card .summary-card-link {");
+for (const expected of ["margin-top: auto;","font-size: 0.85rem;","line-height: 1;"]) {
+  if (!summaryLink.includes(expected)) {
+    console.error(`Expected .summary-card-link to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const summaryCopy = block(".summary-card-copy {");
+for (const expected of ["max-width: 13.75rem;","font-size: 0.89rem;","line-height: 1.6;"]) {
+  if (!summaryCopy.includes(expected)) {
+    console.error(`Expected .summary-card-copy to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const editionTitle = block(".summary-card-edition h3 {");
+for (const expected of ["font-size: 1.64rem;","line-height: 1.07;","letter-spacing: -0.035em;"]) {
+  if (!editionTitle.includes(expected)) {
+    console.error(`Expected .summary-card-edition h3 to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const editionBody = block(".summary-card-edition .edition-card-copy p {");
+for (const expected of ["max-width: 12rem;","font-size: 0.88rem;","line-height: 1.58;"]) {
+  if (!editionBody.includes(expected)) {
+    console.error(`Expected .summary-card-edition .edition-card-copy p to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const editionCard = block(".edition-card {");
+for (const expected of ["grid-template-columns: minmax(0, 1fr) 7.2rem;","gap: 0.96rem;"]) {
+  if (!editionCard.includes(expected)) {
+    console.error(`Expected .edition-card to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const editionImage = block(".edition-card img {");
+for (const expected of ["width: 6.2rem;","height: 9.3rem;","object-fit: cover;"]) {
+  if (!editionImage.includes(expected)) {
+    console.error(`Expected .edition-card img to include ${expected}.`);
+    process.exit(1);
+  }
+}
+'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.section-divider-country-discovery {'
 check_contains "$LANDING_CSS_ASSERT_FILE" 'margin-block: 24px;'
 check_contains "$LANDING_CSS_ASSERT_FILE" 'border-top: 1px solid var(--line);'
@@ -606,11 +927,17 @@ check_contains "$LANDING_CSS_ASSERT_FILE" '.hero-signal-panel {'
 check_contains "$LANDING_CSS_ASSERT_FILE" 'margin-top: clamp(17rem, 30vw, 20.5rem);'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.chapters-link-row {'
 check_contains "$LANDING_CSS_ASSERT_FILE" 'width: min(90rem, calc(100% - 4rem));'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.homepage-search-shell {'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'grid-template-columns: auto minmax(0, 1fr);'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'width: min(75rem, 100%);'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'justify-content: center;'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const searchShell=block(".homepage-search-shell {");for(const expected of ["min-height: 3.05rem;","border-radius: 999px;","border: 1px solid rgba(126, 144, 175, 0.42);"]){if(!searchShell.includes(expected)){console.error(`Expected .homepage-search-shell to include ${expected}.`);process.exit(1);}}const searchInput=block(".homepage-search-form input {");for(const expected of ["border: 0;","background: transparent;","font-size: 1.16rem;"]){if(!searchInput.includes(expected)){console.error(`Expected .homepage-search-form input to include ${expected}.`);process.exit(1);}}const searchCancel=block(".homepage-search-form input::-webkit-search-cancel-button {");if(!searchCancel.includes("appearance: none;")){console.error("Expected the homepage search input to suppress the native WebKit cancel button.");process.exit(1);}'
 LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const start=css.indexOf(".decision-strip-inner {");if(start===-1){console.error("Expected .decision-strip-inner rule block in expanded landing CSS.");process.exit(1);}const end=css.indexOf("}", start);if(end===-1){console.error("Expected closing brace for .decision-strip-inner rule block.");process.exit(1);}const block=css.slice(start, end + 1);if(!block.includes("width: min(90rem, calc(100% - 4rem));")){console.error("Expected .decision-strip-inner to match the shared 90rem content width aligned with the hero call-to-action baseline.");process.exit(1);}if(!block.includes("grid-template-columns: minmax(0, 1.105fr) minmax(0, 1.195fr);")){console.error("Expected .decision-strip-inner to use the 3-line-title compromise proportions.");process.exit(1);}for(const removed of ["width: min(76rem, calc(100% - 2rem));","width: min(84rem, calc(100% - 2rem));","grid-template-columns: minmax(0, 1.06fr) minmax(0, 1.24fr);","grid-template-columns: minmax(0, 1.18fr) minmax(0, 1.12fr);"]){if(block.includes(removed)){console.error(`Expected .decision-strip-inner to stop using ${removed}.`);process.exit(1);}}'
 LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const start=css.indexOf(".decision-strip-copy {");if(start===-1){console.error("Expected .decision-strip-copy rule block in expanded landing CSS.");process.exit(1);}const end=css.indexOf("}", start);if(end===-1){console.error("Expected closing brace for .decision-strip-copy rule block.");process.exit(1);}const block=css.slice(start, end + 1);for(const expected of ["grid-template-columns: max-content minmax(15rem, 1fr);","column-gap: 2rem;","row-gap: 0;"]){if(!block.includes(expected)){console.error(`Expected .decision-strip-copy to include ${expected} so the supporting copy starts from the true rendered title-column width with doubled spacing.`);process.exit(1);}}for(const removed of ["column-gap: 1rem;","column-gap: 0.5rem;","grid-template-columns: minmax(17.15rem, 17.85rem) minmax(15rem, 1fr);","grid-template-columns: minmax(17.9rem, 18.6rem) minmax(15rem, 1fr);","grid-template-columns: minmax(15.85rem, 17.1rem) minmax(14.7rem, 1fr);","grid-template-columns: minmax(15.25rem, 16.5rem) minmax(15rem, 1fr);","gap: 0.72rem;","gap: 0.8rem;","grid-template-columns: minmax(17rem, 18.5rem) minmax(16.5rem, 1fr);","gap: 0.95rem;","gap: 0.86rem;"]){if(block.includes(removed)){console.error(`Expected .decision-strip-copy to stop using ${removed}.`);process.exit(1);}}'
 LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const start=css.indexOf(".decision-strip-copy h2 {");if(start===-1){console.error("Expected .decision-strip-copy h2 rule block in expanded landing CSS.");process.exit(1);}const end=css.indexOf("}", start);if(end===-1){console.error("Expected closing brace for .decision-strip-copy h2 rule block.");process.exit(1);}const block=css.slice(start, end + 1);for(const expected of ["width: max-content;","max-width: none;","font-size: clamp(1.58rem, 1.64vw, 1.9rem);","line-height: 1.08;","letter-spacing: 0;"]){if(!block.includes(expected)){console.error(`Expected .decision-strip-copy h2 to include ${expected} so the title column matches its actual content width.`);process.exit(1);}}for(const removed of ["max-width: 18rem;","max-width: 16.6rem;","font-size: clamp(1.64rem, 1.76vw, 2rem);","letter-spacing: -0.04em;","text-wrap: balance;"]){if(block.includes(removed)){console.error(`Expected .decision-strip-copy h2 to stop using ${removed}.`);process.exit(1);}}'
 LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const start=css.indexOf(".decision-strip-title-line {");if(start===-1){console.error("Expected .decision-strip-title-line rule block in expanded landing CSS.");process.exit(1);}const end=css.indexOf("}", start);if(end===-1){console.error("Expected closing brace for .decision-strip-title-line rule block.");process.exit(1);}const block=css.slice(start, end + 1);for(const expected of ["display: block;","white-space: nowrap;"]){if(!block.includes(expected)){console.error(`Expected .decision-strip-title-line to include ${expected} for a fixed two-line title layout.`);process.exit(1);}}'
 LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const start=css.indexOf(".decision-strip-copy p {");if(start===-1){console.error("Expected .decision-strip-copy p rule block in expanded landing CSS.");process.exit(1);}const end=css.indexOf("}", start);if(end===-1){console.error("Expected closing brace for .decision-strip-copy p rule block.");process.exit(1);}const block=css.slice(start, end + 1);for(const expected of ["max-width: 21rem;","padding-top: 0;","font-size: 0.875rem;","line-height: 1.54;"]){if(!block.includes(expected)){console.error(`Expected .decision-strip-copy p to include ${expected} so the supporting copy sits closer to the design density.`);process.exit(1);}}for(const removed of ["padding-top: 0.25rem;","font-size: 0.94rem;","font-size: 0.9rem;","line-height: 1.68;","line-height: 1.6;"]){if(block.includes(removed)){console.error(`Expected .decision-strip-copy p to stop using ${removed}.`);process.exit(1);}}'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");function block(selector){const start=css.indexOf(selector);if(start===-1){console.error(`Expected selector block: ${selector}`);process.exit(1);}const end=css.indexOf("}",start);if(end===-1){console.error(`Expected closing brace for selector block: ${selector}`);process.exit(1);}return css.slice(start,end+1);}const colorChecks=[[".decision-strip-copy h2 {","color: var(--homepage-heading-text);"],[".decision-strip-copy p {","color: var(--homepage-primary-text);"],[".section-country-discovery .section-heading-wide h2 {","color: var(--homepage-heading-text);"],[".country-name {","color: var(--homepage-primary-text);"],[".country-metrics dd {","color: var(--homepage-primary-text);"],[".map-overview-copy h2 {","color: var(--homepage-heading-text);"],[".map-overview-copy p {","color: var(--homepage-primary-text);"],[".section-heading-topic-reference h2 {","color: var(--homepage-heading-text);"],[".summary-card-eyebrow {","color: var(--homepage-primary-text);"],[".summary-card-copy {","color: var(--homepage-primary-text);"],[".summary-card-edition h3 {","color: var(--homepage-primary-text);"],[".summary-card-edition .edition-card-copy p {","color: var(--homepage-primary-text);"],[".edition-card-date {","color: var(--homepage-primary-text);"],[".update-label {","color: var(--homepage-primary-text);"]];for(const [selector,expected] of colorChecks){const rule=block(selector);if(!rule.includes(expected)){console.error(`Expected ${selector} to include ${expected}`);process.exit(1);}}const firstSummaryListStart=css.indexOf(".update-list li,");const summaryListStart=firstSummaryListStart===-1?-1:css.indexOf(".update-list li,",firstSummaryListStart+1);if(summaryListStart===-1){console.error("Expected the standalone .update-list li, .topics-covered-list li summary rule block.");process.exit(1);}const summaryListEnd=css.indexOf("}",summaryListStart);if(summaryListEnd===-1){console.error("Expected closing brace for the combined summary list rule block.");process.exit(1);}const summaryListBlock=css.slice(summaryListStart,summaryListEnd+1);if(!summaryListBlock.includes("color: var(--homepage-primary-text);")){console.error("Expected summary list body text to use the shared homepage primary text color.");process.exit(1);}'
 LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const start=css.indexOf(".stakeholder-grid {");if(start===-1){console.error("Expected .stakeholder-grid rule block in expanded landing CSS.");process.exit(1);}const end=css.indexOf("}", start);if(end===-1){console.error("Expected closing brace for .stakeholder-grid rule block.");process.exit(1);}const block=css.slice(start, end + 1);for(const expected of ["grid-template-columns: repeat(6, 120px);","justify-content: end;","justify-items: center;","align-items: start;","gap: 12px;"]){if(!block.includes(expected)){console.error(`Expected .stakeholder-grid to include ${expected} so fixed-width cards keep a true 12px visual gap.`);process.exit(1);}}for(const removed of ["grid-template-columns: repeat(6, minmax(0, 1fr));","grid-template-columns: repeat(6, minmax(7.4rem, 1fr));","gap: 8px;","gap: 0.96rem;","gap: 0.885rem;","gap: 0.84rem;","gap: 0.82rem;"]){if(block.includes(removed)){console.error(`Expected .stakeholder-grid to stop using ${removed}.`);process.exit(1);}}'
 LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e '
 const fs = require("fs");
@@ -1103,6 +1430,13 @@ check_contains public/fr/index.html 'assets/css/landing.css?v=20260703'
 check_contains public/fr/index.html 'class="site-language-switch"'
 check_contains public/fr/index.html 'href="/?lang=en"'
 check_contains public/fr/index.html '<span class="button-label">Commencer la lecture</span>'
+check_contains public/fr/index.html '<h3>Recherche dans Upstream Atlas</h3>'
+check_not_contains public/fr/index.html '<h2>Recherche dans Upstream Atlas</h2>'
+check_contains public/fr/index.html 'class="homepage-search-submit" type="submit" aria-label="Rechercher dans le livre"'
+check_not_contains public/fr/index.html 'class="button button-primary" type="submit">Rechercher dans le livre</button>'
+check_contains public/fr/index.html 'class="search-scope-chip-icon search-scope-chip-icon--countries"'
+check_contains public/fr/index.html 'class="search-scope-chip-label">Compagnies nationales</span>'
+check_not_contains public/fr/index.html 'class="topic-grid topic-grid-reference"'
 check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-research.webp'
 check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-industry-monitoring.webp'
 check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-intelligence.webp'

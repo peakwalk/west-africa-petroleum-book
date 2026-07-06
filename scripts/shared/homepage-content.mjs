@@ -1,6 +1,11 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { getSearchScopeItems, renderSearchScopeIcon } from "./homepage-search-scope.mjs";
+import {
+  getHomepageTopicReferenceItems,
+  renderHomepageTopicReferenceIcon,
+} from "./homepage-topic-reference.mjs";
 
 export const CONTACT_EMAIL = "matt@operatorassetexchange.com";
 export const CONTACT_HREF =
@@ -65,29 +70,6 @@ const HYDROCARBON_COPY = {
   },
 };
 
-const SEARCH_TAGS = {
-  en: [
-    "Countries",
-    "National Oil Companies",
-    "Ministries",
-    "Fields",
-    "Discoveries",
-    "Basins",
-    "Fiscal Systems",
-    "Chapters",
-  ],
-  fr: [
-    "Pays",
-    "Compagnies nationales",
-    "Ministères",
-    "Champs",
-    "Découvertes",
-    "Bassins",
-    "Fiscalité",
-    "Chapitres",
-  ],
-};
-
 const FOOTER_COVERAGE_ITEMS = [
   "16 Countries",
   "1000+ Discoveries",
@@ -148,79 +130,6 @@ const STAKEHOLDER_GROUPS = [
   },
 ];
 
-const TOPIC_DESTINATIONS = [
-  {
-    description:
-      "Frontier geology, basin context, and the regional exploration picture across West Africa.",
-    href: "book/chapters/chapter-02-emerging-petroleum-provinces-in-west-africa.html",
-    kicker: "Regional context",
-    title: "Emerging Petroleum Provinces",
-  },
-  {
-    description:
-      "In-depth country-by-country petroleum sector reviews and regional comparisons.",
-    href: "book/chapters/chapter-03-west-africa-country-analysis.html",
-    kicker: "Country intelligence",
-    title: "Country Analysis",
-  },
-  {
-    description:
-      "State-owned company structures, governance roles, and commercial performance models.",
-    href: "book/chapters/chapter-04-national-oil-companies-in-west-africa.html",
-    kicker: "State participation",
-    title: "National Oil Companies",
-  },
-  {
-    description:
-      "From exploration through development, production, and abandonment across the value chain.",
-    href: "book/chapters/chapter-05-hydrocarbon-value-chain.html",
-    kicker: "Systems view",
-    title: "Petroleum Value Chain",
-  },
-  {
-    description:
-      "Drilling, completions, production, facilities, and operational excellence in the upstream.",
-    href: "book/chapters/chapter-06-upstream-operations-and-government-roles.html",
-    kicker: "Operations",
-    title: "Upstream Operations",
-  },
-  {
-    description:
-      "Royalties, cost oil, taxation, and production-sharing mechanics in petroleum agreements.",
-    href: "book/chapters/chapter-07-petroleum-fiscal-regimes.html",
-    kicker: "Commercial terms",
-    title: "Petroleum Fiscal Systems",
-  },
-  {
-    description:
-      "Comparative fiscal design across West African producers and emerging jurisdictions.",
-    href: "book/chapters/chapter-08-west-african-fiscal-regimes.html",
-    kicker: "Regional comparison",
-    title: "West African Fiscal Regimes",
-  },
-  {
-    description:
-      "Institutions, licensing systems, policy choices, and regulatory capacity across the region.",
-    href: "book/chapters/chapter-09-socio-political-determinants.html",
-    kicker: "Governance",
-    title: "Governance & Regulation",
-  },
-  {
-    description:
-      "Petroleum data systems, technical records, and information-management discipline.",
-    href: "book/chapters/chapter-10-petroleum-data-management-in-west-africa.html",
-    kicker: "Information systems",
-    title: "Data Management",
-  },
-  {
-    description:
-      "Long-range thinking about energy strategy, investment, and regional futures through 2050.",
-    href: "book/chapters/chapter-12-vision-for-west-africa-2050.html",
-    kicker: "Long view",
-    title: "Africa's Vision",
-  },
-];
-
 const LATEST_UPDATES = [
   { label: "English Edition released", date: "June 2026" },
   { label: "Chapter 7 revised", date: "May 2025" },
@@ -261,6 +170,7 @@ const EN_HOMEPAGE_COPY = {
   heroTitleLines: ["West Africa's", "Independent Petroleum Reference"],
   heroTitle: "West Africa's Independent Petroleum Reference",
   latestUpdatesHeading: "Latest Updates",
+  latestUpdatesLabel: "View all updates",
   mapBody:
     "Explore the political landscape of West Africa. Hover over a country to view key petroleum sector information or click to access the full country analysis in Chapter 3.",
   mapCta: "Explore the Map",
@@ -271,6 +181,7 @@ const EN_HOMEPAGE_COPY = {
   searchPlaceholder: "Search West African petroleum knowledge...",
   searchTitle: "Search Upstream Atlas",
   topicsCoveredHeading: "Topics Covered",
+  topicsCoveredLabel: "View all topics",
   topicsEyebrow: "Browse by Topic",
   topicsTitle: "Move from basin context to governance, fiscal systems, and operations.",
 };
@@ -740,16 +651,66 @@ ${renderCountryFlag(country, edition, "map")}
             </a>`;
 }
 
-function renderSearchChip(tag, edition) {
+function renderSearchChip(item, edition) {
   return `          <a class="search-scope-chip" href="${escapeHtml(
-    formatSearchHref(edition, tag)
-  )}">${escapeHtml(tag)}</a>`;
+    formatSearchHref(edition, item.label)
+  )}">${renderSearchScopeIcon(item)}<span class="search-scope-chip-label">${escapeHtml(
+    item.label
+  )}</span></a>`;
 }
 
-function renderTopicCard(topic, edition) {
-  return `        <article class="topic-card">
-          <p class="topic-card-kicker">${escapeHtml(topic.kicker)}</p>
-          <h3>${escapeHtml(topic.title)}</h3>
+export function renderHomepageSearchForm({
+  actionHref,
+  inputId,
+  placeholder,
+  submitLabel,
+  title,
+}) {
+  return `    <form class="homepage-search-form" action="${escapeHtml(
+    actionHref
+  )}" method="get" role="search">
+      <label class="sr-only" for="${escapeHtml(inputId)}">${escapeHtml(title)}</label>
+      <div class="homepage-search-shell">
+        <button class="homepage-search-submit" type="submit" aria-label="${escapeHtml(
+          submitLabel
+        )}">
+          <svg
+            class="homepage-search-submit-icon"
+            aria-hidden="true"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              cx="11"
+              cy="11"
+              r="7.25"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.1"
+            ></circle>
+            <path
+              d="m16.65 16.65 4.1 4.1"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.1"
+              stroke-linecap="round"
+            ></path>
+          </svg>
+        </button>
+        <input
+          id="${escapeHtml(inputId)}"
+          type="search"
+          name="search"
+          placeholder="${escapeHtml(placeholder)}"
+        >
+      </div>
+    </form>`;
+}
+
+function renderTopicReferenceCard(topic, edition) {
+  return `        <article class="topic-card topic-card-reference">
+          ${renderHomepageTopicReferenceIcon(topic)}
+          <h4>${escapeHtml(topic.title)}</h4>
           <p>${escapeHtml(topic.description)}</p>
           <a class="topic-card-link" href="${escapeHtml(formatTopicHref(edition, topic))}">Explore <span aria-hidden="true">→</span></a>
         </article>`;
@@ -764,6 +725,12 @@ function renderUpdateItem(item) {
 
 function renderTopicsCoveredItem(item) {
   return `            <li>${escapeHtml(item)}</li>`;
+}
+
+function renderSummaryCardLink(label, href) {
+  return `        <a class="summary-card-link" href="${escapeHtml(label && href ? href : "#")}">${escapeHtml(
+    label
+  )} <span aria-hidden="true">→</span></a>`;
 }
 
 function renderHeroTitle(copy) {
@@ -789,6 +756,7 @@ function renderAudiencesTitle(copy) {
 function renderEnglishHomepageMain(edition) {
   const copy = EN_HOMEPAGE_COPY;
   const links = resolveHomepageLinks("home", edition);
+  const topicReferenceItems = getHomepageTopicReferenceItems("en");
 
   return `<main>
   ${INLINE_COUNTRY_FLAG_SPRITE}
@@ -897,31 +865,26 @@ ${COUNTRIES.map((country) => renderMapFlag(country, edition)).join("\n")}
 
   <section id="${HOMEPAGE_SECTION_IDS.search}" class="section section-search-surface">
     <div class="section-heading section-heading-centered">
-      <p class="eyebrow">${escapeHtml(copy.searchEyebrow)}</p>
-      <h2>${escapeHtml(copy.searchTitle)}</h2>
+      <h3>${escapeHtml(copy.searchTitle)}</h3>
     </div>
-    <form class="homepage-search-form" action="${escapeHtml(links.ctaHref)}" method="get" role="search">
-      <label class="sr-only" for="homepage-search-input">${escapeHtml(copy.searchTitle)}</label>
-      <input
-        id="homepage-search-input"
-        type="search"
-        name="search"
-        placeholder="${escapeHtml(copy.searchPlaceholder)}"
-      >
-      <button class="button button-primary" type="submit">${escapeHtml(copy.searchButton)}</button>
-    </form>
+${renderHomepageSearchForm({
+  actionHref: links.ctaHref,
+  inputId: "homepage-search-input",
+  placeholder: copy.searchPlaceholder,
+  submitLabel: copy.searchButton,
+  title: copy.searchTitle,
+})}
     <div class="search-scope-grid">
-${SEARCH_TAGS.en.map((tag) => renderSearchChip(tag, edition)).join("\n")}
+${getSearchScopeItems("en").map((item) => renderSearchChip(item, edition)).join("\n")}
     </div>
   </section>
 
-  <section id="${HOMEPAGE_SECTION_IDS.topics}" class="section section-topic-discovery">
-    <div class="section-heading">
-      <p class="eyebrow">${escapeHtml(copy.topicsEyebrow)}</p>
-      <h2>${escapeHtml(copy.topicsTitle)}</h2>
+  <section id="${HOMEPAGE_SECTION_IDS.topics}" class="section section-topic-discovery section-topic-reference">
+    <div class="section-heading section-heading-topic-reference">
+      <h2>${escapeHtml(copy.topicsEyebrow)}</h2>
     </div>
-    <div class="topic-grid">
-${TOPIC_DESTINATIONS.map((topic) => renderTopicCard(topic, edition)).join("\n")}
+    <div class="topic-grid topic-grid-reference">
+${topicReferenceItems.map((topic) => renderTopicReferenceCard(topic, edition)).join("\n")}
     </div>
   </section>
 
@@ -932,6 +895,7 @@ ${TOPIC_DESTINATIONS.map((topic) => renderTopicCard(topic, edition)).join("\n")}
         <ul class="update-list">
 ${LATEST_UPDATES.map(renderUpdateItem).join("\n")}
         </ul>
+${renderSummaryCardLink(copy.latestUpdatesLabel, links.chapterLibraryHref)}
       </article>
       <article class="summary-card summary-card-edition">
         <p class="summary-card-eyebrow">${escapeHtml(copy.currentEditionHeading)}</p>
@@ -949,6 +913,7 @@ ${LATEST_UPDATES.map(renderUpdateItem).join("\n")}
         <ul class="topics-covered-list">
 ${TOPICS_COVERED.map(renderTopicsCoveredItem).join("\n")}
         </ul>
+${renderSummaryCardLink(copy.topicsCoveredLabel, links.topicsHref)}
       </article>
       <article class="summary-card">
         <p class="summary-card-eyebrow">${escapeHtml(copy.futureDevelopmentHeading)}</p>
@@ -996,7 +961,7 @@ export function renderHomepageMain(edition) {
 }
 
 export function renderFrenchHomepageSearchScope() {
-  return SEARCH_TAGS.fr.map((tag) => tag);
+  return getSearchScopeItems("fr").map((item) => ({ ...item }));
 }
 
 export function getFrenchCompatibilityCopy() {

@@ -23,6 +23,10 @@
   gap: 1.5rem;
 }
 
+.section-heading.section-heading-wide {
+  margin-bottom: 0;
+}
+
 .section-heading-wide > div {
   display: grid;
   gap: 0.9rem;
@@ -30,7 +34,7 @@
 
 .section-country-discovery .section-heading-wide h2 {
   max-width: none;
-  color: var(--brand-blue-deep);
+  color: var(--homepage-heading-text);
   font-size: clamp(2.2rem, 2.45vw, 2.7rem);
   line-height: 1.06;
   letter-spacing: -0.035em;
@@ -43,14 +47,16 @@
   letter-spacing: -0.01em;
 }
 
-.section-heading-centered {
+.section-heading.section-heading-centered {
+  margin-bottom: 12px;
   text-align: center;
   justify-items: center;
 }
 
 .section-link,
 .topic-card-link,
-.country-analysis-link {
+.country-analysis-link,
+.summary-card-link {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;

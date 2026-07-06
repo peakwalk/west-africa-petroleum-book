@@ -1,6 +1,7 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { renderSearchScopeIcon } from "./shared/homepage-search-scope.mjs";
 
 import {
   renderLandingFooter,
@@ -10,6 +11,7 @@ import {
 import { listSiteEditions, resolveEditionPath } from "./shared/site-editions.mjs";
 import {
   getFrenchCompatibilityCopy,
+  renderHomepageSearchForm,
   renderFrenchHomepageSearchScope,
   renderHomepageMain,
   resolveHomepageLinks,
@@ -65,10 +67,10 @@ async function renderFrenchCompatibilityHomepage(edition) {
   const links = resolveHomepageLinks("home", edition);
   const searchChips = renderFrenchHomepageSearchScope()
     .map(
-      (tag) =>
+      (item) =>
         `          <a class="search-scope-chip" href="${links.ctaHref}?search=${encodeURIComponent(
-          tag
-        )}">${tag}</a>`
+          item.label
+        )}">${renderSearchScopeIcon(item)}<span class="search-scope-chip-label">${item.label}</span></a>`
     )
     .join("\n");
   const topicCards = copy.topics
@@ -81,6 +83,13 @@ async function renderFrenchCompatibilityHomepage(edition) {
         </article>`
     )
     .join("\n");
+  const searchForm = renderHomepageSearchForm({
+    actionHref: links.ctaHref,
+    inputId: "homepage-search-input-fr",
+    placeholder: copy.searchPlaceholder,
+    submitLabel: copy.searchButton,
+    title: copy.searchTitle,
+  });
 
   return mainContent
     .replace(
@@ -121,19 +130,9 @@ async function renderFrenchCompatibilityHomepage(edition) {
       /<section id="resources" class="section section-muted">[\s\S]*?<\/section>/,
       `<section id="search" class="section section-search-surface fr-compatibility-section">
     <div class="section-heading section-heading-centered">
-      <p class="eyebrow">${copy.searchEyebrow}</p>
-      <h2>${copy.searchTitle}</h2>
+      <h3>${copy.searchTitle}</h3>
     </div>
-    <form class="homepage-search-form" action="${links.ctaHref}" method="get" role="search">
-      <label class="sr-only" for="homepage-search-input-fr">${copy.searchTitle}</label>
-      <input
-        id="homepage-search-input-fr"
-        type="search"
-        name="search"
-        placeholder="${copy.searchPlaceholder}"
-      >
-      <button class="button button-primary" type="submit">${copy.searchButton}</button>
-    </form>
+${searchForm}
     <div class="search-scope-grid">
 ${searchChips}
     </div>

@@ -235,6 +235,75 @@
   .footer-brand-image {
     width: 11.4rem;
   }
+
+  .section-heading.section-heading-topic-reference {
+    margin-bottom: 0.95rem;
+  }
+
+  .section-heading-topic-reference h2 {
+    font-size: clamp(1.72rem, 7vw, 2.05rem);
+  }
+
+  .topic-card-reference {
+    min-height: auto;
+    padding: 1.24rem 1.14rem 0.98rem;
+  }
+
+  .topic-card-icon {
+    width: 2.7rem;
+    height: 2.7rem;
+  }
+
+  .section-search-surface {
+    margin-top: 24px;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .section-search-surface .section-heading {
+    margin-bottom: 12px;
+  }
+
+  .section-search-surface .section-heading h3 {
+    font-size: clamp(1.62rem, 6.5vw, 1.92rem);
+  }
+
+  .homepage-search-shell {
+    gap: 0.5rem;
+    min-height: 2.9rem;
+    padding: 0.06rem 0.84rem 0.06rem 0.76rem;
+  }
+
+  .homepage-search-submit {
+    width: 2.16rem;
+    height: 2.16rem;
+  }
+
+  .homepage-search-submit-icon {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  .homepage-search-form input {
+    font-size: 1rem;
+  }
+
+  .search-scope-grid {
+    justify-content: flex-start;
+  }
+
+  .search-scope-chip {
+    gap: 0.56rem;
+    min-height: 2.9rem;
+    padding: 0.66rem 0.98rem 0.64rem 0.88rem;
+    font-size: 0.84rem;
+  }
+
+  .search-scope-chip-icon {
+    width: 1.08rem;
+    height: 1.08rem;
+  }
 }
 
 @media (max-width: 480px) {
