@@ -9,6 +9,10 @@
   --brand-blue-deep: #264d97;
   --homepage-heading-text: #112c59;
   --homepage-primary-text: #214484;
+  --homepage-body-text: #4a5d78;
+  --homepage-meta-text: #61708a;
+  --homepage-link-text: var(--brand-blue);
+  --homepage-link-hover-text: var(--brand-blue-deep);
   --footer-bg: #0b1f33;
   --secondary: #d88a1d;
   --brand-gold: #d9b24a;
@@ -145,7 +149,7 @@ img {
   margin-left: 0.1rem;
   padding-left: 1.28rem;
   border-left: 1px solid rgba(16, 42, 93, 0.22);
-  color: #17346f;
+  color: var(--homepage-heading-text);
   font-family: "Manrope", "Inter", sans-serif;
   font-size: 1.22rem;
   font-weight: 800;
@@ -182,7 +186,7 @@ img {
 }
 
 .site-language-label {
-  color: rgba(11, 31, 51, 0.52);
+  color: var(--homepage-meta-text);
 }
 
 .site-language-option {

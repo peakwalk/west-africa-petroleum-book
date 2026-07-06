@@ -41,7 +41,7 @@
 }
 
 .section-country-discovery .section-link {
-  color: #2f67f6;
+  color: var(--homepage-link-text);
   font-size: 1.125rem;
   line-height: 1.1;
   letter-spacing: -0.01em;
@@ -60,9 +60,20 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  color: var(--brand-blue);
+  color: var(--homepage-link-text);
   font-family: "Manrope", "Inter", sans-serif;
   font-weight: 700;
+}
+
+.section-link:hover,
+.section-link:focus-visible,
+.topic-card-link:hover,
+.topic-card-link:focus-visible,
+.country-analysis-link:hover,
+.country-analysis-link:focus-visible,
+.summary-card-link:hover,
+.summary-card-link:focus-visible {
+  color: var(--homepage-link-hover-text);
 }
 
 .hero-panel-v2 .hero-layout,

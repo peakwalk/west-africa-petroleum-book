@@ -313,7 +313,7 @@
 }
 
 .country-name {
-  color: var(--homepage-primary-text);
+  color: var(--homepage-heading-text);
   display: block;
   font-family: "Manrope", "Inter", sans-serif;
   font-size: 1.26rem;
@@ -323,7 +323,7 @@
 }
 
 .country-meta {
-  color: #61708a;
+  color: var(--homepage-meta-text);
   font-family: "Manrope", "Inter", sans-serif;
   font-size: 0.74rem;
   font-weight: 700;
@@ -337,7 +337,7 @@
   gap: 0.45rem 0.72rem;
   min-height: 1.25rem;
   align-items: center;
-  color: var(--text-muted);
+  color: var(--homepage-body-text);
   font-size: 0.84rem;
   line-height: 1.25;
 }
@@ -368,7 +368,7 @@
 }
 
 .country-hydrocarbons-empty {
-  color: var(--text-muted);
+  color: var(--homepage-meta-text);
   min-height: 1.25rem;
   font-size: 0.84rem;
   line-height: 1.4;
@@ -388,7 +388,7 @@
 }
 
 .country-metrics dt {
-  color: var(--text);
+  color: var(--homepage-heading-text);
   font-family: "Manrope", "Inter", sans-serif;
   font-size: 1.2rem;
   font-weight: 800;
@@ -397,7 +397,7 @@
 
 .country-metrics dd {
   margin: 0;
-  color: var(--homepage-primary-text);
+  color: var(--homepage-body-text);
   font-size: 0.93rem;
   font-weight: 700;
   line-height: 1.22;

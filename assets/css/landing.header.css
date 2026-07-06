@@ -65,7 +65,7 @@
   align-items: center;
   padding: 0.65rem 0.75rem;
   border-radius: 0.7rem;
-  color: var(--text-muted);
+  color: var(--homepage-heading-text);
   font-family: "Manrope", "Inter", sans-serif;
   font-weight: 700;
 }
@@ -74,7 +74,7 @@
 .mobile-nav-panel a:hover,
 .mobile-nav-panel a:focus-visible {
   background: rgba(49, 99, 194, 0.08);
-  color: var(--brand-blue);
+  color: var(--homepage-link-text);
 }
 
 .mobile-nav-panel .site-language-switch {
@@ -105,7 +105,7 @@
   font-size: 1.05rem;
   font-weight: 700;
   letter-spacing: -0.01em;
-  color: #17346f;
+  color: var(--homepage-heading-text);
 }
 
 .primary-nav a {
@@ -135,7 +135,7 @@
 .primary-nav a.current-link,
 .primary-nav a:hover,
 .primary-nav a:focus-visible {
-  color: var(--brand-blue-deep);
+  color: var(--homepage-link-hover-text);
 }
 
 .primary-nav a.current-link::after,

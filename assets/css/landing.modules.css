@@ -32,13 +32,13 @@
   width: 2.95rem;
   height: 2.95rem;
   justify-self: start;
-  color: #244da3;
+  color: var(--homepage-primary-text);
   flex: 0 0 auto;
 }
 
 .topic-card.topic-card-reference h4 {
   margin: 0;
-  color: #112c59;
+  color: var(--homepage-heading-text);
   font-family: "Manrope", "Inter", sans-serif;
   font-size: 0.92rem;
   font-weight: 700;
@@ -47,7 +47,7 @@
 }
 
 .topic-card.topic-card-reference p {
-  color: #4a5d78;
+  color: var(--homepage-body-text);
   font-size: 0.81rem;
   line-height: 1.54;
 }
@@ -84,7 +84,7 @@
 .topics-covered-list li,
 .fr-compatibility-card p {
   margin: 0;
-  color: var(--text-muted);
+  color: var(--homepage-body-text);
   font-size: 0.95rem;
   line-height: 1.66;
 }
@@ -114,7 +114,7 @@
 
 .summary-card-eyebrow {
   margin: 0;
-  color: var(--homepage-primary-text);
+  color: var(--homepage-heading-text);
   font-family: "Manrope", "Inter", sans-serif;
   font-size: 1rem;
   font-weight: 700;
@@ -144,7 +144,7 @@
 .topics-covered-list li {
   position: relative;
   padding-left: 1.85rem;
-  color: var(--homepage-primary-text);
+  color: var(--homepage-body-text);
   font-size: 0.84rem;
   line-height: 1.4;
 }
@@ -186,7 +186,7 @@
 }
 
 .update-label {
-  color: var(--homepage-primary-text);
+  color: var(--homepage-body-text);
   font-size: 0.86rem;
   font-weight: 600;
   line-height: 1.34;
@@ -195,7 +195,7 @@
 
 .update-date {
   margin-top: 0.02rem;
-  color: var(--homepage-primary-text);
+  color: var(--homepage-meta-text);
   font-size: 0.79rem;
   line-height: 1.28;
 }
@@ -209,7 +209,7 @@
 
 .summary-card-copy {
   max-width: 13.75rem;
-  color: var(--homepage-primary-text);
+  color: var(--homepage-body-text);
   font-size: 0.89rem;
   line-height: 1.6;
   letter-spacing: -0.01em;
@@ -234,7 +234,7 @@
 }
 
 .summary-card-edition h3 {
-  color: var(--homepage-primary-text);
+  color: var(--homepage-heading-text);
   font-size: 1.64rem;
   font-weight: 800;
   line-height: 1.07;
@@ -244,7 +244,7 @@
 .summary-card-edition .edition-card-copy p {
   margin: 0;
   max-width: 12rem;
-  color: var(--homepage-primary-text);
+  color: var(--homepage-body-text);
   font-size: 0.88rem;
   line-height: 1.58;
   letter-spacing: -0.01em;
@@ -261,7 +261,7 @@
 }
 
 .edition-card-date {
-  color: var(--homepage-primary-text);
+  color: var(--homepage-meta-text);
   font-size: 0.82rem;
   font-weight: 600;
   line-height: 1.28;
