@@ -1,28 +1,28 @@
 ## Why
 
-首页 stakeholder 卡片目前指向的一套仓库内 SVG 已经和批准的截图参考不一致。问题不只是 CSS 摆位：其中几枚图标的轮廓、线条节奏和内部留白都变了，因此单靠 `offset` 无法做到像素级对齐。
+当前这套 stakeholder 图标重建包已经可以通过较粗粒度的截图一致性检查，但仍然达不到设计稿所要求的精致度。当前剩下的问题，已经不是“像不像截图”，而是“是否已经精修到可以作为正式前端图标交付”。
 
-用户现在已经提供了一套位于 `/Users/edison/Downloads/Project - Africa_Book/icons_pixel_replica_ultra_crisp_png_all/` 的 PNG 源 icon 包。我们需要一个范围很窄、完全仓库内自持的变更：把这 6 个 stakeholder PNG 正式引入项目，并把验证基线对齐到这套源文件上，再补上回归校验，避免后续首页调整再次把它们拉偏。
+因此，验收模型本身需要更新。继续用单一的通过/失败标准已经不够，因为当前图标包可以通过重合度驱动的基础检查，但肉眼仍然会觉得过于 tracing、过重或过于图库化。项目需要一层标准用于候选筛选，另一层标准用于最终精修交付。
 
 ## What Changes
 
-- 把用户提供的本地源 icon 包中的 6 个 homepage stakeholder PNG 引入首页，而不是继续对当前不匹配的图形做位置微调或手工重绘。
-- 围绕这套引入源文件的光栅几何、透明留白和单色蓝色线稿风格建立 stakeholder 图标基线，使其在固定首页卡片内稳定渲染。
-- 保持现有 stakeholder 卡片的 HTML 结构、固定 `120px` 宽度和桌面六列布局契约，只在需要把图标显示尺寸翻倍、统一视觉重量并让所有图标中心点落在同一条水平线上时做 CSS 调整。
-- 为 stakeholder 图标补充聚焦的几何验证，保证未来修改后其 PNG 可见边界仍然稳定。
+- 把验收拆成 `baseline` trace fidelity 验收和 `production` polish 验收两层。
+- 让 `baseline` 验收继续聚焦截图贴合度、负形保留、前端安全性和交付包完整性，以便候选筛选仍然可自动化。
+- 新增更严格的 `production` polish gate，覆盖光学精修、stroke 语义、路径经济性，以及最终交付前必须经过的人工审查。
+- 更新自动验收脚本和测试，使当前图标包继续能通过 `baseline`，但在手工精修完成前明确无法通过 `production`。
+- 在 proposal、design、spec、tasks、验收标准和验收评审中同步记录新的分层验收模型。
 
 ## Capabilities
 
 ### New Capabilities
-- `homepage-stakeholder-icon-alignment`：首页 stakeholder 卡片渲染导入的源 PNG 集合，并在固定 `120px` 宽度的卡片网格内保持稳定几何、倍增后的显示尺寸，以及共用的图标中心线。
+- `homepage-stakeholder-icon-alignment`：项目能够生成并审阅一套 trace 重建的 stakeholder 图标包；最终 SVG/PNG 资产从多个候选方案中择优选出，并通过批准后的验收标准。
 
 ### Modified Capabilities
 - None.
 
 ## Impact
 
-- 影响的源生成文件：`scripts/shared/homepage-content.mjs`
-- 影响的 landing 样式：`assets/css/landing.discovery.css`
-- 影响的视觉资产：`assets/icons/stakeholders/*.png`
-- 影响的验证：`scripts/test-site-render.sh` 与新增的定向图标几何测试
-- 重建后受影响的生成输出：`index.html`、本地化首页输出，以及 `public/assets/icons/stakeholders/*`
+- 受影响的重建工具：`scripts/build_stakeholder_icons_trace_rebuild.py`
+- 受影响的验证：新增专用 acceptance checker 及其聚焦测试
+- 受影响的评审产物：`artifacts/stakeholder_icons_trace_rebuild/` 下的预览图、对比图、metadata 和 review notes
+- 受影响的 OpenSpec 产物：本变更下的 proposal、design、spec、tasks、验收标准和验收评审文档

@@ -1,28 +1,28 @@
 ## Why
 
-The homepage stakeholder cards currently point at a repo-owned SVG set that no longer matches the approved screenshot reference. The mismatch is not limited to CSS placement: several icons use different silhouettes, stroke rhythm, and internal whitespace, so the section cannot reach pixel-level alignment through offsets alone.
+The current stakeholder icon rebuild package can now clear the coarse screenshot-fidelity gate, but it still does not satisfy the level of polish expected from the supplied design reference. The remaining problem is no longer “does it look like the screenshot at all?” but “is it refined enough to ship as a polished frontend icon set?”
 
-The user has now supplied a concrete PNG source icon package under `/Users/edison/Downloads/Project - Africa_Book/icons_pixel_replica_ultra_crisp_png_all/`. We need a narrow repo-owned change that imports those six stakeholder PNGs into the project, aligns the verification baseline to that source set, and locks the result with regression checks so future homepage tweaks do not reintroduce drift.
+The acceptance model therefore needs to change. A single pass/fail gate is no longer sufficient because the present package can satisfy baseline overlap-driven checks while still looking too trace-derived, too heavy, or too generic. The project needs one acceptance layer for candidate selection and another for polished final delivery.
 
 ## What Changes
 
-- Import the six homepage stakeholder PNGs from the supplied local source package instead of continuing to tune or redraw the current mismatched shapes.
-- Align the stakeholder icon baseline around the imported source set's raster geometry, transparent padding, and single-color blue line style so the cards render the provided artwork consistently inside the fixed homepage layout.
-- Keep the existing stakeholder card markup, fixed `120px` card width, and desktop six-column layout contract, changing CSS only as needed to double the displayed icon size, equalize visual weight, and keep every icon center on the same horizontal line.
-- Add focused verification for stakeholder icon geometry so the visible PNG bounds stay stable after future edits.
+- Split acceptance into `baseline` trace-fidelity acceptance and `production` polish acceptance.
+- Keep `baseline` acceptance focused on screenshot alignment, negative space, frontend safety, and package completeness so it remains useful for candidate filtering.
+- Add a stricter `production` polish gate for optical refinement, stroke semantics, path economy, and manual review before the icons are treated as a polished final delivery.
+- Update the automated acceptance checker and tests so the current package still passes `baseline` but explicitly fails `production` until the icons are hand-refined.
+- Record the new layered acceptance model in the change proposal, design, spec, tasks, and acceptance review artifacts.
 
 ## Capabilities
 
 ### New Capabilities
-- `homepage-stakeholder-icon-alignment`: The homepage stakeholder cards render the imported stakeholder source PNG set and preserve stable icon geometry, doubled display sizing, and a shared icon centerline inside the fixed `120px`-wide card grid.
+- `homepage-stakeholder-icon-alignment`: The project can generate and review a trace-rebuilt stakeholder icon package whose final SVG and PNG assets are selected from multiple candidate approaches and pass the approved acceptance criteria.
 
 ### Modified Capabilities
 - None.
 
 ## Impact
 
-- Affected source generation: `scripts/shared/homepage-content.mjs`
-- Affected landing styles: `assets/css/landing.discovery.css`
-- Affected visual assets: `assets/icons/stakeholders/*.png`
-- Affected verification: `scripts/test-site-render.sh` and a new targeted icon-geometry test
-- Affected generated outputs after rebuild: `index.html`, localized homepage outputs, and `public/assets/icons/stakeholders/*`
+- Affected rebuild tooling: `scripts/build_stakeholder_icons_trace_rebuild.py`
+- Affected verification: a new dedicated acceptance checker and its focused test coverage
+- Affected review artifacts: preview grids, comparison previews, metadata, and review notes under `artifacts/stakeholder_icons_trace_rebuild/`
+- Affected OpenSpec artifacts: proposal, design, spec, tasks, acceptance criteria, and acceptance review notes for this change

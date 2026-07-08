@@ -100,11 +100,11 @@
   align-items: center;
   justify-content: flex-end;
   justify-self: end;
-  gap: 1rem 3.25rem;
+  gap: 0.9rem 2.7rem;
   font-family: "Manrope", "Inter", sans-serif;
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  font-size: 0.98rem;
+  font-weight: 650;
+  letter-spacing: -0.008em;
   color: var(--homepage-heading-text);
 }
 
@@ -112,7 +112,7 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  min-height: 2.6rem;
+  min-height: 2.45rem;
   padding-bottom: 0.08rem;
   transition:
     color 160ms ease,
@@ -123,8 +123,8 @@
   content: "";
   position: absolute;
   inset-inline: 0.02rem;
-  bottom: -0.52rem;
-  height: 0.23rem;
+  bottom: -0.44rem;
+  height: 0.2rem;
   transform: scaleX(0);
   transform-origin: center;
   border-radius: 999px;
@@ -147,7 +147,7 @@
 @media (min-width: 1024px) and (max-width: 1439px) {
   .site-header-inner {
     width: min(88rem, calc(100% - 3rem));
-    gap: 1.85rem;
+    gap: 1.6rem;
   }
 
   .brand-reference-copy {
@@ -159,7 +159,7 @@
   }
 
   .primary-nav {
-    gap: 0.8rem 1.7rem;
-    font-size: 0.94rem;
+    gap: 0.72rem 1.55rem;
+    font-size: 0.91rem;
   }
 }

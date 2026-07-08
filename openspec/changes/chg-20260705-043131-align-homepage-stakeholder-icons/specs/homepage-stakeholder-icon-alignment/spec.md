@@ -1,21 +1,52 @@
 ## ADDED Requirements
 
-### Requirement: Homepage stakeholder cards MUST render the imported stakeholder source set with stable raster geometry
-The homepage SHALL render the six stakeholder cards with repo-owned PNG icons imported from the user-supplied stakeholder source package, preserving that source set's silhouettes, single-color line treatment, and rendered visible bounds closely enough that the card row no longer depends on large CSS compensation to appear aligned.
+### Requirement: Stakeholder icon rebuilds MUST use acceptance-driven multi-variant selection
+The project SHALL rebuild the stakeholder icon package from the approved screenshot reference using multiple candidate approaches per failing icon, then select and publish only the candidates that satisfy the acceptance criteria.
 
-#### Scenario: Imported source silhouettes replace the mismatched icon set
-- **WHEN** the homepage stakeholder cards render on desktop
-- **THEN** each card uses the imported repo-owned PNG asset for its stakeholder type instead of the currently mismatched silhouette
-- **THEN** the icon treatment remains a single-color blue line drawing without accent-color dots or duotone details
+#### Scenario: Failing icons generate multiple reconstruction candidates
+- **WHEN** a stakeholder icon fails the acceptance review
+- **THEN** the rebuild flow generates at least two candidate variants for that icon
+- **THEN** the variants may come from different reconstruction families such as screenshot trace, cleaned proxy vector, or hand-authored SVG
+- **THEN** the workflow does not force all icons through one identical reconstruction method
 
-#### Scenario: Fixed-width card boxes preserve stable icon alignment at doubled display size
-- **WHEN** the stakeholder PNG assets are rendered inside the fixed `120px`-wide card layout
-- **THEN** their visible bounds remain stable enough that only minor optical size adjustments are needed per card
-- **THEN** the displayed icon size is doubled relative to the previous imported-asset CSS baseline instead of staying at the smaller placeholder scale
-- **THEN** the six rendered icon centers land on the same horizontal line
-- **THEN** icon alignment does not rely on large whitespace differences hidden inside the PNG canvases
+#### Scenario: Final icon selection is based on comparison rather than first output
+- **WHEN** multiple candidates exist for a stakeholder icon
+- **THEN** the workflow compares those candidates against the screenshot-derived source reference
+- **THEN** the final selected version is the candidate that best satisfies quantified comparison and manual review
+- **THEN** lower-quality candidates are not silently promoted to final delivery
 
-#### Scenario: Geometry regression catches visible-bound drift
-- **WHEN** stakeholder PNG assets are changed in the repo
-- **THEN** focused verification inspects and trims each asset at its fixed pixel size
-- **THEN** the verification fails if an icon's visible bounding box drifts away from the imported source baseline
+### Requirement: Final stakeholder icon package MUST pass acceptance as a complete set
+The project SHALL not treat the stakeholder icon rebuild as complete until the final package passes completeness checks, frontend SVG checks, special-case rules, and screenshot-fidelity review across the full icon set.
+
+#### Scenario: Special-case icon rules remain enforced
+- **WHEN** `oil_drop` is rebuilt
+- **THEN** the final SVG preserves the right-side negative-space slit as transparent cutout
+- **THEN** the final icon does not collapse into a generic solid drop
+
+#### Scenario: Smooth vector delivery rejects rough trace output
+- **WHEN** the final SVGs are reviewed
+- **THEN** noisy direct-trace edges, broken line rhythm, and visibly stepped contours cause acceptance failure
+- **THEN** only frontend-usable clean vector geometry can pass
+
+#### Scenario: Rebuild loop continues until all icons pass
+- **WHEN** any icon still fails the acceptance criteria
+- **THEN** the rebuild workflow iterates again for that icon
+- **THEN** the package is not accepted as final until every icon passes
+
+### Requirement: Acceptance MUST distinguish baseline trace fidelity from production polish
+The project SHALL maintain two acceptance layers: a `baseline` trace-fidelity gate for candidate filtering and a stricter `production` polish gate for polished frontend delivery.
+
+#### Scenario: Baseline acceptance remains useful for candidate filtering
+- **WHEN** a rebuilt icon package is checked under the `baseline` profile
+- **THEN** the checker validates screenshot similarity, package completeness, special-case negative space rules, and basic frontend SVG safety
+- **THEN** passing `baseline` does not by itself imply the icon is polished enough for final delivery
+
+#### Scenario: Production acceptance rejects stroke-like trace silhouettes
+- **WHEN** a line-dominant icon such as `regulators`, `governments`, `shield_star`, or `global` is checked under the `production` profile
+- **THEN** the delivery must use stroke-led or equivalently hand-controlled vector geometry rather than an evenodd-filled trace silhouette
+- **THEN** obvious trace-derived path bloat or line wobble causes production failure even if baseline overlap metrics still pass
+
+#### Scenario: Replacing homepage-facing icons requires production polish
+- **WHEN** a stakeholder or topic-card icon is treated as a polished final frontend replacement
+- **THEN** that icon set must pass the `production` profile in addition to `baseline`
+- **THEN** manual review remains required before the set is considered fully accepted

@@ -1,65 +1,73 @@
 ## Context
 
-The stakeholder card section is generated from `scripts/shared/homepage-content.mjs`, styled in `assets/css/landing.discovery.css`, and rendered with six standalone assets under `assets/icons/stakeholders/`. The current CSS already locks each card to a fixed `120px` box with per-icon sizing and offset variables, but the shipped SVG assets do not share consistent visible bounds. The user has now provided a local PNG source icon package at `/Users/edison/Downloads/Project - Africa_Book/icons_pixel_replica_ultra_crisp_png_all/`, which becomes the preferred visual source of truth for this change.
+The repo now contains a dedicated stakeholder icon rebuild script, a compare preview package under `artifacts/stakeholder_icons_trace_rebuild/`, and a baseline acceptance checker. That baseline is useful, but it has exposed a second problem: a package can pass screenshot-fidelity automation while still looking visibly less refined than the original design reference.
 
-Before that source package arrived, the implementation direction was to redraw the icons from screenshots. With the new source set available, the narrower and more defensible move is to import the supplied PNGs directly, then make the repo verify and publish that exact set.
+This means the change now has two quality targets rather than one:
+
+- `baseline` trace fidelity: close enough to the screenshot to compare and filter candidates safely.
+- `production` polish: clean enough to ship as a polished icon set without obvious trace-derived heaviness, wobble, or generic-library drift.
 
 ## Goals / Non-Goals
 
 **Goals:**
-- Import the six stakeholder icons from the supplied local source package as repo-owned transparent PNGs.
-- Normalize project verification around the imported asset geometry so each stakeholder file keeps predictable visible bounds while the rendered row shares one horizontal icon centerline.
-- Preserve the existing stakeholder card HTML contract, fixed `120px` width, and desktop six-column arrangement while allowing the displayed icon size to double and the card height to expand only as much as that larger icon slot requires.
-- Add regression checks that catch visible-bound drift, not just missing files or HTML wiring.
+- Produce a trace-rebuilt stakeholder icon package that passes the acceptance criteria as a complete set.
+- Generate multiple candidate variants for each failing icon rather than forcing all icons through one rebuild method.
+- Preserve the screenshot source as the visual truth for silhouette and negative space.
+- Make the final SVGs frontend-usable and the PNG exports stable across all required sizes.
 
 **Non-Goals:**
-- Redesign the stakeholder card layout, label copy, or overall decision-strip composition.
-- Re-vectorize or redraw the supplied PNGs into a different production format.
-- Rebuild the whole homepage icon system or unify every other homepage icon set in this change.
-- Reconstruct another hand-drawn icon set when a user-approved source PNG package is already available.
+- Reopen unrelated homepage layout or CSS work.
+- Treat a single automatic trace output as sufficient final output.
+- Force every icon into one uniform reconstruction method when different icons need different approaches.
+- Archive the change before the final package passes the acceptance checks.
 
 ## Decisions
 
-### Decision: Import the provided PNG source files directly into the repo
-The implementation will use the supplied local PNG source package as the stakeholder icon truth and copy those files into the repo-owned asset path. This respects the user's newer source-of-truth input, avoids a second hand-drawn approximation layer, and keeps the rendered cards aligned to the exact raster set the user approved.
+### Decision: Use per-icon multi-variant generation
+Each failing icon will generate at least two candidates. Candidate families may include screenshot-derived trace, proxy-vector cleanup, and hand-authored SVG reconstruction. The final selected icon is whichever candidate best survives both quantified comparison and manual review.
 
 Alternative considered:
-- Keep the hand-redrawn SVG approximation built from screenshots. Rejected because the user later supplied a concrete icon source package and explicitly asked to use it directly.
+- Keep one global pipeline for all six icons. Rejected because the current failures show that some icons need direct screenshot reconstruction while others are better served by cleaned proxy geometry.
 
-### Decision: Normalize verification around the imported source set instead of rewriting the source geometry
-The imported stakeholder PNGs keep their original `1024x1024` pixel dimensions and transparent padding. Rather than redrawing or vectorizing that geometry into a new house style, the repo will lock verification to the imported source set's trimmed visible bounds. CSS can still apply small optical corrections plus per-icon size equalization, but the imported asset itself remains primary.
-
-Alternative considered:
-- Rewrite the imported PNGs into a new SVG or `32x32` normalized set. Rejected because the user explicitly requested direct introduction of the supplied files, not a transformed derivative.
-
-### Decision: Preserve the imported source pixel contract
-The imported PNGs already encode the desired single-color navy line style, transparent background, and visible padding. Verification will preserve that source contract instead of recoloring, tracing, or recompositing the files during import.
+### Decision: Keep screenshot silhouette as the final truth source
+Even when proxy vectors are used as a starting point, acceptance will still be measured against the screenshot-derived source reference. Proxy vectors are only scaffolding, not truth.
 
 Alternative considered:
-- Recolor or trace the imported source into a new house style. Rejected because that would mean the project no longer ships the supplied source assets as-is.
+- Promote existing repo proxy vectors to the truth source for selected icons. Rejected because that would allow drift away from the supplied screenshot.
 
-### Decision: Lock geometry with rendered-bounds assertions
-Verification will inspect each PNG at its fixed pixel size, trim transparent edges, and assert the resulting bounding box. This remains the narrowest automated proxy for what the browser effectively sees, and it adapts cleanly to the imported source set without requiring a separate SVG rasterization step.
+### Decision: Add explicit acceptance automation
+The rebuild flow will include a dedicated acceptance checker. It will verify package completeness, SVG semantics, special-case constraints such as `oil_drop` negative space, and a quantified silhouette comparison baseline that can reject obviously wrong candidates before manual review.
 
 Alternative considered:
-- Assert only that the six PNG files exist and that the card CSS still uses the current size variables. Rejected because those checks can pass even when the visible icons drift away from the intended source set.
+- Rely on preview images and manual review only. Rejected because the user has asked for a repeatable rebuild-review loop, not a one-off visual judgement.
+
+### Decision: Split acceptance into baseline and production profiles
+The checker and the written criteria will distinguish between a `baseline` profile and a `production` profile. `Baseline` keeps the current role of candidate filtering and source-fidelity verification. `Production` adds stricter SVG semantics, path-economy heuristics, and a manual polish gate for the final delivery set.
+
+Alternative considered:
+- Keep a single acceptance profile and just tighten the current thresholds. Rejected because overlap-driven automation and polish-driven review are solving different problems and should not be collapsed into one number.
+
+### Decision: Prefer manual cleanup over raw trace output
+Automatic tracing is allowed only as a draft generator. Any candidate that still looks like direct raster tracing at final export quality must be rejected, even if it scores well enough on coarse overlap metrics.
+
+Alternative considered:
+- Accept high-overlap rough traces as long as they are close to the screenshot. Rejected because the acceptance criteria require production-ready smooth vector delivery, not only approximate shape overlap.
 
 ## Risks / Trade-offs
 
-- [The imported source set uses a larger `1024x1024` raster canvas than the repo's previous `32x32` SVG set] -> Lock verification to trimmed visible bounds instead of raw placeholder-size assumptions.
-- [The PNG source package ships multiple size variants] -> Standardize on `png_1024_transparent/` so the repo keeps the full-resolution transparent production assets without taking the larger `2048` payload.
-- [The imported source files may still need small CSS optical correction once seen in the 120px cards] -> Keep CSS changes optional and minimal; only adjust after checking the real card render.
-- [Exact bbox assertions can be brittle if the source package changes later] -> Keep the test scoped to these six icons and update expected boxes only when a deliberate source refresh is approved.
-- [The current worktree already contains unrelated homepage edits] -> Limit file changes to the stakeholder assets, minimal CSS/test touch points, and the new OpenSpec change files.
+- [Quantified shape comparison can reward noisy traces that overlap well] -> Keep it in `baseline`, but add a separate `production` gate rather than pretending the same metrics can measure polish.
+- [Manual SVG reconstruction can drift into redesign] -> Keep screenshot-derived source references visible in every compare preview and reject candidates that normalize into library-style symbols.
+- [Different candidate pipelines per icon increase script complexity] -> Keep variant definitions explicit and per-icon rather than overgeneralizing the generator.
+- [The worktree already has unrelated user changes] -> Limit edits to the stakeholder rebuild scripts, focused tests, and the OpenSpec files for this change.
 
 ## Migration Plan
 
-1. Update the OpenSpec artifacts to record the direct-import source-package approach.
-2. Add a failing geometry regression check aligned to the imported source PNGs.
-3. Import the PNG assets from the supplied local source package and apply only the smallest required CSS adjustments if the rendered cards need them.
-4. Rebuild the site outputs and run focused verification, including the geometry check and site render assertions.
-5. If the import is unacceptable, roll back by reverting the six PNG assets, the stakeholder asset references, and the focused verification changes; no data migration is involved.
+1. Update the OpenSpec artifacts to describe the iterative multi-variant rebuild strategy.
+2. Add failing acceptance automation for the current package.
+3. Extend the rebuild script to emit multiple candidate variants per failing icon.
+4. Generate compare previews and quantified scores, then select the best candidate per icon.
+5. Refine failing icons and rerun acceptance until the full set passes.
 
 ## Open Questions
 
-- None. The user has explicitly chosen the direct-import PNG source package approach.
+- None. The user has explicitly requested iterative rebuild, multi-scheme comparison, and repeated self-acceptance until pass.

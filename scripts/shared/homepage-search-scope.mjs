@@ -1,3 +1,5 @@
+const SEARCH_SCOPE_ICON_BASE_PATH = "/assets/icons/search-scope";
+
 const SEARCH_SCOPE_ITEMS = [
   {
     key: "countries",
@@ -140,5 +142,11 @@ export function getSearchScopeItems(locale) {
 }
 
 export function renderSearchScopeIcon(item) {
-  return `<svg class="search-scope-chip-icon search-scope-chip-icon--${item.iconKey}" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${item.renderIcon()}</svg>`;
+  return `<img class="search-scope-chip-icon search-scope-chip-icon--${item.iconKey}" src="${getSearchScopeIconSrc(
+    item.iconKey
+  )}" alt="" aria-hidden="true" decoding="async">`;
+}
+
+function getSearchScopeIconSrc(iconKey) {
+  return `${SEARCH_SCOPE_ICON_BASE_PATH}/${iconKey.replace(/-/g, "_")}.svg`;
 }

@@ -1,5 +1,5 @@
 .decision-strip {
-  margin-top: 2.2rem;
+  margin-top: 1.85rem;
   padding-top: 0;
   padding-bottom: 0;
 }
@@ -13,14 +13,14 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: minmax(0, 1.105fr) minmax(0, 1.195fr);
-  gap: clamp(1.5rem, 2vw, 2.4rem);
+  gap: clamp(1.35rem, 1.8vw, 2.1rem);
   align-items: center;
 }
 
 .decision-strip-copy {
   display: grid;
   grid-template-columns: max-content minmax(15rem, 1fr);
-  column-gap: 2rem;
+  column-gap: 1.65rem;
   row-gap: 0;
   align-items: start;
 }
@@ -31,8 +31,8 @@
   font-family: "Manrope", "Inter", sans-serif;
   width: max-content;
   max-width: none;
-  font-size: clamp(1.58rem, 1.64vw, 1.9rem);
-  line-height: 1.08;
+  font-size: clamp(1.48rem, 1.54vw, 1.78rem);
+  line-height: 1.1;
   letter-spacing: 0;
 }
 
@@ -44,10 +44,10 @@
 .decision-strip-copy p {
   margin: 0;
   color: var(--homepage-body-text);
-  max-width: 21rem;
+  max-width: 20rem;
   padding-top: 0;
-  font-size: 0.875rem;
-  line-height: 1.54;
+  font-size: 0.84rem;
+  line-height: 1.48;
 }
 
 .stakeholder-grid {
@@ -56,37 +56,37 @@
   justify-content: end;
   justify-items: center;
   align-items: start;
-  gap: 12px;
+  gap: 10px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .stakeholder-card {
-  --stakeholder-icon-color: var(--homepage-primary-text);
+  --stakeholder-icon-color: var(--homepage-heading-text);
   --stakeholder-icon-size: 78px;
   --stakeholder-icon-offset-x: 0px;
   --stakeholder-icon-offset-y: 0px;
   --stakeholder-icon-scale: 1;
-  --stakeholder-text-color: var(--homepage-primary-text);
+  --stakeholder-text-color: var(--homepage-heading-text);
   align-self: start;
   box-sizing: border-box;
   display: grid;
   justify-items: center;
-  grid-template-rows: 82px 37px;
+  grid-template-rows: 80px 34px;
   align-content: center;
   width: 120px;
   min-width: 120px;
   max-width: 120px;
-  height: 154px;
-  min-height: 154px;
-  max-height: 154px;
-  row-gap: 9px;
-  padding: 15px 9px 11px;
-  border: 1px solid rgba(11, 31, 51, 0.08);
-  border-radius: 0.96rem;
+  height: 148px;
+  min-height: 148px;
+  max-height: 148px;
+  row-gap: 8px;
+  padding: 13px 8px 10px;
+  border: 1px solid rgba(11, 31, 51, 0.09);
+  border-radius: 0.9rem;
   background: rgba(255, 255, 255, 0.98);
-  box-shadow: 0 8px 20px rgba(11, 31, 51, 0.045);
+  box-shadow: 0 8px 20px rgba(11, 31, 51, 0.042);
   color: var(--stakeholder-text-color);
   font-family: "Manrope", "Inter", sans-serif;
   text-align: center;
@@ -134,9 +134,9 @@
   align-content: start;
   min-height: 100%;
   color: var(--stakeholder-text-color);
-  font-size: 0.72rem;
-  font-weight: 600;
-  line-height: 1.08;
+  font-size: 0.71rem;
+  font-weight: 650;
+  line-height: 1.04;
   letter-spacing: -0.01em;
   text-wrap: balance;
 }
@@ -170,14 +170,14 @@
 }
 
 .section.section-summary-modules {
-  margin-top: 24px;
-  margin-bottom: 24px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   padding-top: 0;
   padding-bottom: 0;
 }
 
 .section.section-topic-reference {
-  margin-top: 24px;
+  margin-top: 20px;
   padding-top: 0;
   padding-bottom: 0;
 }
@@ -198,13 +198,13 @@
 }
 
 .section-map-overview {
-  margin-top: 2rem;
+  margin-top: 1.8rem;
   padding-top: 0;
   padding-bottom: 0;
 }
 
 .section-search-surface {
-  margin-top: 24px;
+  margin-top: 20px;
   margin-bottom: 0;
   padding-top: 0;
   padding-bottom: 0;
@@ -216,16 +216,16 @@
 }
 
 .country-grid-v2 {
-  margin-top: 2.5rem;
+  margin-top: 2.1rem;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1rem;
+  gap: 0.92rem;
 }
 
 .map-overview-grid {
   display: grid;
   grid-template-columns: minmax(18.6rem, 19.4rem) minmax(0, 1fr);
-  column-gap: 1.5rem;
+  column-gap: 1.35rem;
   row-gap: 1rem;
   align-items: center;
 }
@@ -241,7 +241,7 @@
   color: var(--homepage-heading-text);
   font-family: "Inter", "Manrope", sans-serif;
   max-width: 15.6rem;
-  font-size: clamp(1.6rem, 1.74vw, 1.82rem);
+  font-size: clamp(1.54rem, 1.68vw, 1.76rem);
   font-weight: 700;
   line-height: 1.14;
   letter-spacing: -0.03em;
@@ -252,30 +252,30 @@
   color: var(--homepage-body-text);
   font-family: "Inter", "Manrope", sans-serif;
   max-width: 17.2rem;
-  font-size: 0.885rem;
-  line-height: 1.58;
+  font-size: 0.84rem;
+  line-height: 1.52;
 }
 
 .map-overview-copy .button-primary {
   justify-self: start;
   min-width: 11.7rem;
-  min-height: 3rem;
-  padding-inline: 1.15rem 1rem;
+  min-height: 2.9rem;
+  padding-inline: 1.08rem 0.96rem;
   border: 1px solid rgba(15, 62, 175, 0.18);
-  border-radius: 0.82rem;
+  border-radius: 0.78rem;
   background: linear-gradient(180deg, #1a66f4, #0b4fdc);
   font-family: "Inter", "Manrope", sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 700;
   box-shadow:
-    0 10px 20px rgba(22, 83, 216, 0.18),
+    0 8px 18px rgba(22, 83, 216, 0.16),
     inset 0 1px 0 rgba(255, 255, 255, 0.16);
 }
 
 .map-overview-copy .button-primary:hover,
 .map-overview-copy .button-primary:focus-visible {
   box-shadow:
-    0 12px 24px rgba(22, 83, 216, 0.22),
+    0 10px 22px rgba(22, 83, 216, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
@@ -345,8 +345,8 @@
   margin-block: 0;
   max-width: none;
   color: var(--homepage-heading-text);
-  font-size: clamp(1.9rem, 2.15vw, 2.2rem);
-  line-height: 1.08;
+  font-size: clamp(1.84rem, 2vw, 2.06rem);
+  line-height: 1.06;
   letter-spacing: -0.035em;
 }
 
@@ -359,13 +359,13 @@
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
-  gap: 0.72rem;
-  min-height: 3.05rem;
-  padding: 0.08rem 1.12rem 0.08rem 0.98rem;
-  border: 1px solid rgba(126, 144, 175, 0.42);
+  gap: 0.68rem;
+  min-height: 2.96rem;
+  padding: 0.08rem 1.05rem 0.08rem 0.94rem;
+  border: 1px solid rgba(126, 144, 175, 0.36);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.99);
-  box-shadow: 0 4px 18px rgba(17, 44, 89, 0.04);
+  box-shadow: 0 4px 16px rgba(17, 44, 89, 0.035);
   transition:
     border-color 160ms ease,
     box-shadow 160ms ease;
@@ -380,13 +380,13 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.35rem;
-  height: 2.35rem;
+  width: 2.22rem;
+  height: 2.22rem;
   padding: 0;
   border: 0;
   border-radius: 999px;
   background: transparent;
-  color: var(--homepage-meta-text);
+  color: var(--homepage-primary-text);
   cursor: pointer;
   transition:
     color 160ms ease,
@@ -401,8 +401,8 @@
 }
 
 .homepage-search-submit-icon {
-  width: 1.34rem;
-  height: 1.34rem;
+  width: 1.28rem;
+  height: 1.28rem;
 }
 
 .homepage-search-form input {
@@ -414,7 +414,7 @@
   box-shadow: none;
   color: var(--homepage-heading-text);
   font: inherit;
-  font-size: 1.16rem;
+  font-size: 1.08rem;
   font-weight: 500;
   appearance: none;
 }
@@ -434,8 +434,8 @@
 .search-scope-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.8rem;
-  margin-top: 1.32rem;
+  gap: 0.72rem;
+  margin-top: 1.24rem;
   justify-content: center;
 }
 
@@ -443,20 +443,20 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.62rem;
-  min-height: 3.05rem;
-  padding: 0.68rem 1.1rem 0.66rem 0.94rem;
-  border: 1px solid rgba(49, 99, 194, 0.12);
-  border-radius: 1rem;
+  gap: 0.56rem;
+  min-height: 2.86rem;
+  padding: 0.6rem 1rem 0.58rem 0.86rem;
+  border: 1px solid rgba(17, 44, 89, 0.13);
+  border-radius: 0.94rem;
   background: rgba(255, 255, 255, 0.98);
   box-shadow:
-    0 2px 10px rgba(17, 44, 89, 0.035),
+    0 4px 12px rgba(17, 44, 89, 0.038),
     inset 0 1px 0 rgba(255, 255, 255, 0.82);
-  color: var(--homepage-link-text);
+  color: var(--homepage-primary-text);
   font-family: "Manrope", "Inter", sans-serif;
-  font-size: 0.87rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  font-size: 0.85rem;
+  font-weight: 760;
+  letter-spacing: -0.012em;
   line-height: 1;
   transition:
     transform 160ms ease,
@@ -467,9 +467,9 @@
 
 .search-scope-chip:hover,
 .search-scope-chip:focus-visible {
-  border-color: rgba(49, 99, 194, 0.22);
+  border-color: rgba(49, 99, 194, 0.28);
   box-shadow:
-    0 6px 16px rgba(17, 44, 89, 0.06),
+    0 7px 15px rgba(17, 44, 89, 0.052),
     inset 0 1px 0 rgba(255, 255, 255, 0.88);
   color: var(--homepage-link-hover-text);
   outline: none;
@@ -477,8 +477,8 @@
 }
 
 .search-scope-chip-icon {
-  width: 1.18rem;
-  height: 1.18rem;
+  width: 1.12rem;
+  height: 1.12rem;
   flex: 0 0 auto;
   stroke-width: 1.9;
 }
@@ -490,11 +490,11 @@
 
 @media (min-width: 1440px) {
   .decision-strip-copy h2 {
-    font-size: 1.58rem;
+    font-size: 1.5rem;
   }
 
   .map-overview-copy h2 {
     max-width: 17rem;
-    font-size: 1.6rem;
+    font-size: 1.54rem;
   }
 }

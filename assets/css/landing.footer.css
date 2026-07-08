@@ -1,5 +1,5 @@
 .site-footer {
-  padding: 3.4rem 0 1.35rem;
+  padding: 3.45rem 0 1.35rem;
   background:
     radial-gradient(
       circle at top left,
@@ -19,46 +19,47 @@
 .site-footer-inner {
   display: grid;
   grid-template-columns: minmax(0, 1.3fr) repeat(3, minmax(0, 1fr));
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .site-footer-column {
   display: grid;
   align-content: start;
-  gap: 0.85rem;
+  gap: 0.76rem;
 }
 
 .site-footer-column-brand {
-  padding-inline-end: 0.75rem;
+  max-width: 15.5rem;
+  padding-inline-end: 1.1rem;
 }
 
 .site-footer-heading {
   margin: 0;
   color: rgba(255, 255, 255, 0.95);
   font-family: "Manrope", "Inter", sans-serif;
-  font-size: 0.84rem;
+  font-size: 0.8rem;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
 }
 
 .site-footer-intro {
   margin: 0;
   color: rgba(255, 255, 255, 0.74);
-  line-height: 1.7;
+  line-height: 1.64;
 }
 
 .site-footer-column-links,
 .site-footer-contact-list {
   display: grid;
-  gap: 0.72rem;
+  gap: 0.68rem;
 }
 
 .site-footer-column-links a,
 .site-footer-email {
   color: rgba(255, 255, 255, 0.84);
   font-family: "Manrope", "Inter", sans-serif;
-  font-weight: 600;
+  font-weight: 540;
   transition:
     color 160ms ease,
     transform 160ms ease;
@@ -88,7 +89,7 @@
 
 .site-footer-contact-label {
   color: rgba(255, 255, 255, 0.58);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.03em;
   text-transform: uppercase;
@@ -99,15 +100,15 @@
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 0.75rem 1.5rem;
-  margin-top: 2rem;
-  padding-top: 1.15rem;
+  margin-top: 1.95rem;
+  padding-top: 1.08rem;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .site-footer-bottom p {
   margin: 0;
   color: rgba(255, 255, 255, 0.62);
-  font-size: 0.92rem;
+  font-size: 0.86rem;
 }
 
 .footer-brand {
@@ -117,7 +118,7 @@
 }
 
 .footer-brand-image {
-  width: 12.25rem;
+  width: 11.9rem;
 }
 
 .sr-only {
