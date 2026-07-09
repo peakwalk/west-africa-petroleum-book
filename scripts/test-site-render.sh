@@ -1037,7 +1037,7 @@ for (const expected of ["font-size: 0.88rem;","line-height: 1;"]) {
 }
 
 const topicIcon = block(".topic-card-icon {");
-for (const expected of ["width: 3.22rem;","height: 3.22rem;","display: block;","object-fit: contain;","color: var(--homepage-heading-text);","--homepage-inline-icon-stroke: 2.1;"]) {
+for (const expected of ["width: 3.5rem;","height: 3.5rem;","display: block;","object-fit: contain;","color: var(--homepage-heading-text);","--homepage-inline-icon-stroke: 2.35;"]) {
   if (!topicIcon.includes(expected)) {
     console.error(`Expected .topic-card-icon to include ${expected}.`);
     process.exit(1);
@@ -1053,7 +1053,7 @@ for (const expected of ["gap: 0;","max-width: 64.2rem;"]) {
 }
 
 const heroStatCard = block(".hero-stat-card {");
-for (const expected of ["gap: 0.52rem;","padding: 0.18rem 0.94rem 0.12rem;"]) {
+for (const expected of ["gap: 0.56rem;","padding: 0.2rem 0.94rem 0.14rem;"]) {
   if (!heroStatCard.includes(expected)) {
     console.error(`Expected .hero-stat-card to include ${expected}.`);
     process.exit(1);
@@ -1061,7 +1061,7 @@ for (const expected of ["gap: 0.52rem;","padding: 0.18rem 0.94rem 0.12rem;"]) {
 }
 
 const heroStatDivider = block(".hero-stat-card + .hero-stat-card {");
-if (!heroStatDivider.includes("border-left: 1px solid rgba(255, 255, 255, 0.06);")) {
+if (!heroStatDivider.includes("border-left: 1px solid rgba(255, 255, 255, 0.05);")) {
   console.error("Expected .hero-stat-card + .hero-stat-card to reduce divider contrast.");
   process.exit(1);
 }
@@ -1075,7 +1075,7 @@ for (const expected of ["width: 2.72rem;","height: 2.72rem;","margin-bottom: 0.5
 }
 
 const heroStatLabel = block(".hero-stat-label {");
-for (const expected of ["gap: 0.12rem;","line-height: 1.26;"]) {
+for (const expected of ["gap: 0.14rem;","line-height: 1.28;"]) {
   if (!heroStatLabel.includes(expected)) {
     console.error(`Expected .hero-stat-label to include ${expected}.`);
     process.exit(1);
@@ -1254,7 +1254,7 @@ for (const expected of [
   "--stakeholder-text-color: var(--homepage-heading-text);",
   "align-self: start;",
   "box-sizing: border-box;",
-  "grid-template-rows: 62px 34px;",
+  "grid-template-rows: 60px 37px;",
   "align-content: center;",
   "width: 120px;",
   "min-width: 120px;",
@@ -1262,7 +1262,7 @@ for (const expected of [
   "height: 124px;",
   "min-height: 124px;",
   "max-height: 124px;",
-  "row-gap: 4px;",
+  "row-gap: 3px;",
   "padding: 12px 8px;",
   "border-radius: 0.9rem;",
   "box-shadow: 0 8px 20px rgba(11, 31, 51, 0.042);",
@@ -1314,7 +1314,7 @@ for (const expected of [
   "place-items: center;",
   "align-self: stretch;",
   "justify-self: stretch;",
-  "min-height: 62px;",
+  "min-height: 60px;",
 ]) {
   if (!iconSlot.includes(expected)) {
     console.error(`Expected .stakeholder-icon-slot to include ${expected} so icons share one fixed container.`);
@@ -1377,7 +1377,7 @@ for (const expected of [
   "align-self: stretch;",
   "justify-self: stretch;",
   "align-content: start;",
-  "min-height: 2.125rem;",
+  "min-height: 2.3rem;",
 ]) {
   if (!copySlot.includes(expected)) {
     console.error(`Expected .stakeholder-copy-slot to include ${expected} so labels share one fixed container.`);
@@ -1387,13 +1387,14 @@ for (const expected of [
 
 const stakeholderLabel = getBlock(".stakeholder-label");
 for (const expected of [
-  "gap: 0.06rem;",
+  "gap: 0.1rem;",
   "align-content: start;",
   "min-height: 100%;",
   "color: var(--stakeholder-text-color);",
   "font-size: 0.75rem;",
-  "font-weight: 640;",
-  "line-height: 1.14;",
+  "font-weight: 620;",
+  "line-height: 1.22;",
+  "letter-spacing: 0.004em;",
 ]) {
   if (!stakeholderLabel.includes(expected)) {
     console.error(`Expected .stakeholder-label to include ${expected} so multi-line labels top-align within the copy slot.`);
@@ -1402,21 +1403,24 @@ for (const expected of [
 }
 
 for (const removed of [
+  "gap: 0.08rem;",
+  "gap: 0.06rem;",
   "gap: 0.04rem;",
   "gap: 0.03rem;",
   "min-height: auto;",
+  "min-height: 2.25rem;",
   "min-height: 2.34rem;",
   "min-height: 2.42rem;",
   "min-height: 2.26rem;",
+  "font-size: 0.76rem;",
   "font-size: 0.74rem;",
   "font-size: 0.79rem;",
-  "font-size: 0.76rem;",
   "font-size: 0.72rem;",
+  "line-height: 1.18;",
+  "line-height: 1.14;",
   "line-height: 1.1;",
   "line-height: 1.08;",
-  "line-height: 1.18;",
   "line-height: 1.2;",
-  "line-height: 1.22;",
 ]) {
   if (stakeholderLabel.includes(removed)) {
     console.error(`Expected .stakeholder-label to stop using ${removed}.`);
@@ -1467,7 +1471,7 @@ for (const expected of ["--stakeholder-icon-size: 57px;"]) {
 }
 
 const universitiesCard = getBlock(".stakeholder-card--universities-researchers");
-for (const expected of ["--stakeholder-icon-size: 57px;"]) {
+for (const expected of ["--stakeholder-icon-size: 56px;"]) {
   if (!universitiesCard.includes(expected)) {
     console.error(
       `Expected .stakeholder-card--universities-researchers to include ${expected} for optical centering.`,

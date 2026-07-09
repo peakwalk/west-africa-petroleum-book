@@ -29,14 +29,14 @@
 }
 
 .topic-card-icon {
-  width: 3.22rem;
-  height: 3.22rem;
+  width: 3.5rem;
+  height: 3.5rem;
   display: block;
   justify-self: start;
   object-fit: contain;
   object-position: center;
   color: var(--homepage-heading-text);
-  --homepage-inline-icon-stroke: 2.1;
+  --homepage-inline-icon-stroke: 2.35;
   flex: 0 0 auto;
 }
 

@@ -73,7 +73,7 @@
   box-sizing: border-box;
   display: grid;
   justify-items: center;
-  grid-template-rows: 62px 34px;
+  grid-template-rows: 60px 37px;
   align-content: center;
   width: 120px;
   min-width: 120px;
@@ -81,7 +81,7 @@
   height: 124px;
   min-height: 124px;
   max-height: 124px;
-  row-gap: 4px;
+  row-gap: 3px;
   padding: 12px 8px;
   border: 1px solid rgba(11, 31, 51, 0.09);
   border-radius: 0.9rem;
@@ -97,7 +97,7 @@
   place-items: center;
   align-self: stretch;
   justify-self: stretch;
-  min-height: 62px;
+  min-height: 60px;
 }
 
 .stakeholder-icon {
@@ -125,20 +125,20 @@
   align-self: stretch;
   justify-self: stretch;
   align-content: start;
-  min-height: 2.125rem;
+  min-height: 2.3rem;
 }
 
 .stakeholder-label {
   display: grid;
-  gap: 0.06rem;
+  gap: 0.1rem;
   justify-items: center;
   align-content: start;
   min-height: 100%;
   color: var(--stakeholder-text-color);
   font-size: 0.75rem;
-  font-weight: 640;
-  line-height: 1.14;
-  letter-spacing: 0;
+  font-weight: 620;
+  line-height: 1.22;
+  letter-spacing: 0.004em;
   text-wrap: balance;
 }
 
@@ -163,7 +163,7 @@
 }
 
 .stakeholder-card--universities-researchers {
-  --stakeholder-icon-size: 57px;
+  --stakeholder-icon-size: 56px;
 }
 
 .stakeholder-label-line {
