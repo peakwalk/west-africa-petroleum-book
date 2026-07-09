@@ -357,12 +357,24 @@ check_exists assets/icons/homepage/icon-audience-research.svg
 check_exists assets/icons/homepage/icon-audience-policy.svg
 check_exists assets/icons/homepage/icon-audience-operators.svg
 check_exists assets/icons/homepage-sprite.svg
+check_exists assets/icons/stakeholders/governments.svg
+check_exists assets/icons/stakeholders/regulators.svg
+check_exists assets/icons/stakeholders/national-oil-companies.svg
+check_exists assets/icons/stakeholders/operators.svg
+check_exists assets/icons/stakeholders/investors.svg
+check_exists assets/icons/stakeholders/universities-researchers.svg
 check_exists assets/icons/stakeholders/governments.png
 check_exists assets/icons/stakeholders/regulators.png
 check_exists assets/icons/stakeholders/national-oil-companies.png
 check_exists assets/icons/stakeholders/operators.png
 check_exists assets/icons/stakeholders/investors.png
 check_exists assets/icons/stakeholders/universities-researchers.png
+check_exists assets/icons/topics/petroleum-value-chain.svg
+check_exists assets/icons/topics/west-african-fiscal-regimes.svg
+check_exists assets/icons/topics/national-oil-companies.svg
+check_exists assets/icons/topics/upstream-operations.svg
+check_exists assets/icons/topics/governance-regulation.svg
+check_exists assets/icons/topics/country-analysis.svg
 check_exists scripts/build_reader_page_meta.mjs
 check_exists scripts/check_reader_runtime_build_contract.mjs
 check_exists scripts/check_reader_runtime_outline.mjs
@@ -436,12 +448,12 @@ const crypto = require("crypto");
 const fs = require("fs");
 
 const expectedHeroStatIconHashes = {
-  "assets/icons/homepage/hero-countries.svg": "20888e0d727553022a136824f94e7d31f1a272c2ed6b9f0d8cb7dd4ae13a8e96",
-  "assets/icons/homepage/hero-discoveries.svg": "d1c737aa87b8b4e3435cb5467d3bbc8d3edaabff6da5bf1ccbb48c2f9e3c2055",
-  "assets/icons/homepage/hero-basins.svg": "4f7099dd27de089a51974c631a58a4c4a92f06566ebb25955b010adf321971aa",
-  "assets/icons/homepage/hero-chapters.svg": "f7bc9e1e643e0bcdc441b374f8d1b401f697ea5189cbda939cc237093e6d04c3",
-  "assets/icons/homepage/hero-exploration.svg": "0ba7812536a9207c29338325cb020c72b03d2a25e2d1828ff2d992a630c6f8d4",
-  "assets/icons/homepage/hero-figures.svg": "0d349e818674099c9602e16ec25b0ab4d860504395243242adf9b86e837268cc",
+  "assets/icons/homepage/hero-countries.svg": "d68e175d6a3ab90bf01831c8e62a4d2e9fa6b47531f13ca400b10bdc5a01796d",
+  "assets/icons/homepage/hero-discoveries.svg": "b21ccb68ee7bc2281b090eecc29e7252fe55ee5f99bbb55b32259b4e29ddf2a7",
+  "assets/icons/homepage/hero-basins.svg": "a899e91874f42b294a6926b3fc05562b725cf8a14932b398bd41c3b57500325e",
+  "assets/icons/homepage/hero-chapters.svg": "949fba3223492196c94fe7f0b883762559674214073399c35ea3fcc1690b177a",
+  "assets/icons/homepage/hero-exploration.svg": "aaaa4926e86cf127cff713f33c90f4bfd2e178272cc28ff373f43a20bd29d296",
+  "assets/icons/homepage/hero-figures.svg": "a173ef87409c385b5d7653f701dacd448add1073583811446bb8ab7285034ffa",
 };
 
 for (const [filePath, expectedHash] of Object.entries(expectedHeroStatIconHashes)) {
@@ -469,12 +481,18 @@ check_contains public/index.html 'class="stakeholder-grid"'
 check_contains public/index.html 'class="stakeholder-card stakeholder-card--governments"'
 check_contains public/index.html 'class="stakeholder-icon-slot"'
 check_contains public/index.html 'class="stakeholder-copy-slot"'
-check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/governments.png"'
-check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/regulators.png"'
-check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/national-oil-companies.png"'
-check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/operators.png"'
-check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/investors.png"'
-check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/universities-researchers.png"'
+check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/governments.svg"'
+check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/regulators.svg"'
+check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/national-oil-companies.svg"'
+check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/operators.svg"'
+check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/investors.svg"'
+check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/universities-researchers.svg"'
+check_not_contains public/index.html 'src="/assets/icons/stakeholders/governments.png"'
+check_not_contains public/index.html 'src="/assets/icons/stakeholders/regulators.png"'
+check_not_contains public/index.html 'src="/assets/icons/stakeholders/national-oil-companies.png"'
+check_not_contains public/index.html 'src="/assets/icons/stakeholders/operators.png"'
+check_not_contains public/index.html 'src="/assets/icons/stakeholders/investors.png"'
+check_not_contains public/index.html 'src="/assets/icons/stakeholders/universities-researchers.png"'
 check_not_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-audience-policy'
 check_not_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-audience-national-oil-companies'
 check_not_contains public/index.html 'assets/icons/homepage-sprite.svg#icon-industry-monitoring'
@@ -494,9 +512,18 @@ check_contains public/index.html '<use href="#nigeria"></use>'
 check_contains public/index.html '<use href="#ghana"></use>'
 check_not_contains public/index.html '/assets/icons/country-flags.svg#nigeria'
 check_not_contains public/index.html '/assets/icons/country-flags.svg#ghana'
-check_contains public/index.html 'assets/images/homepage-west-africa-map-panel.png'
-check_contains public/index.html 'assets/images/homepage-west-africa-map-panel@2x.png 2x'
+check_contains public/index.html 'assets/images/homepage-west-africa-map-panel.svg'
+check_not_contains public/index.html 'assets/images/homepage-west-africa-map-panel.png'
+check_not_contains public/index.html 'assets/images/homepage-west-africa-map-panel@2x.png'
 check_not_contains public/index.html 'assets/images/homepage-west-africa-map-panel.webp'
+check_contains public/index.html 'class="west-africa-map-hotspot status-producing"'
+check_contains public/index.html 'class="west-africa-map-hotspot status-noCommercialProduction"'
+check_not_contains public/index.html 'class="west-africa-map-flag status-producing"'
+check_not_contains public/index.html 'class="west-africa-map-callout-line"'
+check_not_contains public/index.html 'class="west-africa-map-inset status-noCommercialProduction"'
+check_not_contains public/index.html 'assets/images/homepage-cabo-verde-inset.svg'
+check_not_contains public/index.html 'class="west-africa-map-mainland"'
+check_contains public/index.html 'aria-label="Cabo Verde"'
 check_not_contains public/index.html '🇳🇬'
 check_contains public/index.html 'View All Countries'
 check_contains public/index.html 'Country Analysis <span aria-hidden="true">→</span></a>'
@@ -520,24 +547,30 @@ check_contains public/index.html '<h4>Petroleum Value Chain</h4>'
 check_contains public/index.html '<h4>West African Fiscal Regimes</h4>'
 check_contains public/index.html 'class="topic-card-icon topic-card-icon--petroleum-value-chain"'
 check_contains public/index.html 'class="topic-card-icon topic-card-icon--country-analysis"'
-check_contains public/index.html 'src="/assets/icons/topics/petroleum-value-chain.png"'
-check_contains public/index.html 'src="/assets/icons/topics/west-african-fiscal-regimes.png"'
-check_contains public/index.html 'src="/assets/icons/topics/national-oil-companies.png"'
-check_contains public/index.html 'src="/assets/icons/topics/upstream-operations.png"'
-check_contains public/index.html 'src="/assets/icons/topics/governance-regulation.png"'
-check_contains public/index.html 'src="/assets/icons/topics/country-analysis.png"'
+check_contains public/index.html 'src="/assets/icons/topics/petroleum-value-chain.svg"'
+check_contains public/index.html 'src="/assets/icons/topics/west-african-fiscal-regimes.svg"'
+check_contains public/index.html 'src="/assets/icons/topics/national-oil-companies.svg"'
+check_contains public/index.html 'src="/assets/icons/topics/upstream-operations.svg"'
+check_contains public/index.html 'src="/assets/icons/topics/governance-regulation.svg"'
+check_contains public/index.html 'src="/assets/icons/topics/country-analysis.svg"'
+check_not_contains public/index.html 'src="/assets/icons/topics/petroleum-value-chain.png"'
+check_not_contains public/index.html 'src="/assets/icons/topics/west-african-fiscal-regimes.png"'
+check_not_contains public/index.html 'src="/assets/icons/topics/national-oil-companies.png"'
+check_not_contains public/index.html 'src="/assets/icons/topics/upstream-operations.png"'
+check_not_contains public/index.html 'src="/assets/icons/topics/governance-regulation.png"'
+check_not_contains public/index.html 'src="/assets/icons/topics/country-analysis.png"'
 check_not_contains public/index.html '<svg class="topic-card-icon topic-card-icon--petroleum-value-chain"'
 node - <<'NODE'
 const crypto = require("crypto");
 const fs = require("fs");
 
 const expectedTopicCardIconHashes = {
-  "assets/icons/topics/petroleum-value-chain.png": "461da8d002817af21d81ee2df6dc6657d2f02f58d72779f0b4e705a2be63dc3f",
-  "assets/icons/topics/west-african-fiscal-regimes.png": "9bc2b9d6da9e4638d75e9f6bc54f293b2c1e52e2e153e932a553268d40ad5c5b",
-  "assets/icons/topics/national-oil-companies.png": "0b41f622a81a4534b9d1776c5774155f86d041a638c1493f5391a8ea572eb1dc",
-  "assets/icons/topics/upstream-operations.png": "fcd066f087051f9cd95b494e69682ea5a5cd60b5e4586931b56e01c513a83ce7",
-  "assets/icons/topics/governance-regulation.png": "fca5da6e8a13220b418fd2a2e431b3b247876fa3e3fdb851bd662c9bbea154c0",
-  "assets/icons/topics/country-analysis.png": "07e97f77004425a4e24358d8ac4c7644a688aa3077889ca9a8bf3635e0962610",
+  "assets/icons/topics/petroleum-value-chain.svg": "18e59cb8f9d111a815a3825aabc7c6364347d8ead6ef8ac2a467568ceae6e393",
+  "assets/icons/topics/west-african-fiscal-regimes.svg": "23dc9bdca8438581f0989f39c88e2377ad53a85c6f2f66d17de1fa9834fd6bec",
+  "assets/icons/topics/national-oil-companies.svg": "11707f3e3068aee5844979aa3341db1421e255eed59310770b725064eda35fd3",
+  "assets/icons/topics/upstream-operations.svg": "8129734b1e15745f95e81a9d26a8138f33ceb4f9b5e8035a566f60190f527d98",
+  "assets/icons/topics/governance-regulation.svg": "1f87f8d19a4f26dd783968c664ddbc5234ad35a4d08a29925e2dffd78591093b",
+  "assets/icons/topics/country-analysis.svg": "dcb3482ffa0ea6587e2f6ca6c9f1c7541f1703401282f64047869a94981f3859",
 };
 
 for (const [filePath, expectedHash] of Object.entries(expectedTopicCardIconHashes)) {
@@ -597,20 +630,32 @@ check_exists public/assets/icons/homepage/icon-audience-research.svg
 check_exists public/assets/icons/homepage/icon-audience-policy.svg
 check_exists public/assets/icons/homepage/icon-audience-operators.svg
 check_exists public/assets/icons/homepage-sprite.svg
+check_exists public/assets/icons/stakeholders/governments.svg
+check_exists public/assets/icons/stakeholders/regulators.svg
+check_exists public/assets/icons/stakeholders/national-oil-companies.svg
+check_exists public/assets/icons/stakeholders/operators.svg
+check_exists public/assets/icons/stakeholders/investors.svg
+check_exists public/assets/icons/stakeholders/universities-researchers.svg
 check_exists public/assets/icons/stakeholders/governments.png
 check_exists public/assets/icons/stakeholders/regulators.png
 check_exists public/assets/icons/stakeholders/national-oil-companies.png
 check_exists public/assets/icons/stakeholders/operators.png
 check_exists public/assets/icons/stakeholders/investors.png
 check_exists public/assets/icons/stakeholders/universities-researchers.png
+check_exists public/assets/icons/topics/petroleum-value-chain.svg
+check_exists public/assets/icons/topics/west-african-fiscal-regimes.svg
+check_exists public/assets/icons/topics/national-oil-companies.svg
+check_exists public/assets/icons/topics/upstream-operations.svg
+check_exists public/assets/icons/topics/governance-regulation.svg
+check_exists public/assets/icons/topics/country-analysis.svg
 python3 scripts/check_stakeholder_icon_geometry.py
 check_exists public/assets/icons/country-flags.svg
 check_exists public/assets/images/upstream-atlas-nav-logo.webp
 check_exists public/assets/images/upstream-atlas-hero-v7-clean-left.webp
-check_exists assets/images/homepage-west-africa-map-panel.png
-check_exists assets/images/homepage-west-africa-map-panel@2x.png
-check_exists public/assets/images/homepage-west-africa-map-panel.png
-check_exists public/assets/images/homepage-west-africa-map-panel@2x.png
+check_exists assets/images/homepage-west-africa-map-panel.svg
+check_exists assets/images/homepage-cabo-verde-inset.svg
+check_exists public/assets/images/homepage-west-africa-map-panel.svg
+check_exists public/assets/images/homepage-cabo-verde-inset.svg
 check_exists public/assets/images/prototype-hero-graywhite-left.webp
 check_exists public/assets/images/prototype-hero-graywhite-right.webp
 check_exists assets/css/landing.base.css
@@ -621,6 +666,7 @@ check_exists assets/css/landing.components.css
 check_exists assets/css/landing.footer.css
 check_exists assets/css/landing.homepage-v2.css
 check_exists assets/css/landing.discovery.css
+check_exists assets/css/landing.map-overview.css
 check_exists assets/css/landing.modules.css
 check_exists assets/css/landing.responsive-tablet.css
 check_exists assets/css/landing.responsive-mobile.css
@@ -633,6 +679,7 @@ check_line_count_at_most assets/css/landing.components.css 500
 check_line_count_at_most assets/css/landing.footer.css 500
 check_line_count_at_most assets/css/landing.homepage-v2.css 500
 check_line_count_at_most assets/css/landing.discovery.css 500
+check_line_count_at_most assets/css/landing.map-overview.css 500
 check_line_count_at_most assets/css/landing.modules.css 500
 check_line_count_at_most assets/css/landing.responsive-tablet.css 500
 check_line_count_at_most assets/css/landing.responsive-mobile.css 500
@@ -653,6 +700,7 @@ check_contains assets/css/landing.css '@import "./landing.components.css";'
 check_contains assets/css/landing.css '@import "./landing.footer.css";'
 check_contains assets/css/landing.css '@import "./landing.homepage-v2.css";'
 check_contains assets/css/landing.css '@import "./landing.discovery.css";'
+check_contains assets/css/landing.css '@import "./landing.map-overview.css";'
 check_contains assets/css/landing.css '@import "./landing.modules.css";'
 check_contains assets/css/landing.css '@import "./landing.responsive-tablet.css";'
 check_contains assets/css/landing.css '@import "./landing.responsive-mobile.css";'
@@ -690,6 +738,16 @@ check_contains "$LANDING_CSS_ASSERT_FILE" 'padding-bottom: 0;'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.section-heading.section-heading-centered {'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.section-search-surface .section-heading h3 {'
 check_contains "$LANDING_CSS_ASSERT_FILE" 'margin-block: 0;'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.west-africa-map-canvas {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.west-africa-map-panel-image {'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'aspect-ratio: 1546 / 495;'
+check_contains "$LANDING_CSS_ASSERT_FILE" 'object-fit: contain;'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.west-africa-map-hotspot {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.west-africa-map-hotspot::after {'
+check_not_contains "$LANDING_CSS_ASSERT_FILE" '.west-africa-map-mainland {'
+check_not_contains "$LANDING_CSS_ASSERT_FILE" '.west-africa-map-mainland-media {'
+check_not_contains "$LANDING_CSS_ASSERT_FILE" '.west-africa-map-canvas::before {'
+check_not_contains "$LANDING_CSS_ASSERT_FILE" '.west-africa-map-inset {'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.search-scope-chip-icon {'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.search-scope-chip-label {'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.section.section-topic-reference {'
@@ -778,10 +836,38 @@ const mobileSearchBlock =
   mobileSearchStart === -1 || mobileSearchEnd === -1
     ? ""
     : mobileSegment.slice(mobileSearchStart, mobileSearchEnd + 1);
+const mobileSearchIconStart = mobileSegment.indexOf(".search-scope-chip-icon {");
+const mobileSearchIconEnd =
+  mobileSearchIconStart === -1 ? -1 : mobileSegment.indexOf("}", mobileSearchIconStart);
+const mobileSearchIconBlock =
+  mobileSearchIconStart === -1 || mobileSearchIconEnd === -1
+    ? ""
+    : mobileSegment.slice(mobileSearchIconStart, mobileSearchIconEnd + 1);
+const mobileTopicIconStart = mobileSegment.indexOf(".topic-card-icon {");
+const mobileTopicIconEnd =
+  mobileTopicIconStart === -1 ? -1 : mobileSegment.indexOf("}", mobileTopicIconStart);
+const mobileTopicIconBlock =
+  mobileTopicIconStart === -1 || mobileTopicIconEnd === -1
+    ? ""
+    : mobileSegment.slice(mobileTopicIconStart, mobileTopicIconEnd + 1);
 
 for (const expected of ["margin-top: 24px;", "margin-bottom: 0;", "padding-top: 0;", "padding-bottom: 0;"]) {
   if (!mobileSearchBlock.includes(expected)) {
     console.error("Expected mobile .section-search-surface to preserve its 24px top margin while keeping bottom spacing and padding cleared.");
+    process.exit(1);
+  }
+}
+
+for (const expected of ["width: 0.96rem;", "height: 0.96rem;"]) {
+  if (!mobileSearchIconBlock.includes(expected)) {
+    console.error(`Expected mobile .search-scope-chip-icon to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+for (const expected of ["width: 2.32rem;", "height: 2.32rem;"]) {
+  if (!mobileTopicIconBlock.includes(expected)) {
+    console.error(`Expected mobile .topic-card-icon to include ${expected}.`);
     process.exit(1);
   }
 }
@@ -795,7 +881,7 @@ for (const expected of ["gap: 0.56rem;", "min-height: 2.86rem;", "border-radius:
 }
 
 const icon = block(".search-scope-chip-icon {");
-for (const expected of ["width: 1.12rem;", "height: 1.12rem;", "stroke-width: 1.9;"]) {
+for (const expected of ["width: 1rem;", "height: 1rem;"]) {
   if (!icon.includes(expected)) {
     console.error(`Expected .search-scope-chip-icon to include ${expected}.`);
     process.exit(1);
@@ -905,7 +991,7 @@ for (const expected of ["font-size: 0.88rem;","line-height: 1;"]) {
 }
 
 const topicIcon = block(".topic-card-icon {");
-for (const expected of ["width: 3.2rem;","height: 3.2rem;","display: block;","object-fit: contain;","color: var(--homepage-heading-text);"]) {
+for (const expected of ["width: 2.6rem;","height: 2.6rem;","display: block;","object-fit: contain;","color: var(--homepage-heading-text);"]) {
   if (!topicIcon.includes(expected)) {
     console.error(`Expected .topic-card-icon to include ${expected}.`);
     process.exit(1);
@@ -1069,7 +1155,7 @@ function getBlock(selector) {
 const stakeholderCard = getBlock(".stakeholder-card");
 for (const expected of [
   "--stakeholder-icon-color: var(--homepage-heading-text);",
-  "--stakeholder-icon-size: 78px;",
+  "--stakeholder-icon-size: 62px;",
   "--stakeholder-icon-offset-x: 0px;",
   "--stakeholder-icon-offset-y: 0px;",
   "--stakeholder-icon-scale: 1;",
@@ -1238,7 +1324,7 @@ for (const removed of [
 }
 
 const governmentsCard = getBlock(".stakeholder-card--governments");
-for (const expected of ["--stakeholder-icon-size: 80px;"]) {
+for (const expected of ["--stakeholder-icon-size: 64px;"]) {
   if (!governmentsCard.includes(expected)) {
     console.error(`Expected .stakeholder-card--governments to include ${expected} for optical centering.`);
     process.exit(1);
@@ -1246,7 +1332,7 @@ for (const expected of ["--stakeholder-icon-size: 80px;"]) {
 }
 
 const regulatorsCard = getBlock(".stakeholder-card--regulators");
-for (const expected of ["--stakeholder-icon-size: 74px;"]) {
+for (const expected of ["--stakeholder-icon-size: 58px;"]) {
   if (!regulatorsCard.includes(expected)) {
     console.error(`Expected .stakeholder-card--regulators to include ${expected} for optical centering.`);
     process.exit(1);
@@ -1254,7 +1340,7 @@ for (const expected of ["--stakeholder-icon-size: 74px;"]) {
 }
 
 const nocCard = getBlock(".stakeholder-card--national-oil-companies");
-for (const expected of ["--stakeholder-icon-size: 76px;"]) {
+for (const expected of ["--stakeholder-icon-size: 60px;"]) {
   if (!nocCard.includes(expected)) {
     console.error(
       `Expected .stakeholder-card--national-oil-companies to include ${expected} for optical centering.`,
@@ -1264,7 +1350,7 @@ for (const expected of ["--stakeholder-icon-size: 76px;"]) {
 }
 
 const operatorsCard = getBlock(".stakeholder-card--operators");
-for (const expected of ["--stakeholder-icon-size: 80px;"]) {
+for (const expected of ["--stakeholder-icon-size: 64px;"]) {
   if (!operatorsCard.includes(expected)) {
     console.error(`Expected .stakeholder-card--operators to include ${expected} for optical centering.`);
     process.exit(1);
@@ -1272,7 +1358,7 @@ for (const expected of ["--stakeholder-icon-size: 80px;"]) {
 }
 
 const investorsCard = getBlock(".stakeholder-card--investors");
-for (const expected of ["--stakeholder-icon-size: 78px;"]) {
+for (const expected of ["--stakeholder-icon-size: 61px;"]) {
   if (!investorsCard.includes(expected)) {
     console.error(`Expected .stakeholder-card--investors to include ${expected} for optical centering.`);
     process.exit(1);
@@ -1280,7 +1366,7 @@ for (const expected of ["--stakeholder-icon-size: 78px;"]) {
 }
 
 const universitiesCard = getBlock(".stakeholder-card--universities-researchers");
-for (const expected of ["--stakeholder-icon-size: 78px;"]) {
+for (const expected of ["--stakeholder-icon-size: 61px;"]) {
   if (!universitiesCard.includes(expected)) {
     console.error(
       `Expected .stakeholder-card--universities-researchers to include ${expected} for optical centering.`,
@@ -1547,15 +1633,25 @@ check_contains public/fr/index.html 'class="search-scope-chip-icon search-scope-
 check_contains public/fr/index.html 'src="/assets/icons/search-scope/countries.svg"'
 check_contains public/fr/index.html 'class="search-scope-chip-label">Compagnies nationales</span>'
 check_not_contains public/fr/index.html 'class="topic-grid topic-grid-reference"'
-check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-research.webp'
-check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-industry-monitoring.webp'
-check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-intelligence.webp'
+check_contains public/fr/index.html 'assets/icons/homepage/icon-research.svg'
+check_contains public/fr/index.html 'assets/icons/homepage/icon-industry-monitoring.svg'
+check_contains public/fr/index.html 'assets/icons/homepage/icon-intelligence.svg'
 check_contains public/fr/index.html 'assets/icons/homepage-sprite.svg#icon-start-reading'
 check_contains public/fr/index.html 'assets/icons/homepage-sprite.svg#icon-menu'
 check_contains public/fr/index.html 'assets/icons/homepage-sprite.svg#icon-close'
-check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-audience-research.webp'
-check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-audience-policy.webp'
-check_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-audience-operators.webp'
+check_contains public/fr/index.html 'assets/icons/homepage/icon-audience-research.svg'
+check_contains public/fr/index.html 'assets/icons/homepage/icon-audience-policy.svg'
+check_contains public/fr/index.html 'assets/icons/homepage/icon-audience-operators.svg'
+check_not_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-research.webp'
+check_not_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-industry-monitoring.webp'
+check_not_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-intelligence.webp'
+check_not_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-production.webp'
+check_not_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-exploration.webp'
+check_not_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-fiscal.webp'
+check_not_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-regulation.webp'
+check_not_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-audience-research.webp'
+check_not_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-audience-policy.webp'
+check_not_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-audience-operators.webp'
 check_not_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-research.png'
 check_not_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-industry-monitoring.png'
 check_not_contains public/fr/index.html 'assets/icons/homepage-cropped/icon-intelligence.png'

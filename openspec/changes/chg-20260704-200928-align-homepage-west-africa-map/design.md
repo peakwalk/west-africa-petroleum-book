@@ -1,6 +1,6 @@
 ## Context
 
-The homepage map overview is generated from `scripts/shared/homepage-content.mjs` and styled in `assets/css/landing.discovery.css`. The current implementation draws the map area with CSS gradients and clipped polygons, which made it fast to ship but does not resemble the approved west-coast political reference the user expects.
+The homepage map overview is generated from `scripts/shared/homepage-content.mjs` and styled in `assets/css/landing.discovery.css`. The current implementation already moved away from the old abstract polygon, but it still uses a repo-cropped panel plus a separate Cabo Verde inset, so the clickable hotspots drift from the exact flag positions in the user-supplied reference SVG.
 
 This task is intentionally narrow. The goal is not to redesign the whole homepage again; it is to make the existing map-overview module visually line up with the supplied target while keeping the current routing model intact. The country card grid remains the primary entry path. The map panel remains secondary, but it must now look like the approved west Africa west-coast composition.
 
@@ -9,7 +9,7 @@ That same primary entry path currently renders flags through an external SVG spr
 ## Goals / Non-Goals
 
 **Goals:**
-- Match the approved map-overview composition closely on desktop, including copy density, blue CTA treatment, Cape Verde inset, and west-coast political basemap.
+- Match the approved map-overview composition closely on desktop, including copy density, blue CTA treatment, and the exact user-supplied west-coast political SVG with its embedded flag layout.
 - Preserve the existing country-analysis deep links from the map surface.
 - Keep country-card flags rendering reliably in standalone homepage output.
 - Keep the change repo-local, static-build-friendly, and limited to homepage sources, assets, and verification.
@@ -24,17 +24,17 @@ That same primary entry path currently renders flags through an external SVG spr
 
 ## Decisions
 
-### Decision: Use a repo-owned reference-derived map panel image for the visual baseline
-The implementation will use a repo-owned cropped map panel derived from the approved reference as the visual baseline for the right-hand map panel. This is the most direct way to achieve the requested pixel-level alignment without adding an external geographic data pipeline or hand-drawing a fragile SVG approximation under time pressure.
+### Decision: Use the user-supplied SVG as the single visual baseline
+The implementation will use the user-supplied `africa_map_accurate.svg` directly as the visual baseline for the right-hand map panel. This removes the extra crop and inset coordinate system, which is the main reason the current hotspots no longer line up exactly with the visible flags.
 
 Alternative considered:
 - Rebuild the map as pure CSS/SVG immediately. Rejected for this change because it is slower, higher-risk, and less likely to match the approved composition precisely on the first pass.
 
-### Decision: Preserve routing with focusable hotspots layered over the reference panel
-The visible map panel will no longer render live flag DOM for the panel itself. Instead, the existing country routing model will be preserved through transparent, focusable hotspots positioned over the visual flags in the reference panel. This keeps the country destinations aligned with homepage card links while allowing the artwork to stay locked to the approved reference.
+### Decision: Preserve routing by aligning hotspots directly to the flags embedded in the SVG
+The visible map panel will keep the flags drawn inside the supplied SVG and place the clickable hotspots directly over those flag bounds, including the Cabo Verde inset already present in the artwork. This keeps the destinations aligned with homepage card links while collapsing the map interaction to a single coordinate system.
 
 Alternative considered:
-- Render a second visible flag layer on top of the panel. Rejected because it would create visual drift from the approved reference and require a second round of manual optical alignment.
+- Keep the cropped mainland panel plus a separate Cabo Verde inset. Rejected because it preserves the current alignment problem and forces every hotspot change through two different layout transforms.
 
 ### Decision: Keep all copy and markup changes in the homepage generator, not in generated output
 The revised title, descriptive copy, CTA markup, and map panel structure will live in `scripts/shared/homepage-content.mjs`, with `index.html` and `public/` regenerated from source. This follows the repo rule that generated landing outputs should not be hand-maintained.
@@ -66,7 +66,8 @@ Alternative considered:
 
 - [Reference-derived raster art can drift from future country sets or flag updates] -> Keep hotspot routing data separate from the image so the navigation contract remains editable even if the artwork is later replaced.
 - [Raster scaling can soften on very large screens] -> Use a sufficiently large source asset, constrain the section width, and let the image scale proportionally rather than stretch.
-- [Transparent hotspots are less self-evident than visible interactive markers] -> Add hover/focus outlines so mouse and keyboard users still get a clear affordance.
+- [SVG transparency can reveal more ocean around the west-coast composition than the cropped panel did] -> Keep the existing light blue canvas background behind the vector so the surrounding negative space still reads as intentional map framing.
+- [Flag-sized hotspots can become harder to hit on smaller screens] -> Keep minimum hotspot dimensions in CSS so touch targets remain usable even when the visible flag art scales down.
 - [Inlining the sprite slightly increases homepage HTML size] -> Accept the small markup increase because the sprite is reused across all country cards and removes a more visible rendering failure.
 - [The French homepage may share some landing CSS] -> Keep selectors scoped to the map-overview module and verify the generated localized outputs remain intact.
 - [Breakpoint consolidation can shift other homepage modules unexpectedly] -> Limit the explicit range lock to homepage-facing selectors, keep micro phone tweaks only where needed, and verify the built homepage on representative widths.

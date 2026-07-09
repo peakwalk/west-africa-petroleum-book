@@ -250,8 +250,8 @@
   }
 
   .topic-card-icon {
-    width: 2.7rem;
-    height: 2.7rem;
+    width: 2.32rem;
+    height: 2.32rem;
   }
 
   .section-search-surface {
@@ -301,8 +301,12 @@
   }
 
   .search-scope-chip-icon {
-    width: 1.08rem;
-    height: 1.08rem;
+    width: 0.96rem;
+    height: 0.96rem;
+  }
+
+  .west-africa-map-hotspot::after {
+    inset: -0.16rem;
   }
 }
 

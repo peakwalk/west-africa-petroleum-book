@@ -61,6 +61,10 @@
     padding-top: 0;
   }
 
+  .west-africa-map-hotspot::after {
+    inset: -0.2rem;
+  }
+
   .stakeholder-card {
     min-height: 8.8rem;
   }
@@ -203,8 +207,8 @@
   }
 
   .hero-panel-v2 .hero-stat-icon {
-    width: 2.45rem;
-    height: 2.45rem;
+    width: 2.2rem;
+    height: 2.2rem;
   }
 
   .hero-stat-grid,

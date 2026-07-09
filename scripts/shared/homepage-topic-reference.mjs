@@ -64,7 +64,7 @@ const HOMEPAGE_TOPIC_REFERENCE_ITEMS = [
 ];
 
 function getTopicIconSrc(iconKey) {
-  return `${TOPIC_ICON_BASE_PATH}/${iconKey}.png`;
+  return `${TOPIC_ICON_BASE_PATH}/${iconKey}.svg`;
 }
 
 export function getHomepageTopicReferenceItems(locale) {

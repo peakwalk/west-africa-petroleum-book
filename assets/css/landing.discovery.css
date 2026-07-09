@@ -64,7 +64,7 @@
 
 .stakeholder-card {
   --stakeholder-icon-color: var(--homepage-heading-text);
-  --stakeholder-icon-size: 78px;
+  --stakeholder-icon-size: 62px;
   --stakeholder-icon-offset-x: 0px;
   --stakeholder-icon-offset-y: 0px;
   --stakeholder-icon-scale: 1;
@@ -142,27 +142,27 @@
 }
 
 .stakeholder-card--governments {
-  --stakeholder-icon-size: 80px;
+  --stakeholder-icon-size: 64px;
 }
 
 .stakeholder-card--regulators {
-  --stakeholder-icon-size: 74px;
+  --stakeholder-icon-size: 58px;
 }
 
 .stakeholder-card--national-oil-companies {
-  --stakeholder-icon-size: 76px;
+  --stakeholder-icon-size: 60px;
 }
 
 .stakeholder-card--operators {
-  --stakeholder-icon-size: 80px;
+  --stakeholder-icon-size: 64px;
 }
 
 .stakeholder-card--investors {
-  --stakeholder-icon-size: 78px;
+  --stakeholder-icon-size: 61px;
 }
 
 .stakeholder-card--universities-researchers {
-  --stakeholder-icon-size: 78px;
+  --stakeholder-icon-size: 61px;
 }
 
 .stakeholder-label-line {
@@ -227,7 +227,7 @@
   grid-template-columns: minmax(18.6rem, 19.4rem) minmax(0, 1fr);
   column-gap: 1.35rem;
   row-gap: 1rem;
-  align-items: center;
+  align-items: stretch;
 }
 
 .map-overview-copy {
@@ -286,55 +286,13 @@
 
 .west-africa-map-card {
   position: relative;
+  display: flex;
+  align-self: stretch;
   min-height: 0;
   padding: 0;
   border-radius: 1.6rem;
   background: transparent;
   box-shadow: none;
-}
-
-.west-africa-map-canvas {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1905 / 530;
-  border-radius: 1.28rem;
-  overflow: hidden;
-  background: transparent;
-}
-
-.west-africa-map-panel-image {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-}
-
-.west-africa-map-flag {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  display: inline-flex;
-  width: clamp(2.35rem, 2.7vw, 2.85rem);
-  aspect-ratio: 72 / 48;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.west-africa-map-flag .country-flag-map {
-  width: 100%;
-  height: 100%;
-  border-radius: 0.34rem;
-  background: transparent;
-  box-shadow: none;
-  opacity: 0;
-}
-
-.west-africa-map-flag:hover,
-.west-africa-map-flag:focus-visible {
-  transform: translate(-50%, -50%);
-  outline: none;
 }
 
 .section-search-surface .section-heading {
@@ -477,10 +435,9 @@
 }
 
 .search-scope-chip-icon {
-  width: 1.12rem;
-  height: 1.12rem;
+  width: 1rem;
+  height: 1rem;
   flex: 0 0 auto;
-  stroke-width: 1.9;
 }
 
 .search-scope-chip-label {

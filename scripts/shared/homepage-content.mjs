@@ -39,10 +39,27 @@ const COUNTRY_FLAG_SPRITE_PATH = path.resolve(
   "country-flags.svg"
 );
 const INLINE_COUNTRY_FLAG_SPRITE = fs.readFileSync(COUNTRY_FLAG_SPRITE_PATH, "utf8").trim();
-const MAP_PANEL_IMAGE_PATH = "assets/images/homepage-west-africa-map-panel.png";
-const MAP_PANEL_IMAGE_2X_PATH = "assets/images/homepage-west-africa-map-panel@2x.png";
-const MAP_PANEL_IMAGE_WIDTH = 1905;
-const MAP_PANEL_IMAGE_HEIGHT = 530;
+const MAP_PANEL_IMAGE_PATH = "assets/images/homepage-west-africa-map-panel.svg";
+const MAP_PANEL_IMAGE_WIDTH = 1546;
+const MAP_PANEL_IMAGE_HEIGHT = 495;
+const MAP_HOTSPOTS = {
+  benin: { centerX: 38.4541, centerY: 76.1616, width: 3.5576, height: 7.2727 },
+  "burkina-faso": { centerX: 33.7322, centerY: 64.4444, width: 3.5576, height: 7.2727 },
+  "cabo-verde": { centerX: 6.533, centerY: 49.1919, width: 2.8461, height: 5.8586 },
+  "cote-divoire": { centerX: 29.0103, centerY: 82.5253, width: 3.5576, height: 7.4747 },
+  ghana: { centerX: 33.9909, centerY: 81.0101, width: 3.5576, height: 7.2727 },
+  guinea: { centerX: 23.3829, centerY: 72.7273, width: 3.5576, height: 7.2727 },
+  "guinea-bissau": { centerX: 17.4321, centerY: 65.8586, width: 2.9107, height: 6.0606 },
+  liberia: { centerX: 23.9651, centerY: 86.6667, width: 2.9107, height: 6.0606 },
+  mali: { centerX: 34.3144, centerY: 43.7374, width: 3.5576, height: 7.4747 },
+  mauritania: { centerX: 22.6067, centerY: 32.4242, width: 3.5576, height: 7.4747 },
+  niger: { centerX: 46.6688, centerY: 46.3636, width: 3.5576, height: 7.4747 },
+  nigeria: { centerX: 45.0841, centerY: 77.2727, width: 3.6223, height: 7.4747 },
+  senegal: { centerX: 17.5614, centerY: 55.3535, width: 3.5576, height: 7.2727 },
+  "sierra-leone": { centerX: 21.3131, centerY: 78.3838, width: 2.9107, height: 6.0606 },
+  "the-gambia": { centerX: 16.1384, centerY: 60.202, width: 2.9107, height: 6.0606 },
+  togo: { centerX: 36.934, centerY: 78.7879, width: 2.8461, height: 6.0606 },
+};
 
 const COUNTRY_STATUS_COPY = {
   en: {
@@ -94,37 +111,37 @@ const HERO_METRICS = [
 const STAKEHOLDER_GROUPS = [
   {
     icon: "icon-regulation",
-    iconAsset: "assets/icons/stakeholders/governments.png",
+    iconAsset: "assets/icons/stakeholders/governments.svg",
     labelLines: ["Governments"],
     slug: "governments",
   },
   {
     icon: "icon-audience-policy",
-    iconAsset: "assets/icons/stakeholders/regulators.png",
+    iconAsset: "assets/icons/stakeholders/regulators.svg",
     labelLines: ["Regulators"],
     slug: "regulators",
   },
   {
     icon: "icon-audience-national-oil-companies",
-    iconAsset: "assets/icons/stakeholders/national-oil-companies.png",
+    iconAsset: "assets/icons/stakeholders/national-oil-companies.svg",
     labelLines: ["National Oil", "Companies"],
     slug: "national-oil-companies",
   },
   {
     icon: "icon-industry-monitoring",
-    iconAsset: "assets/icons/stakeholders/operators.png",
+    iconAsset: "assets/icons/stakeholders/operators.svg",
     labelLines: ["Operators"],
     slug: "operators",
   },
   {
     icon: "icon-audience-investors",
-    iconAsset: "assets/icons/stakeholders/investors.png",
+    iconAsset: "assets/icons/stakeholders/investors.svg",
     labelLines: ["Investors"],
     slug: "investors",
   },
   {
     icon: "icon-research",
-    iconAsset: "assets/icons/stakeholders/universities-researchers.png",
+    iconAsset: "assets/icons/stakeholders/universities-researchers.svg",
     labelLines: ["Universities &", "Researchers"],
     slug: "universities-researchers",
   },
@@ -244,7 +261,8 @@ const COUNTRIES = [
     flagId: "nigeria",
     frAnchor: "61--nigeria",
     hydrocarbons: ["oil", "gas", "condensate"],
-    map: { x: 69.3, y: 57.5 },
+    map: { x: 71.3, y: 58.9 },
+    mapScale: 0.94,
     ministryAbbr: "FMPR",
     ministryName: "Federal Ministry of Petroleum Resources",
     name: "Nigeria",
@@ -259,7 +277,7 @@ const COUNTRIES = [
     flagId: "ghana",
     frAnchor: "62--ghana",
     hydrocarbons: ["oil", "gas", "condensate"],
-    map: { x: 46.1, y: 59.6 },
+    map: { x: 44.9, y: 61.5 },
     ministryAbbr: "MEGT",
     ministryName: "Ministry of Energy and Green Transition",
     name: "Ghana",
@@ -274,7 +292,7 @@ const COUNTRIES = [
     flagId: "cote-divoire",
     frAnchor: "64--côte-divoire",
     hydrocarbons: ["oil", "gas", "condensate"],
-    map: { x: 38.7, y: 66.9 },
+    map: { x: 39.0, y: 61.6 },
     ministryAbbr: "MMPE",
     ministryName: "Ministry of Mines, Petroleum and Energy",
     name: "Côte d'Ivoire",
@@ -289,7 +307,8 @@ const COUNTRIES = [
     flagId: "senegal",
     frAnchor: "63--sénégal",
     hydrocarbons: ["oil", "gas", "condensate"],
-    map: { x: 21.8, y: 21.0 },
+    map: { x: 13.4, y: 44.6 },
+    mapFlag: { x: 8.0, y: 41.6 },
     ministryAbbr: "MEPM",
     ministryName: "Ministry of Energy, Petroleum and Mines",
     name: "Senegal",
@@ -304,7 +323,8 @@ const COUNTRIES = [
     flagId: "mauritania",
     frAnchor: "671--mauritanie",
     hydrocarbons: ["gas", "condensate", "oil"],
-    map: { x: 32.4, y: 9.6 },
+    map: { x: 22.8, y: 24.2 },
+    mapScale: 0.94,
     ministryAbbr: "MEP",
     ministryName: "Ministry of Energy and Petroleum",
     name: "Mauritania",
@@ -319,7 +339,7 @@ const COUNTRIES = [
     flagId: "niger",
     frAnchor: "66--niger",
     hydrocarbons: ["oil"],
-    map: { x: 61.9, y: 32.5 },
+    map: { x: 62.3, y: 39.4 },
     ministryAbbr: "MP",
     ministryName: "Ministry of Petroleum",
     name: "Niger",
@@ -334,7 +354,8 @@ const COUNTRIES = [
     flagId: "benin",
     frAnchor: "65--bénin",
     hydrocarbons: ["oil"],
-    map: { x: 54.5, y: 54.4 },
+    map: { x: 58.2, y: 58.3 },
+    mapScale: 0.86,
     ministryAbbr: "MEEM",
     ministryName: "Ministry of Energy, Water and Mines",
     name: "Benin",
@@ -349,7 +370,8 @@ const COUNTRIES = [
     flagId: "liberia",
     frAnchor: "673--libéria",
     hydrocarbons: [],
-    map: { x: 32.4, y: 82.5 },
+    map: { x: 23.8, y: 71.0 },
+    mapFlag: { x: 16.0, y: 69.6 },
     ministryAbbr: "MME",
     ministryName: "Ministry of Mines and Energy",
     name: "Liberia",
@@ -364,7 +386,8 @@ const COUNTRIES = [
     flagId: "sierra-leone",
     frAnchor: "672--sierra-leone",
     hydrocarbons: [],
-    map: { x: 26.0, y: 61.6 },
+    map: { x: 17.9, y: 64.4 },
+    mapFlag: { x: 10.4, y: 61.2 },
     ministryAbbr: "PDSL",
     ministryName: "Petroleum Directorate Sierra Leone",
     name: "Sierra Leone",
@@ -379,7 +402,8 @@ const COUNTRIES = [
     flagId: "guinea",
     frAnchor: "674--guinée-et-guinée-bissau",
     hydrocarbons: [],
-    map: { x: 32.4, y: 47.1 },
+    map: { x: 22.8, y: 57.3 },
+    mapFlag: { x: 15.3, y: 54.8 },
     ministryAbbr: "MEHH",
     ministryName: "Ministry of Energy, Hydraulics and Hydrocarbons",
     name: "Guinea",
@@ -394,7 +418,8 @@ const COUNTRIES = [
     flagId: "guinea-bissau",
     frAnchor: "674--guinée-et-guinée-bissau",
     hydrocarbons: [],
-    map: { x: 21.8, y: 42.9 },
+    map: { x: 14.8, y: 53.6 },
+    mapFlag: { x: 8.1, y: 50.6 },
     ministryAbbr: "MRN",
     ministryName: "Ministry of Natural Resources",
     name: "Guinea-Bissau",
@@ -409,7 +434,8 @@ const COUNTRIES = [
     flagId: "the-gambia",
     frAnchor: "675--la-gambie",
     hydrocarbons: [],
-    map: { x: 26.0, y: 46.0 },
+    map: { x: 14.8, y: 47.1 },
+    mapFlag: { x: 9.8, y: 44.3 },
     ministryAbbr: "MPEM",
     ministryName: "Ministry of Petroleum, Energy and Mines",
     name: "The Gambia",
@@ -424,7 +450,8 @@ const COUNTRIES = [
     flagId: "togo",
     frAnchor: "",
     hydrocarbons: [],
-    map: { x: 51.3, y: 73.1 },
+    map: { x: 53.3, y: 58.2 },
+    mapScale: 0.68,
     ministryAbbr: "MME",
     ministryName: "Ministry of Mines and Energy Resources",
     name: "Togo",
@@ -439,7 +466,8 @@ const COUNTRIES = [
     flagId: "burkina-faso",
     frAnchor: "",
     hydrocarbons: [],
-    map: { x: 46.1, y: 42.9 },
+    map: { x: 47.6, y: 47.5 },
+    mapScale: 0.88,
     ministryAbbr: "MEMC",
     ministryName: "Ministry of Energy, Mines and Quarries",
     name: "Burkina Faso",
@@ -454,7 +482,8 @@ const COUNTRIES = [
     flagId: "mali",
     frAnchor: "",
     hydrocarbons: [],
-    map: { x: 49.2, y: 14.8 },
+    map: { x: 41.8, y: 29.4 },
+    mapScale: 0.94,
     ministryAbbr: "MM",
     ministryName: "Ministry of Mines",
     name: "Mali",
@@ -469,7 +498,7 @@ const COUNTRIES = [
     flagId: "cabo-verde",
     frAnchor: "",
     hydrocarbons: [],
-    map: { x: 7.0, y: 64.8 },
+    map: { x: 6.0, y: 64.5 },
     ministryAbbr: "MITE",
     ministryName: "Ministry of Industry, Trade and Energy",
     name: "Cabo Verde",
@@ -584,6 +613,10 @@ function renderHydrocarbonList(country, locale) {
     .join("")}</p>`;
 }
 
+function getMapPanelImageHref(edition) {
+  return buildRelativeHref(editionBaseHref(edition), MAP_PANEL_IMAGE_PATH);
+}
+
 function renderCountryFlag(country, edition, variant = "card") {
   const flagHref = `#${country.flagId}`;
 
@@ -639,16 +672,39 @@ function renderCountryCard(country, edition) {
         </article>`;
 }
 
-function renderMapFlag(country, edition) {
-  return `            <a
-              class="west-africa-map-flag status-${escapeHtml(country.status)}"
-              href="${escapeHtml(formatCountryLink(edition, country))}"
-              style="left: ${country.map.x}%; top: ${country.map.y}%;"
-              title="${escapeHtml(country.name)}"
-              aria-label="${escapeHtml(country.name)}"
-            >
-${renderCountryFlag(country, edition, "map")}
-            </a>`;
+function renderMapPanelImage(edition) {
+  return `            <img
+              class="west-africa-map-panel-image"
+              src="${escapeHtml(getMapPanelImageHref(edition))}"
+              alt=""
+              aria-hidden="true"
+              width="${MAP_PANEL_IMAGE_WIDTH}"
+              height="${MAP_PANEL_IMAGE_HEIGHT}"
+              decoding="async"
+            >`;
+}
+
+function getMapHotspot(country) {
+  return (
+    MAP_HOTSPOTS[country.flagId] ?? {
+      centerX: country.map.x,
+      centerY: country.map.y,
+      width: 3.56,
+      height: 7.28,
+    }
+  );
+}
+
+function renderMapHotspot(country, edition) {
+  const hotspot = getMapHotspot(country);
+
+  return `          <a
+            class="west-africa-map-hotspot status-${escapeHtml(country.status)}"
+            href="${escapeHtml(formatCountryLink(edition, country))}"
+            style="--west-africa-map-hotspot-left: ${hotspot.centerX}%; --west-africa-map-hotspot-top: ${hotspot.centerY}%; --west-africa-map-hotspot-width: ${hotspot.width}%; --west-africa-map-hotspot-height: ${hotspot.height}%;"
+            title="${escapeHtml(country.name)}"
+            aria-label="${escapeHtml(country.name)}"
+          ></a>`;
 }
 
 function renderSearchChip(item, edition) {
@@ -838,26 +894,11 @@ ${COUNTRIES.map((country) => renderCountryCard(country, edition)).join("\n")}
       <div class="west-africa-map-card">
         <div
           class="west-africa-map-canvas"
-          role="group"
-          aria-label="Clickable West Africa political map with country hotspots"
+          role="img"
+          aria-label="Political map of West Africa with country flags"
         >
-          <img
-            class="west-africa-map-panel-image"
-            src="${escapeHtml(buildRelativeHref(editionBaseHref(edition), MAP_PANEL_IMAGE_PATH))}"
-            srcset="${escapeHtml(buildRelativeHref(
-              editionBaseHref(edition),
-              MAP_PANEL_IMAGE_PATH
-            ))} 1x, ${escapeHtml(buildRelativeHref(
-              editionBaseHref(edition),
-              MAP_PANEL_IMAGE_2X_PATH
-            ))} 2x"
-            alt=""
-            aria-hidden="true"
-            width="${MAP_PANEL_IMAGE_WIDTH}"
-            height="${MAP_PANEL_IMAGE_HEIGHT}"
-            decoding="async"
-          >
-${COUNTRIES.map((country) => renderMapFlag(country, edition)).join("\n")}
+${renderMapPanelImage(edition)}
+${COUNTRIES.map((country) => renderMapHotspot(country, edition)).join("\n")}
         </div>
       </div>
     </div>
