@@ -903,7 +903,7 @@ for (const expected of ["width: 120px;", "height: 124px;", "min-height: 124px;",
 }
 
 const chip = block(".search-scope-chip {");
-for (const expected of ["gap: 0.56rem;", "min-height: 2.78rem;", "border-radius: 0.94rem;", "font-size: 0.84rem;"]) {
+for (const expected of ["gap: 0.64rem;", "min-height: 2.96rem;", "border-radius: 0.98rem;", "font-size: 0.86rem;", "font-weight: 760;"]) {
   if (!chip.includes(expected)) {
     console.error(`Expected .search-scope-chip to include ${expected}.`);
     process.exit(1);
@@ -911,7 +911,7 @@ for (const expected of ["gap: 0.56rem;", "min-height: 2.78rem;", "border-radius:
 }
 
 const icon = block(".search-scope-chip-icon {");
-for (const expected of ["width: 1.04rem;", "height: 1.04rem;", "--homepage-inline-icon-stroke: 1.85;"]) {
+for (const expected of ["width: 1.1rem;", "height: 1.1rem;", "--homepage-inline-icon-stroke: 2;"]) {
   if (!icon.includes(expected)) {
     console.error(`Expected .search-scope-chip-icon to include ${expected}.`);
     process.exit(1);
@@ -1037,11 +1037,47 @@ for (const expected of ["font-size: 0.88rem;","line-height: 1;"]) {
 }
 
 const topicIcon = block(".topic-card-icon {");
-for (const expected of ["width: 3.64rem;","height: 3.64rem;","display: block;","object-fit: contain;","color: var(--homepage-heading-text);","--homepage-inline-icon-stroke: 2.5;"]) {
+for (const expected of ["width: 3.7rem;","height: 3.7rem;","display: block;","object-fit: contain;","color: var(--homepage-heading-text);","--homepage-inline-icon-stroke: 2.5;","transform: translateY(var(--topic-icon-offset-y)) scale(var(--topic-icon-scale));","transform-origin: center center;"]) {
   if (!topicIcon.includes(expected)) {
     console.error(`Expected .topic-card-icon to include ${expected}.`);
     process.exit(1);
   }
+}
+
+const topicOilIcon = block(".topic-card-icon--petroleum-value-chain {");
+if (!topicOilIcon.includes("--topic-icon-scale: 1.08;")) {
+  console.error("Expected .topic-card-icon--petroleum-value-chain to slightly scale up for optical balance.");
+  process.exit(1);
+}
+
+const topicFiscalIcon = block(".topic-card-icon--west-african-fiscal-regimes {");
+if (!topicFiscalIcon.includes("--topic-icon-scale: 1.07;")) {
+  console.error("Expected .topic-card-icon--west-african-fiscal-regimes to slightly scale up for optical balance.");
+  process.exit(1);
+}
+
+const topicNocIcon = block(".topic-card-icon--national-oil-companies {");
+if (!topicNocIcon.includes("--topic-icon-scale: 1.05;")) {
+  console.error("Expected .topic-card-icon--national-oil-companies to slightly scale up for optical balance.");
+  process.exit(1);
+}
+
+const topicUpstreamIcon = block(".topic-card-icon--upstream-operations {");
+if (!topicUpstreamIcon.includes("--topic-icon-scale: 1.06;")) {
+  console.error("Expected .topic-card-icon--upstream-operations to slightly scale up for optical balance.");
+  process.exit(1);
+}
+
+const topicGovernanceIcon = block(".topic-card-icon--governance-regulation {");
+if (!topicGovernanceIcon.includes("--topic-icon-scale: 1.04;")) {
+  console.error("Expected .topic-card-icon--governance-regulation to slightly scale up for optical balance.");
+  process.exit(1);
+}
+
+const topicCountryIcon = block(".topic-card-icon--country-analysis {");
+if (!topicCountryIcon.includes("--topic-icon-scale: 0.95;")) {
+  console.error("Expected .topic-card-icon--country-analysis to slightly scale down for optical balance.");
+  process.exit(1);
 }
 
 const heroStatGrid = block(".hero-stat-grid {");
@@ -1254,7 +1290,7 @@ for (const expected of [
   "--stakeholder-text-color: var(--homepage-heading-text);",
   "align-self: start;",
   "box-sizing: border-box;",
-  "grid-template-rows: 59px 38px;",
+  "grid-template-rows: 58px 39px;",
   "align-content: center;",
   "width: 120px;",
   "min-width: 120px;",
@@ -1314,7 +1350,7 @@ for (const expected of [
   "place-items: center;",
   "align-self: stretch;",
   "justify-self: stretch;",
-  "min-height: 59px;",
+  "min-height: 58px;",
 ]) {
   if (!iconSlot.includes(expected)) {
     console.error(`Expected .stakeholder-icon-slot to include ${expected} so icons share one fixed container.`);
@@ -1377,7 +1413,7 @@ for (const expected of [
   "align-self: stretch;",
   "justify-self: stretch;",
   "align-content: start;",
-  "min-height: 2.38rem;",
+  "min-height: 2.44rem;",
 ]) {
   if (!copySlot.includes(expected)) {
     console.error(`Expected .stakeholder-copy-slot to include ${expected} so labels share one fixed container.`);
@@ -1387,14 +1423,14 @@ for (const expected of [
 
 const stakeholderLabel = getBlock(".stakeholder-label");
 for (const expected of [
-  "gap: 0.12rem;",
+  "gap: 0.09rem;",
   "align-content: start;",
   "min-height: 100%;",
   "color: var(--stakeholder-text-color);",
-  "font-size: 0.74rem;",
-  "font-weight: 610;",
-  "line-height: 1.24;",
-  "letter-spacing: 0.006em;",
+  "font-size: 0.78rem;",
+  "font-weight: 630;",
+  "line-height: 1.2;",
+  "letter-spacing: 0.002em;",
 ]) {
   if (!stakeholderLabel.includes(expected)) {
     console.error(`Expected .stakeholder-label to include ${expected} so multi-line labels top-align within the copy slot.`);
@@ -1403,7 +1439,8 @@ for (const expected of [
 }
 
 for (const removed of [
-  "gap: 0.1rem;",
+  "gap: 0.11rem;",
+  "gap: 0.12rem;",
   "gap: 0.08rem;",
   "gap: 0.06rem;",
   "gap: 0.04rem;",
@@ -1414,16 +1451,18 @@ for (const removed of [
   "min-height: 2.34rem;",
   "min-height: 2.42rem;",
   "min-height: 2.26rem;",
+  "font-size: 0.74rem;",
   "font-size: 0.75rem;",
   "font-size: 0.76rem;",
   "font-size: 0.79rem;",
   "font-size: 0.72rem;",
+  "line-height: 1.24;",
+  "line-height: 1.23;",
   "line-height: 1.22;",
   "line-height: 1.18;",
   "line-height: 1.14;",
   "line-height: 1.1;",
   "line-height: 1.08;",
-  "line-height: 1.2;",
 ]) {
   if (stakeholderLabel.includes(removed)) {
     console.error(`Expected .stakeholder-label to stop using ${removed}.`);

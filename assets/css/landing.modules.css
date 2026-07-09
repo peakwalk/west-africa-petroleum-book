@@ -29,8 +29,10 @@
 }
 
 .topic-card-icon {
-  width: 3.64rem;
-  height: 3.64rem;
+  width: 3.7rem;
+  height: 3.7rem;
+  --topic-icon-scale: 1;
+  --topic-icon-offset-y: 0rem;
   display: block;
   justify-self: start;
   object-fit: contain;
@@ -38,6 +40,32 @@
   color: var(--homepage-heading-text);
   --homepage-inline-icon-stroke: 2.5;
   flex: 0 0 auto;
+  transform: translateY(var(--topic-icon-offset-y)) scale(var(--topic-icon-scale));
+  transform-origin: center center;
+}
+
+.topic-card-icon--petroleum-value-chain {
+  --topic-icon-scale: 1.08;
+}
+
+.topic-card-icon--west-african-fiscal-regimes {
+  --topic-icon-scale: 1.07;
+}
+
+.topic-card-icon--national-oil-companies {
+  --topic-icon-scale: 1.05;
+}
+
+.topic-card-icon--upstream-operations {
+  --topic-icon-scale: 1.06;
+}
+
+.topic-card-icon--governance-regulation {
+  --topic-icon-scale: 1.04;
+}
+
+.topic-card-icon--country-analysis {
+  --topic-icon-scale: 0.95;
 }
 
 .topic-card.topic-card-reference h4 {
