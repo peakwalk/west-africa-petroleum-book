@@ -40,25 +40,25 @@ const COUNTRY_FLAG_SPRITE_PATH = path.resolve(
 );
 const INLINE_COUNTRY_FLAG_SPRITE = fs.readFileSync(COUNTRY_FLAG_SPRITE_PATH, "utf8").trim();
 const MAP_PANEL_IMAGE_PATH = "assets/images/homepage-west-africa-map-panel.svg";
-const MAP_PANEL_IMAGE_WIDTH = 1546;
-const MAP_PANEL_IMAGE_HEIGHT = 495;
+const MAP_PANEL_IMAGE_WIDTH = 1044;
+const MAP_PANEL_IMAGE_HEIGHT = 260;
 const MAP_HOTSPOTS = {
-  benin: { centerX: 38.4541, centerY: 76.1616, width: 3.5576, height: 7.2727 },
-  "burkina-faso": { centerX: 33.7322, centerY: 64.4444, width: 3.5576, height: 7.2727 },
-  "cabo-verde": { centerX: 6.533, centerY: 49.1919, width: 2.8461, height: 5.8586 },
-  "cote-divoire": { centerX: 29.0103, centerY: 82.5253, width: 3.5576, height: 7.4747 },
-  ghana: { centerX: 33.9909, centerY: 81.0101, width: 3.5576, height: 7.2727 },
-  guinea: { centerX: 23.3829, centerY: 72.7273, width: 3.5576, height: 7.2727 },
-  "guinea-bissau": { centerX: 17.4321, centerY: 65.8586, width: 2.9107, height: 6.0606 },
-  liberia: { centerX: 23.9651, centerY: 86.6667, width: 2.9107, height: 6.0606 },
-  mali: { centerX: 34.3144, centerY: 43.7374, width: 3.5576, height: 7.4747 },
-  mauritania: { centerX: 22.6067, centerY: 32.4242, width: 3.5576, height: 7.4747 },
-  niger: { centerX: 46.6688, centerY: 46.3636, width: 3.5576, height: 7.4747 },
-  nigeria: { centerX: 45.0841, centerY: 77.2727, width: 3.6223, height: 7.4747 },
-  senegal: { centerX: 17.5614, centerY: 55.3535, width: 3.5576, height: 7.2727 },
-  "sierra-leone": { centerX: 21.3131, centerY: 78.3838, width: 2.9107, height: 6.0606 },
-  "the-gambia": { centerX: 16.1384, centerY: 60.202, width: 2.9107, height: 6.0606 },
-  togo: { centerX: 36.934, centerY: 78.7879, width: 2.8461, height: 6.0606 },
+  benin: { centerX: 43.0351, centerY: 68.3988, width: 2.781, height: 7.7762 },
+  "burkina-faso": { centerX: 38.3029, centerY: 53.295, width: 2.781, height: 7.7758 },
+  "cabo-verde": { centerX: 11.6229, centerY: 36.0277, width: 2.2496, height: 6.3435 },
+  "cote-divoire": { centerX: 33.5708, centerY: 76.6815, width: 2.781, height: 7.7762 },
+  ghana: { centerX: 38.5456, centerY: 74.7327, width: 2.781, height: 7.7762 },
+  guinea: { centerX: 27.8679, centerY: 64.0138, width: 2.781, height: 7.7758 },
+  "guinea-bissau": { centerX: 21.9224, centerY: 55.3804, width: 2.2496, height: 6.3435 },
+  liberia: { centerX: 28.4746, centerY: 82.1773, width: 2.2496, height: 6.3438 },
+  mali: { centerX: 38.9096, centerY: 26.4985, width: 2.781, height: 7.7762 },
+  mauritania: { centerX: 27.1399, centerY: 11.8819, width: 2.781, height: 7.7758 },
+  niger: { centerX: 51.2859, centerY: 29.9088, width: 2.781, height: 7.7758 },
+  nigeria: { centerX: 49.7085, centerY: 69.8604, width: 2.781, height: 7.7758 },
+  senegal: { centerX: 22.0438, centerY: 41.6019, width: 2.781, height: 7.7758 },
+  "sierra-leone": { centerX: 25.8052, centerY: 71.4585, width: 2.2496, height: 6.3435 },
+  "the-gambia": { centerX: 20.5877, centerY: 48.0723, width: 2.2496, height: 6.3438 },
+  togo: { centerX: 41.5183, centerY: 71.9458, width: 2.2496, height: 6.3438 },
 };
 
 const COUNTRY_STATUS_COPY = {

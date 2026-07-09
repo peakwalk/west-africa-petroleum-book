@@ -1,10 +1,10 @@
 .west-africa-map-canvas {
   position: relative;
   width: 100%;
-  aspect-ratio: 1546 / 495;
+  aspect-ratio: 1044 / 260;
   border-radius: 1.28rem;
   overflow: hidden;
-  background: linear-gradient(180deg, #dce8f7 0%, #d8e6f6 100%);
+  background: transparent;
   isolation: isolate;
 }
 
@@ -16,7 +16,7 @@
   height: 100%;
   object-fit: contain;
   object-position: center center;
-  z-index: 0;
+  z-index: 1;
 }
 
 .west-africa-map-hotspot {
@@ -29,20 +29,25 @@
   transform: translate(-50%, -50%);
   border-radius: 0.48rem;
   text-decoration: none;
-  z-index: 1;
+  z-index: 2;
   outline: none;
+  overflow: visible;
 }
 
 .west-africa-map-hotspot:hover,
 .west-africa-map-hotspot:focus-visible {
-  z-index: 3;
+  z-index: 4;
 }
 
 .west-africa-map-hotspot::after {
   content: "";
   position: absolute;
-  inset: -0.24rem;
-  border-radius: 0.64rem;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--west-africa-map-hotspot-width) + 0.28rem);
+  height: calc(var(--west-africa-map-hotspot-height) + 0.28rem);
+  transform: translate(-50%, -50%);
+  border-radius: 0.44rem;
   border: 1.5px solid transparent;
   box-shadow: none;
   transition:
@@ -53,10 +58,14 @@
 
 .west-africa-map-hotspot-flag {
   position: absolute;
-  inset: 0;
+  left: 50%;
+  top: 50%;
+  width: var(--west-africa-map-hotspot-width);
+  height: var(--west-africa-map-hotspot-height);
   display: flex;
   align-items: center;
   justify-content: center;
+  transform: translate(-50%, -50%);
   opacity: 0;
   pointer-events: none;
   transition: opacity 160ms ease;
