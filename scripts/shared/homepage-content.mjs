@@ -704,7 +704,11 @@ function renderMapHotspot(country, edition) {
             style="--west-africa-map-hotspot-left: ${hotspot.centerX}%; --west-africa-map-hotspot-top: ${hotspot.centerY}%; --west-africa-map-hotspot-width: ${hotspot.width}%; --west-africa-map-hotspot-height: ${hotspot.height}%;"
             title="${escapeHtml(country.name)}"
             aria-label="${escapeHtml(country.name)}"
-          ></a>`;
+          >
+            <span class="west-africa-map-hotspot-flag" aria-hidden="true">
+${renderCountryFlag(country, edition, "map")}
+            </span>
+          </a>`;
 }
 
 function renderSearchChip(item, edition) {
