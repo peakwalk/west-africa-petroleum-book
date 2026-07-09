@@ -477,16 +477,25 @@ check_contains public/index.html 'class="section section-platform decision-strip
 check_contains public/index.html 'Built for informed decision-making'
 check_contains public/index.html '<span class="decision-strip-title-line">Built for informed</span><span class="decision-strip-title-line">decision-making</span>'
 check_contains public/index.html 'class="section-divider section-divider-country-discovery"'
+check_contains public/index.html 'class="hero-stat-icon hero-stat-icon--countries homepage-inline-icon homepage-inline-icon--countries"'
+check_contains public/index.html 'class="hero-stat-icon hero-stat-icon--discoveries homepage-inline-icon homepage-inline-icon--discoveries"'
+check_not_contains public/index.html 'class="hero-stat-icon hero-stat-icon--countries"></span>'
 check_contains public/index.html 'class="stakeholder-grid"'
 check_contains public/index.html 'class="stakeholder-card stakeholder-card--governments"'
 check_contains public/index.html 'class="stakeholder-icon-slot"'
 check_contains public/index.html 'class="stakeholder-copy-slot"'
-check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/governments.svg"'
-check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/regulators.svg"'
-check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/national-oil-companies.svg"'
-check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/operators.svg"'
-check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/investors.svg"'
-check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image" src="/assets/icons/stakeholders/universities-researchers.svg"'
+check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image homepage-inline-icon homepage-inline-icon--governments"'
+check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image homepage-inline-icon homepage-inline-icon--regulators"'
+check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image homepage-inline-icon homepage-inline-icon--national-oil-companies"'
+check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image homepage-inline-icon homepage-inline-icon--operators"'
+check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image homepage-inline-icon homepage-inline-icon--investors"'
+check_contains public/index.html 'class="stakeholder-icon stakeholder-icon-image homepage-inline-icon homepage-inline-icon--universities-researchers"'
+check_not_contains public/index.html 'src="/assets/icons/stakeholders/governments.svg"'
+check_not_contains public/index.html 'src="/assets/icons/stakeholders/regulators.svg"'
+check_not_contains public/index.html 'src="/assets/icons/stakeholders/national-oil-companies.svg"'
+check_not_contains public/index.html 'src="/assets/icons/stakeholders/operators.svg"'
+check_not_contains public/index.html 'src="/assets/icons/stakeholders/investors.svg"'
+check_not_contains public/index.html 'src="/assets/icons/stakeholders/universities-researchers.svg"'
 check_not_contains public/index.html 'src="/assets/icons/stakeholders/governments.png"'
 check_not_contains public/index.html 'src="/assets/icons/stakeholders/regulators.png"'
 check_not_contains public/index.html 'src="/assets/icons/stakeholders/national-oil-companies.png"'
@@ -535,31 +544,31 @@ check_contains public/index.html 'class="homepage-search-shell"'
 check_contains public/index.html 'class="homepage-search-submit" type="submit" aria-label="Search the Book"'
 check_not_contains public/index.html 'class="button button-primary" type="submit">Search the Book</button>'
 check_contains public/index.html 'class="search-scope-chip" href="/book/?search=Fiscal%20Systems"'
-check_contains public/index.html 'class="search-scope-chip-icon search-scope-chip-icon--countries"'
-check_contains public/index.html 'class="search-scope-chip-icon search-scope-chip-icon--chapters"'
-check_contains public/index.html 'src="/assets/icons/search-scope/countries.svg"'
-check_contains public/index.html 'src="/assets/icons/search-scope/national_oil_companies.svg"'
+check_contains public/index.html 'class="search-scope-chip-icon search-scope-chip-icon--countries homepage-inline-icon homepage-inline-icon--countries"'
+check_contains public/index.html 'class="search-scope-chip-icon search-scope-chip-icon--chapters homepage-inline-icon homepage-inline-icon--chapters"'
+check_not_contains public/index.html 'src="/assets/icons/search-scope/countries.svg"'
+check_not_contains public/index.html 'src="/assets/icons/search-scope/national_oil_companies.svg"'
 check_contains public/index.html 'class="search-scope-chip-label">National Oil Companies</span>'
 check_contains public/index.html 'class="section-heading section-heading-topic-reference"'
 check_contains public/index.html 'class="topic-grid topic-grid-reference"'
 check_contains public/index.html 'class="topic-card topic-card-reference"'
 check_contains public/index.html '<h4>Petroleum Value Chain</h4>'
 check_contains public/index.html '<h4>West African Fiscal Regimes</h4>'
-check_contains public/index.html 'class="topic-card-icon topic-card-icon--petroleum-value-chain"'
-check_contains public/index.html 'class="topic-card-icon topic-card-icon--country-analysis"'
-check_contains public/index.html 'src="/assets/icons/topics/petroleum-value-chain.svg"'
-check_contains public/index.html 'src="/assets/icons/topics/west-african-fiscal-regimes.svg"'
-check_contains public/index.html 'src="/assets/icons/topics/national-oil-companies.svg"'
-check_contains public/index.html 'src="/assets/icons/topics/upstream-operations.svg"'
-check_contains public/index.html 'src="/assets/icons/topics/governance-regulation.svg"'
-check_contains public/index.html 'src="/assets/icons/topics/country-analysis.svg"'
+check_contains public/index.html 'class="topic-card-icon topic-card-icon--petroleum-value-chain homepage-inline-icon homepage-inline-icon--petroleum-value-chain"'
+check_contains public/index.html 'class="topic-card-icon topic-card-icon--country-analysis homepage-inline-icon homepage-inline-icon--country-analysis"'
+check_not_contains public/index.html 'src="/assets/icons/topics/petroleum-value-chain.svg"'
+check_not_contains public/index.html 'src="/assets/icons/topics/west-african-fiscal-regimes.svg"'
+check_not_contains public/index.html 'src="/assets/icons/topics/national-oil-companies.svg"'
+check_not_contains public/index.html 'src="/assets/icons/topics/upstream-operations.svg"'
+check_not_contains public/index.html 'src="/assets/icons/topics/governance-regulation.svg"'
+check_not_contains public/index.html 'src="/assets/icons/topics/country-analysis.svg"'
 check_not_contains public/index.html 'src="/assets/icons/topics/petroleum-value-chain.png"'
 check_not_contains public/index.html 'src="/assets/icons/topics/west-african-fiscal-regimes.png"'
 check_not_contains public/index.html 'src="/assets/icons/topics/national-oil-companies.png"'
 check_not_contains public/index.html 'src="/assets/icons/topics/upstream-operations.png"'
 check_not_contains public/index.html 'src="/assets/icons/topics/governance-regulation.png"'
 check_not_contains public/index.html 'src="/assets/icons/topics/country-analysis.png"'
-check_not_contains public/index.html '<svg class="topic-card-icon topic-card-icon--petroleum-value-chain"'
+check_contains public/index.html '<svg class="topic-card-icon topic-card-icon--petroleum-value-chain homepage-inline-icon homepage-inline-icon--petroleum-value-chain"'
 node - <<'NODE'
 const crypto = require("crypto");
 const fs = require("fs");
@@ -762,6 +771,7 @@ check_contains "$LANDING_CSS_ASSERT_FILE" '.topic-grid-reference {'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.topic-card-reference {'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.topic-card.topic-card-reference h4 {'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.topic-card-icon {'
+check_contains "$LANDING_CSS_ASSERT_FILE" '.homepage-inline-icon {'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.section.section-summary-modules {'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.section-summary-modules .summary-grid {'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.summary-card .summary-card-link {'
@@ -856,6 +866,13 @@ const mobileTopicIconBlock =
   mobileTopicIconStart === -1 || mobileTopicIconEnd === -1
     ? ""
     : mobileSegment.slice(mobileTopicIconStart, mobileTopicIconEnd + 1);
+const mobileStakeholderCardStart = mobileSegment.indexOf(".stakeholder-card {");
+const mobileStakeholderCardEnd =
+  mobileStakeholderCardStart === -1 ? -1 : mobileSegment.indexOf("}", mobileStakeholderCardStart);
+const mobileStakeholderCardBlock =
+  mobileStakeholderCardStart === -1 || mobileStakeholderCardEnd === -1
+    ? ""
+    : mobileSegment.slice(mobileStakeholderCardStart, mobileStakeholderCardEnd + 1);
 
 for (const expected of ["margin-top: 24px;", "margin-bottom: 0;", "padding-top: 0;", "padding-bottom: 0;"]) {
   if (!mobileSearchBlock.includes(expected)) {
@@ -864,22 +881,29 @@ for (const expected of ["margin-top: 24px;", "margin-bottom: 0;", "padding-top: 
   }
 }
 
-for (const expected of ["width: 0.96rem;", "height: 0.96rem;"]) {
+for (const expected of ["width: 1rem;", "height: 1rem;"]) {
   if (!mobileSearchIconBlock.includes(expected)) {
     console.error(`Expected mobile .search-scope-chip-icon to include ${expected}.`);
     process.exit(1);
   }
 }
 
-for (const expected of ["width: 2.32rem;", "height: 2.32rem;"]) {
+for (const expected of ["width: 2.44rem;", "height: 2.44rem;"]) {
   if (!mobileTopicIconBlock.includes(expected)) {
     console.error(`Expected mobile .topic-card-icon to include ${expected}.`);
     process.exit(1);
   }
 }
 
+for (const expected of ["width: 120px;", "height: 124px;", "min-height: 124px;", "max-height: 124px;"]) {
+  if (!mobileStakeholderCardBlock.includes(expected)) {
+    console.error(`Expected mobile .stakeholder-card to include ${expected} so the stakeholder tiles stay visually square.`);
+    process.exit(1);
+  }
+}
+
 const chip = block(".search-scope-chip {");
-for (const expected of ["gap: 0.56rem;", "min-height: 2.86rem;", "border-radius: 0.94rem;", "font-size: 0.85rem;"]) {
+for (const expected of ["gap: 0.64rem;", "min-height: 2.98rem;", "border-radius: 0.98rem;", "font-size: 0.86rem;"]) {
   if (!chip.includes(expected)) {
     console.error(`Expected .search-scope-chip to include ${expected}.`);
     process.exit(1);
@@ -887,7 +911,7 @@ for (const expected of ["gap: 0.56rem;", "min-height: 2.86rem;", "border-radius:
 }
 
 const icon = block(".search-scope-chip-icon {");
-for (const expected of ["width: 1rem;", "height: 1rem;"]) {
+for (const expected of ["width: 1.08rem;", "height: 1.08rem;", "--homepage-inline-icon-stroke: 1.95;"]) {
   if (!icon.includes(expected)) {
     console.error(`Expected .search-scope-chip-icon to include ${expected}.`);
     process.exit(1);
@@ -980,6 +1004,22 @@ for (const expected of ["font-size: 0.98rem;","line-height: 1.18;","letter-spaci
   }
 }
 
+const homepageInlineIcon = block(".homepage-inline-icon {");
+for (const expected of ["display: block;","width: 1em;","height: 1em;","overflow: visible;","color: currentColor;"]) {
+  if (!homepageInlineIcon.includes(expected)) {
+    console.error(`Expected .homepage-inline-icon to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const homepageInlineIconStroke = block(".homepage-inline-icon path,");
+for (const expected of ["fill: none;","stroke: currentColor;","stroke-width: var(--homepage-inline-icon-stroke, 1.75);","stroke-linecap: round;","stroke-linejoin: round;","vector-effect: non-scaling-stroke;"]) {
+  if (!homepageInlineIconStroke.includes(expected)) {
+    console.error(`Expected the homepage inline icon stroke contract to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
 const topicCopy = block(".topic-card.topic-card-reference p {");
 for (const expected of ["font-size: 0.82rem;","line-height: 1.48;"]) {
   if (!topicCopy.includes(expected)) {
@@ -997,9 +1037,55 @@ for (const expected of ["font-size: 0.88rem;","line-height: 1;"]) {
 }
 
 const topicIcon = block(".topic-card-icon {");
-for (const expected of ["width: 2.6rem;","height: 2.6rem;","display: block;","object-fit: contain;","color: var(--homepage-heading-text);"]) {
+for (const expected of ["width: 3.08rem;","height: 3.08rem;","display: block;","object-fit: contain;","color: var(--homepage-heading-text);","--homepage-inline-icon-stroke: 2;"]) {
   if (!topicIcon.includes(expected)) {
     console.error(`Expected .topic-card-icon to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const heroStatGrid = block(".hero-stat-grid {");
+for (const expected of ["gap: 0;","max-width: 64.2rem;"]) {
+  if (!heroStatGrid.includes(expected)) {
+    console.error(`Expected .hero-stat-grid to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const heroStatCard = block(".hero-stat-card {");
+for (const expected of ["gap: 0.46rem;","padding: 0.12rem 0.86rem 0.08rem;"]) {
+  if (!heroStatCard.includes(expected)) {
+    console.error(`Expected .hero-stat-card to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const heroStatDivider = block(".hero-stat-card + .hero-stat-card {");
+if (!heroStatDivider.includes("border-left: 1px solid rgba(255, 255, 255, 0.08);")) {
+  console.error("Expected .hero-stat-card + .hero-stat-card to reduce divider contrast.");
+  process.exit(1);
+}
+
+const heroStatIcon = block(".hero-stat-icon {");
+for (const expected of ["width: 2.72rem;","height: 2.72rem;","margin-bottom: 0.52rem;","--homepage-inline-icon-stroke: 1.9;"]) {
+  if (!heroStatIcon.includes(expected)) {
+    console.error(`Expected .hero-stat-icon to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const heroStatLabel = block(".hero-stat-label {");
+for (const expected of ["gap: 0.08rem;","line-height: 1.22;"]) {
+  if (!heroStatLabel.includes(expected)) {
+    console.error(`Expected .hero-stat-label to include ${expected}.`);
+    process.exit(1);
+  }
+}
+
+const heroButtonSecondary = block(".hero-panel-v2 .button-secondary {");
+for (const expected of ["background: rgba(9, 27, 48, 0.28);","border-color: rgba(255, 255, 255, 0.42);","box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);"]) {
+  if (!heroButtonSecondary.includes(expected)) {
+    console.error(`Expected .hero-panel-v2 .button-secondary to include ${expected}.`);
     process.exit(1);
   }
 }
@@ -1161,23 +1247,23 @@ function getBlock(selector) {
 const stakeholderCard = getBlock(".stakeholder-card");
 for (const expected of [
   "--stakeholder-icon-color: var(--homepage-heading-text);",
-  "--stakeholder-icon-size: 62px;",
+  "--stakeholder-icon-size: 58px;",
   "--stakeholder-icon-offset-x: 0px;",
   "--stakeholder-icon-offset-y: 0px;",
   "--stakeholder-icon-scale: 1;",
   "--stakeholder-text-color: var(--homepage-heading-text);",
   "align-self: start;",
   "box-sizing: border-box;",
-  "grid-template-rows: 80px 34px;",
+  "grid-template-rows: 64px 32px;",
   "align-content: center;",
   "width: 120px;",
   "min-width: 120px;",
   "max-width: 120px;",
-  "height: 148px;",
-  "min-height: 148px;",
-  "max-height: 148px;",
-  "row-gap: 8px;",
-  "padding: 13px 8px 10px;",
+  "height: 124px;",
+  "min-height: 124px;",
+  "max-height: 124px;",
+  "row-gap: 4px;",
+  "padding: 12px 8px;",
   "border-radius: 0.9rem;",
   "box-shadow: 0 8px 20px rgba(11, 31, 51, 0.042);",
   "color: var(--stakeholder-text-color);",
@@ -1202,11 +1288,15 @@ for (const removed of [
   "min-height: 9.55rem;",
   "min-height: 9.35rem;",
   "min-height: 9.45rem;",
+  "height: 148px;",
+  "min-height: 148px;",
+  "max-height: 148px;",
   "padding: 0.25rem 0.56rem 0.5rem;",
   "padding: 1.02rem 0.62rem 0.98rem;",
   "padding: 1.14rem 0.64rem 0.96rem;",
   "padding: 1.18rem 0.7rem 0.9rem;",
   "padding: 1.28rem 0.75rem 0.95rem;",
+  "padding: 13px 8px 10px;",
   "border-radius: 0.92rem;",
   "border-radius: 1rem;",
   "box-shadow: 0 6px 18px rgba(11, 31, 51, 0.045);",
@@ -1224,7 +1314,7 @@ for (const expected of [
   "place-items: center;",
   "align-self: stretch;",
   "justify-self: stretch;",
-  "min-height: 82px;",
+  "min-height: 64px;",
 ]) {
   if (!iconSlot.includes(expected)) {
     console.error(`Expected .stakeholder-icon-slot to include ${expected} so icons share one fixed container.`);
@@ -1241,6 +1331,7 @@ for (const expected of [
   "height: var(--stakeholder-icon-size);",
   "margin-top: 0;",
   "color: var(--stakeholder-icon-color);",
+  "--homepage-inline-icon-stroke: 1.7;",
   "transform: translate(var(--stakeholder-icon-offset-x), var(--stakeholder-icon-offset-y))",
   "scale(var(--stakeholder-icon-scale));",
   "transform-origin: center center;",
@@ -1286,7 +1377,7 @@ for (const expected of [
   "align-self: stretch;",
   "justify-self: stretch;",
   "align-content: start;",
-  "min-height: 2.32rem;",
+  "min-height: 2rem;",
 ]) {
   if (!copySlot.includes(expected)) {
     console.error(`Expected .stakeholder-copy-slot to include ${expected} so labels share one fixed container.`);
@@ -1296,13 +1387,13 @@ for (const expected of [
 
 const stakeholderLabel = getBlock(".stakeholder-label");
 for (const expected of [
-  "gap: 0.02rem;",
+  "gap: 0.04rem;",
   "align-content: start;",
   "min-height: 100%;",
   "color: var(--stakeholder-text-color);",
-  "font-size: 0.71rem;",
+  "font-size: 0.74rem;",
   "font-weight: 650;",
-  "line-height: 1.04;",
+  "line-height: 1.1;",
 ]) {
   if (!stakeholderLabel.includes(expected)) {
     console.error(`Expected .stakeholder-label to include ${expected} so multi-line labels top-align within the copy slot.`);
@@ -1312,13 +1403,15 @@ for (const expected of [
 
 for (const removed of [
   "gap: 0.06rem;",
-  "gap: 0.04rem;",
+  "gap: 0.03rem;",
   "min-height: auto;",
   "min-height: 2.34rem;",
   "min-height: 2.42rem;",
   "min-height: 2.26rem;",
   "font-size: 0.79rem;",
   "font-size: 0.76rem;",
+  "font-size: 0.72rem;",
+  "line-height: 1.08;",
   "line-height: 1.18;",
   "line-height: 1.2;",
   "line-height: 1.22;",
@@ -1330,7 +1423,7 @@ for (const removed of [
 }
 
 const governmentsCard = getBlock(".stakeholder-card--governments");
-for (const expected of ["--stakeholder-icon-size: 64px;"]) {
+for (const expected of ["--stakeholder-icon-size: 60px;"]) {
   if (!governmentsCard.includes(expected)) {
     console.error(`Expected .stakeholder-card--governments to include ${expected} for optical centering.`);
     process.exit(1);
@@ -1338,7 +1431,7 @@ for (const expected of ["--stakeholder-icon-size: 64px;"]) {
 }
 
 const regulatorsCard = getBlock(".stakeholder-card--regulators");
-for (const expected of ["--stakeholder-icon-size: 58px;"]) {
+for (const expected of ["--stakeholder-icon-size: 54px;"]) {
   if (!regulatorsCard.includes(expected)) {
     console.error(`Expected .stakeholder-card--regulators to include ${expected} for optical centering.`);
     process.exit(1);
@@ -1346,7 +1439,7 @@ for (const expected of ["--stakeholder-icon-size: 58px;"]) {
 }
 
 const nocCard = getBlock(".stakeholder-card--national-oil-companies");
-for (const expected of ["--stakeholder-icon-size: 60px;"]) {
+for (const expected of ["--stakeholder-icon-size: 56px;"]) {
   if (!nocCard.includes(expected)) {
     console.error(
       `Expected .stakeholder-card--national-oil-companies to include ${expected} for optical centering.`,
@@ -1356,7 +1449,7 @@ for (const expected of ["--stakeholder-icon-size: 60px;"]) {
 }
 
 const operatorsCard = getBlock(".stakeholder-card--operators");
-for (const expected of ["--stakeholder-icon-size: 64px;"]) {
+for (const expected of ["--stakeholder-icon-size: 60px;"]) {
   if (!operatorsCard.includes(expected)) {
     console.error(`Expected .stakeholder-card--operators to include ${expected} for optical centering.`);
     process.exit(1);
@@ -1364,7 +1457,7 @@ for (const expected of ["--stakeholder-icon-size: 64px;"]) {
 }
 
 const investorsCard = getBlock(".stakeholder-card--investors");
-for (const expected of ["--stakeholder-icon-size: 61px;"]) {
+for (const expected of ["--stakeholder-icon-size: 57px;"]) {
   if (!investorsCard.includes(expected)) {
     console.error(`Expected .stakeholder-card--investors to include ${expected} for optical centering.`);
     process.exit(1);
@@ -1372,7 +1465,7 @@ for (const expected of ["--stakeholder-icon-size: 61px;"]) {
 }
 
 const universitiesCard = getBlock(".stakeholder-card--universities-researchers");
-for (const expected of ["--stakeholder-icon-size: 61px;"]) {
+for (const expected of ["--stakeholder-icon-size: 57px;"]) {
   if (!universitiesCard.includes(expected)) {
     console.error(
       `Expected .stakeholder-card--universities-researchers to include ${expected} for optical centering.`,
@@ -1381,6 +1474,9 @@ for (const expected of ["--stakeholder-icon-size: 61px;"]) {
   }
 }
 '
+check_contains assets/css/landing.responsive-tablet.css 'min-height: 7.75rem;'
+check_not_contains assets/css/landing.responsive-tablet.css 'min-height: 8.8rem;'
+check_not_contains assets/css/landing.responsive-tablet.css 'min-height: 8rem;'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.chapters-link {'
 check_contains "$LANDING_CSS_ASSERT_FILE" 'margin: 0;'
 check_contains "$LANDING_CSS_ASSERT_FILE" 'border-radius: 0.5rem;'
@@ -1635,8 +1731,8 @@ check_contains public/fr/index.html '<h3>Recherche dans Upstream Atlas</h3>'
 check_not_contains public/fr/index.html '<h2>Recherche dans Upstream Atlas</h2>'
 check_contains public/fr/index.html 'class="homepage-search-submit" type="submit" aria-label="Rechercher dans le livre"'
 check_not_contains public/fr/index.html 'class="button button-primary" type="submit">Rechercher dans le livre</button>'
-check_contains public/fr/index.html 'class="search-scope-chip-icon search-scope-chip-icon--countries"'
-check_contains public/fr/index.html 'src="/assets/icons/search-scope/countries.svg"'
+check_contains public/fr/index.html 'class="search-scope-chip-icon search-scope-chip-icon--countries homepage-inline-icon homepage-inline-icon--countries"'
+check_not_contains public/fr/index.html 'src="/assets/icons/search-scope/countries.svg"'
 check_contains public/fr/index.html 'class="search-scope-chip-label">Compagnies nationales</span>'
 check_not_contains public/fr/index.html 'class="topic-grid topic-grid-reference"'
 check_contains public/fr/index.html 'assets/icons/homepage/icon-research.svg'

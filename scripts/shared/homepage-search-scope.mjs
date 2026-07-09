@@ -1,8 +1,9 @@
-const SEARCH_SCOPE_ICON_BASE_PATH = "/assets/icons/search-scope";
+import { renderHomepageOutlineIcon } from "./homepage-outline-icons.mjs";
 
 const SEARCH_SCOPE_ITEMS = [
   {
     key: "countries",
+    iconName: "countries",
     labels: {
       en: "Countries",
       fr: "Pays",
@@ -19,6 +20,7 @@ const SEARCH_SCOPE_ITEMS = [
   },
   {
     key: "national-oil-companies",
+    iconName: "national-oil-companies",
     labels: {
       en: "National Oil Companies",
       fr: "Compagnies nationales",
@@ -35,6 +37,7 @@ const SEARCH_SCOPE_ITEMS = [
   },
   {
     key: "ministries",
+    iconName: "ministries",
     labels: {
       en: "Ministries",
       fr: "Ministères",
@@ -49,6 +52,7 @@ const SEARCH_SCOPE_ITEMS = [
   },
   {
     key: "fields",
+    iconName: "fields",
     labels: {
       en: "Fields",
       fr: "Champs",
@@ -65,6 +69,7 @@ const SEARCH_SCOPE_ITEMS = [
   },
   {
     key: "discoveries",
+    iconName: "discoveries",
     labels: {
       en: "Discoveries",
       fr: "Découvertes",
@@ -81,6 +86,7 @@ const SEARCH_SCOPE_ITEMS = [
   },
   {
     key: "basins",
+    iconName: "basins",
     labels: {
       en: "Basins",
       fr: "Bassins",
@@ -96,6 +102,7 @@ const SEARCH_SCOPE_ITEMS = [
   },
   {
     key: "fiscal-systems",
+    iconName: "fiscal-systems",
     labels: {
       en: "Fiscal Systems",
       fr: "Fiscalité",
@@ -119,6 +126,7 @@ const SEARCH_SCOPE_ITEMS = [
   },
   {
     key: "chapters",
+    iconName: "chapters",
     labels: {
       en: "Chapters",
       fr: "Chapitres",
@@ -134,6 +142,7 @@ const SEARCH_SCOPE_ITEMS = [
 
 export function getSearchScopeItems(locale) {
   return SEARCH_SCOPE_ITEMS.map((item) => ({
+    iconName: item.iconName,
     iconKey: item.key,
     key: item.key,
     label: item.labels[locale] || item.labels.en,
@@ -142,11 +151,8 @@ export function getSearchScopeItems(locale) {
 }
 
 export function renderSearchScopeIcon(item) {
-  return `<img class="search-scope-chip-icon search-scope-chip-icon--${item.iconKey}" src="${getSearchScopeIconSrc(
-    item.iconKey
-  )}" alt="" aria-hidden="true" decoding="async">`;
-}
-
-function getSearchScopeIconSrc(iconKey) {
-  return `${SEARCH_SCOPE_ICON_BASE_PATH}/${iconKey.replace(/-/g, "_")}.svg`;
+  return renderHomepageOutlineIcon(
+    item.iconName || item.iconKey,
+    `search-scope-chip-icon search-scope-chip-icon--${item.iconKey}`
+  );
 }

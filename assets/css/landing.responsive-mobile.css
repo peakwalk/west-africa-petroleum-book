@@ -222,9 +222,9 @@
     width: 120px;
     min-width: 120px;
     max-width: 120px;
-    height: 154px;
-    min-height: 154px;
-    max-height: 154px;
+    height: 124px;
+    min-height: 124px;
+    max-height: 124px;
     padding-inline: 0.56rem;
   }
 
@@ -250,8 +250,8 @@
   }
 
   .topic-card-icon {
-    width: 2.32rem;
-    height: 2.32rem;
+    width: 2.44rem;
+    height: 2.44rem;
   }
 
   .section-search-surface {
@@ -301,8 +301,8 @@
   }
 
   .search-scope-chip-icon {
-    width: 0.96rem;
-    height: 0.96rem;
+    width: 1rem;
+    height: 1rem;
   }
 
   .west-africa-map-hotspot::after {

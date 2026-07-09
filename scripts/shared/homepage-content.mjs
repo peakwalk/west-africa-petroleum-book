@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { renderHomepageOutlineIcon } from "./homepage-outline-icons.mjs";
 import { getSearchScopeItems, renderSearchScopeIcon } from "./homepage-search-scope.mjs";
 import {
   getHomepageTopicReferenceItems,
@@ -559,32 +560,26 @@ function renderMetric(metric) {
   const labelMarkup = metric.labelLines
     .map((line) => `<span class="hero-stat-label-line">${escapeHtml(line)}</span>`)
     .join("");
+  const iconMarkup = renderHomepageOutlineIcon(
+    metric.icon,
+    `hero-stat-icon hero-stat-icon--${metric.icon}`
+  );
 
   return `            <div class="hero-stat-card hero-stat-card--${escapeHtml(metric.icon)}">
-              <span class="hero-stat-icon hero-stat-icon--${escapeHtml(metric.icon)}" aria-hidden="true"></span>
+              ${iconMarkup}
               <span class="hero-stat-value">${escapeHtml(metric.value)}</span>
               <span class="hero-stat-label">${labelMarkup}</span>
             </div>`;
 }
 
 function renderStakeholder(stakeholder, edition) {
-  const iconHref = buildRelativeHref(
-    editionBaseHref(edition),
-    `assets/icons/homepage-sprite.svg#${stakeholder.icon}`
-  );
-  const iconAssetHref = stakeholder.iconAsset
-    ? buildRelativeHref(editionBaseHref(edition), stakeholder.iconAsset)
-    : null;
   const labelMarkup = stakeholder.labelLines
     .map((line) => `<span class="stakeholder-label-line">${escapeHtml(line)}</span>`)
     .join("");
-  const iconMarkup = iconAssetHref
-    ? `<img class="stakeholder-icon stakeholder-icon-image" src="${escapeHtml(
-        iconAssetHref
-      )}" alt="" aria-hidden="true" decoding="async">`
-    : `<svg class="stakeholder-icon ua-icon" aria-hidden="true" focusable="false"><use href="${escapeHtml(
-        iconHref
-      )}"></use></svg>`;
+  const iconMarkup = renderHomepageOutlineIcon(
+    stakeholder.slug,
+    `stakeholder-icon stakeholder-icon-image`
+  );
 
   return `          <li class="stakeholder-card stakeholder-card--${escapeHtml(stakeholder.slug)}">
             <span class="stakeholder-icon-slot">

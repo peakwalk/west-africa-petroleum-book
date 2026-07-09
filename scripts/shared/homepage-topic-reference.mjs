@@ -1,8 +1,9 @@
-const TOPIC_ICON_BASE_PATH = "/assets/icons/topics";
+import { renderHomepageOutlineIcon } from "./homepage-outline-icons.mjs";
 
 const HOMEPAGE_TOPIC_REFERENCE_ITEMS = [
   {
     key: "petroleum-value-chain",
+    iconName: "petroleum-value-chain",
     title: {
       en: "Petroleum Value Chain",
     },
@@ -13,6 +14,7 @@ const HOMEPAGE_TOPIC_REFERENCE_ITEMS = [
   },
   {
     key: "west-african-fiscal-regimes",
+    iconName: "west-african-fiscal-regimes",
     title: {
       en: "West African Fiscal Regimes",
     },
@@ -23,6 +25,7 @@ const HOMEPAGE_TOPIC_REFERENCE_ITEMS = [
   },
   {
     key: "national-oil-companies",
+    iconName: "national-oil-companies",
     title: {
       en: "National Oil Companies",
     },
@@ -33,6 +36,7 @@ const HOMEPAGE_TOPIC_REFERENCE_ITEMS = [
   },
   {
     key: "upstream-operations",
+    iconName: "upstream-operations",
     title: {
       en: "Upstream Operations",
     },
@@ -43,6 +47,7 @@ const HOMEPAGE_TOPIC_REFERENCE_ITEMS = [
   },
   {
     key: "governance-regulation",
+    iconName: "governance-regulation",
     title: {
       en: "Governance & Regulation",
     },
@@ -53,6 +58,7 @@ const HOMEPAGE_TOPIC_REFERENCE_ITEMS = [
   },
   {
     key: "country-analysis",
+    iconName: "country-analysis",
     title: {
       en: "Country Analysis",
     },
@@ -63,14 +69,11 @@ const HOMEPAGE_TOPIC_REFERENCE_ITEMS = [
   },
 ];
 
-function getTopicIconSrc(iconKey) {
-  return `${TOPIC_ICON_BASE_PATH}/${iconKey}.svg`;
-}
-
 export function getHomepageTopicReferenceItems(locale) {
   return HOMEPAGE_TOPIC_REFERENCE_ITEMS.map((item) => ({
     description: item.description[locale] || item.description.en,
     href: item.href,
+    iconName: item.iconName,
     iconKey: item.key,
     key: item.key,
     title: item.title[locale] || item.title.en,
@@ -78,7 +81,8 @@ export function getHomepageTopicReferenceItems(locale) {
 }
 
 export function renderHomepageTopicReferenceIcon(item) {
-  return `<img class="topic-card-icon topic-card-icon--${item.iconKey}" src="${getTopicIconSrc(
-    item.iconKey
-  )}" alt="" aria-hidden="true" loading="lazy" decoding="async">`;
+  return renderHomepageOutlineIcon(
+    item.iconName || item.iconKey,
+    `topic-card-icon topic-card-icon--${item.iconKey}`
+  );
 }

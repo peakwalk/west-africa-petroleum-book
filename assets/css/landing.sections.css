@@ -87,6 +87,29 @@
   pointer-events: none;
 }
 
+.homepage-inline-icon {
+  display: block;
+  width: 1em;
+  height: 1em;
+  overflow: visible;
+  flex: 0 0 auto;
+  color: currentColor;
+}
+
+.homepage-inline-icon path,
+.homepage-inline-icon circle,
+.homepage-inline-icon rect,
+.homepage-inline-icon line,
+.homepage-inline-icon polyline,
+.homepage-inline-icon polygon {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: var(--homepage-inline-icon-stroke, 1.75);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
 .ua-icon--feature {
   width: 48px;
   height: 48px;
@@ -292,4 +315,3 @@
   border-color: rgba(31, 94, 122, 0.24);
   background: rgba(31, 94, 122, 0.1);
 }
-
