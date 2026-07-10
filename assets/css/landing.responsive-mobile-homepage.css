@@ -116,6 +116,19 @@
   }
 }
 
+@media (min-width: 700px) and (max-width: 767px) {
+  .country-grid-v2,
+  .topic-grid,
+  .summary-grid,
+  .topic-grid-compact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .section-summary-modules .summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 480px) {
   .mobile-nav-panel {
     min-width: calc(100vw - 1rem);
@@ -293,6 +306,13 @@
     width: 4.25rem;
     height: 6.35rem;
     justify-self: end;
+  }
+}
+
+@media (max-width: 320px) {
+  .hero-panel-v2 .hero-copy-block h1 {
+    max-width: 12.4ch;
+    font-size: clamp(1.68rem, 8.35vw, 1.88rem);
   }
 }
 
