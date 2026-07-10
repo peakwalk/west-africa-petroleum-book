@@ -103,6 +103,13 @@ function renderSpriteIcon({ className, href }) {
   return `<svg class="${escapeHtml(className)}" aria-hidden="true" focusable="false"><use href="${escapeHtml(href)}"></use></svg>`;
 }
 
+function renderHeaderContactIcon() {
+  return `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <rect x="3.75" y="6.25" width="16.5" height="11.5" rx="1.6"></rect>
+    <path d="M4.75 7.25 12 12.75 19.25 7.25"></path>
+  </svg>`;
+}
+
 function renderLanguageSwitch({ edition, currentPage, currentLegalPage = null, localeStrings }) {
   const peerEdition = getPeerSiteEdition(edition.locale);
   if (!peerEdition) {
@@ -315,6 +322,15 @@ ${renderResponsiveBrandLink({
         </nav>
         <div class="header-actions">
 ${renderLanguageSwitch({ currentLegalPage, currentPage, edition, localeStrings })}
+          <a
+            class="header-contact-link"
+            href="${escapeHtml(links.contactHref)}"
+            aria-label="${escapeHtml(localeStrings.nav.contact)}"
+            data-tooltip="${escapeHtml(localeStrings.nav.contact)}"
+          >
+            ${renderHeaderContactIcon()}
+            <span class="sr-only">${escapeHtml(localeStrings.nav.contact)}</span>
+          </a>
           <a class="button button-header" href="${escapeHtml(links.ctaHref)}">
             ${renderSpriteIcon({ className: "button-icon ua-icon ua-icon--sm", href: startReadingIconHref })}
             <span class="button-label">${escapeHtml(localeStrings.buttons.startReading)}</span>

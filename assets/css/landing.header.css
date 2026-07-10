@@ -52,11 +52,15 @@
   display: grid;
   gap: 0.35rem;
   min-width: min(20rem, calc(100vw - 1.4rem));
+  max-height: calc(100dvh - 5.8rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 0.8rem;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(17, 44, 89, 0.12);
   border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.98);
-  box-shadow: var(--card-shadow);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.99) 0%, rgba(247, 250, 255, 0.98) 100%);
+  box-shadow: 0 22px 40px rgba(11, 31, 51, 0.14);
+  backdrop-filter: blur(14px);
 }
 
 .mobile-nav-panel a:not(.button) {

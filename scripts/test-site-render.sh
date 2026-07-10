@@ -471,6 +471,8 @@ NODE
 check_contains public/index.html 'class="button-icon ua-icon ua-icon--sm"'
 check_contains public/index.html 'class="mobile-nav-icon mobile-nav-icon-menu ua-icon ua-icon--sm"'
 check_contains public/index.html 'class="mobile-nav-icon mobile-nav-icon-close ua-icon ua-icon--sm"'
+check_contains public/index.html 'class="header-contact-link"'
+check_contains public/index.html '<rect x="3.75" y="6.25" width="16.5" height="11.5" rx="1.6"></rect>'
 check_not_contains public/index.html 'class="mobile-nav-contact"'
 check_not_contains public/index.html '>Contact Us</a>'
 check_contains public/index.html 'class="section section-platform decision-strip"'
@@ -873,6 +875,78 @@ const mobileStakeholderCardBlock =
   mobileStakeholderCardStart === -1 || mobileStakeholderCardEnd === -1
     ? ""
     : mobileSegment.slice(mobileStakeholderCardStart, mobileStakeholderCardEnd + 1);
+const mobileHeroCopyStart = mobileSegment.indexOf(".hero-copy-block-v2 {");
+const mobileHeroCopyEnd =
+  mobileHeroCopyStart === -1 ? -1 : mobileSegment.indexOf("}", mobileHeroCopyStart);
+const mobileHeroCopyBlock =
+  mobileHeroCopyStart === -1 || mobileHeroCopyEnd === -1
+    ? ""
+    : mobileSegment.slice(mobileHeroCopyStart, mobileHeroCopyEnd + 1);
+const mobileHeroActionsStart = mobileSegment.indexOf(".hero-panel-v2 .hero-actions {");
+const mobileHeroActionsEnd =
+  mobileHeroActionsStart === -1 ? -1 : mobileSegment.indexOf("}", mobileHeroActionsStart);
+const mobileHeroActionsBlock =
+  mobileHeroActionsStart === -1 || mobileHeroActionsEnd === -1
+    ? ""
+    : mobileSegment.slice(mobileHeroActionsStart, mobileHeroActionsEnd + 1);
+const mobileHeroStatsStart = mobileSegment.indexOf(".hero-panel-v2 .hero-stat-grid {");
+const mobileHeroStatsEnd =
+  mobileHeroStatsStart === -1 ? -1 : mobileSegment.indexOf("}", mobileHeroStatsStart);
+const mobileHeroStatsBlock =
+  mobileHeroStatsStart === -1 || mobileHeroStatsEnd === -1
+    ? ""
+    : mobileSegment.slice(mobileHeroStatsStart, mobileHeroStatsEnd + 1);
+const mobileHeroStatCardStart = mobileSegment.indexOf(".hero-panel-v2 .hero-stat-card {");
+const mobileHeroStatCardEnd =
+  mobileHeroStatCardStart === -1 ? -1 : mobileSegment.indexOf("}", mobileHeroStatCardStart);
+const mobileHeroStatCardBlock =
+  mobileHeroStatCardStart === -1 || mobileHeroStatCardEnd === -1
+    ? ""
+    : mobileSegment.slice(mobileHeroStatCardStart, mobileHeroStatCardEnd + 1);
+const mobileHeroStatDividerStart = mobileSegment.indexOf(
+  ".hero-panel-v2 .hero-stat-card + .hero-stat-card {"
+);
+const mobileHeroStatDividerEnd =
+  mobileHeroStatDividerStart === -1 ? -1 : mobileSegment.indexOf("}", mobileHeroStatDividerStart);
+const mobileHeroStatDividerBlock =
+  mobileHeroStatDividerStart === -1 || mobileHeroStatDividerEnd === -1
+    ? ""
+    : mobileSegment.slice(mobileHeroStatDividerStart, mobileHeroStatDividerEnd + 1);
+const mobileStakeholderGridStart = mobileSegment.indexOf(".stakeholder-grid {");
+const mobileStakeholderGridEnd =
+  mobileStakeholderGridStart === -1 ? -1 : mobileSegment.indexOf("}", mobileStakeholderGridStart);
+const mobileStakeholderGridBlock =
+  mobileStakeholderGridStart === -1 || mobileStakeholderGridEnd === -1
+    ? ""
+    : mobileSegment.slice(mobileStakeholderGridStart, mobileStakeholderGridEnd + 1);
+const mobileSummaryCardStart = mobileSegment.indexOf(".summary-card {");
+const mobileSummaryCardEnd =
+  mobileSummaryCardStart === -1 ? -1 : mobileSegment.indexOf("}", mobileSummaryCardStart);
+const mobileSummaryCardBlock =
+  mobileSummaryCardStart === -1 || mobileSummaryCardEnd === -1
+    ? ""
+    : mobileSegment.slice(mobileSummaryCardStart, mobileSummaryCardEnd + 1);
+const mobileSummaryCopyStart = mobileSegment.indexOf(".summary-card-copy {");
+const mobileSummaryCopyEnd =
+  mobileSummaryCopyStart === -1 ? -1 : mobileSegment.indexOf("}", mobileSummaryCopyStart);
+const mobileSummaryCopyBlock =
+  mobileSummaryCopyStart === -1 || mobileSummaryCopyEnd === -1
+    ? ""
+    : mobileSegment.slice(mobileSummaryCopyStart, mobileSummaryCopyEnd + 1);
+const mobileEditionCardStart = mobileSegment.lastIndexOf(".edition-card {");
+const mobileEditionCardEnd =
+  mobileEditionCardStart === -1 ? -1 : mobileSegment.indexOf("}", mobileEditionCardStart);
+const mobileEditionCardBlock =
+  mobileEditionCardStart === -1 || mobileEditionCardEnd === -1
+    ? ""
+    : mobileSegment.slice(mobileEditionCardStart, mobileEditionCardEnd + 1);
+const mobileEditionImageStart = mobileSegment.lastIndexOf(".edition-card img {");
+const mobileEditionImageEnd =
+  mobileEditionImageStart === -1 ? -1 : mobileSegment.indexOf("}", mobileEditionImageStart);
+const mobileEditionImageBlock =
+  mobileEditionImageStart === -1 || mobileEditionImageEnd === -1
+    ? ""
+    : mobileSegment.slice(mobileEditionImageStart, mobileEditionImageEnd + 1);
 
 for (const expected of ["margin-top: 24px;", "margin-bottom: 0;", "padding-top: 0;", "padding-bottom: 0;"]) {
   if (!mobileSearchBlock.includes(expected)) {
@@ -895,9 +969,108 @@ for (const expected of ["width: 2.44rem;", "height: 2.44rem;"]) {
   }
 }
 
-for (const expected of ["width: 120px;", "height: 124px;", "min-height: 124px;", "max-height: 124px;"]) {
+for (const expected of ["display: flex;", "flex-direction: column;", "gap: 0;"]) {
+  if (!mobileHeroCopyBlock.includes(expected)) {
+    console.error(
+      `Expected mobile .hero-copy-block-v2 to include ${expected} so the CTA can move ahead of the stats on phones.`,
+    );
+    process.exit(1);
+  }
+}
+
+for (const expected of ["order: 4;", "gap: 0.7rem;", "margin-bottom: 1.1rem;"]) {
+  if (!mobileHeroActionsBlock.includes(expected)) {
+    console.error(
+      `Expected mobile .hero-actions to include ${expected} so the main CTA stays within the first phone screen.`,
+    );
+    process.exit(1);
+  }
+}
+
+for (const expected of [
+  "order: 5;",
+  "grid-template-columns: repeat(2, minmax(0, 1fr));",
+  "gap: 0.7rem 0.65rem;",
+  "margin-bottom: 0;",
+  "transform: none;",
+]) {
+  if (!mobileHeroStatsBlock.includes(expected)) {
+    console.error(
+      `Expected mobile .hero-stat-grid to include ${expected} so the metrics condense below the CTA.`,
+    );
+    process.exit(1);
+  }
+}
+
+for (const expected of ["min-height: 0;", "padding: 0.9rem 0.7rem 0.82rem;", "border-radius: 0.88rem;"]) {
+  if (!mobileHeroStatCardBlock.includes(expected)) {
+    console.error(`Expected mobile .hero-stat-card to include ${expected} so each metric becomes a compact tile.`);
+    process.exit(1);
+  }
+}
+
+if (!mobileHeroStatDividerBlock.includes("border-left: 0;")) {
+  console.error("Expected mobile .hero-stat-card + .hero-stat-card to remove the desktop vertical divider in the two-column phone grid.");
+  process.exit(1);
+}
+
+for (const expected of [
+  "grid-template-columns: repeat(2, minmax(0, 1fr));",
+  "justify-content: stretch;",
+  "justify-items: stretch;",
+]) {
+  if (!mobileStakeholderGridBlock.includes(expected)) {
+    console.error(
+      `Expected mobile .stakeholder-grid to include ${expected} so the audience cards become a denser two-column grid.`,
+    );
+    process.exit(1);
+  }
+}
+
+for (const expected of [
+  "width: 100%;",
+  "min-width: 0;",
+  "max-width: none;",
+  "height: auto;",
+  "min-height: 6.9rem;",
+  "max-height: none;",
+]) {
   if (!mobileStakeholderCardBlock.includes(expected)) {
-    console.error(`Expected mobile .stakeholder-card to include ${expected} so the stakeholder tiles stay visually square.`);
+    console.error(
+      `Expected mobile .stakeholder-card to include ${expected} so the stakeholder tiles can flex inside a two-column phone grid.`,
+    );
+    process.exit(1);
+  }
+}
+
+for (const expected of ["min-height: auto;", "gap: 0.82rem;", "padding: 1.18rem 1rem 1rem;"]) {
+  if (!mobileSummaryCardBlock.includes(expected)) {
+    console.error(
+      `Expected mobile .summary-card to include ${expected} so the summary modules stop inheriting the desktop card height.`,
+    );
+    process.exit(1);
+  }
+}
+
+if (!mobileSummaryCopyBlock.includes("max-width: none;")) {
+  console.error("Expected mobile .summary-card-copy to remove the desktop max-width so long text can reflow on phones.");
+  process.exit(1);
+}
+
+for (const expected of ["grid-template-columns: minmax(0, 1fr) 5.15rem;", "gap: 0.85rem;"]) {
+  if (!mobileEditionCardBlock.includes(expected)) {
+    console.error(
+      `Expected mobile .edition-card to include ${expected} so the edition cover stays compact on phones.`,
+    );
+    process.exit(1);
+  }
+}
+
+for (const expected of ["width: 5.15rem;", "height: 7.7rem;", "justify-self: end;"]) {
+  if (!mobileEditionImageBlock.includes(expected)) {
+    console.error(
+      `Expected mobile .edition-card img to include ${expected} so the cover art stops dominating the mobile card height.`,
+    );
     process.exit(1);
   }
 }
@@ -1539,11 +1712,16 @@ check_contains "$LANDING_CSS_ASSERT_FILE" '.header-actions {'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.header-contact-link::after {'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.mobile-nav-contact {'
 LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const compactLogoRule=/@media \(max-width: 767px\) \{[\s\S]*?\.brand-mark-image-full \{[^}]*display: none;[^}]*\}[\s\S]*?\.brand-mark-image-compact \{[^}]*display: block;[^}]*\}/;if(!compactLogoRule.test(css)){console.error("Expected landing header to switch to the compact logo below 768px.");process.exit(1);}'
-LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const match=css.match(/@media \(max-width: 767px\) \{[\s\S]*?\.site-header \.brand-mark \{[\s\S]*?\.site-header[\s\S]*?\.mobile-nav-toggle[\s\S]*?\.ua-icon--sm \{[\s\S]*?\}/);if(!match){console.error("Expected phone landing header media block with compact-brand and nav-toggle rules.");process.exit(1);}const block=match[0];for(const expected of [".site-header .brand-mark {","min-width: 2.75rem;","min-height: 2.75rem;","justify-content: center;",".site-header .brand-mark-image-compact {","width: 2rem;"]){if(!block.includes(expected)){console.error("Expected narrow landing header logo CSS to include "+expected);process.exit(1);}}'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const match=css.match(/@media \(max-width: 767px\) \{[\s\S]*?\.site-header \.brand-mark \{[\s\S]*?\.site-header[\s\S]*?\.mobile-nav-toggle[\s\S]*?\.ua-icon--sm \{[\s\S]*?\}/);if(!match){console.error("Expected phone landing header media block with compact-brand and nav-toggle rules.");process.exit(1);}const block=match[0];for(const expected of [".site-header .brand-mark {","min-width: 2.75rem;","min-height: 2.75rem;","justify-content: flex-start;",".site-header .brand-reference-copy {","display: none;",".site-header .brand-mark-image-compact {","width: 2rem;"]){if(!block.includes(expected)){console.error("Expected narrow landing header logo CSS to include "+expected);process.exit(1);}}'
 LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const match=css.match(/@media \(max-width: 767px\) \{[\s\S]*?\.site-header \.brand-mark \{[\s\S]*?\.site-header[\s\S]*?\.mobile-nav-toggle[\s\S]*?\.ua-icon--sm \{[\s\S]*?\}/);if(!match){console.error("Expected phone landing header media block with compact-brand and nav-toggle rules.");process.exit(1);}const block=match[0];for(const expected of [".site-header .header-actions > .site-language-switch {","min-height: 2.75rem;","gap: 0;","padding: 0 0.125rem;","background: transparent;","border-color: transparent;","isolation: isolate;",".site-header .header-actions > .site-language-switch::before {","inset: 0.1875rem 0;","content: \"\";",".site-header .header-actions > .site-language-switch .site-language-option {","min-width: 2.75rem;","min-height: 2.75rem;","padding: 0 0.4rem;","font-size: 0.78rem;",".site-language-option.is-current::before,","a.site-language-option:hover::before,","inset: 0.25rem 0.16rem;",".site-header .header-actions > .mobile-nav-menu .mobile-nav-toggle {","gap: 0.35rem;","padding: 0 0.75rem;","font-size: 0.82rem;",".site-header .header-actions > .mobile-nav-menu .mobile-nav-toggle::before {"]){if(!block.includes(expected)){console.error("Expected narrow landing header CSS to include "+expected);process.exit(1);}}'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const start=css.indexOf("@media (max-width: 767px) {");const end=css.indexOf("@media (max-width: 480px) {",start);if(start===-1||end===-1){console.error("Expected phone landing media block boundaries in expanded landing CSS.");process.exit(1);}const block=css.slice(start,end);for(const expected of [".site-header .brand-mark {","justify-content: flex-start;",".site-header .header-actions > .header-contact-link {","width: 2.75rem;","height: 2.75rem;"]){if(!block.includes(expected)){console.error("Expected phone landing reference-header CSS to include "+expected);process.exit(1);}}'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const panelStart=css.indexOf(".mobile-nav-panel {");if(panelStart===-1){console.error("Expected .mobile-nav-panel rule block in expanded landing CSS.");process.exit(1);}const panelEnd=css.indexOf("}",panelStart);if(panelEnd===-1){console.error("Expected closing brace for .mobile-nav-panel rule block.");process.exit(1);}const block=css.slice(panelStart,panelEnd+1);for(const expected of ["max-height: calc(100dvh - 5.8rem);","overflow-y: auto;","overscroll-behavior: contain;"]){if(!block.includes(expected)){console.error("Expected mobile nav panel CSS to include "+expected+" so narrow screens keep the menu usable.");process.exit(1);}}'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const narrowStart=css.indexOf("@media (max-width: 480px) {");const narrowEnd=css.indexOf("@media (max-width: 360px) {",narrowStart);if(narrowStart===-1||narrowEnd===-1){console.error("Expected narrow-phone landing media block boundaries in expanded landing CSS.");process.exit(1);}const block=css.slice(narrowStart,narrowEnd);for(const expected of [".mobile-nav-panel {","min-width: calc(100vw - 1rem);"]){if(!block.includes(expected)){console.error("Expected <=480px landing CSS to include "+expected+" so the menu sheet aligns with the shared content gutter.");process.exit(1);}}'
 LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const match=css.match(/@media \(min-width: 768px\) and \(max-width: 1023px\) \{[\s\S]*?\.site-header \.brand-mark \{[\s\S]*?\.site-header \.brand-mark-image-compact \{[\s\S]*?display: none;[\s\S]*?\}/);if(!match){console.error("Expected landing tablet header logo media block in expanded landing CSS.");process.exit(1);}const block=match[0];for(const expected of [".site-header .brand-mark {","width: auto;","height: 44px;","flex: 0 0 auto;",".site-header .brand-mark-image-full {","width: auto;","height: 36px;",".site-header .brand-mark-image-compact {","display: none;"]){if(!block.includes(expected)){console.error("Expected landing tablet header logo CSS to include "+expected);process.exit(1);}}'
 LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const match=css.match(/@media \(min-width: 1024px\) and \(max-width: 1439px\) \{[\s\S]*?\.site-header \.brand-mark-image-full \{[\s\S]*?height: 36px;[\s\S]*?\}/);if(!match){console.error("Expected landing small-desktop header media block in expanded landing CSS.");process.exit(1);}const block=match[0];for(const expected of [".site-header .brand-mark-image-full {","width: auto;","height: 36px;"]){if(!block.includes(expected)){console.error("Expected landing small-desktop header CSS to include "+expected);process.exit(1);}}'
 LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const compactStart=css.indexOf("@media (max-width: 360px) {");if(compactStart===-1){console.error("Expected extra-narrow landing header media block in expanded landing CSS.");process.exit(1);}const compactBlock=css.slice(compactStart);for(const removed of ["min-width: 1.85rem;","width: 2.5rem;"]){if(compactBlock.includes(removed)){console.error("Expected extra-narrow landing header to keep the compact logo touch target while avoiding oversized visual overrides: "+removed);process.exit(1);}}'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const compactStart=css.indexOf("@media (max-width: 360px) {");const compactEnd=css.indexOf("@media (min-width: 321px) and (max-width: 360px) {",compactStart);if(compactStart===-1||compactEnd===-1){console.error("Expected compact-phone landing media block boundaries in expanded landing CSS.");process.exit(1);}const compactBlock=css.slice(compactStart,compactEnd);for(const expected of [".mobile-nav-panel {","min-width: calc(100vw - 1rem);",".hero-panel-v2 .hero-copy-block h1 {","font-size: clamp(1.72rem, 8.7vw, 1.96rem);",".hero-panel-v2 .hero-actions {","width: calc(100% - 1rem);","margin-right: auto;",".hero-panel-v2 .hero-copy {","width: calc(100% - 1rem);","margin-right: auto;",".hero-panel-v2 .hero-stat-grid {","width: calc(100% - 1rem);","margin-right: auto;",".edition-card {","grid-template-columns: minmax(0, 1fr) 4.25rem;",".edition-card img {","width: 4.25rem;","height: 6.35rem;","justify-self: end;"]){if(!compactBlock.includes(expected)){console.error("Expected extra-narrow landing CSS to include "+expected+" so 320px screens keep one consistent compact track and a denser edition card.");process.exit(1);}}for(const removed of ["order: 3;","order: 4;","grid-template-columns: 1fr;","justify-self: start;",".hero-copy-block-v2 {","width: 100%;"]){if(compactBlock.includes(removed)){console.error("Expected extra-narrow landing CSS to stop using "+removed+" inside the <=360px base block so 320px keeps its compact sizing.");process.exit(1);}}'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const smoothStart=css.indexOf("@media (min-width: 321px) and (max-width: 360px) {");if(smoothStart===-1){console.error("Expected 321px-360px landing smoothing media block in expanded landing CSS.");process.exit(1);}const smoothBlock=css.slice(smoothStart);for(const expected of [".hero-copy-block-v2 {","width: 100%;",".hero-panel-v2 .hero-actions,",".hero-panel-v2 .hero-copy,",".hero-panel-v2 .hero-stat-grid {","width: 100%;"]){if(!smoothBlock.includes(expected)){console.error("Expected 321px-360px landing CSS to include "+expected+" so 360px aligns with the wider phone content track.");process.exit(1);}}'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.ua-icon {'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.ua-icon-image {'
 check_contains "$LANDING_CSS_ASSERT_FILE" '.ua-icon--feature {'
@@ -3455,6 +3633,8 @@ check_not_contains theme/custom.js 'sidebarShellResizeObserver'
 check_not_contains theme/custom.js 'function syncSidebarShellGeometry()'
 check_not_contains theme/custom.js 'function installSidebarShellGeometry()'
 check_not_contains theme/custom.js '"--sidebar-intro-height"'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const start=css.indexOf("@media (max-width: 767px) {");const end=css.indexOf("@media (max-width: 480px) {",start);if(start===-1||end===-1){console.error("Expected phone landing media block boundaries in expanded landing CSS.");process.exit(1);}const block=css.slice(start,end);for(const expected of [".site-header .primary-nav,",".site-header .header-actions > .button-header {","display: none;",".site-header .header-actions {","display: inline-flex;","justify-self: end;",".site-header .mobile-nav-menu {","display: block;"]){if(!block.includes(expected)){console.error("Expected phone landing header state CSS to include "+expected);process.exit(1);}}'
+LANDING_CSS_ASSERT_FILE="$LANDING_CSS_ASSERT_FILE" node -e 'const fs=require("fs");const css=fs.readFileSync(process.env.LANDING_CSS_ASSERT_FILE,"utf8");const start=css.indexOf("@media (max-width: 767px) {");const end=css.indexOf("@media (max-width: 480px) {",start);if(start===-1||end===-1){console.error("Expected phone landing media block boundaries in expanded landing CSS.");process.exit(1);}const block=css.slice(start,end);for(const expected of [".decision-strip-inner {","grid-template-columns: 1fr;",".decision-strip-copy {",".section-summary-modules .summary-grid {"]){if(!block.includes(expected)){console.error("Expected phone landing section stacking CSS to include "+expected);process.exit(1);}}'
 
 echo "Site render checks passed."
 check_not_contains theme/custom.css '.reader-sidebar-section-chevron'
