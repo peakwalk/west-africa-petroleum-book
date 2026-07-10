@@ -183,12 +183,6 @@
   --hero-stat-grid-left-shift: 0rem;
 }
 
-@media (min-width: 1440px) {
-  .hero-panel-v2 {
-    --hero-stat-grid-left-shift: 2.3125rem;
-  }
-}
-
 .hero-stat-grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -250,22 +244,4 @@
 
 .hero-stat-label-line {
   display: block;
-}
-
-@media (min-width: 1440px) {
-  .hero-copy-block-v2 {
-    padding-top: 1.95rem;
-  }
-
-  .hero-panel-v2 .hero-copy-block h1 {
-    font-size: 2.58rem;
-  }
-
-  .section-country-discovery .section-heading-wide h2 {
-    font-size: 2.12rem;
-  }
-
-  .hero-stat-value {
-    font-size: 2.27rem;
-  }
 }

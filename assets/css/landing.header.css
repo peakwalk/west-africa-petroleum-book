@@ -190,7 +190,7 @@
   }
 }
 
-@media (min-width: 1120px) and (max-width: 1439px) {
+@media (min-width: 1120px) and (max-width: 1679px) {
   .site-header-inner {
     width: min(88rem, calc(100% - 3rem));
     gap: 1.6rem;

@@ -114,6 +114,10 @@
     height: 7.7rem;
     justify-self: end;
   }
+
+  .section-search-surface .homepage-search-form {
+    width: min(75rem, calc(100% - 2rem));
+  }
 }
 
 @media (min-width: 700px) and (max-width: 767px) {

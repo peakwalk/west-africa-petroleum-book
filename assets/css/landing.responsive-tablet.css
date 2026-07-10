@@ -319,7 +319,7 @@
   }
 
   .hero-panel-v2 .hero-copy-block h1 {
-    max-width: 17.3ch;
+    max-width: 23.5ch;
     margin-bottom: 1rem;
     font-size: clamp(2.24rem, 3.25vw, 2.74rem);
     line-height: 1.05;
