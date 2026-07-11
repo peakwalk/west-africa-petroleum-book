@@ -149,6 +149,8 @@ export const WEBSITE_LEGAL_LINKS = {
 
 const ICON_LOGO_PATH = "assets/images/upstream-atlas-icon.png";
 const NAV_LOGO_PATH = "assets/images/upstream-atlas-nav-logo.webp";
+const LANDING_FAVICON_PATH = "assets/images/upstream-atlas-favicon-32.png?v=1";
+const LANDING_APPLE_TOUCH_ICON_PATH = "assets/images/upstream-atlas-apple-touch-icon.png?v=1";
 const LANDING_CSS_VERSION = "20260703";
 
 export function resolveShellLinks(currentPage, edition, currentLegalPage = null) {
@@ -190,7 +192,8 @@ export function renderLandingHead({
     appendAssetVersion("assets/css/landing.css", LANDING_CSS_VERSION),
     ...extraStylesheets,
   ].map((href) => resolveAssetPath(basePath, href));
-  const faviconHref = resolveAssetPath(basePath, "assets/images/upstream-atlas-favicon.png?v=2");
+  const faviconHref = resolveAssetPath(basePath, LANDING_FAVICON_PATH);
+  const appleTouchIconHref = resolveAssetPath(basePath, LANDING_APPLE_TOUCH_ICON_PATH);
   const scriptHref = resolveAssetPath(basePath, "assets/js/ga.js");
   const peerEdition = getPeerSiteEdition(edition.locale);
 
@@ -212,7 +215,7 @@ ${stylesheetHrefs
   .join("\n")}
     <link rel="icon" href="${escapeHtml(faviconHref)}" type="image/png" sizes="32x32">
     <link rel="shortcut icon" href="${escapeHtml(faviconHref)}" type="image/png">
-    <link rel="apple-touch-icon" href="${escapeHtml(faviconHref)}">
+    <link rel="apple-touch-icon" href="${escapeHtml(appleTouchIconHref)}">
     <link rel="alternate" hreflang="${escapeHtml(edition.locale)}" href="${escapeHtml(
       buildPageHref(edition, currentPage, currentLegalPage)
     )}">

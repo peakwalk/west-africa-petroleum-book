@@ -10,6 +10,48 @@ from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 CONFIG_PATH = ROOT_DIR / "config" / "editions.json"
+RETIRED_LANDING_IMAGE_ASSETS = (
+    "cover.png",
+    "homepage-west-africa-map-panel.png",
+    "homepage-west-africa-map-panel.webp",
+    "homepage-west-africa-map-panel@2x.png",
+    "prototype-hero-cutout.png",
+    "prototype-hero-edge-left.png",
+    "prototype-hero-edge-right.png",
+    "prototype-hero-grayscale-left.png",
+    "prototype-hero-grayscale-right.png",
+    "prototype-hero-overlay.png",
+    "upstream-atlas-hero-v2-photo.png",
+    "upstream-atlas-logo.png",
+    "upstream-atlas-nav-logo.png",
+)
+RETIRED_HOMEPAGE_CROPPED_ICON_PNG_ASSETS = (
+    "icon-audience-operators.png",
+    "icon-audience-policy.png",
+    "icon-audience-research.png",
+    "icon-exploration.png",
+    "icon-fiscal.png",
+    "icon-industry-monitoring.png",
+    "icon-intelligence.png",
+    "icon-production.png",
+    "icon-regulation.png",
+    "icon-research.png",
+)
+RETIRED_UNREFERENCED_LANDING_ASSET_VARIANTS = (
+    "homepage-cabo-verde-inset.svg",
+    "prototype-hero-dusk.webp",
+    "prototype-hero-night.webp",
+    "prototype-hero-sunset-right.webp",
+    "prototype-hero-sunset-source.webp",
+    "prototype-hero.jpg",
+    "upstream-atlas-hero-v2-photo-right-fade.webp",
+    "upstream-atlas-hero-v3-clean.webp",
+    "upstream-atlas-hero-v4-clean.webp",
+    "upstream-atlas-hero-v5-soft-left.webp",
+    "upstream-atlas-hero-v6-soft-left.webp",
+    "upstream-atlas-wordmark.png",
+    "west-africa-intelligence-overlay.svg",
+)
 
 
 class PublicEditionBuildTests(unittest.TestCase):
@@ -119,6 +161,60 @@ class PublicEditionBuildTests(unittest.TestCase):
 
         self.assertIn("Intelligence pétrolière ouest-africaine", french_index)
         self.assertIn("Explorer la couche pays", french_index)
+
+    def test_current_edition_cover_uses_optimized_webp_delivery(self) -> None:
+        english_index = (self.output_root / "index.html").read_text(encoding="utf-8")
+        cover_png = ROOT_DIR / "assets" / "images" / "upstream-atlas-hero-book.png"
+        cover_webp = ROOT_DIR / "assets" / "images" / "upstream-atlas-hero-book.webp"
+
+        self.assertTrue(cover_webp.exists())
+        self.assertLess(cover_webp.stat().st_size, cover_png.stat().st_size)
+        self.assertLess(cover_webp.stat().st_size, 150_000)
+
+        self.assertIn('src="assets/images/upstream-atlas-hero-book.webp"', english_index)
+        self.assertIn('loading="lazy"', english_index)
+        self.assertIn('decoding="async"', english_index)
+        self.assertNotIn('src="assets/images/upstream-atlas-hero-book.png"', english_index)
+
+    def test_landing_shell_uses_split_favicon_delivery(self) -> None:
+        english_index = (self.output_root / "index.html").read_text(encoding="utf-8")
+        french_index = (self.output_root / "fr" / "index.html").read_text(encoding="utf-8")
+        favicon_source = ROOT_DIR / "assets" / "images" / "upstream-atlas-favicon.png"
+        favicon_32 = ROOT_DIR / "assets" / "images" / "upstream-atlas-favicon-32.png"
+        apple_touch_icon = ROOT_DIR / "assets" / "images" / "upstream-atlas-apple-touch-icon.png"
+
+        self.assertTrue(favicon_32.exists())
+        self.assertTrue(apple_touch_icon.exists())
+        self.assertLess(favicon_32.stat().st_size, 5_000)
+        self.assertLess(apple_touch_icon.stat().st_size, favicon_source.stat().st_size)
+        self.assertLess(apple_touch_icon.stat().st_size, 30_000)
+
+        for homepage_html in (english_index, french_index):
+            self.assertIn('rel="icon" href="assets/images/upstream-atlas-favicon-32.png', homepage_html)
+            self.assertIn('rel="shortcut icon" href="assets/images/upstream-atlas-favicon-32.png', homepage_html)
+            self.assertIn('rel="apple-touch-icon" href="assets/images/upstream-atlas-apple-touch-icon.png', homepage_html)
+            self.assertNotIn('assets/images/upstream-atlas-favicon.png?v=2', homepage_html)
+
+    def test_retired_landing_image_assets_are_absent_from_source_tree(self) -> None:
+        assets_root = ROOT_DIR / "assets" / "images"
+
+        for asset_name in RETIRED_LANDING_IMAGE_ASSETS:
+            with self.subTest(asset_name=asset_name):
+                self.assertFalse((assets_root / asset_name).exists())
+
+    def test_retired_homepage_cropped_icon_png_assets_are_absent_from_source_tree(self) -> None:
+        assets_root = ROOT_DIR / "assets" / "icons" / "homepage-cropped"
+
+        for asset_name in RETIRED_HOMEPAGE_CROPPED_ICON_PNG_ASSETS:
+            with self.subTest(asset_name=asset_name):
+                self.assertFalse((assets_root / asset_name).exists())
+
+    def test_unreferenced_landing_asset_variants_are_absent_from_source_tree(self) -> None:
+        assets_root = ROOT_DIR / "assets" / "images"
+
+        for asset_name in RETIRED_UNREFERENCED_LANDING_ASSET_VARIANTS:
+            with self.subTest(asset_name=asset_name):
+                self.assertFalse((assets_root / asset_name).exists())
 
     def test_english_reference_cards_do_not_render_escaped_html_descriptions(self) -> None:
         english_chapters = (self.output_root / "chapters" / "index.html").read_text(encoding="utf-8")

@@ -9,6 +9,45 @@ import { runMdbook } from "./shared/run-mdbook.mjs";
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(scriptDir, "..");
 const publicDir = path.join(rootDir, "public");
+const assetsDir = path.join(rootDir, "assets");
+
+const SHARED_PUBLIC_ASSET_PATHS = [
+  "css",
+  "js/ga.js",
+  "icons/homepage-sprite.svg",
+  "images/prototype-hero-graywhite-left.webp",
+  "images/prototype-hero-graywhite-right.webp",
+  "images/upstream-atlas-apple-touch-icon.png",
+  "images/upstream-atlas-favicon-32.png",
+  "images/upstream-atlas-favicon.png",
+  "images/upstream-atlas-hero-v7-clean-left.webp",
+  "images/upstream-atlas-icon.png",
+  "images/upstream-atlas-nav-logo.webp",
+];
+
+const FRENCH_ONLY_PUBLIC_ASSET_PATHS = [
+  "icons/homepage/icon-audience-operators.svg",
+  "icons/homepage/icon-audience-policy.svg",
+  "icons/homepage/icon-audience-research.svg",
+  "icons/homepage/icon-industry-monitoring.svg",
+  "icons/homepage/icon-intelligence.svg",
+  "icons/homepage/icon-research.svg",
+];
+
+const ENGLISH_ONLY_PUBLIC_ASSET_PATHS = [
+  "icons/homepage-cropped/icon-audience-operators.webp",
+  "icons/homepage-cropped/icon-audience-policy.webp",
+  "icons/homepage-cropped/icon-audience-research.webp",
+  "icons/homepage-cropped/icon-exploration.webp",
+  "icons/homepage-cropped/icon-fiscal.webp",
+  "icons/homepage-cropped/icon-industry-monitoring.webp",
+  "icons/homepage-cropped/icon-intelligence.webp",
+  "icons/homepage-cropped/icon-production.webp",
+  "icons/homepage-cropped/icon-regulation.webp",
+  "icons/homepage-cropped/icon-research.webp",
+  "images/homepage-west-africa-map-panel.svg",
+  "images/upstream-atlas-hero-book.webp",
+];
 
 function copyPathSync(sourcePath, destinationPath) {
   if (typeof fs.cpSync === "function") {
@@ -63,10 +102,23 @@ function runNodeScript(relativeScriptPath, args = []) {
   }
 }
 
+function copyAssetManifest(destinationAssetsDir, assetRelativePaths) {
+  assetRelativePaths.forEach((relativePath) => {
+    copyPathSync(path.join(assetsDir, relativePath), path.join(destinationAssetsDir, relativePath));
+  });
+}
+
 function copyIntoPublic() {
-  copyPathSync(path.join(rootDir, "assets"), path.join(publicDir, "assets"));
-  fs.mkdirSync(path.join(publicDir, "fr"), { recursive: true });
-  copyPathSync(path.join(rootDir, "assets"), path.join(publicDir, "fr", "assets"));
+  const englishAssetsDir = path.join(publicDir, "assets");
+  const frenchAssetsDir = path.join(publicDir, "fr", "assets");
+
+  fs.mkdirSync(englishAssetsDir, { recursive: true });
+  fs.mkdirSync(frenchAssetsDir, { recursive: true });
+
+  copyAssetManifest(englishAssetsDir, SHARED_PUBLIC_ASSET_PATHS);
+  copyAssetManifest(englishAssetsDir, ENGLISH_ONLY_PUBLIC_ASSET_PATHS);
+  copyAssetManifest(frenchAssetsDir, SHARED_PUBLIC_ASSET_PATHS);
+  copyAssetManifest(frenchAssetsDir, FRENCH_ONLY_PUBLIC_ASSET_PATHS);
 }
 
 function buildBookEdition(edition) {

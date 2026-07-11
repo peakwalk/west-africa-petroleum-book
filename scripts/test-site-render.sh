@@ -328,7 +328,6 @@ check_exists editions/en/content/images/figure-029.webp
 check_exists editions/en/content/images/figure-031.webp
 check_exists editions/en/content/images/figure-032.webp
 check_exists editions/en/content/images/figure-000.webp
-check_exists assets/images/west-africa-intelligence-overlay.svg
 check_exists assets/images/upstream-atlas-nav-logo.webp
 check_exists assets/images/upstream-atlas-hero-v7-clean-left.webp
 check_exists assets/images/prototype-hero-graywhite-left.webp
@@ -407,10 +406,14 @@ check_contains public/index.html 'class="hero-panel hero-panel-v2"'
 check_contains public/index.html 'class="hero-copy-block hero-copy-block-v2"'
 check_contains public/index.html 'class="site-header-inner"'
 check_contains public/index.html 'assets/css/landing.css?v=20260703'
-check_contains public/index.html 'upstream-atlas-favicon.png?v=2'
+check_contains public/index.html 'upstream-atlas-favicon-32.png?v=1'
+check_contains public/index.html 'upstream-atlas-apple-touch-icon.png?v=1'
+check_not_contains public/index.html 'upstream-atlas-favicon.png?v=2'
 check_contains public/index.html 'upstream-atlas-nav-logo.webp'
 check_not_contains public/index.html 'upstream-atlas-nav-logo.png'
 check_contains public/index.html 'upstream-atlas-icon.png'
+check_contains public/index.html '<img src="assets/images/upstream-atlas-hero-book.webp" alt="Upstream Atlas English edition cover" width="240" height="360" loading="lazy" decoding="async">'
+check_not_contains public/index.html 'src="assets/images/upstream-atlas-hero-book.png"'
 check_contains public/index.html 'href="/chapters/"'
 check_contains public/index.html 'class="current-link" href="/">Home</a>'
 check_contains public/index.html 'href="/#countries">Countries</a>'
@@ -617,16 +620,6 @@ check_not_contains public/index.html 'footer-brand-surface'
 check_not_contains public/index.html 'upstream-atlas-wordmark.png'
 check_not_contains public/index.html 'upstream-atlas-logo.png'
 check_contains public/index.html 'fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap'
-check_exists public/assets/icons/homepage/icon-research.svg
-check_exists public/assets/icons/homepage/icon-industry-monitoring.svg
-check_exists public/assets/icons/homepage/icon-intelligence.svg
-check_exists public/assets/icons/homepage/icon-start-reading.svg
-check_exists public/assets/icons/homepage/icon-menu.svg
-check_exists public/assets/icons/homepage/icon-close.svg
-check_exists public/assets/icons/homepage/icon-production.svg
-check_exists public/assets/icons/homepage/icon-exploration.svg
-check_exists public/assets/icons/homepage/icon-fiscal.svg
-check_exists public/assets/icons/homepage/icon-regulation.svg
 check_exists public/assets/icons/homepage-cropped/icon-research.webp
 check_exists public/assets/icons/homepage-cropped/icon-industry-monitoring.webp
 check_exists public/assets/icons/homepage-cropped/icon-intelligence.webp
@@ -637,38 +630,162 @@ check_exists public/assets/icons/homepage-cropped/icon-regulation.webp
 check_exists public/assets/icons/homepage-cropped/icon-audience-research.webp
 check_exists public/assets/icons/homepage-cropped/icon-audience-policy.webp
 check_exists public/assets/icons/homepage-cropped/icon-audience-operators.webp
-check_exists public/assets/icons/homepage/icon-audience-research.svg
-check_exists public/assets/icons/homepage/icon-audience-policy.svg
-check_exists public/assets/icons/homepage/icon-audience-operators.svg
+for file in \
+  icon-audience-operators.webp \
+  icon-audience-policy.webp \
+  icon-audience-research.webp \
+  icon-exploration.webp \
+  icon-fiscal.webp \
+  icon-industry-monitoring.webp \
+  icon-intelligence.webp \
+  icon-production.webp \
+  icon-regulation.webp \
+  icon-research.webp; do
+  check_not_exists "public/fr/assets/icons/homepage-cropped/$file"
+done
+for file in \
+  icon-audience-operators.png \
+  icon-audience-policy.png \
+  icon-audience-research.png \
+  icon-exploration.png \
+  icon-fiscal.png \
+  icon-industry-monitoring.png \
+  icon-intelligence.png \
+  icon-production.png \
+  icon-regulation.png \
+  icon-research.png; do
+  check_not_exists "assets/icons/homepage-cropped/$file"
+  check_not_exists "public/assets/icons/homepage-cropped/$file"
+  check_not_exists "public/fr/assets/icons/homepage-cropped/$file"
+done
 check_exists public/assets/icons/homepage-sprite.svg
-check_exists public/assets/icons/stakeholders/governments.svg
-check_exists public/assets/icons/stakeholders/regulators.svg
-check_exists public/assets/icons/stakeholders/national-oil-companies.svg
-check_exists public/assets/icons/stakeholders/operators.svg
-check_exists public/assets/icons/stakeholders/investors.svg
-check_exists public/assets/icons/stakeholders/universities-researchers.svg
-check_exists public/assets/icons/stakeholders/governments.png
-check_exists public/assets/icons/stakeholders/regulators.png
-check_exists public/assets/icons/stakeholders/national-oil-companies.png
-check_exists public/assets/icons/stakeholders/operators.png
-check_exists public/assets/icons/stakeholders/investors.png
-check_exists public/assets/icons/stakeholders/universities-researchers.png
-check_exists public/assets/icons/topics/petroleum-value-chain.svg
-check_exists public/assets/icons/topics/west-african-fiscal-regimes.svg
-check_exists public/assets/icons/topics/national-oil-companies.svg
-check_exists public/assets/icons/topics/upstream-operations.svg
-check_exists public/assets/icons/topics/governance-regulation.svg
-check_exists public/assets/icons/topics/country-analysis.svg
+for file in \
+  hero-arrow.svg \
+  hero-basins.svg \
+  hero-chapters.svg \
+  hero-countries.svg \
+  hero-discoveries.svg \
+  hero-exploration.svg \
+  hero-figures.svg \
+  icon-audience-operators.svg \
+  icon-audience-policy.svg \
+  icon-audience-research.svg \
+  icon-close.svg \
+  icon-exploration.svg \
+  icon-fiscal.svg \
+  icon-industry-monitoring.svg \
+  icon-intelligence.svg \
+  icon-menu.svg \
+  icon-production.svg \
+  icon-regulation.svg \
+  icon-research.svg \
+  icon-start-reading.svg; do
+  check_not_exists "public/assets/icons/homepage/$file"
+done
+check_exists public/fr/assets/icons/homepage/icon-audience-operators.svg
+check_exists public/fr/assets/icons/homepage/icon-audience-policy.svg
+check_exists public/fr/assets/icons/homepage/icon-audience-research.svg
+check_exists public/fr/assets/icons/homepage/icon-industry-monitoring.svg
+check_exists public/fr/assets/icons/homepage/icon-intelligence.svg
+check_exists public/fr/assets/icons/homepage/icon-research.svg
+for file in \
+  hero-arrow.svg \
+  hero-basins.svg \
+  hero-chapters.svg \
+  hero-countries.svg \
+  hero-discoveries.svg \
+  hero-exploration.svg \
+  hero-figures.svg \
+  icon-close.svg \
+  icon-exploration.svg \
+  icon-fiscal.svg \
+  icon-menu.svg \
+  icon-production.svg \
+  icon-regulation.svg \
+  icon-start-reading.svg; do
+  check_not_exists "public/fr/assets/icons/homepage/$file"
+done
 python3 scripts/check_stakeholder_icon_geometry.py
-check_exists public/assets/icons/country-flags.svg
+for file in \
+  country-flags.svg \
+  stakeholders/governments.svg \
+  stakeholders/regulators.svg \
+  stakeholders/national-oil-companies.svg \
+  stakeholders/operators.svg \
+  stakeholders/investors.svg \
+  stakeholders/universities-researchers.svg \
+  stakeholders/governments.png \
+  stakeholders/regulators.png \
+  stakeholders/national-oil-companies.png \
+  stakeholders/operators.png \
+  stakeholders/investors.png \
+  stakeholders/universities-researchers.png \
+  topics/petroleum-value-chain.svg \
+  topics/west-african-fiscal-regimes.svg \
+  topics/national-oil-companies.svg \
+  topics/upstream-operations.svg \
+  topics/governance-regulation.svg \
+  topics/country-analysis.svg; do
+  check_not_exists "public/assets/icons/$file"
+done
 check_exists public/assets/images/upstream-atlas-nav-logo.webp
 check_exists public/assets/images/upstream-atlas-hero-v7-clean-left.webp
+check_exists assets/images/upstream-atlas-favicon-32.png
+check_exists assets/images/upstream-atlas-apple-touch-icon.png
+check_exists public/assets/images/upstream-atlas-favicon-32.png
+check_exists public/assets/images/upstream-atlas-apple-touch-icon.png
+check_exists public/fr/assets/images/upstream-atlas-favicon-32.png
+check_exists public/fr/assets/images/upstream-atlas-apple-touch-icon.png
+check_exists assets/images/upstream-atlas-hero-book.webp
+check_exists public/assets/images/upstream-atlas-hero-book.webp
+check_not_exists public/assets/images/upstream-atlas-hero-book.png
+check_not_exists public/fr/assets/images/upstream-atlas-hero-book.png
+check_not_exists public/assets/images/prototype-hero-graywhite-left.png
+check_not_exists public/assets/images/prototype-hero-graywhite-right.png
+check_not_exists public/fr/assets/images/prototype-hero-graywhite-left.png
+check_not_exists public/fr/assets/images/prototype-hero-graywhite-right.png
+check_not_exists public/fr/assets/images/upstream-atlas-hero-book.webp
 check_exists assets/images/homepage-west-africa-map-panel.svg
-check_exists assets/images/homepage-cabo-verde-inset.svg
 check_exists public/assets/images/homepage-west-africa-map-panel.svg
-check_exists public/assets/images/homepage-cabo-verde-inset.svg
+check_not_exists public/fr/assets/images/homepage-west-africa-map-panel.svg
 check_exists public/assets/images/prototype-hero-graywhite-left.webp
 check_exists public/assets/images/prototype-hero-graywhite-right.webp
+for file in \
+  cover.png \
+  homepage-west-africa-map-panel.png \
+  homepage-west-africa-map-panel.webp \
+  homepage-west-africa-map-panel@2x.png \
+  prototype-hero-cutout.png \
+  prototype-hero-edge-left.png \
+  prototype-hero-edge-right.png \
+  prototype-hero-grayscale-left.png \
+  prototype-hero-grayscale-right.png \
+  prototype-hero-overlay.png \
+  upstream-atlas-hero-v2-photo.png \
+  upstream-atlas-logo.png \
+  upstream-atlas-nav-logo.png; do
+  check_not_exists "assets/images/$file"
+  check_not_exists "public/assets/images/$file"
+  check_not_exists "public/fr/assets/images/$file"
+done
+for file in \
+  homepage-cabo-verde-inset.svg \
+  prototype-hero-dusk.webp \
+  prototype-hero-night.webp \
+  prototype-hero-sunset-right.webp \
+  prototype-hero-sunset-source.webp \
+  prototype-hero.jpg \
+  upstream-atlas-hero-v2-photo-right-fade.webp \
+  upstream-atlas-hero-v3-clean.webp \
+  upstream-atlas-hero-v4-clean.webp \
+  upstream-atlas-hero-v5-soft-left.webp \
+  upstream-atlas-hero-v6-soft-left.webp \
+  upstream-atlas-wordmark.png \
+  west-africa-intelligence-overlay.svg; do
+  check_not_exists "assets/images/$file"
+  check_not_exists "public/assets/images/$file"
+  check_not_exists "public/fr/assets/images/$file"
+done
 check_exists assets/css/landing.base.css
 check_exists assets/css/landing.header.css
 check_exists assets/css/landing.hero.css
@@ -695,10 +812,11 @@ check_line_count_at_most assets/css/landing.modules.css 500
 check_line_count_at_most assets/css/landing.responsive-tablet.css 500
 check_line_count_at_most assets/css/landing.responsive-mobile.css 500
 check_file_size_at_most public/assets/images/upstream-atlas-icon.png 50000
-check_file_size_at_most public/assets/images/upstream-atlas-wordmark.png 110000
+check_file_size_at_most public/assets/images/upstream-atlas-favicon-32.png 5000
+check_file_size_at_most public/assets/images/upstream-atlas-apple-touch-icon.png 30000
 check_file_size_at_most public/assets/images/upstream-atlas-nav-logo.webp 80000
+check_file_size_at_most public/assets/images/upstream-atlas-hero-book.webp 150000
 check_image_has_no_opaque_white_fringe public/assets/images/upstream-atlas-nav-logo.webp 50
-check_file_size_at_most public/assets/images/prototype-hero.jpg 120000
 check_file_size_at_most public/assets/images/prototype-hero-graywhite-left.webp 25000
 check_file_size_at_most public/assets/images/prototype-hero-graywhite-right.webp 25000
 LANDING_CSS_ASSERT_FILE="$(create_temp_file "landing-css-check." ".css")"
@@ -1966,6 +2084,9 @@ check_exists public/fr/book/index.html
 check_exists public/fr/book/reader-page-meta.json
 check_exists public/fr/assets/images/upstream-atlas-nav-logo.webp
 check_contains public/fr/index.html 'assets/css/landing.css?v=20260703'
+check_contains public/fr/index.html 'upstream-atlas-favicon-32.png?v=1'
+check_contains public/fr/index.html 'upstream-atlas-apple-touch-icon.png?v=1'
+check_not_contains public/fr/index.html 'upstream-atlas-favicon.png?v=2'
 check_contains public/fr/index.html 'class="site-language-switch"'
 check_contains public/fr/index.html 'href="/?lang=en"'
 check_contains public/fr/index.html '<span class="button-label">Commencer la lecture</span>'

@@ -945,7 +945,7 @@ ${renderSummaryCardLink(copy.latestUpdatesLabel, links.chapterLibraryHref)}
             <p>${escapeHtml(copy.currentEditionBody)}</p>
             <p class="edition-card-date">${escapeHtml(copy.currentEditionDate)}</p>
           </div>
-          <img src="assets/images/upstream-atlas-hero-book.png" alt="Upstream Atlas English edition cover" width="240" height="360">
+          <img src="assets/images/upstream-atlas-hero-book.webp" alt="Upstream Atlas English edition cover" width="240" height="360" loading="lazy" decoding="async">
         </div>
       </article>
       <article class="summary-card">
