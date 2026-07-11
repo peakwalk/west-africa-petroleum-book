@@ -159,8 +159,9 @@ class PublicEditionBuildTests(unittest.TestCase):
     def test_french_landing_hero_uses_french_copy(self) -> None:
         french_index = (self.output_root / "fr" / "index.html").read_text(encoding="utf-8")
 
-        self.assertIn("Intelligence pétrolière ouest-africaine", french_index)
-        self.assertIn("Explorer la couche pays", french_index)
+        self.assertIn("Compatibilite de navigation", french_index)
+        self.assertIn("Une base de reference pour naviguer dans l'edition francaise.", french_index)
+        self.assertIn("Ouvrir l'analyse pays", french_index)
 
     def test_current_edition_cover_uses_optimized_webp_delivery(self) -> None:
         english_index = (self.output_root / "index.html").read_text(encoding="utf-8")
@@ -194,6 +195,37 @@ class PublicEditionBuildTests(unittest.TestCase):
             self.assertIn('rel="shortcut icon" href="assets/images/upstream-atlas-favicon-32.png', homepage_html)
             self.assertIn('rel="apple-touch-icon" href="assets/images/upstream-atlas-apple-touch-icon.png', homepage_html)
             self.assertNotIn('assets/images/upstream-atlas-favicon.png?v=2', homepage_html)
+
+    def test_landing_pages_reference_only_essential_png_assets(self) -> None:
+        expected_png_assets = {
+            "upstream-atlas-apple-touch-icon.png",
+            "upstream-atlas-favicon-32.png",
+            "upstream-atlas-icon.png",
+        }
+        page_paths = (
+            self.output_root / "index.html",
+            self.output_root / "terms-of-use.html",
+            self.output_root / "privacy-policy.html",
+            self.output_root / "cookie-policy.html",
+            self.output_root / "chapters" / "index.html",
+            self.output_root / "fr" / "index.html",
+            self.output_root / "fr" / "terms-of-use.html",
+            self.output_root / "fr" / "privacy-policy.html",
+            self.output_root / "fr" / "cookie-policy.html",
+            self.output_root / "fr" / "chapters" / "index.html",
+        )
+        png_reference_pattern = re.compile(r"assets/images/([^\"?]+\.png)")
+        referenced_png_assets: set[str] = set()
+
+        for page_path in page_paths:
+            page_html = page_path.read_text(encoding="utf-8")
+            referenced_png_assets.update(png_reference_pattern.findall(page_html))
+
+        self.assertEqual(expected_png_assets, referenced_png_assets)
+
+    def test_root_level_tracked_landing_outputs_are_absent(self) -> None:
+        self.assertFalse((ROOT_DIR / "index.html").exists())
+        self.assertFalse((ROOT_DIR / "fr" / "index.html").exists())
 
     def test_retired_landing_image_assets_are_absent_from_source_tree(self) -> None:
         assets_root = ROOT_DIR / "assets" / "images"

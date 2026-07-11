@@ -24,7 +24,7 @@ const outputRootArgIndex = process.argv.indexOf("--output-root");
 const outputRoot =
   outputRootArgIndex >= 0 && process.argv[outputRootArgIndex + 1]
     ? path.resolve(ROOT, process.argv[outputRootArgIndex + 1])
-    : ROOT;
+    : path.join(ROOT, "public");
 
 async function main() {
   await Promise.all(

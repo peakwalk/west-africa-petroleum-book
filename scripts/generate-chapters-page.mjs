@@ -16,7 +16,7 @@ const outputRootArgIndex = process.argv.indexOf("--output-root");
 const outputRoot =
   outputRootArgIndex >= 0 && process.argv[outputRootArgIndex + 1]
     ? path.resolve(ROOT, process.argv[outputRootArgIndex + 1])
-    : ROOT;
+    : path.join(ROOT, "public");
 const DEFAULT_GENERIC_DESCRIPTIONS = new Map([
   ["cover", "Opening material and publication framing for the web edition."],
   ["foreword", "Context for the book's purpose, scope, and relevance to petroleum resource governance."],

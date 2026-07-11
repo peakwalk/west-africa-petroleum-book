@@ -378,12 +378,15 @@ check_exists scripts/build_reader_page_meta.mjs
 check_exists scripts/check_reader_runtime_build_contract.mjs
 check_exists scripts/check_reader_runtime_outline.mjs
 check_exists scripts/check_reader_runtime_browser.swift
-check_contains package.json '"build:index": "node scripts/generate-index-page.mjs"'
-check_contains package.json '"build:legal": "node scripts/generate-legal-pages.mjs"'
+check_contains package.json '"build:index": "node scripts/generate-index-page.mjs --output-root public"'
+check_contains package.json '"build:legal": "node scripts/generate-legal-pages.mjs --output-root public"'
+check_contains package.json '"build:chapters": "node scripts/generate-chapters-page.mjs chapters --output-root public"'
 check_contains package.json '"build:reader-meta": "node scripts/build_reader_page_meta.mjs"'
 check_contains package.json '"build:site": "node scripts/build_site.mjs"'
 check_contains .github/workflows/pages.yml 'run: npm run test:site'
 check_not_contains .github/workflows/pages.yml 'cp index.html public/index.html'
+check_not_exists index.html
+check_not_exists fr/index.html
 check_contains scripts/generate-index-page.mjs 'renderLandingHead'
 check_contains scripts/generate-index-page.mjs 'renderLandingHeader'
 check_contains scripts/generate-index-page.mjs 'renderLandingFooter'

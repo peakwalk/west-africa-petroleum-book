@@ -19,7 +19,7 @@ const outputRootArgIndex = process.argv.indexOf("--output-root");
 const outputRoot =
   outputRootArgIndex >= 0 && process.argv[outputRootArgIndex + 1]
     ? path.resolve(ROOT, process.argv[outputRootArgIndex + 1])
-    : ROOT;
+    : path.join(ROOT, "public");
 
 const PAGES = [
   { key: "terms", output: WEBSITE_LEGAL_LINKS.terms, source: "terms-of-use.json" },
