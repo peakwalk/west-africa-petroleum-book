@@ -177,7 +177,7 @@ The field is being developed and produced with the support of BP, with the first
 
 Benin, located within the Gulf of Guinea petroleum province (Figure 7), previously produced oil between 1982 and 1998 from the marginal Sèmè Field located in Block 1 of its Coastal Sedimentary Basin. The field was originally discovered in 1968 by Union Oil of California.
 
-Production from the Sèmè Field has recently resumed through Akrake Petroleum, a subsidiary of Rex International, while exploration activities have also been restarted.
+Redevelopment operations at the Sèmè Field have recently resumed following the signing of a production sharing contract with Akrake Petroleum, a subsidiary of Rex International, while exploration work continues tentatively on other blocks.
 
 Several additional countries remain in the exploration phase and may ultimately achieve commercial discoveries owing to their favourable geological settings:
 
