@@ -258,7 +258,6 @@ const FR_COMPATIBILITY_TOPICS = [
 const COUNTRIES = [
   {
     anchor: "31--nigeria",
-    discoveries: 620,
     flagId: "nigeria",
     frAnchor: "61--nigeria",
     hydrocarbons: ["oil", "gas", "condensate"],
@@ -274,7 +273,6 @@ const COUNTRIES = [
   },
   {
     anchor: "32--ghana",
-    discoveries: 19,
     flagId: "ghana",
     frAnchor: "62--ghana",
     hydrocarbons: ["oil", "gas", "condensate"],
@@ -289,7 +287,6 @@ const COUNTRIES = [
   },
   {
     anchor: "33--côte-divoire",
-    discoveries: 35,
     flagId: "cote-divoire",
     frAnchor: "64--côte-divoire",
     hydrocarbons: ["oil", "gas", "condensate"],
@@ -304,7 +301,6 @@ const COUNTRIES = [
   },
   {
     anchor: "34--senegal",
-    discoveries: 7,
     flagId: "senegal",
     frAnchor: "63--sénégal",
     hydrocarbons: ["oil", "gas", "condensate"],
@@ -320,7 +316,6 @@ const COUNTRIES = [
   },
   {
     anchor: "35--mauritania",
-    discoveries: 22,
     flagId: "mauritania",
     frAnchor: "671--mauritanie",
     hydrocarbons: ["gas", "condensate", "oil"],
@@ -336,7 +331,6 @@ const COUNTRIES = [
   },
   {
     anchor: "36--niger",
-    discoveries: 8,
     flagId: "niger",
     frAnchor: "66--niger",
     hydrocarbons: ["oil"],
@@ -351,7 +345,6 @@ const COUNTRIES = [
   },
   {
     anchor: "37--benin",
-    discoveries: 5,
     flagId: "benin",
     frAnchor: "65--bénin",
     hydrocarbons: ["oil"],
@@ -367,7 +360,6 @@ const COUNTRIES = [
   },
   {
     anchor: "38--liberia",
-    discoveries: 2,
     flagId: "liberia",
     frAnchor: "673--libéria",
     hydrocarbons: [],
@@ -383,7 +375,6 @@ const COUNTRIES = [
   },
   {
     anchor: "39--sierra-leone",
-    discoveries: 2,
     flagId: "sierra-leone",
     frAnchor: "672--sierra-leone",
     hydrocarbons: [],
@@ -399,7 +390,6 @@ const COUNTRIES = [
   },
   {
     anchor: "310--guinea",
-    discoveries: 1,
     flagId: "guinea",
     frAnchor: "674--guinée-et-guinée-bissau",
     hydrocarbons: [],
@@ -415,7 +405,6 @@ const COUNTRIES = [
   },
   {
     anchor: "311--guinea-bissau",
-    discoveries: 2,
     flagId: "guinea-bissau",
     frAnchor: "674--guinée-et-guinée-bissau",
     hydrocarbons: [],
@@ -431,7 +420,6 @@ const COUNTRIES = [
   },
   {
     anchor: "312--the-gambia",
-    discoveries: 2,
     flagId: "the-gambia",
     frAnchor: "675--la-gambie",
     hydrocarbons: [],
@@ -447,7 +435,6 @@ const COUNTRIES = [
   },
   {
     anchor: "313--togo",
-    discoveries: 0,
     flagId: "togo",
     frAnchor: "",
     hydrocarbons: [],
@@ -463,7 +450,6 @@ const COUNTRIES = [
   },
   {
     anchor: "314--burkina-faso",
-    discoveries: 0,
     flagId: "burkina-faso",
     frAnchor: "",
     hydrocarbons: [],
@@ -479,7 +465,6 @@ const COUNTRIES = [
   },
   {
     anchor: "315--mali",
-    discoveries: 0,
     flagId: "mali",
     frAnchor: "",
     hydrocarbons: [],
@@ -495,7 +480,6 @@ const COUNTRIES = [
   },
   {
     anchor: "316--cabo-verde",
-    discoveries: 0,
     flagId: "cabo-verde",
     frAnchor: "",
     hydrocarbons: [],
@@ -632,7 +616,6 @@ function renderCountryCard(country, edition) {
   const statusCopy = COUNTRY_STATUS_COPY[locale][country.status];
   const producingFieldsLabel =
     locale === "fr" ? "champs en production" : "Producing Fields";
-  const discoveriesLabel = locale === "fr" ? "Decouvertes" : "Discoveries";
   const analysisLabel =
     locale === "fr" ? "Analyse pays" : EN_COMPATIBILITY_COUNTRY_ANALYSIS_LABEL;
   const cardMeta = [country.ministryAbbr, country.nocAbbr].filter(Boolean).join(" | ");
@@ -655,10 +638,6 @@ function renderCountryCard(country, edition) {
             <div>
               <dt>${escapeHtml(String(country.producingFields))}</dt>
               <dd>${escapeHtml(producingFieldsLabel)}</dd>
-            </div>
-            <div>
-              <dt>${escapeHtml(String(country.discoveries))}</dt>
-              <dd>${escapeHtml(discoveriesLabel)}</dd>
             </div>
           </dl>
           <a class="country-analysis-link" href="${escapeHtml(

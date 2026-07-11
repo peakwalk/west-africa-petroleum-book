@@ -5,6 +5,7 @@ ROOT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
 
 cd "$ROOT_DIR"
 npm run build:site >/dev/null
+python3 -m unittest discover -s tests -p 'test_homepage_country_cards.py'
 
 run_docx_formula_check_if_available() {
   edition="$1"
