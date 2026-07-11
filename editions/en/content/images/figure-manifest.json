@@ -1356,16 +1356,16 @@
   },
   {
     "number": 57,
-    "caption": "Figure 57: Typical cash flow profile of an upstream petroleum project from licensing and exploration through production and eventual abandonment.",
+    "caption": "Figure 57: Illustration of the typical petroleum field lifecycle, from exploration and appraisal through development and production to decommissioning, abandonment, and site restoration at the end of field life.",
     "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
-    "caption_paragraph_index": 7147,
-    "object_paragraph_start": 7146,
-    "object_paragraph_end": 7147,
+    "caption_paragraph_index": 7182,
+    "object_paragraph_start": 7169,
+    "object_paragraph_end": 7183,
     "kind": "bitmap",
     "objects": {
       "blip_targets": [
-        "word/media/image57.png"
+        "word/media/image58.jpeg"
       ],
       "chart_targets": [],
       "drawing_targets": [],
@@ -1380,16 +1380,16 @@
   },
   {
     "number": 58,
-    "caption": "Figure 58: Illustration of the typical petroleum field lifecycle, from exploration and appraisal through development and production to decommissioning, abandonment, and site restoration at the end of field life.",
+    "caption": "Figure 58: Typical sequence of activities undertaken during petroleum asset decommissioning, including planning, facility removal, well abandonment, site clearance, and environmental restoration.",
     "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
-    "caption_paragraph_index": 7190,
-    "object_paragraph_start": 7177,
-    "object_paragraph_end": 7191,
+    "caption_paragraph_index": 7270,
+    "object_paragraph_start": 7265,
+    "object_paragraph_end": 7271,
     "kind": "bitmap",
     "objects": {
       "blip_targets": [
-        "word/media/image58.jpeg"
+        "word/media/image59.jpeg"
       ],
       "chart_targets": [],
       "drawing_targets": [],
@@ -1404,36 +1404,12 @@
   },
   {
     "number": 59,
-    "caption": "Figure 59: Typical sequence of activities undertaken during petroleum asset decommissioning, including planning, facility removal, well abandonment, site clearance, and environmental restoration.",
+    "caption": "Figure 59: Typical well plugging and abandonment configuration showing barrier placement and the removal of wellheads, conductors, and surface facilities.",
     "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
-    "caption_paragraph_index": 7278,
-    "object_paragraph_start": 7273,
-    "object_paragraph_end": 7279,
-    "kind": "bitmap",
-    "objects": {
-      "blip_targets": [
-        "word/media/image59.jpeg"
-      ],
-      "chart_targets": [],
-      "drawing_targets": [],
-      "anchor_count": 0,
-      "inline_count": 1,
-      "vshape_count": 0,
-      "wps_shape_count": 0
-    },
-    "published_assets": [
-      "figure-059.webp"
-    ]
-  },
-  {
-    "number": 60,
-    "caption": "Figure 60: Typical well plugging and abandonment configuration showing barrier placement and the removal of wellheads, conductors, and surface facilities.",
-    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
-    "caption_paragraph_index": 7295,
-    "object_paragraph_start": 7294,
-    "object_paragraph_end": 7311,
+    "caption_paragraph_index": 7287,
+    "object_paragraph_start": 7286,
+    "object_paragraph_end": 7303,
     "kind": "multi_photo",
     "objects": {
       "blip_targets": [
@@ -1448,21 +1424,47 @@
       "wps_shape_count": 0
     },
     "published_assets": [
+      "figure-059.webp",
+      "figure-059-a.png",
+      "figure-059-b.png"
+    ]
+  },
+  {
+    "number": 60,
+    "caption": "Figure 60: Examples of offshore facilities and subsea infrastructure that may require decommissioning at the end of field life, including platforms, FPSOs, subsea systems, pipelines, umbilicals, and associated support assets.",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 7304,
+    "object_paragraph_start": 7288,
+    "object_paragraph_end": 7315,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image61.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
       "figure-060.webp"
     ]
   },
   {
     "number": 61,
-    "caption": "Figure 61: Examples of offshore facilities and subsea infrastructure that may require decommissioning at the end of field life, including platforms, FPSOs, subsea systems, pipelines, umbilicals, and associated support assets.",
+    "caption": "Figure 61: Key environmental considerations during petroleum decommissioning, including habitat protection, waste management, emissions control, seabed disturbance, and site restoration.",
     "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
-    "caption_paragraph_index": 7312,
-    "object_paragraph_start": 7296,
-    "object_paragraph_end": 7323,
+    "caption_paragraph_index": 7408,
+    "object_paragraph_start": 7401,
+    "object_paragraph_end": 7409,
     "kind": "bitmap",
     "objects": {
       "blip_targets": [
-        "word/media/image61.jpeg"
+        "word/media/image62.jpeg"
       ],
       "chart_targets": [],
       "drawing_targets": [],
@@ -1477,16 +1479,16 @@
   },
   {
     "number": 62,
-    "caption": "Figure 62: Key environmental considerations during petroleum decommissioning, including habitat protection, waste management, emissions control, seabed disturbance, and site restoration.",
+    "caption": "Figure 62: Examples of the principal engineering challenges encountered during offshore decommissioning, including structural integrity, heavy lifting, subsea intervention, environmental constraints, logistics, and cost management.",
     "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
-    "caption_paragraph_index": 7416,
-    "object_paragraph_start": 7409,
-    "object_paragraph_end": 7417,
+    "caption_paragraph_index": 7453,
+    "object_paragraph_start": 7452,
+    "object_paragraph_end": 7454,
     "kind": "bitmap",
     "objects": {
       "blip_targets": [
-        "word/media/image62.jpeg"
+        "word/media/image63.jpeg"
       ],
       "chart_targets": [],
       "drawing_targets": [],
@@ -1501,16 +1503,16 @@
   },
   {
     "number": 63,
-    "caption": "Figure 63: Examples of the principal engineering challenges encountered during offshore decommissioning, including structural integrity, heavy lifting, subsea intervention, environmental constraints, logistics, and cost management.",
+    "caption": "Figure 63: Typical regulatory process for the review, assessment, and approval of petroleum decommissioning plans prior to the commencement of decommissioning activities.",
     "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
-    "caption_paragraph_index": 7461,
-    "object_paragraph_start": 7460,
-    "object_paragraph_end": 7462,
+    "caption_paragraph_index": 7538,
+    "object_paragraph_start": 7534,
+    "object_paragraph_end": 7539,
     "kind": "bitmap",
     "objects": {
       "blip_targets": [
-        "word/media/image63.jpeg"
+        "word/media/image64.png"
       ],
       "chart_targets": [],
       "drawing_targets": [],
@@ -1525,36 +1527,12 @@
   },
   {
     "number": 64,
-    "caption": "Figure 64: Typical regulatory process for the review, assessment, and approval of petroleum decommissioning plans prior to the commencement of decommissioning activities.",
+    "caption": "Figure 64: Typical onshore site restoration activities undertaken following petroleum operations, including facility removal, remediation, land recontouring, revegetation, and long-term environmental monitoring.",
     "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
-    "caption_paragraph_index": 7546,
-    "object_paragraph_start": 7542,
-    "object_paragraph_end": 7547,
-    "kind": "bitmap",
-    "objects": {
-      "blip_targets": [
-        "word/media/image64.png"
-      ],
-      "chart_targets": [],
-      "drawing_targets": [],
-      "anchor_count": 0,
-      "inline_count": 1,
-      "vshape_count": 0,
-      "wps_shape_count": 0
-    },
-    "published_assets": [
-      "figure-064.webp"
-    ]
-  },
-  {
-    "number": 65,
-    "caption": "Figure 65: Typical onshore site restoration activities undertaken following petroleum operations, including facility removal, remediation, land recontouring, revegetation, and long-term environmental monitoring.",
-    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
-    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
-    "caption_paragraph_index": 7588,
-    "object_paragraph_start": 7587,
-    "object_paragraph_end": 7589,
+    "caption_paragraph_index": 7580,
+    "object_paragraph_start": 7579,
+    "object_paragraph_end": 7581,
     "kind": "multi_photo",
     "objects": {
       "blip_targets": [
@@ -1569,21 +1547,47 @@
       "wps_shape_count": 0
     },
     "published_assets": [
+      "figure-064.webp",
+      "figure-064-a.png",
+      "figure-064-b.png"
+    ]
+  },
+  {
+    "number": 65,
+    "caption": "Figure 65: Typical offshore site restoration activities undertaken following petroleum operations, including infrastructure removal, seabed clearance, environmental remediation, habitat recovery, and long-term monitoring",
+    "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
+    "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
+    "caption_paragraph_index": 7582,
+    "object_paragraph_start": 7581,
+    "object_paragraph_end": 7583,
+    "kind": "bitmap",
+    "objects": {
+      "blip_targets": [
+        "word/media/image66.jpeg"
+      ],
+      "chart_targets": [],
+      "drawing_targets": [],
+      "anchor_count": 0,
+      "inline_count": 1,
+      "vshape_count": 0,
+      "wps_shape_count": 0
+    },
+    "published_assets": [
       "figure-065.webp"
     ]
   },
   {
     "number": 66,
-    "caption": "Figure 66: Typical offshore site restoration activities undertaken following petroleum operations, including infrastructure removal, seabed clearance, environmental remediation, habitat recovery, and long-term monitoring",
+    "caption": "Figure 66: Typical framework used to monitor, verify, and demonstrate the long-term environmental and regulatory performance of decommissioned petroleum facilities and sites.",
     "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
-    "caption_paragraph_index": 7590,
-    "object_paragraph_start": 7589,
-    "object_paragraph_end": 7591,
+    "caption_paragraph_index": 7600,
+    "object_paragraph_start": 7599,
+    "object_paragraph_end": 7609,
     "kind": "bitmap",
     "objects": {
       "blip_targets": [
-        "word/media/image66.jpeg"
+        "word/media/image67.png"
       ],
       "chart_targets": [],
       "drawing_targets": [],
@@ -1598,16 +1602,16 @@
   },
   {
     "number": 67,
-    "caption": "Figure 67: Typical framework used to monitor, verify, and demonstrate the long-term environmental and regulatory performance of decommissioned petroleum facilities and sites.",
+    "caption": "Figure 67: Typical cash flow profile of an upstream petroleum project from licensing and exploration through production and eventual abandonment.",
     "chapter_title": "Chapter 6: Upstream Operations and Government Roles",
     "chapter_path": "/Users/edison/workspace/peakwalk/scm/gitlab/africa-book/editions/en/content/chapters/chapter-06-upstream-operations-and-government-roles.md",
-    "caption_paragraph_index": 7608,
-    "object_paragraph_start": 7607,
-    "object_paragraph_end": 7617,
+    "caption_paragraph_index": 7651,
+    "object_paragraph_start": 7650,
+    "object_paragraph_end": 7651,
     "kind": "bitmap",
     "objects": {
       "blip_targets": [
-        "word/media/image67.png"
+        "word/media/image57.png"
       ],
       "chart_targets": [],
       "drawing_targets": [],

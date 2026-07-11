@@ -96,8 +96,8 @@
       <li><a class="reference-index-link" href="chapter-06-upstream-operations-and-government-roles.html#61--pre-licensing-phase">6.1 Pre-Licensing Phase</a></li>
       <li><a class="reference-index-link" href="chapter-06-upstream-operations-and-government-roles.html#62--exploration-phase">6.2 Exploration Phase</a></li>
       <li><a class="reference-index-link" href="chapter-06-upstream-operations-and-government-roles.html#63--development-phase">6.3 Development Phase</a></li>
-      <li><a class="reference-index-link" href="chapter-06-upstream-operations-and-government-roles.html#64--project-expenditures-and-revenues">6.4 Project Expenditures and Revenues</a></li>
-      <li><a class="reference-index-link" href="chapter-06-upstream-operations-and-government-roles.html#65--decommissioning-and-abandonment-phase">6.5 Decommissioning and Abandonment Phase</a></li>
+      <li><a class="reference-index-link" href="chapter-06-upstream-operations-and-government-roles.html#64--decommissioning-and-abandonment-phase">6.4 Decommissioning and Abandonment Phase</a></li>
+      <li><a class="reference-index-link" href="chapter-06-upstream-operations-and-government-roles.html#65--project-expenditures-and-revenues">6.5 Project Expenditures and Revenues</a></li>
       <li><a class="reference-index-link" href="chapter-06-upstream-operations-and-government-roles.html#66--west-african-perspective-government-roles-in-upstream-petroleum-operations">6.6 West African Perspective: Government Roles in Upstream Petroleum Operations</a></li>
     </ol>
   </section>

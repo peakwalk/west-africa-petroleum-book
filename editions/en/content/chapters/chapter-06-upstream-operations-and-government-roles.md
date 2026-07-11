@@ -3765,25 +3765,9 @@ Even modest improvements in recovery factor can significantly increase:
 
 For this reason, reservoir management remains one of the most important disciplines within the petroleum industry.
 
-## 6.4- Project Expenditures and Revenues
+## 6.4- Decommissioning and Abandonment Phase
 
-The summary of cash flows from the pre-licensing phase through to abandonment illustrates the expenditures (investments) incurred during petroleum exploration and production activities, as well as the revenues generated from hydrocarbon production.
-
-Financing of pre-licensing activities generally falls within the sovereign responsibilities of the State, and certain activities may be carried out under service contracts. These activities therefore constitute part of the State's sovereign expenditure.
-
-Once a petroleum contract has been signed, the contractor commits to undertaking substantial capital expenditure (CAPEX) at its own risk during the exploration and development phases.
-
-During the production phase, revenues are generated for both parties to the contract (the State and the contractor) through the sale of produced hydrocarbons. Operating expenditure (OPEX), which covers the maintenance of production facilities and equipment, is generally easier to finance as it can be funded from production revenues. At this stage, cash flow becomes positive. Profits generated from production are shared between the parties in accordance with the contractual terms.
-
-During the abandonment phase, expenditure associated with decommissioning and abandonment activities (ABEX) is typically financed from a portion of production revenues. Petroleum contracts generally include provisions requiring the establishment of abandonment funds or reserves to finance these activities.
-
-![Figure 057](../images/figure-057.webp)
-
-Figure 57 Typical cash flow profile of an upstream petroleum project from licensing and exploration through production and eventual abandonment.
-
-## 6.5- Decommissioning and Abandonment Phase
-
-### 6.5.1- Definition, Objectives and Regulatory Framework
+### 6.4.1- Definition, Objectives and Regulatory Framework
 
 Every petroleum field eventually reaches the end of its economic life.
 
@@ -3851,9 +3835,9 @@ Ensuring permanent containment of hydrocarbons.
 
 Meeting all legal and contractual obligations.
 
-![Figure 058](../images/figure-058.webp)
+![Figure 057](../images/figure-057.webp)
 
-Figure 58 Illustration of the typical petroleum field lifecycle, from exploration and appraisal through development and production to decommissioning, abandonment, and site restoration at the end of field life.
+Figure 57 Illustration of the typical petroleum field lifecycle, from exploration and appraisal through development and production to decommissioning, abandonment, and site restoration at the end of field life.
 
 **End-of-Life Planning**
 
@@ -3995,9 +3979,9 @@ Environmental restoration activities are completed.
 
 Post-decommissioning monitoring may continue for several years.
 
-![Figure 059](../images/figure-059.webp)
+![Figure 058](../images/figure-058.webp)
 
-Figure 59 Typical sequence of activities undertaken during petroleum asset decommissioning, including planning, facility removal, well abandonment, site clearance, and environmental restoration.
+Figure 58 Typical sequence of activities undertaken during petroleum asset decommissioning, including planning, facility removal, well abandonment, site clearance, and environmental restoration.
 
 **Well Plugging and Abandonment (P&A)**
 
@@ -4026,9 +4010,9 @@ Includes removal of:
 
 Permanent abandonment must comply with recognised industry standards and regulatory requirements.
 
-![Figure 060](../images/figure-060.webp)
+![Figure 059](../images/figure-059.webp)
 
-Figure 60 Typical well plugging and abandonment configuration showing barrier placement and the removal of wellheads, conductors, and surface facilities.
+Figure 59 Typical well plugging and abandonment configuration showing barrier placement and the removal of wellheads, conductors, and surface facilities.
 
 **Offshore Decommissioning**
 
@@ -4051,9 +4035,9 @@ The selected decommissioning strategy depends on:
 - Environmental considerations;
 - Regulatory requirements.
 
-![Figure 061](../images/figure-061.webp)
+![Figure 060](../images/figure-060.webp)
 
-Figure 61 Examples of offshore facilities and subsea infrastructure that may require decommissioning at the end of field life, including platforms, FPSOs, subsea systems, pipelines, umbilicals, and associated support assets.
+Figure 60 Examples of offshore facilities and subsea infrastructure that may require decommissioning at the end of field life, including platforms, FPSOs, subsea systems, pipelines, umbilicals, and associated support assets.
 
 **Environmental Considerations**
 
@@ -4227,9 +4211,9 @@ Examples include:
 
 Governments increasingly encourage recycling and reuse where feasible.
 
-![Figure 062](../images/figure-062.webp)
+![Figure 061](../images/figure-061.webp)
 
-Figure 62 Key environmental considerations during petroleum decommissioning, including habitat protection, waste management, emissions control, seabed disturbance, and site restoration.
+Figure 61 Key environmental considerations during petroleum decommissioning, including habitat protection, waste management, emissions control, seabed disturbance, and site restoration.
 
 **Social Challenges**
 
@@ -4305,9 +4289,9 @@ Poorly abandoned wells can present long-term risks including:
 
 Permanent well barriers must therefore be designed and verified carefully.
 
-![Figure 063](../images/figure-063.webp)
+![Figure 062](../images/figure-062.webp)
 
-Figure 63 Examples of the principal engineering challenges encountered during offshore decommissioning, including structural integrity, heavy lifting, subsea intervention, environmental constraints, logistics, and cost management.
+Figure 62 Examples of the principal engineering challenges encountered during offshore decommissioning, including structural integrity, heavy lifting, subsea intervention, environmental constraints, logistics, and cost management.
 
 **Regulatory Challenges**
 
@@ -4389,7 +4373,7 @@ Effective decommissioning programmes:
 
 The long-term success of the petroleum industry depends not only on discovering and producing hydrocarbons, but also on responsibly managing the end of field life.
 
-### 6.5.2- Government Responsibilities for Decommissioning
+### 6.4.2- Government Responsibilities for Decommissioning
 
 The decommissioning and abandonment phase places significant responsibilities upon governments and regulatory authorities.
 
@@ -4450,9 +4434,9 @@ Whether affected stakeholders have been consulted appropriately.
 
 Only after regulatory approval should decommissioning activities proceed.
 
-![Figure 064](../images/figure-064.webp)
+![Figure 063](../images/figure-063.webp)
 
-Figure 64 Typical regulatory process for the review, assessment, and approval of petroleum decommissioning plans prior to the commencement of decommissioning activities.
+Figure 63 Typical regulatory process for the review, assessment, and approval of petroleum decommissioning plans prior to the commencement of decommissioning activities.
 
 **Verification of Financial Security**
 
@@ -4522,13 +4506,13 @@ Objectives may include:
 
 Site restoration standards should be clearly defined within regulations.
 
+![Figure 064](../images/figure-064.webp)
+
+Figure 64 Typical onshore site restoration activities undertaken following petroleum operations, including facility removal, remediation, land recontouring, revegetation, and long-term environmental monitoring.
+
 ![Figure 065](../images/figure-065.webp)
 
-Figure 65 Typical onshore site restoration activities undertaken following petroleum operations, including facility removal, remediation, land recontouring, revegetation, and long-term environmental monitoring.
-
-![Figure 066](../images/figure-066.webp)
-
-Figure 66 Typical offshore site restoration activities undertaken following petroleum operations, including infrastructure removal, seabed clearance, environmental remediation, habitat recovery, and long-term monitoring
+Figure 65 Typical offshore site restoration activities undertaken following petroleum operations, including infrastructure removal, seabed clearance, environmental remediation, habitat recovery, and long-term monitoring
 
 **Stakeholder Engagement**
 
@@ -4555,9 +4539,9 @@ Following completion of decommissioning activities, governments may require moni
 
 Verification activities may continue for several years depending on the nature of the development.
 
-![Figure 067](../images/figure-067.webp)
+![Figure 066](../images/figure-066.webp)
 
-Figure 67 Typical framework used to monitor, verify, and demonstrate the long-term environmental and regulatory performance of decommissioned petroleum facilities and sites.
+Figure 66 Typical framework used to monitor, verify, and demonstrate the long-term environmental and regulatory performance of decommissioned petroleum facilities and sites.
 
 **Institutional Capacity Requirements**
 
@@ -4625,6 +4609,22 @@ Government oversight is essential to ensuring that decommissioning activities:
 - Promote responsible resource management.
 
 The effectiveness of decommissioning governance will ultimately influence how the petroleum industry is perceived long after production has ceased.
+
+## 6.5- Project Expenditures and Revenues
+
+The summary of cash flows from the pre-licensing phase through to abandonment illustrates the expenditures (investments) incurred during petroleum exploration and production activities, as well as the revenues generated from hydrocarbon production.
+
+Financing of pre-licensing activities generally falls within the sovereign responsibilities of the State, and certain activities may be carried out under service contracts. These activities therefore constitute part of the State's sovereign expenditure.
+
+Once a petroleum contract has been signed, the contractor commits to undertaking substantial capital expenditure (CAPEX) at its own risk during the exploration and development phases.
+
+During the production phase, revenues are generated for both parties to the contract (the State and the contractor) through the sale of produced hydrocarbons. Operating expenditure (OPEX), which covers the maintenance of production facilities and equipment, is generally easier to finance as it can be funded from production revenues. At this stage, cash flow becomes positive. Profits generated from production are shared between the parties in accordance with the contractual terms.
+
+During the abandonment phase, expenditure associated with decommissioning and abandonment activities (ABEX) is typically financed from a portion of production revenues. Petroleum contracts generally include provisions requiring the establishment of abandonment funds or reserves to finance these activities.
+
+![Figure 067](../images/figure-067.webp)
+
+Figure 67 Typical cash flow profile of an upstream petroleum project from licensing and exploration through production and eventual abandonment.
 
 ## 6.6- West African Perspective: Government Roles in Upstream Petroleum Operations
 
