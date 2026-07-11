@@ -333,6 +333,7 @@ check_exists assets/images/upstream-atlas-nav-logo.webp
 check_exists assets/images/upstream-atlas-hero-v7-clean-left.webp
 check_exists assets/images/prototype-hero-graywhite-left.webp
 check_exists assets/images/prototype-hero-graywhite-right.webp
+check_exists assets/icons/homepage/hero-arrow.svg
 check_exists assets/icons/homepage/icon-research.svg
 check_exists assets/icons/homepage/icon-industry-monitoring.svg
 check_exists assets/icons/homepage/icon-intelligence.svg
@@ -544,7 +545,8 @@ check_not_contains public/index.html 'class="west-africa-map-mainland"'
 check_contains public/index.html 'aria-label="Cabo Verde"'
 check_not_contains public/index.html '🇳🇬'
 check_contains public/index.html 'View All Countries'
-check_contains public/index.html 'Country Analysis <span aria-hidden="true">→</span></a>'
+check_contains public/index.html 'Chapter 3.1 <span aria-hidden="true">→</span></a>'
+check_not_contains public/index.html 'Country Analysis <span aria-hidden="true">→</span></a>'
 check_contains public/index.html 'class="section-heading section-heading-centered"'
 check_contains public/index.html 'Search Upstream Atlas'
 check_contains public/index.html '<h3>Search Upstream Atlas</h3>'
@@ -663,8 +665,8 @@ for file in \
   check_not_exists "public/fr/assets/icons/homepage-cropped/$file"
 done
 check_exists public/assets/icons/homepage-sprite.svg
+check_exists public/assets/icons/homepage/hero-arrow.svg
 for file in \
-  hero-arrow.svg \
   hero-basins.svg \
   hero-chapters.svg \
   hero-countries.svg \

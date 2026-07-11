@@ -35,6 +35,7 @@ const FRENCH_ONLY_PUBLIC_ASSET_PATHS = [
 ];
 
 const ENGLISH_ONLY_PUBLIC_ASSET_PATHS = [
+  "icons/homepage/hero-arrow.svg",
   "icons/homepage-cropped/icon-audience-operators.webp",
   "icons/homepage-cropped/icon-audience-policy.webp",
   "icons/homepage-cropped/icon-audience-research.webp",

@@ -204,8 +204,6 @@ const EN_HOMEPAGE_COPY = {
   topicsTitle: "Move from basin context to governance, fiscal systems, and operations.",
 };
 
-const EN_COMPATIBILITY_COUNTRY_ANALYSIS_LABEL = "Country Analysis";
-
 const FR_COMPATIBILITY_COPY = {
   countriesBody:
     "L'edition francaise actuelle conserve sa propre structure de lecture. Utilisez cette section pour acceder au chapitre d'analyse pays deja publie.",
@@ -258,6 +256,7 @@ const FR_COMPATIBILITY_TOPICS = [
 const COUNTRIES = [
   {
     anchor: "31--nigeria",
+    chapterNumber: "3.1",
     flagId: "nigeria",
     frAnchor: "61--nigeria",
     hydrocarbons: ["oil", "gas", "condensate"],
@@ -273,6 +272,7 @@ const COUNTRIES = [
   },
   {
     anchor: "32--ghana",
+    chapterNumber: "3.2",
     flagId: "ghana",
     frAnchor: "62--ghana",
     hydrocarbons: ["oil", "gas", "condensate"],
@@ -287,6 +287,7 @@ const COUNTRIES = [
   },
   {
     anchor: "33--côte-divoire",
+    chapterNumber: "3.3",
     flagId: "cote-divoire",
     frAnchor: "64--côte-divoire",
     hydrocarbons: ["oil", "gas", "condensate"],
@@ -301,6 +302,7 @@ const COUNTRIES = [
   },
   {
     anchor: "34--senegal",
+    chapterNumber: "3.4",
     flagId: "senegal",
     frAnchor: "63--sénégal",
     hydrocarbons: ["oil", "gas", "condensate"],
@@ -316,6 +318,7 @@ const COUNTRIES = [
   },
   {
     anchor: "35--mauritania",
+    chapterNumber: "3.5",
     flagId: "mauritania",
     frAnchor: "671--mauritanie",
     hydrocarbons: ["gas", "condensate", "oil"],
@@ -331,6 +334,7 @@ const COUNTRIES = [
   },
   {
     anchor: "36--niger",
+    chapterNumber: "3.6",
     flagId: "niger",
     frAnchor: "66--niger",
     hydrocarbons: ["oil"],
@@ -345,6 +349,7 @@ const COUNTRIES = [
   },
   {
     anchor: "37--benin",
+    chapterNumber: "3.7",
     flagId: "benin",
     frAnchor: "65--bénin",
     hydrocarbons: ["oil"],
@@ -360,6 +365,7 @@ const COUNTRIES = [
   },
   {
     anchor: "38--liberia",
+    chapterNumber: "3.8",
     flagId: "liberia",
     frAnchor: "673--libéria",
     hydrocarbons: [],
@@ -375,6 +381,7 @@ const COUNTRIES = [
   },
   {
     anchor: "39--sierra-leone",
+    chapterNumber: "3.9",
     flagId: "sierra-leone",
     frAnchor: "672--sierra-leone",
     hydrocarbons: [],
@@ -390,6 +397,7 @@ const COUNTRIES = [
   },
   {
     anchor: "310--guinea",
+    chapterNumber: "3.10",
     flagId: "guinea",
     frAnchor: "674--guinée-et-guinée-bissau",
     hydrocarbons: [],
@@ -405,6 +413,7 @@ const COUNTRIES = [
   },
   {
     anchor: "311--guinea-bissau",
+    chapterNumber: "3.11",
     flagId: "guinea-bissau",
     frAnchor: "674--guinée-et-guinée-bissau",
     hydrocarbons: [],
@@ -420,6 +429,7 @@ const COUNTRIES = [
   },
   {
     anchor: "312--the-gambia",
+    chapterNumber: "3.12",
     flagId: "the-gambia",
     frAnchor: "675--la-gambie",
     hydrocarbons: [],
@@ -435,6 +445,7 @@ const COUNTRIES = [
   },
   {
     anchor: "313--togo",
+    chapterNumber: "3.13",
     flagId: "togo",
     frAnchor: "",
     hydrocarbons: [],
@@ -450,6 +461,7 @@ const COUNTRIES = [
   },
   {
     anchor: "314--burkina-faso",
+    chapterNumber: "3.14",
     flagId: "burkina-faso",
     frAnchor: "",
     hydrocarbons: [],
@@ -465,6 +477,7 @@ const COUNTRIES = [
   },
   {
     anchor: "315--mali",
+    chapterNumber: "3.15",
     flagId: "mali",
     frAnchor: "",
     hydrocarbons: [],
@@ -480,6 +493,7 @@ const COUNTRIES = [
   },
   {
     anchor: "316--cabo-verde",
+    chapterNumber: "3.16",
     flagId: "cabo-verde",
     frAnchor: "",
     hydrocarbons: [],
@@ -616,8 +630,7 @@ function renderCountryCard(country, edition) {
   const statusCopy = COUNTRY_STATUS_COPY[locale][country.status];
   const producingFieldsLabel =
     locale === "fr" ? "champs en production" : "Producing Fields";
-  const analysisLabel =
-    locale === "fr" ? "Analyse pays" : EN_COMPATIBILITY_COUNTRY_ANALYSIS_LABEL;
+  const analysisLabel = locale === "fr" ? "Analyse pays" : `Chapter ${country.chapterNumber}`;
   const cardMeta = [country.ministryAbbr, country.nocAbbr].filter(Boolean).join(" | ");
 
   return `        <article class="country-card-v2 status-${escapeHtml(country.status)}">
