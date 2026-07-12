@@ -1,6 +1,6 @@
-# Chapter 10: Petroleum Data Management in West Africa
+# Chapter 7: Petroleum Data Management in West Africa
 
-## 10.1- Introduction
+## 7.1- Introduction
 
 Petroleum data is one of the most valuable strategic assets held by a resource-owning State. Before hydrocarbons are discovered, developed, or produced, the State’s ability to understand and promote its petroleum potential depends largely on the quality, preservation, interpretation, and accessibility of its subsurface data.
 
@@ -10,9 +10,9 @@ For West African countries, petroleum data access is not only a technical issue.
 
 A country with high-quality, accessible, well-organised petroleum data is more likely to attract credible operators, increase competitive tension during licensing rounds, reduce exploration uncertainty, and negotiate stronger commercial terms. Conversely, countries with fragmented, poorly archived, or inaccessible data often struggle to promote acreage effectively and may award petroleum rights under terms that do not reflect the true value of the underlying resources.
 
-## 10.2- Petroleum Data as a Strategic National Asset
+## 7.2- Petroleum Data as a Strategic National Asset
 
-### 10.2.1- Strategic Importance of Petroleum Data Access
+### 7.2.1- Strategic Importance of Petroleum Data Access
 
 The value of petroleum data extends across the full petroleum lifecycle.
 
@@ -28,7 +28,7 @@ During decommissioning, historical well data, facility records, environmental ba
 
 For these reasons, petroleum data access should be viewed as a sovereign resource management function, not merely an administrative service.
 
-## 10.3- Types of Petroleum Data
+## 7.3- Types of Petroleum Data
 
 A national petroleum data system should ideally preserve and manage the following categories of data:
 
@@ -39,7 +39,7 @@ A national petroleum data system should ideally preserve and manage the followin
 - Reservoir and production dataThis includes reservoir models, static models, dynamic models, production histories, pressure surveys, fluid analyses, reserves reports, production allocation data, and enhanced recovery studies.
 - Commercial and regulatory dataThis includes licence maps, block boundaries, relinquishment records, petroleum agreements, fiscal terms, local content obligations, environmental approvals, and approved Field Development Plans.
 
-## 10.4- Confidentiality and Data Release
+## 7.4- Confidentiality and Data Release
 
 Petroleum data is normally subject to confidentiality periods defined in petroleum laws, regulations, licences, or contracts. During the confidentiality period, data acquired by an operator may be restricted to the State, the operator, partners, and authorised users. Once the confidentiality period expires, the State may be able to release, license, or use the data for future promotion.
 
@@ -54,9 +54,9 @@ The following principles should apply:
 - Released data should be made available through transparent licensing or data-room processes.
 - The State should retain ownership and long-term control of national petroleum data.
 
-## 10.5- Country-Level Petroleum Data Access
+## 7.5- Country-Level Petroleum Data Access
 
-### 10.5.1- Nigeria
+### 7.5.1- Nigeria
 
 Nigeria has the most mature petroleum industry in West Africa and one of the largest collections of subsurface data on the continent. The Nigerian Upstream Petroleum Regulatory Commission is responsible for upstream petroleum regulation, and its stated functions include maintaining records on reserves, production, exports, licences, leases, and managing the National Data Repository. (Nigerians Upstream Regulator)
 
@@ -68,7 +68,7 @@ Key data access features:
 
 Nigeria’s main challenge is not the absence of petroleum data, but the scale, quality control, integration, digitisation, and efficient commercial access to legacy and modern datasets. A well-functioning National Data Repository is critical for future licensing rounds, marginal field development, gas commercialisation, reserves auditing, and monitoring fiscal obligations under the Petroleum Industry Act.
 
-### 10.5.2- Ghana
+### 7.5.2- Ghana
 
 Ghana’s upstream petroleum sector is regulated by the Petroleum Commission, which describes itself as the regulator of Ghana’s upstream petroleum industry. (Petroleum Commission Ghana) Ghana has become an important petroleum producer following discoveries and developments such as Jubilee, TEN, and Sankofa.
 
@@ -80,7 +80,7 @@ Key data access features:
 
 Ghana should continue strengthening digital petroleum data access, particularly for available acreage, relinquished blocks, mature discoveries, and near-field exploration opportunities. A transparent and accessible data platform would support future investment and strengthen Ghana’s ability to compete for capital against other emerging deepwater provinces.
 
-### 10.5.3- Côte d’Ivoire
+### 7.5.3- Côte d’Ivoire
 
 Côte d’Ivoire has become one of West Africa’s most important renewed exploration and production areas, particularly following recent offshore discoveries. PETROCI plays a central role in the petroleum sector, including promotion of acreage and management of technical information.
 
@@ -92,7 +92,7 @@ Key data access features:
 
 Côte d’Ivoire is a good example of how a country can use a virtual data room to improve acreage promotion. Its recent offshore success makes data quality particularly important because investors will seek access to regional seismic, well correlations, play fairway analysis, source rock information, and analogue field data.
 
-### 10.5.4- Senegal
+### 7.5.4- Senegal
 
 Senegal has rapidly moved from frontier exploration province to petroleum-producing country following major offshore oil and gas discoveries. PETROSEN plays a central role in petroleum promotion, State participation, and technical oversight.
 
@@ -102,7 +102,7 @@ Key data access features:
 
 Senegal should prioritise the consolidation of its petroleum data into a modern national petroleum data centre. This would help preserve the knowledge generated from Sangomar, GTA, Yakaar-Teranga, and other offshore exploration campaigns. It would also support future licensing, domestic capacity building, and better regulatory oversight.
 
-### 10.5.5- Mauritania
+### 7.5.5- Mauritania
 
 Mauritania forms part of the MSGBC Basin and shares the Greater Tortue Ahmeyim gas development with Senegal. Its petroleum data is strategically important because regional interpretation across Mauritania and Senegal is essential for understanding source rock maturity, migration pathways, deepwater plays, and gas prospectivity.
 
@@ -112,7 +112,7 @@ Key data access features:
 
 Mauritania’s priority should be regional data integration. Because the petroleum system crosses national boundaries, interpretation benefits from harmonised seismic, well, stratigraphic, and source rock datasets across Mauritania, Senegal, The Gambia, Guinea-Bissau, and Guinea.
 
-### 10.5.6- Benin
+### 7.5.6- Benin
 
 Benin has a smaller petroleum sector but remains strategically relevant because of its location within the Gulf of Guinea petroleum province and the historical Sèmè Field. The manuscript already notes Benin’s previous production from the Sèmè Field and recent renewed activity.
 
@@ -122,7 +122,7 @@ Key data access features:
 
 Benin should prioritise the digitisation and re-evaluation of historical data. Older wells, seismic lines, field reports, and core or cuttings samples may still hold value when reinterpreted using modern petroleum systems concepts, improved seismic processing, and regional Gulf of Guinea analogues.
 
-### 10.5.7- Niger
+### 7.5.7- Niger
 
 Niger is primarily an onshore petroleum province, with production linked to the Agadem Basin and related infrastructure. Its petroleum data is different from the offshore Gulf of Guinea countries because exploration and development are focused on inland basins, pipeline export routes, and domestic refining.
 
@@ -130,7 +130,7 @@ Key data access features:
 
 Niger’s data access strategy should focus on preserving onshore basin data, supporting future exploration beyond producing areas, and improving access to geological and seismic information for underexplored basins.
 
-### 10.5.8- Guinea-Bissau
+### 7.5.8- Guinea-Bissau
 
 Guinea-Bissau lies within the MSGBC petroleum province and has offshore exploration potential. However, compared with Senegal and Mauritania, its petroleum sector remains underdeveloped.
 
@@ -138,7 +138,7 @@ Key data access features:
 
 For Guinea-Bissau, access to reliable regional seismic and well data is essential. Because frontier and emerging basins carry higher geological risk, investors require confidence that available technical data is complete, accessible, and properly managed.
 
-### 10.5.9- The Gambia
+### 7.5.9- The Gambia
 
 The Gambia occupies a small but strategically located offshore position within the MSGBC Basin. Its petroleum potential is linked to regional geological trends extending from Senegal and Guinea-Bissau.
 
@@ -146,7 +146,7 @@ Key data access features:
 
 The Gambia should focus on regional basin integration and transparent acreage promotion. Given its smaller offshore area, the ability to package high-quality data clearly may be more important than the volume of data available.
 
-### 10.5.10- Guinea
+### 7.5.10- Guinea
 
 Guinea remains a frontier petroleum province, although it is part of the wider West African margin and has geological links to the MSGBC and Sierra Leone-Liberia offshore trends.
 
@@ -154,7 +154,7 @@ Key data access features:
 
 Guinea’s priority should be early-stage petroleum data acquisition and preservation. Gravity, magnetic, regional 2D seismic, and basin modelling studies would help reduce uncertainty and make the petroleum system more understandable to investors.
 
-### 10.5.11- Sierra Leone
+### 7.5.11- Sierra Leone
 
 Sierra Leone has experienced offshore exploration interest, including deepwater wells, but has not yet become a major producer. Its petroleum potential is linked to the transform margin between the MSGBC Basin and the Côte d’Ivoire-Ghana margin.
 
@@ -162,7 +162,7 @@ Key data access features:
 
 Sierra Leone’s most important data priority is the reinterpretation of previous exploration results. Unsuccessful wells can still create significant value if they clarify source rock presence, reservoir quality, migration timing, pressure regime, and play risk.
 
-### 10.5.12- Liberia
+### 7.5.12- Liberia
 
 Liberia has offshore petroleum potential along the West African transform margin and has attracted previous exploration interest. Like Sierra Leone, its exploration results should be preserved and reinterpreted.
 
@@ -170,7 +170,7 @@ Key data access features:
 
 Liberia should focus on creating clear, investor-ready data packages for available acreage, including play summaries, well results, seismic interpretation, source rock analysis, and remaining prospectivity.
 
-### 10.5.13- Togo
+### 7.5.13- Togo
 
 Togo has limited petroleum production history but sits within the Gulf of Guinea petroleum province between Ghana and Benin. Its petroleum potential is best understood through regional correlation with neighbouring countries.
 
@@ -178,9 +178,9 @@ Key data access features:
 
 Togo’s main priority should be building a modern baseline petroleum database, including historical exploration records, offshore seismic coverage, and regional correlation with Ghana, Benin, and Nigeria.
 
-## 10.6- Comparative Petroleum Data Access Table
+## 7.6- Comparative Petroleum Data Access Table
 
-## 10.7- Physical Core and Sample Repositories
+## 7.7- Physical Core and Sample Repositories
 
 Digital data alone is not sufficient. Physical geological material remains essential for long-term petroleum evaluation.
 
@@ -192,7 +192,7 @@ National core repositories should therefore be treated as strategic infrastructu
 
 The PETROCI core library in Côte d’Ivoire provides a useful regional example of physical petroleum data preservation and should be used in the book as a practical illustration of why national data infrastructure matters.
 
-## 10.8- Digital Petroleum Data Centres
+## 7.8- Digital Petroleum Data Centres
 
 A modern national petroleum data centre should not simply be an archive. It should operate as an investment promotion, regulatory, technical, and governance platform.
 
@@ -202,7 +202,7 @@ Key functions should include:
 
 For West African countries, digital petroleum data centres can significantly improve investment attractiveness. Investors are more likely to engage when they can quickly understand what data exists, what acreage is available, what previous wells found, and how to access technical information.
 
-## 10.9- Recommended Best Practice Model for West Africa
+## 7.9- Recommended Best Practice Model for West Africa
 
 West African countries should adopt a regional best-practice petroleum data model based on the following principles:
 
@@ -217,7 +217,7 @@ West African countries should adopt a regional best-practice petroleum data mode
 - Capacity buildingGovernment staff should be trained in data management, geoscience, seismic interpretation, reservoir engineering, and digital systems.
 - Revenue generationData licensing can generate income for the State while improving investor access.
 
-## 10.10- Regional Cooperation in Petroleum Data
+## 7.10- Regional Cooperation in Petroleum Data
 
 Many West African petroleum systems cross national boundaries. The MSGBC Basin extends across Mauritania, Senegal, The Gambia, Guinea-Bissau, and Guinea. The Gulf of Guinea petroleum province links Nigeria, Benin, Togo, Ghana, and Côte d’Ivoire. The transform margin extends through Sierra Leone, Liberia, Côte d’Ivoire, and Ghana.
 
@@ -229,7 +229,7 @@ Potential regional initiatives include:
 
 This would be particularly valuable for frontier and emerging countries with limited national datasets.
 
-## 10.11- Key Challenges
+## 7.11- Key Challenges
 
 Several challenges continue to affect petroleum data access in West Africa.
 
@@ -245,7 +245,7 @@ Fifth, some countries lack the technical and financial capacity to maintain mode
 
 Finally, poor data access can weaken licensing rounds because investors are reluctant to bid aggressively where subsurface uncertainty remains high.
 
-## 10.12- Strategic Recommendations
+## 7.12- Strategic Recommendations
 
 West African governments should consider the following actions:
 
@@ -262,7 +262,7 @@ West African governments should consider the following actions:
 - Ensure data access fees are commercially reasonable.
 - Use petroleum data to strengthen fiscal modelling, reserves auditing, and production verification.
 
-## 10.13- Conclusion
+## 7.13- Conclusion
 
 Petroleum data access is a central pillar of petroleum resource governance. It influences exploration success, investment attractiveness, licensing outcomes, fiscal negotiations, production monitoring, reserves management, and long-term national value creation.
 

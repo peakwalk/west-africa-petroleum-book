@@ -44,7 +44,7 @@ FIGURE_TARGETS = (
             / "en"
             / "content"
             / "chapters"
-            / "chapter-07-petroleum-fiscal-regimes.md"
+            / "chapter-08-petroleum-fiscal-regimes.md"
         ),
         "source_sha256": "b539215fc11f36d6afcd2f2e4200c6164fdf02d2069cb7b2ed02b005be4c57af",
     },

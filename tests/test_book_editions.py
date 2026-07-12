@@ -10,6 +10,14 @@ from pathlib import Path
 
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
+NON_CANONICAL_CHAPTER_PAGE_NAMES = {
+    "cover.html",
+    "front-matter.html",
+    "chapter-07-petroleum-fiscal-regimes.html",
+    "chapter-08-west-african-fiscal-regimes.html",
+    "chapter-09-socio-political-determinants.html",
+    "chapter-10-petroleum-data-management-in-west-africa.html",
+}
 
 
 class BookEditionBuildTests(unittest.TestCase):
@@ -76,7 +84,7 @@ class BookEditionBuildTests(unittest.TestCase):
             sorted(
                 chapter_path
                 for chapter_path in (locale_root / "chapters").glob("*.html")
-                if chapter_path.name not in {"front-matter.html", "cover.html"}
+                if chapter_path.name not in NON_CANONICAL_CHAPTER_PAGE_NAMES
             )
         )
         return pages
@@ -468,14 +476,14 @@ class BookEditionBuildTests(unittest.TestCase):
             / "public"
             / "book"
             / "chapters"
-            / "chapter-07-petroleum-fiscal-regimes.html"
+            / "chapter-08-petroleum-fiscal-regimes.html"
         ).read_text(encoding="utf-8")
         english_chapter_eight = (
             ROOT_DIR
             / "public"
             / "book"
             / "chapters"
-            / "chapter-08-west-african-fiscal-regimes.html"
+            / "chapter-09-west-african-fiscal-regimes.html"
         ).read_text(encoding="utf-8")
 
         for asset in ["016", "025", "026", "027", "038", "040", "041", "042"]:
@@ -521,7 +529,7 @@ class BookEditionBuildTests(unittest.TestCase):
             / "public"
             / "book"
             / "chapters"
-            / "chapter-08-west-african-fiscal-regimes.html"
+            / "chapter-09-west-african-fiscal-regimes.html"
         ).read_text(encoding="utf-8")
 
         self.assertIn("Table 20 Principal Fiscal Elements", english_chapter_eight)
@@ -901,11 +909,19 @@ class BookEditionBuildTests(unittest.TestCase):
             sitemap,
         )
         self.assertIn(
+            "https://upstreamatlas.com/book/chapters/chapter-07-petroleum-data-management-in-west-africa.html",
+            sitemap,
+        )
+        self.assertIn(
             "https://upstreamatlas.com/fr/book/chapters/chapter-01-value-chain-of-the-hydrocarbon-sector.html",
             sitemap,
         )
         self.assertNotIn("https://upstreamatlas.com/book/chapters/cover.html", sitemap)
         self.assertNotIn("https://upstreamatlas.com/book/chapters/front-matter.html", sitemap)
+        self.assertNotIn(
+            "https://upstreamatlas.com/book/chapters/chapter-10-petroleum-data-management-in-west-africa.html",
+            sitemap,
+        )
         self.assertNotIn("https://upstreamatlas.com/fr/book/chapters/cover.html", sitemap)
         self.assertNotIn("https://upstreamatlas.com/fr/book/chapters/front-matter.html", sitemap)
         self.assertIn("Sitemap: https://upstreamatlas.com/book-sitemap.xml", robots)
@@ -1155,7 +1171,7 @@ class BookEditionBuildTests(unittest.TestCase):
             / "public"
             / "book"
             / "chapters"
-            / "chapter-09-socio-political-determinants.html"
+            / "chapter-10-socio-political-determinants.html"
         ).read_text(encoding="utf-8")
         french_socio_political = (
             ROOT_DIR
@@ -1187,7 +1203,7 @@ class BookEditionBuildTests(unittest.TestCase):
                 "index.html",
                 "chapters/list-of-figures.html",
                 "chapters/chapter-05-hydrocarbon-value-chain.html",
-                "chapters/chapter-09-socio-political-determinants.html",
+                "chapters/chapter-10-socio-political-determinants.html",
                 "chapters/chapter-11-general-conclusion.html",
             ],
         )

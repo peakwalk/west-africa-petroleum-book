@@ -1,8 +1,8 @@
-# Chapter 8: West African Fiscal Regimes
+# Chapter 9: West African Fiscal Regimes
 
 Case studies: Benin, Niger, Ghana, Côte d’Ivoire, Nigeria and Senegal
 
-## 8.1- Petroleum Financial Flow Modelling
+## 9.1- Petroleum Financial Flow Modelling
 
 Before the commencement of petroleum negotiations, the State, as resource owner, must develop a simplified financial or economic flow diagram (flow chart) showing the distribution of revenues between the contractor and the State.
 
@@ -10,11 +10,11 @@ This diagram serves as a simplified economic model that enables the State to und
 
 The legal and regulatory instruments underpinning the design of this decision-support tool are the petroleum code and, in particular, the fiscal regime.
 
-### 8.1.1- Petroleum Code
+### 9.1.1- Petroleum Code
 
 The petroleum code is the legal instrument governing petroleum operations. It includes provisions designed to encourage oil companies or consortia to undertake petroleum operations, given the high cost of exploration activities, while also regulating the distribution of revenues between the State and its partners.
 
-### 8.1.2- Fiscal Regime
+### 9.1.2- Fiscal Regime
 
 The fiscal regime is generally established under petroleum legislation. For example, in Benin, Law No. 2019-06 of 15 November 2019 establishing the Petroleum Code provides exclusively for the Production Sharing Contract (PSC) as the applicable fiscal regime for upstream exploration and production activities.
 
@@ -34,9 +34,9 @@ Bonuses and ad valorem royalties are upfront payments to the State and are not b
 
 Conversely, a regressive system discourages investors, who generally prefer progressive fiscal regimes in which State revenue is more strongly linked to project profitability (income tax, supplementary taxes, etc.).
 
-## 8.2- Key Fiscal Elements in Selected West African Countries
+## 9.2- Key Fiscal Elements in Selected West African Countries
 
-### 8.2.1- Ad Valorem Royalty
+### 9.2.1- Ad Valorem Royalty
 
 At the first production of oil or gas, a portion is directly allocated to the resource-owning State before any cost deduction or profit sharing. This is known as a royalty.
 
@@ -48,7 +48,7 @@ Royalties may be paid in kind or in cash.
 
 Post-royalty revenue is defined as:
 
-<div class="book-formula" data-equation-label="8.1" role="img" aria-label="Post royalty revenue equals gross revenue minus royalty">
+<div class="book-formula" data-equation-label="9.1" role="img" aria-label="Post royalty revenue equals gross revenue minus royalty">
   <span class="book-formula-line" aria-hidden="true">Post-Royalty Revenue = Gross Revenue &minus; Royalty</span>
 </div>
 
@@ -135,7 +135,7 @@ Côte d’Ivoire’s absence of royalty improves investment attractiveness.
 
 Benin’s offshore royalty structure is less competitive than Ghana, Senegal, Côte d’Ivoire and Nigeria.
 
-### 8.2.2- Recoverable Petroleum Costs
+### 9.2.2- Recoverable Petroleum Costs
 
 Recoverable costs include exploration, development and operating expenditures incurred by contractors, including depreciation and amortisation.
 
@@ -159,12 +159,12 @@ Ghana applies a linear recovery model of 20% per year over five years, independe
 
 Figure 71 Comparison of cost recovery limits under selected West African petroleum fiscal regimes, illustrating variations by country and development environment.
 
-### 8.2.3- Profit Oil
+### 9.2.3- Profit Oil
 
 Profit oil is the portion remaining after deduction of royalty and recoverable costs, shared between the State and contractor.
 
 <!-- parity-ignore:start -->
-<section class="formula-group formula-group--split formula-group--oil-profit" data-equation-label="8.2" aria-label="Profit oil formulas">
+<section class="formula-group formula-group--split formula-group--oil-profit" data-equation-label="9.2" aria-label="Profit oil formulas">
   <div class="formula-split-entry">
     <div class="book-formula" role="img" aria-label="Profit oil equals post royalty revenue minus recoverable costs">
       <span class="book-formula-line" aria-hidden="true">Profit Oil = Post-Royalty Revenue &minus; Recoverable Costs</span>
@@ -202,7 +202,7 @@ Two main approaches exist:
 Common formulations include:
 
 <!-- parity-ignore:start -->
-<section class="formula-panel formula-panel--r-factor" data-equation-label="8.3" aria-label="R-factor calculation formulas">
+<section class="formula-panel formula-panel--r-factor" data-equation-label="9.3" aria-label="R-factor calculation formulas">
   <div class="book-formula book-formula--panel-row" data-formula-label="a)" role="img" aria-label="R equals cumulative revenue over cumulative cost">
     <span class="book-formula-line" aria-hidden="true">R = cumulative revenue / cumulative cost</span>
   </div>
@@ -465,7 +465,7 @@ As R increases, project profitability increases, and the State share typically r
 - Senegal: R-factor (40-60%)
 - Niger: R-factor (40-60%)
 
-### 8.2.4- Corporate Income Tax
+### 9.2.4- Corporate Income Tax
 
 - Benin & Niger: tax embedded in State profit oil
 - Nigeria, Ghana, Senegal: direct corporate taxation applies
@@ -523,7 +523,7 @@ Nigeria applies the highest corporate tax rates in the region.
 - Senegal: 30%
 - Niger: included in State share
 
-### 8.2.5- State Participation
+### 9.2.5- State Participation
 
 State participation is a key mechanism for increasing national capture of petroleum rent.
 
@@ -585,13 +585,13 @@ Benefits include:
 </tbody>
 </table>
 
-## 8.3- Comparative Analysis of Fiscal Regimes
+## 9.3- Comparative Analysis of Fiscal Regimes
 
-To align with the country coverage you've developed in Section 8.5, I would expand 8.3 Comparative Analysis of Fiscal Regimes to include all major West African jurisdictions using a consistent format.
+To align with the country coverage you've developed in Section 9.5, I would expand 9.3 Comparative Analysis of Fiscal Regimes to include all major West African jurisdictions using a consistent format.
 
-- 8.3. Comparative Analysis of Fiscal Regimes
+- 9.3. Comparative Analysis of Fiscal Regimes
 
-**8.3.1. Nigeria**
+**9.3.1. Nigeria**
 
 Nigeria's fiscal system is one of the most complex in the region, reflecting decades of progressive evolution. The Petroleum Industry Act (PIA) of 2021 consolidated many of these elements, introducing a dual fiscal structure comprising a Hydrocarbon Tax and Companies Income Tax, while also revising the royalty framework.
 
@@ -599,97 +599,97 @@ Royalties now vary according to terrain and production levels. Deepwater project
 
 Nigeria offers significant resource potential and substantial growth opportunities; however, these advantages are offset by fiscal complexity and operational risks.
 
-**8.3.2. Ghana**
+**9.3.2. Ghana**
 
 Ghana's fiscal regime combines royalties, petroleum income tax, State participation, and negotiated contractual provisions. The framework is widely regarded as one of the most transparent and balanced in Africa, providing investors with fiscal stability while ensuring meaningful government participation in petroleum revenues.
 
 The State participates through the Ghana National Petroleum Corporation (GNPC), which typically holds a carried interest and may acquire additional participating interests. Ghana's relatively stable political environment and predictable regulatory framework have contributed significantly to the success of major offshore developments such as Jubilee, TEN, and Sankofa.
 
-**8.3.3. Côte d'Ivoire**
+**9.3.3. Côte d'Ivoire**
 
 Côte d'Ivoire utilises a PSC-based fiscal system designed to encourage exploration while maintaining a competitive government take. The country has successfully attracted international investment through a combination of attractive fiscal terms, regulatory stability, and significant offshore prospectivity.
 
 Recent deepwater discoveries have strengthened investor confidence and demonstrated the effectiveness of the country's fiscal framework in promoting exploration and development activities.
 
-**8.3.4. Senegal**
+**9.3.4. Senegal**
 
 Senegal's fiscal framework is centred on Production Sharing Contracts supported by taxation and State participation. The regime has gained international attention following major offshore oil and gas discoveries within the MSGBC Basin.
 
 The fiscal system seeks to balance investor returns with long-term national benefits. Ongoing developments such as Sangomar and Greater Tortue Ahmeyim have tested the practical implementation of the country's fiscal framework and regulatory institutions.
 
-**8.3.5. Mauritania**
+**9.3.5. Mauritania**
 
 Mauritania employs a PSC-based fiscal regime that has evolved to support large-scale offshore gas developments. The country's emergence as a major gas producer through the Greater Tortue Ahmeyim project has increased the importance of fiscal stability and investor confidence.
 
 The regime remains relatively competitive, particularly for offshore frontier exploration, reflecting the technical and commercial risks associated with deepwater developments.
 
-**8.3.6. Niger**
+**9.3.6. Niger**
 
 Niger's fiscal framework combines PSC arrangements, royalties, taxation, and State participation. Unlike many West African producers, Niger's petroleum sector is dominated by onshore developments within the Agadem Basin.
 
 The fiscal regime has supported the transition from domestic-focused production to export-oriented operations following the construction of the Niger-Benin Export Pipeline. Nevertheless, logistical constraints and security considerations continue to influence project economics.
 
-**8.3.7. Benin**
+**9.3.7. Benin**
 
 Benin operates a PSC-based fiscal system designed to attract investment into both offshore and onshore frontier acreage. Fiscal terms are generally considered competitive, reflecting the country's limited production history and relatively high exploration risk.
 
 Future fiscal competitiveness will depend largely on the ability to attract sustained exploration activity and demonstrate commercial hydrocarbon potential.
 
-**8.3.8. Liberia**
+**9.3.8. Liberia**
 
 Liberia's PSC framework is designed to encourage investment in frontier offshore exploration along the West African Transform Margin. Fiscal terms are generally attractive compared with more mature producing jurisdictions, reflecting the absence of commercial production and the higher risks associated with deepwater exploration.
 
 The government seeks to balance investor incentives with future revenue generation should commercial discoveries be developed.
 
-**8.3.9. Sierra Leone**
+**9.3.9. Sierra Leone**
 
 Sierra Leone employs a PSC-based fiscal regime aimed at promoting offshore exploration and development. Although several hydrocarbon discoveries have been made, commercial production has yet to commence.
 
 The fiscal framework remains competitive by regional standards and is intended to offset the technical and financial challenges associated with deepwater exploration projects.
 
-**8.3.10. Guinea**
+**9.3.10. Guinea**
 
 Guinea maintains a PSC-based fiscal framework focused on attracting investment into underexplored offshore areas. The country has adopted relatively investor-friendly terms to compensate for geological uncertainty and limited exploration activity.
 
 As exploration progresses, the fiscal regime may evolve to reflect changes in resource potential and industry interest.
 
-**8.3.11. Guinea-Bissau**
+**9.3.11. Guinea-Bissau**
 
 Guinea-Bissau operates a PSC-based system designed to attract exploration investment within the MSGBC Basin. Given the country's frontier status and absence of commercial production, fiscal terms are generally favourable to investors.
 
 The principal challenge remains converting geological potential into sustained exploration activity.
 
-**8.3.12. The Gambia**
+**9.3.12. The Gambia**
 
 The Gambia's fiscal framework follows the PSC model commonly used throughout West Africa. The regime is intended to encourage offshore exploration within the highly prospective MSGBC Basin.
 
 Competitive fiscal terms have been adopted to attract international operators despite the country's limited petroleum sector infrastructure and exploration history.
 
-**8.3.13. Togo**
+**9.3.13. Togo**
 
 Togo utilises a PSC-based fiscal system designed to promote exploration within the Dahomey Basin. The country's fiscal terms are generally structured to compensate for frontier exploration risk while ensuring future government participation in petroleum revenues.
 
 Limited exploration activity means that the effectiveness of the regime remains largely untested.
 
-**8.3.14. Burkina Faso**
+**9.3.14. Burkina Faso**
 
 Burkina Faso has established a fiscal framework based on PSC principles despite not yet achieving commercial hydrocarbon production. Fiscal terms are designed to attract investment into frontier inland basins where geological uncertainty remains high.
 
 The country's competitiveness is influenced by both exploration risk and broader security considerations.
 
-**8.3.15. Mali**
+**9.3.15. Mali**
 
 Mali's fiscal regime similarly focuses on encouraging frontier exploration through investor-friendly PSC arrangements. Large underexplored basins such as the Taoudeni Basin offer potential long-term opportunities, although significant geological, infrastructure, and security challenges remain.
 
 The fiscal framework reflects the need to attract high-risk exploration capital.
 
-**8.3.16. Cabo Verde**
+**9.3.16. Cabo Verde**
 
 Cabo Verde employs a PSC-based fiscal system designed to encourage offshore frontier exploration. Given the absence of commercial discoveries and the technical challenges associated with deepwater exploration, fiscal terms are generally structured to maximise investor attractiveness.
 
 The country's future competitiveness will depend on successful exploration outcomes and improved understanding of its offshore petroleum systems.
 
-**8.3.17. Regional Fiscal Comparison**
+**9.3.17. Regional Fiscal Comparison**
 
 Across West Africa, fiscal regimes generally converge around Production Sharing Contract structures supplemented by taxation, royalties, and varying levels of State participation. Established producers such as Nigeria, Ghana, Côte d'Ivoire, Senegal, and Mauritania typically impose higher government participation while benefiting from proven petroleum systems and established infrastructure.
 
@@ -849,7 +849,7 @@ Nigeria’s PIA royalty framework varies by terrain and production, with lower d
 
 Sierra Leone’s recent licensing terms have included 10% oil royalty, 5% gas royalty, and 25% corporate income tax, although broader fiscal terms remain contract-dependent.
 
-## 8.4- State-Contractor Cash Flow Analysis
+## 9.4- State-Contractor Cash Flow Analysis
 
 A simplified 100-barrel reference model is used to illustrate how petroleum revenues may be distributed between the State and the contractor under different West African fiscal regimes. The model is not intended to reproduce the full economics of any specific petroleum contract. Instead, it provides a practical comparative framework for understanding how royalties, cost recovery limits, profit oil sharing, corporate income tax, and State participation affect the division of petroleum value.
 
@@ -952,7 +952,7 @@ Figure 79 Distribution of Cash Flow Between the Contractor and the State for Eve
 - Senegal: Contractor 69.34 / State 30.66
 - Niger: Contractor 73.27 / State 26.73
 
-## 8.5- Country Fiscal Regime Summaries in West Africa
+## 9.5- Country Fiscal Regime Summaries in West Africa
 
 The fiscal regime is one of the most important determinants of petroleum investment attractiveness. It defines how economic value generated from petroleum resources is shared between the resource-owning State and the investor.
 
@@ -979,7 +979,7 @@ While individual petroleum contracts may differ, the principal fiscal elements c
 
 The following country summaries provide an overview of the principal fiscal features commonly applied across West Africa.
 
-### 8.5.1- Nigeria
+### 9.5.1- Nigeria
 
 **Fiscal System**
 
@@ -1023,7 +1023,7 @@ Nigeria serves as the benchmark petroleum jurisdiction for West Africa and remai
 
 Nigeria also provides important lessons regarding governance, fiscal stability, host-community relations, environmental management, and resource revenue administration. For many emerging petroleum-producing countries in West Africa, Nigeria represents both a model of petroleum sector development and a source of valuable operational and policy experience.
 
-### 8.5.2- Ghana
+### 9.5.2- Ghana
 
 **Fiscal System**
 
@@ -1064,7 +1064,7 @@ Ghana is frequently regarded as one of West Africa's petroleum success stories. 
 
 The country's approach to petroleum governance, revenue management, local content development, and regulatory oversight is often cited as a model for balancing resource development with economic sustainability. Ghana also highlights the growing importance of deepwater exploration within the Gulf of Guinea, where advanced offshore technologies continue to unlock significant hydrocarbon resources.
 
-### 8.5.3- Côte d'Ivoire
+### 9.5.3- Côte d'Ivoire
 
 **Fiscal System**
 
@@ -1108,7 +1108,7 @@ Côte d'Ivoire has emerged as one of the most important petroleum growth stories
 
 The success of deepwater exploration programmes has strengthened Côte d'Ivoire's position alongside Ghana and Nigeria as a major offshore petroleum province. The country's experience illustrates how sustained exploration investment, effective regulation, and attractive PSC terms can transform a mature petroleum sector into a rapidly expanding hydrocarbon province. For many emerging West African producers, Côte d'Ivoire provides an important example of how regulatory stability and geological opportunity can combine to attract significant international investment and drive petroleum sector growth.
 
-### 8.5.4- Senegal
+### 9.5.4- Senegal
 
 **Fiscal System**
 
@@ -1154,7 +1154,7 @@ The country's experience highlights the importance of high-quality seismic imagi
 
 For emerging petroleum-producing countries across Africa, Senegal provides an important example of how frontier exploration success can rapidly evolve into large-scale oil production, LNG exports, infrastructure development, and long-term economic opportunity.
 
-### 8.5.5- Mauritania
+### 9.5.5- Mauritania
 
 **Fiscal System**
 
@@ -1200,7 +1200,7 @@ The development of the GTA project demonstrates the value of cross-border cooper
 
 For the wider West African region, Mauritania provides an important case study in frontier basin development, international partnership, and the transition from exploration success to large-scale commercial production and LNG exports.
 
-### 8.5.6- Niger
+### 9.5.6- Niger
 
 **Fiscal System**
 
@@ -1245,7 +1245,7 @@ The development of the Agadem Basin and the construction of the export pipeline 
 
 For emerging petroleum-producing nations, Niger demonstrates how phased exploration, infrastructure development, and export market access can transform a frontier basin into a significant contributor to national economic development and energy exports.
 
-### 8.5.7- Benin
+### 9.5.7- Benin
 
 **Fiscal System**
 
@@ -1287,7 +1287,7 @@ Benin illustrates the significant untapped petroleum potential that remains with
 
 Benin's experience highlights the importance of sustained exploration investment, modern seismic acquisition, and regulatory stability in attracting industry interest to frontier areas. As operators continue to seek opportunities beyond mature producing provinces, Benin remains a potentially attractive exploration destination within the Gulf of Guinea and an important component of West Africa's broader petroleum landscape.
 
-### 8.5.8- Liberia
+### 9.5.8- Liberia
 
 **Fiscal System**
 
@@ -1333,7 +1333,7 @@ The Liberian experience highlights a common challenge across many frontier offsh
 
 For West Africa, Liberia represents an important frontier exploration province with substantial untapped potential. As exploration technologies continue to improve and understanding of transform margin petroleum systems advances, Liberia remains well positioned to contribute to the future growth of the region's offshore petroleum industry.
 
-### 8.5.9- Sierra Leone
+### 9.5.9- Sierra Leone
 
 **Fiscal System**
 
@@ -1379,7 +1379,7 @@ The country's offshore sector forms part of the broader West African Transform M
 
 For West Africa, Sierra Leone highlights both the opportunities and challenges associated with frontier deepwater exploration. The country remains an important exploration destination with significant long-term potential to contribute to the region's future hydrocarbon production and reserves growth.
 
-### 8.5.10- Guinea
+### 9.5.10- Guinea
 
 **Fiscal System**
 
@@ -1425,7 +1425,7 @@ The country's experience demonstrates that geological prospectivity alone is ins
 
 For West Africa as a whole, Guinea represents an important frontier exploration province that could play a future role in expanding the region's hydrocarbon resource base. As exploration activity continues to spread across the Atlantic Margin and the MSGBC Basin, Guinea remains a potentially attractive long-term destination for offshore exploration investment.
 
-### 8.5.11- Guinea-Bissau
+### 9.5.11- Guinea-Bissau
 
 **Fiscal System**
 
@@ -1471,7 +1471,7 @@ The country's experience highlights how frontier exploration opportunities often
 
 For West Africa, Guinea-Bissau represents an important frontier jurisdiction where future discoveries could further expand the resource base of the MSGBC Basin and reinforce the region's growing importance within the global oil and gas industry. The country remains a classic frontier exploration opportunity with substantial geological potential but limited exploration maturity.
 
-### 8.5.12- The Gambia
+### 9.5.12- The Gambia
 
 **Fiscal System**
 
@@ -1517,7 +1517,7 @@ The Gambian experience highlights how major discoveries in one part of a basin c
 
 For West Africa, The Gambia demonstrates the importance of regional petroleum systems that extend across national boundaries and the role that frontier exploration can play in unlocking new hydrocarbon provinces capable of reshaping the region's energy landscape.
 
-### 8.5.13- Togo
+### 9.5.13- Togo
 
 **Fiscal System**
 
@@ -1563,7 +1563,7 @@ The country's experience demonstrates how geological prospectivity alone does no
 
 For the wider West African region, Togo represents an important frontier exploration province where future discoveries could contribute to expanding the petroleum resource base of the Gulf of Guinea and further strengthen the region's position as a major hydrocarbon-producing area.
 
-### 8.5.14- Burkina Faso
+### 9.5.14- Burkina Faso
 
 **Fiscal System**
 
@@ -1608,7 +1608,7 @@ The country's experience demonstrates that many West African nations continue to
 
 For the broader region, Burkina Faso highlights both the opportunities and challenges associated with developing petroleum resources in landlocked frontier environments where geological knowledge, infrastructure, and investment remain limited.
 
-### 8.5.15- Mali
+### 9.5.15- Mali
 
 **Fiscal System**
 
@@ -1654,7 +1654,7 @@ Mali's experience highlights the importance of regional geological understanding
 
 For West Africa as a whole, Mali remains an important frontier exploration territory where future discoveries could significantly expand the region's petroleum resource base beyond the established offshore provinces of the Gulf of Guinea and the MSGBC Basin.
 
-### 8.5.16- Cabo Verde
+### 9.5.16- Cabo Verde
 
 **Fiscal System**
 
@@ -1699,7 +1699,7 @@ The country's offshore sector illustrates the continuing frontier opportunities 
 
 For West Africa as a whole, Cabo Verde highlights the substantial unexplored potential that remains beyond the region's established producing provinces and demonstrates the importance of long-term exploration investment in identifying the next generation of petroleum opportunities.
 
-## 8.6- Comparative Overview of Fiscal Systems
+## 9.6- Comparative Overview of Fiscal Systems
 
 <table>
 <caption><p>Table 33 Overview of Fiscal Systems</p></caption>
@@ -1823,9 +1823,9 @@ For West Africa as a whole, Cabo Verde highlights the substantial unexplored pot
 - Niger, Benin, Burkina Faso, and Mali offer frontier opportunities but face challenges related to infrastructure, market access, security, or geological uncertainty.
 - Cabo Verde, Guinea-Bissau, The Gambia, Guinea, Sierra Leone, Liberia, and Togo are frontier exploration jurisdictions where fiscal terms are generally designed to be attractive in order to offset higher geological and commercial risk.
 
-## 8.7- Interpretation and Analysis
+## 9.7- Interpretation and Analysis
 
-### 8.7.1- Net Cash Flows and Investment Attractiveness
+### 9.7.1- Net Cash Flows and Investment Attractiveness
 
 Nigeria's fiscal regime provides the highest petroleum rent (net cash flow) to the State, exceeding 86%. This is primarily attributable to the State's 60% participation through its National Oil Company, NNPC, and the 50% corporate income tax applicable to petroleum operations. Despite this apparently high State take, Nigeria remains attractive to foreign investors because of the exceptional prospectivity of its sedimentary basins. Nigeria's policy of participating financially in petroleum operations is supported by its substantial proven resource base and its strategy of capturing a larger share of project profits through State participation.
 
@@ -1848,7 +1848,7 @@ Consequently, the absence of new petroleum contracts signed in Benin during the 
 
 Given the limited understanding of Benin's petroleum potential, it would be advisable to address those fiscal elements that reduce the attractiveness of the regime, including various non-profit-based charges such as bonuses, legal and financial assistance fees, fixed approval fees for subcontractors, and other upfront payments. Reforming these provisions could make Benin's Petroleum Code more competitive and investment-friendly.
 
-### 8.7.2- Overall State-Contractor Cash Flows
+### 9.7.2- Overall State-Contractor Cash Flows
 
 The petroleum rent generated under the fiscal regimes analysed represents an apparent value that is highly dependent upon the State's ability to monitor and control petroleum costs incurred by contractors. These benefits are only realised if governments effectively verify and manage the costs claimed by contractors. In many African countries, weaknesses in institutional capacity often limit effective oversight of petroleum expenditures.
 
@@ -1860,7 +1860,7 @@ A detailed examination of the results indicates that Ghana's fiscal regime offer
 
 Côte d'Ivoire has the least advantageous fiscal regime for the State among the countries examined. During the initial years of production, the State receives less than 15 barrels out of every 100 barrels produced (14.65 barrels). Benin, Niger and Senegal follow, receiving approximately 24.38, 26.73 and 30.66 barrels respectively per 100 barrels produced.
 
-## 8.8- Suggestions for Maximising State Petroleum Rent
+## 9.8- Suggestions for Maximising State Petroleum Rent
 
 Based on the analysis presented above, two key fiscal parameters can serve as effective levers for increasing petroleum rent in West African countries when properly managed and negotiated within petroleum contracts:
 
@@ -1869,7 +1869,7 @@ Based on the analysis presented above, two key fiscal parameters can serve as ef
 
 Governments must seek an appropriate balance between maintaining investment attractiveness, taking into account the financial risks inherent in petroleum operations, and maximising the value derived from their petroleum resources.
 
-### 8.8.1- Recoverable Petroleum Costs
+### 9.8.1- Recoverable Petroleum Costs
 
 The mechanism used to recover petroleum costs, generally based on a cost recovery limit (cost stop), has traditionally been viewed as an important incentive for international petroleum companies, particularly when the limit is set at a high level. However, inadequate control of this mechanism can significantly reduce the petroleum rent available to governments by limiting their ability to benefit from production during the early years of a project. Cost recovery provisions also directly influence the profit oil sharing mechanism.
 
@@ -1879,7 +1879,7 @@ Accordingly, governments should consider:
 - Reviewing excessively high cost recovery limits contained within existing fiscal regimes, as these limits are difficult to monitor effectively and often reduce the State's share of petroleum revenues.
 - Developing specialist expertise in petroleum cost control, auditing and cost management, while ensuring rigorous oversight of exploration, development and production expenditures.
 
-### 8.8.2- State Participation
+### 9.8.2- State Participation
 
 State participation in petroleum development and production projects represents an important mechanism for increasing the government's share of project benefits. It also promotes investor confidence and demonstrates long-term commitment to the sector, in a manner comparable to the role played by political stability.
 
@@ -1889,13 +1889,13 @@ Governments should therefore seek greater participation in petroleum projects, p
 - The establishment of an African or regional petroleum development bank, with African governments, National Oil Companies and domestic private-sector participants as the principal shareholders.
 - Increased participation through locally owned private companies.
 
-## 8.9- West African Perspective: Fiscal Regimes Across West Africa
+## 9.9- West African Perspective: Fiscal Regimes Across West Africa
 
 Fiscal regimes play a central role in determining the attractiveness, competitiveness, and long-term sustainability of petroleum investments in West Africa. Governments seek to maximise revenues from their hydrocarbon resources while ensuring that projects remain economically viable and attractive to investors. The region exhibits a wide range of fiscal systems, reflecting differing levels of resource maturity, exploration risk, political priorities, and economic development objectives.
 
 Over time, many West African countries have modified their petroleum fiscal frameworks to balance government revenue objectives with the need to attract exploration and development capital in an increasingly competitive global investment environment.
 
-### 8.9.1- Regional Examples
+### 9.9.1- Regional Examples
 
 West Africa contains examples of nearly every major petroleum fiscal model used globally, including:
 
@@ -1909,7 +1909,7 @@ Most modern petroleum agreements in the region combine several fiscal instrument
 
 The diversity of fiscal approaches reflects the differing geological risks, levels of basin maturity, and national development objectives across the region.
 
-### 8.9.2- Key Petroleum-Producing Countries and Fiscal Approaches
+### 9.9.2- Key Petroleum-Producing Countries and Fiscal Approaches
 
 **Nigeria**
 
@@ -1961,7 +1961,7 @@ The framework was designed to attract investment into frontier and emerging petr
 
 Mauritania has adopted fiscal terms aimed at encouraging investment in offshore gas developments, particularly within deepwater frontier areas where development costs are substantial and project economics are highly sensitive to fiscal conditions.
 
-### 8.9.3- Basin-Specific Fiscal Considerations
+### 9.9.3- Basin-Specific Fiscal Considerations
 
 **Mature Producing Basins**
 
@@ -2007,7 +2007,7 @@ Deepwater projects throughout the Gulf of Guinea generally require:
 
 Fiscal regimes applicable to these projects often include mechanisms designed to improve project economics while preserving long-term government revenues.
 
-### 8.9.4- Country Case Studies
+### 9.9.4- Country Case Studies
 
 **Nigeria: Maximising State Revenue from Mature Resources**
 
@@ -2027,7 +2027,7 @@ Côte d'Ivoire's recent exploration success has been supported by a fiscal frame
 
 The fiscal frameworks adopted by Senegal and Mauritania have been designed to support large-scale offshore developments while maintaining acceptable returns for both investors and governments. The development of the Greater Tortue Ahmeyim project highlights the importance of aligning fiscal terms with project economics in high-cost offshore environments.
 
-### 8.9.5- Operational Lessons from West Africa
+### 9.9.5- Operational Lessons from West Africa
 
 **Fiscal Stability Is Often More Important Than Fiscal Generosity**
 
@@ -2053,11 +2053,11 @@ Overly complex fiscal systems may increase administrative burdens, reduce transp
 
 Periods of low commodity prices frequently encourage governments to improve fiscal competitiveness, whereas periods of high prices may increase pressure for higher government take. Successful fiscal systems remain resilient throughout commodity price cycles.
 
-### 8.9.6- Key Takeaways
+### 9.9.6- Key Takeaways
 
 West African petroleum fiscal regimes reflect a balance between attracting investment and maximising national benefits from hydrocarbon resources. Countries such as Nigeria, Ghana, Côte d'Ivoire, Senegal, and Mauritania have adopted different approaches based on their geological maturity, economic objectives, and investment priorities. The regional experience demonstrates that fiscal stability, transparency, competitiveness, and alignment with project economics are essential for sustaining exploration activity and long-term petroleum sector growth. Effective fiscal regimes must generate fair returns for both investors and host governments while supporting the continued development of the region's petroleum resources.
 
-## 8.10- Conclusion
+## 9.10- Conclusion
 
 Fiscal regimes across West Africa reflect varying stages of petroleum sector maturity, geological prospectivity, political priorities and economic development objectives. Mature producing countries such as Nigeria and Angola generally operate more complex fiscal systems designed to maximise government revenue from established resources, whereas frontier jurisdictions such as Guinea-Bissau, Liberia, Sierra Leone and The Gambia often offer more attractive fiscal terms to compensate investors for higher geological risk and encourage exploration activity.
 

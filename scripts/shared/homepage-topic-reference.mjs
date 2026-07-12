@@ -21,7 +21,7 @@ const HOMEPAGE_TOPIC_REFERENCE_ITEMS = [
     description: {
       en: "Royalties, taxes, profit oil, state participation and fiscal frameworks.",
     },
-    href: "book/chapters/chapter-08-west-african-fiscal-regimes.html",
+    href: "book/chapters/chapter-09-west-african-fiscal-regimes.html",
   },
   {
     key: "national-oil-companies",
@@ -54,7 +54,7 @@ const HOMEPAGE_TOPIC_REFERENCE_ITEMS = [
     description: {
       en: "Institutions, licensing systems, policies and regulatory frameworks.",
     },
-    href: "book/chapters/chapter-09-socio-political-determinants.html",
+    href: "book/chapters/chapter-10-socio-political-determinants.html",
   },
   {
     key: "country-analysis",

@@ -302,7 +302,7 @@ class ThemeCustomCssTest(unittest.TestCase):
     def test_browser_runtime_smoke_config_covers_high_risk_outline_pages(self) -> None:
         browser_checker_config = BROWSER_RUNTIME_CONFIG_PATH.read_text(encoding="utf-8")
 
-        self.assertIn("chapter-09-socio-political-determinants.html", browser_checker_config)
+        self.assertIn("chapter-10-socio-political-determinants.html", browser_checker_config)
         self.assertIn("chapter-11-general-conclusion.html", browser_checker_config)
         self.assertIn("chapter-05-key-socio-political-determinants-of-oil-sector-performance.html", browser_checker_config)
         self.assertIn('"chapters/general-conclusion.html"', browser_checker_config)

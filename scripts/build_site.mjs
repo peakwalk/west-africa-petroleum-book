@@ -159,6 +159,7 @@ function main() {
   const editions = listSiteEditions();
   editions.forEach(buildBookEdition);
   editions.forEach(injectBookSeo);
+  runNodeScript("scripts/generate_legacy_book_redirects.mjs", [publicDir]);
   runNodeScript("scripts/generate_book_sitemap.mjs", [publicDir]);
   runNodeScript("scripts/generate_site_robots.mjs", [publicDir]);
 }

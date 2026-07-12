@@ -43,7 +43,7 @@ const sentinelPages = [
   },
   {
     locale: "en",
-    pageKey: "chapters/chapter-09-socio-political-determinants.html",
+    pageKey: "chapters/chapter-10-socio-political-determinants.html",
     forbiddenClasses: ["book-outline-empty", "book-page-aux-index", "book-page-front-matter-outline-rail"],
     requireReaderShell: true,
   },

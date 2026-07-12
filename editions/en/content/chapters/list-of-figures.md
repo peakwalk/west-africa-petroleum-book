@@ -95,26 +95,26 @@
   </section>
 
   <section class="reference-index-group">
-    <h2>Chapter 7: Petroleum Fiscal Regimes</h2>
+    <h2>Chapter 8: Petroleum Fiscal Regimes</h2>
     <ol class="reference-index-list">
-      <li><a class="reference-index-link" href="chapter-07-petroleum-fiscal-regimes.html#figure-68">Figure 68: The economic value of hydrocarbon resources is primarily determined by recoverability, market conditions, and the fiscal regime governing petroleum exploration, development, and production activities.</a></li>
-      <li><a class="reference-index-link" href="chapter-07-petroleum-fiscal-regimes.html#figure-69">Figure 69: Illustration of how production revenues are allocated between cost recovery, contractor entitlement, and government take under a typical petroleum fiscal regime.</a></li>
-      <li><a class="reference-index-link" href="chapter-07-petroleum-fiscal-regimes.html#figure-70">Figure 70: Overview of the principal petroleum fiscal regimes used worldwide, including concessionary systems, service contracts, and production sharing contracts, together with examples of countries where they are applied.</a></li>
+      <li><a class="reference-index-link" href="chapter-08-petroleum-fiscal-regimes.html#figure-68">Figure 68: The economic value of hydrocarbon resources is primarily determined by recoverability, market conditions, and the fiscal regime governing petroleum exploration, development, and production activities.</a></li>
+      <li><a class="reference-index-link" href="chapter-08-petroleum-fiscal-regimes.html#figure-69">Figure 69: Illustration of how production revenues are allocated between cost recovery, contractor entitlement, and government take under a typical petroleum fiscal regime.</a></li>
+      <li><a class="reference-index-link" href="chapter-08-petroleum-fiscal-regimes.html#figure-70">Figure 70: Overview of the principal petroleum fiscal regimes used worldwide, including concessionary systems, service contracts, and production sharing contracts, together with examples of countries where they are applied.</a></li>
     </ol>
   </section>
 
   <section class="reference-index-group">
-    <h2>Chapter 8: West African Fiscal Regimes</h2>
+    <h2>Chapter 9: West African Fiscal Regimes</h2>
     <ol class="reference-index-list">
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#figure-71">Figure 71: Comparison of cost recovery limits under selected West African petroleum fiscal regimes, illustrating variations by country and development environment.</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#figure-72">Figure 72: Simplified Illustration of State and Contractor Revenue Sharing under Fiscal Regime in Benin.</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#figure-73">Figure 73: Simplified Illustration of State and Contractor Revenue Sharing under Fiscal Regime in Ghana.</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#figure-74">Figure 74: Simplified Illustration of State and Contractor Revenue Sharing under Fiscal Regime in Côte d’Ivoire.</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#figure-75">Figure 75: Simplified Illustration of State and Contractor Revenue Sharing under Fiscal Regime in Nigeria.</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#figure-76">Figure 76: Simplified Illustration of State and Contractor Revenue Sharing under Fiscal Regime in Senegal.</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#figure-77">Figure 77: Simplified Illustration of State and Contractor Revenue Sharing under Fiscal Regime in Niger.</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#figure-78">Figure 78: Distribution of Net Profit Between the Contractor and the State Under Selected West African Petroleum Fiscal Regimes.</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#figure-79">Figure 79: Distribution of Cash Flow Between the Contractor and the State for Every 100 Barrels of Oil Produced.</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#figure-71">Figure 71: Comparison of cost recovery limits under selected West African petroleum fiscal regimes, illustrating variations by country and development environment.</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#figure-72">Figure 72: Simplified Illustration of State and Contractor Revenue Sharing under Fiscal Regime in Benin.</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#figure-73">Figure 73: Simplified Illustration of State and Contractor Revenue Sharing under Fiscal Regime in Ghana.</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#figure-74">Figure 74: Simplified Illustration of State and Contractor Revenue Sharing under Fiscal Regime in Côte d’Ivoire.</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#figure-75">Figure 75: Simplified Illustration of State and Contractor Revenue Sharing under Fiscal Regime in Nigeria.</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#figure-76">Figure 76: Simplified Illustration of State and Contractor Revenue Sharing under Fiscal Regime in Senegal.</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#figure-77">Figure 77: Simplified Illustration of State and Contractor Revenue Sharing under Fiscal Regime in Niger.</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#figure-78">Figure 78: Distribution of Net Profit Between the Contractor and the State Under Selected West African Petroleum Fiscal Regimes.</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#figure-79">Figure 79: Distribution of Cash Flow Between the Contractor and the State for Every 100 Barrels of Oil Produced.</a></li>
     </ol>
   </section>
 

@@ -1,4 +1,4 @@
-# Chapter 7: Petroleum Fiscal Regimes
+# Chapter 8: Petroleum Fiscal Regimes
 
 Three main factors determine the economic value of a State’s petroleum resources (Figure 21). These are:
 
@@ -40,7 +40,7 @@ Figure 69 illustrates the typical distribution of revenues generated from petrol
 
 Figure 69 Illustration of how production revenues are allocated between cost recovery, contractor entitlement, and government take under a typical petroleum fiscal regime.
 
-## 7.1- Fiscal System or Regime: Conceptual Foundations
+## 8.1- Fiscal System or Regime: Conceptual Foundations
 
 The fiscal regime is the most important resource management tool available to States. It is therefore essential for all managers and decision-makers in the petroleum sector to understand its basic principles, types, advantages, and disadvantages.
 
@@ -76,7 +76,7 @@ Countries (examples):
 - Angola, Indonesia, Côte d’Ivoire, Nigeria, Niger, Cameroon, Benin, Senegal…
 - Argentina, Brazil, Venezuela, Philippines…
 
-## 7.2- The Concessionary System
+## 8.2- The Concessionary System
 
 The concession system, also known as a licence or lease system, is the oldest and most widely used petroleum fiscal regime. It is typically characterised by royalty-and-tax-based arrangements.
 
@@ -89,11 +89,11 @@ Key characteristics include:
 - The company has the right to export hydrocarbons;
 - The company owns the equipment.
 
-## 7.3- The Contractual System
+## 8.3- The Contractual System
 
 This system comprises two main categories: Production Sharing Contracts (PSC) and Service Contracts.
 
-### 7.3.1- Production Sharing Contract (PSC)
+### 8.3.1- Production Sharing Contract (PSC)
 
 The Production Sharing Contract (PSC), also referred to as a Production Sharing Agreement (PSA), is the most commonly used petroleum contract in Africa. It is fundamentally based on three core elements: recoverable costs, profit oil sharing between the Government and the contractor, and profit taxation.
 
@@ -124,7 +124,7 @@ Key characteristics of PSCs:
 - The State retains ownership of equipment;
 - The State retains ownership of the hydrocarbons at all times.
 
-### 7.3.2- Service Contracts
+### 8.3.2- Service Contracts
 
 Service contracts are divided into pure service contracts and risk service contracts.
 
@@ -145,13 +145,13 @@ In this model:
 
 Risk service contracts are, in many respects, similar to production sharing contracts, except for the payment mechanism (cash versus in-kind), while the same economic principles govern both structures.
 
-## 7.4- Contractual Frameworks in West Africa
+## 8.4- Contractual Frameworks in West Africa
 
 Production Sharing Contracts (PSCs) are the dominant model in West Africa. They allow governments to retain ownership of resources while relying on private companies for capital and technical expertise. Under PSCs, contractors bear exploration and development risk, recover costs from production, and then share remaining profits with the State.
 
 Concession systems are still used in certain countries, particularly those influenced by Anglo-Saxon legal traditions or with more mature petroleum sectors. Service contracts are less common but exist in specific cases. In practice, many countries adopt hybrid approaches combining elements of different systems to meet project-specific or policy objectives.
 
-## 7.5- Structure of Petroleum Fiscal Systems in West Africa
+## 8.5- Structure of Petroleum Fiscal Systems in West Africa
 
 Most fiscal systems in West Africa are based on a combination of instruments, each serving a specific function. Royalties generate early revenue streams but can be regressive, particularly for marginal fields. Cost recovery mechanisms, especially in PSCs, allow investors to recover expenditures, although these are usually capped to ensure the State begins receiving petroleum revenues within a reasonable timeframe.
 
@@ -159,13 +159,13 @@ Profit-based taxes, such as corporate income tax or capital gains tax, are the m
 
 It is the interaction between these elements, rather than any single component, that determines the overall government take and influences how investors assess risk and reward.
 
-## 7.6- West African Perspective: Applying Petroleum Fiscal Regime Principles in West Africa
+## 8.6- West African Perspective: Applying Petroleum Fiscal Regime Principles in West Africa
 
 The design of petroleum fiscal regimes has played a critical role in shaping the development of West Africa's hydrocarbon sector. Across the region, governments have sought to balance two often competing objectives: maximising national benefits from petroleum resources while maintaining sufficient commercial incentives to attract investment and manage exploration risk.
 
 The evolution of fiscal systems throughout West Africa illustrates how petroleum-producing countries adapt fiscal instruments to differing geological conditions, project economics, investment climates, and stages of petroleum sector development.
 
-### 7.6.1- Regional Examples
+### 8.6.1- Regional Examples
 
 Petroleum developments across West Africa range from:
 
@@ -271,7 +271,7 @@ Frequent or unexpected changes to fiscal terms can increase investment risk and 
 
 Long-term stability remains one of the most important characteristics of successful petroleum fiscal systems.
 
-### 7.6.2- Operational Lessons from West Africa
+### 8.6.2- Operational Lessons from West Africa
 
 **Fiscal Systems Must Reflect Project Economics**
 
@@ -297,6 +297,6 @@ The economics of gas developments often differ significantly from those of oil p
 
 Predictable fiscal systems reduce uncertainty and support sustained investment throughout the life of petroleum projects.
 
-### 7.6.3- Key Takeaways
+### 8.6.3- Key Takeaways
 
 The West African petroleum industry demonstrates that effective fiscal regime design requires balancing government revenue objectives with commercial realities. Successful fiscal systems recognise differences in geological risk, project economics, development costs, and market conditions while maintaining transparency, stability, and investor confidence. The regional experience shows that the most effective fiscal frameworks are those that adapt to changing industry conditions while preserving the long-term competitiveness of the petroleum sector.

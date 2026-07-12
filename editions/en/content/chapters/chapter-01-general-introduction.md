@@ -74,19 +74,19 @@ Chapter 2 examines the emerging petroleum provinces of West Africa and provides 
 
 Chapter 3 presents a country-by-country analysis of the petroleum sector across West Africa. It reviews the petroleum potential, exploration history, production status, regulatory frameworks, fiscal systems, national oil companies, opportunities, and challenges associated with each country.
 
-Chapter 4 examines the petroleum value chain and the strategic role of hydrocarbons in supporting economic growth, industrialisation, energy security, regional integration, and broader socio-economic development throughout West Africa.
+Chapter 4 examines national oil companies in West Africa and their roles in resource management, revenue generation, local content, and national energy security.
 
-Chapter 5 is devoted to upstream petroleum operations and provides a detailed examination of petroleum exploration, appraisal, development planning, drilling, production operations, reserves and resources evaluation, and field abandonment.
+Chapter 5 examines the hydrocarbon value chain and the strategic role of hydrocarbons in supporting economic growth, industrialisation, energy security, regional integration, and broader socio-economic development throughout West Africa.
 
-Chapter 6 examines petroleum fiscal regimes and explains the principal contractual and fiscal mechanisms through which States derive value from petroleum resources. Particular attention is given to royalties, taxation, production sharing contracts, bonuses, and State participation.
+Chapter 6 is devoted to upstream petroleum operations and government roles, including petroleum exploration, appraisal, development planning, drilling, production operations, reserves and resources evaluation, and field abandonment.
 
-Chapter 7 applies these concepts through a comparative analysis of fiscal regimes used across selected West African countries and evaluates their implications for government revenues, investment attractiveness, and project economics.
+Chapter 7 examines petroleum data management and highlights the strategic importance of geological, geophysical, drilling, reservoir, and production data throughout the petroleum project life cycle. The chapter emphasises the role of national data repositories and the preservation of petroleum data as a strategic national asset.
 
-Chapter 8 examines the role of national oil companies within West Africa and analyses their contribution to resource management, petroleum sector development, revenue generation, local content, and national energy security.
+Chapter 8 examines petroleum fiscal regimes and explains the principal contractual and fiscal mechanisms through which States derive value from petroleum resources. Particular attention is given to royalties, taxation, production sharing contracts, bonuses, and State participation.
 
-Chapter 9 investigates the socio-political factors that influence petroleum sector performance, including governance, transparency, accountability, political stability, institutional effectiveness, and corruption.
+Chapter 9 applies these concepts through a comparative analysis of fiscal regimes used across selected West African countries and evaluates their implications for government revenues, investment attractiveness, and project economics.
 
-Chapter 10 examines petroleum data management and highlights the strategic importance of geological, geophysical, drilling, reservoir, and production data throughout the petroleum project life cycle. The chapter emphasises the role of national data repositories and the preservation of petroleum data as a strategic national asset.
+Chapter 10 investigates the socio-political factors that influence petroleum sector performance, including governance, transparency, accountability, political stability, institutional effectiveness, and corruption.
 
 Chapter 11 presents the principal conclusions derived from the technical, economic, fiscal, institutional, and governance analyses developed throughout the book.
 

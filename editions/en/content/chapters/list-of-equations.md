@@ -13,11 +13,11 @@
   </section>
 
   <section class="reference-index-group">
-    <h2>Chapter 8: West African Fiscal Regimes</h2>
+    <h2>Chapter 9: West African Fiscal Regimes</h2>
     <ol class="reference-index-list">
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#formula-8-1">Equation 8.1: Post-Royalty Revenue = Gross Revenue − Royalty</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#formula-8-2">Equation 8.2: Profit Oil = Post-Royalty Revenue − Recoverable Costs</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#formula-8-3">Equation 8.3: R = cumulative revenue / cumulative cost</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#formula-9-1">Equation 9.1: Post-Royalty Revenue = Gross Revenue − Royalty</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#formula-9-2">Equation 9.2: Profit Oil = Post-Royalty Revenue − Recoverable Costs</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#formula-9-3">Equation 9.3: R = cumulative revenue / cumulative cost</a></li>
     </ol>
   </section>
 </div>

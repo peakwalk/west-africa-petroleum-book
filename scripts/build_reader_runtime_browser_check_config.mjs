@@ -15,7 +15,7 @@ const config = {
       "index.html",
       "chapters/list-of-figures.html",
       "chapters/chapter-05-hydrocarbon-value-chain.html",
-      "chapters/chapter-09-socio-political-determinants.html",
+      "chapters/chapter-10-socio-political-determinants.html",
       "chapters/chapter-11-general-conclusion.html",
     ],
     fr: [

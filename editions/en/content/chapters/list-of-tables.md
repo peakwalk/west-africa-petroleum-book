@@ -32,31 +32,31 @@
   </section>
 
   <section class="reference-index-group">
-    <h2>Chapter 8: West African Fiscal Regimes</h2>
+    <h2>Chapter 9: West African Fiscal Regimes</h2>
     <ol class="reference-index-list">
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#table-11">Table 11 Summary of Ad Valorem Royalty Rates Applied in Selected West African Countries.</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#table-12">Table 12 Summary of Profit Oil Sharing Mechanisms and Government Profit Oil Entitlements in Selected West African Countries.</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#table-13">Table 13 Corporate Income Tax Rates for Petroleum Operations in some West African Countries.</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#table-14">Table 14 State Participation in Petroleum Projects in Selected West African Countries.</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#table-15">Table 15 Summary of Key Fiscal Terms in Selected West African Petroleum Regimes.</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#table-16">Table 16 Simplified State–Contractor Cash Flow Distribution Using 100 Barrels of Gross Production</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#table-17">Table 17 Net Cash Flow Distribution Derived from the Production of 100 Barrels of Oil.</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#table-18">Table 18 Principal Fiscal Elements & Application – Nigeria</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#table-32">Table 32. Principal Fiscal Elements & Application – Ghana</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#table-19">Table 19 Principal Fiscal Elements & Application – Côte d'Ivoire</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#table-20">Table 20 Principal Fiscal Elements & Application – Senegal</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#table-21">Table 21 Principal Fiscal Elements & Application – Mauritania</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#table-22">Table 22 Principal Fiscal Elements & Application – Niger</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#table-23">Table 23 Principal Fiscal Elements & Application – Benin</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#table-24">Table 24 Principal Fiscal Elements & Application – Liberia</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#table-25">Table 25 Principal Fiscal Elements & Application – Sierra Leone</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#table-26">Table 26 Principal Fiscal Elements & Application – Guinea</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#table-27">Table 27 Principal Fiscal Elements & Application – Guinea-Bissau</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#table-28">Table 28 Principal Fiscal Elements & Application – The Gambia</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#table-29">Table 29 Principal Fiscal Elements & Application – Togo</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#table-30">Table 30 Principal Fiscal Elements & Application – Burkina Faso</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#table-31">Table 31 Principal Fiscal Elements & Application – Mali</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#table-33">Table 33 Overview of Fiscal Systems</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#table-11">Table 11 Summary of Ad Valorem Royalty Rates Applied in Selected West African Countries.</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#table-12">Table 12 Summary of Profit Oil Sharing Mechanisms and Government Profit Oil Entitlements in Selected West African Countries.</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#table-13">Table 13 Corporate Income Tax Rates for Petroleum Operations in some West African Countries.</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#table-14">Table 14 State Participation in Petroleum Projects in Selected West African Countries.</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#table-15">Table 15 Summary of Key Fiscal Terms in Selected West African Petroleum Regimes.</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#table-16">Table 16 Simplified State–Contractor Cash Flow Distribution Using 100 Barrels of Gross Production</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#table-17">Table 17 Net Cash Flow Distribution Derived from the Production of 100 Barrels of Oil.</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#table-18">Table 18 Principal Fiscal Elements & Application – Nigeria</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#table-32">Table 32. Principal Fiscal Elements & Application – Ghana</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#table-19">Table 19 Principal Fiscal Elements & Application – Côte d'Ivoire</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#table-20">Table 20 Principal Fiscal Elements & Application – Senegal</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#table-21">Table 21 Principal Fiscal Elements & Application – Mauritania</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#table-22">Table 22 Principal Fiscal Elements & Application – Niger</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#table-23">Table 23 Principal Fiscal Elements & Application – Benin</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#table-24">Table 24 Principal Fiscal Elements & Application – Liberia</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#table-25">Table 25 Principal Fiscal Elements & Application – Sierra Leone</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#table-26">Table 26 Principal Fiscal Elements & Application – Guinea</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#table-27">Table 27 Principal Fiscal Elements & Application – Guinea-Bissau</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#table-28">Table 28 Principal Fiscal Elements & Application – The Gambia</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#table-29">Table 29 Principal Fiscal Elements & Application – Togo</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#table-30">Table 30 Principal Fiscal Elements & Application – Burkina Faso</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#table-31">Table 31 Principal Fiscal Elements & Application – Mali</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#table-33">Table 33 Overview of Fiscal Systems</a></li>
     </ol>
   </section>
 

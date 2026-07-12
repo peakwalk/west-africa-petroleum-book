@@ -32,6 +32,8 @@ const SECTION_PRIMARY_TAGS = {
     "part i: general information on the oil industry": "Foundations",
     "part ii: oil contracts and oil taxation in west africa": "Fiscal Systems",
     "part iii: political stability, governance and corruption": "Governance",
+    "part ii: upstream petroleum operations and development": "Operations",
+    "part iii: petroleum fiscal, commercial and economic framework": "Fiscal Systems",
     "back matter": "Reference"
   },
   fr: {

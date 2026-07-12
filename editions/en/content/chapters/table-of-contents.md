@@ -103,63 +103,63 @@
   </section>
 
   <section class="reference-index-group">
-    <h2>Chapter 7: Petroleum Fiscal Regimes</h2>
+    <h2>Chapter 7: Petroleum Data Management in West Africa</h2>
     <ol class="reference-index-list">
-      <li><a class="reference-index-link" href="chapter-07-petroleum-fiscal-regimes.html#71--fiscal-system-or-regime-conceptual-foundations">7.1 Fiscal System or Regime: Conceptual Foundations</a></li>
-      <li><a class="reference-index-link" href="chapter-07-petroleum-fiscal-regimes.html#72--the-concessionary-system">7.2 The Concessionary System</a></li>
-      <li><a class="reference-index-link" href="chapter-07-petroleum-fiscal-regimes.html#73--the-contractual-system">7.3 The Contractual System</a></li>
-      <li><a class="reference-index-link" href="chapter-07-petroleum-fiscal-regimes.html#74--contractual-frameworks-in-west-africa">7.4 Contractual Frameworks in West Africa</a></li>
-      <li><a class="reference-index-link" href="chapter-07-petroleum-fiscal-regimes.html#75--structure-of-petroleum-fiscal-systems-in-west-africa">7.5 Structure of Petroleum Fiscal Systems in West Africa</a></li>
-      <li><a class="reference-index-link" href="chapter-07-petroleum-fiscal-regimes.html#76--west-african-perspective-applying-petroleum-fiscal-regime-principles-in-west-africa">7.6 West African Perspective: Applying Petroleum Fiscal Regime Principles in West Africa</a></li>
+      <li><a class="reference-index-link" href="chapter-07-petroleum-data-management-in-west-africa.html#71--introduction">7.1 Introduction</a></li>
+      <li><a class="reference-index-link" href="chapter-07-petroleum-data-management-in-west-africa.html#72--petroleum-data-as-a-strategic-national-asset">7.2 Petroleum Data as a Strategic National Asset</a></li>
+      <li><a class="reference-index-link" href="chapter-07-petroleum-data-management-in-west-africa.html#73--types-of-petroleum-data">7.3 Types of Petroleum Data</a></li>
+      <li><a class="reference-index-link" href="chapter-07-petroleum-data-management-in-west-africa.html#74--confidentiality-and-data-release">7.4 Confidentiality and Data Release</a></li>
+      <li><a class="reference-index-link" href="chapter-07-petroleum-data-management-in-west-africa.html#75--country-level-petroleum-data-access">7.5 Country-Level Petroleum Data Access</a></li>
+      <li><a class="reference-index-link" href="chapter-07-petroleum-data-management-in-west-africa.html#76--comparative-petroleum-data-access-table">7.6 Comparative Petroleum Data Access Table</a></li>
+      <li><a class="reference-index-link" href="chapter-07-petroleum-data-management-in-west-africa.html#77--physical-core-and-sample-repositories">7.7 Physical Core and Sample Repositories</a></li>
+      <li><a class="reference-index-link" href="chapter-07-petroleum-data-management-in-west-africa.html#78--digital-petroleum-data-centres">7.8 Digital Petroleum Data Centres</a></li>
+      <li><a class="reference-index-link" href="chapter-07-petroleum-data-management-in-west-africa.html#79--recommended-best-practice-model-for-west-africa">7.9 Recommended Best Practice Model for West Africa</a></li>
+      <li><a class="reference-index-link" href="chapter-07-petroleum-data-management-in-west-africa.html#710--regional-cooperation-in-petroleum-data">7.10 Regional Cooperation in Petroleum Data</a></li>
+      <li><a class="reference-index-link" href="chapter-07-petroleum-data-management-in-west-africa.html#711--key-challenges">7.11 Key Challenges</a></li>
+      <li><a class="reference-index-link" href="chapter-07-petroleum-data-management-in-west-africa.html#712--strategic-recommendations">7.12 Strategic Recommendations</a></li>
+      <li><a class="reference-index-link" href="chapter-07-petroleum-data-management-in-west-africa.html#713--conclusion">7.13 Conclusion</a></li>
     </ol>
   </section>
 
   <section class="reference-index-group">
-    <h2>Chapter 8: West African Fiscal Regimes</h2>
+    <h2>Chapter 8: Petroleum Fiscal Regimes</h2>
     <ol class="reference-index-list">
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#81--petroleum-financial-flow-modelling">8.1 Petroleum Financial Flow Modelling</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#82--key-fiscal-elements-in-selected-west-african-countries">8.2 Key Fiscal Elements in Selected West African Countries</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#83--comparative-analysis-of-fiscal-regimes">8.3 Comparative Analysis of Fiscal Regimes</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#84--state-contractor-cash-flow-analysis">8.4 State-Contractor Cash Flow Analysis</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#85--country-fiscal-regime-summaries-in-west-africa">8.5 Country Fiscal Regime Summaries in West Africa</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#86--comparative-overview-of-fiscal-systems">8.6 Comparative Overview of Fiscal Systems</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#87--interpretation-and-analysis">8.7 Interpretation and Analysis</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#88--suggestions-for-maximising-state-petroleum-rent">8.8 Suggestions for Maximising State Petroleum Rent</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#89--west-african-perspective-fiscal-regimes-across-west-africa">8.9 West African Perspective: Fiscal Regimes Across West Africa</a></li>
-      <li><a class="reference-index-link" href="chapter-08-west-african-fiscal-regimes.html#810--conclusion">8.10 Conclusion</a></li>
+      <li><a class="reference-index-link" href="chapter-08-petroleum-fiscal-regimes.html#81--fiscal-system-or-regime-conceptual-foundations">8.1 Fiscal System or Regime: Conceptual Foundations</a></li>
+      <li><a class="reference-index-link" href="chapter-08-petroleum-fiscal-regimes.html#82--the-concessionary-system">8.2 The Concessionary System</a></li>
+      <li><a class="reference-index-link" href="chapter-08-petroleum-fiscal-regimes.html#83--the-contractual-system">8.3 The Contractual System</a></li>
+      <li><a class="reference-index-link" href="chapter-08-petroleum-fiscal-regimes.html#84--contractual-frameworks-in-west-africa">8.4 Contractual Frameworks in West Africa</a></li>
+      <li><a class="reference-index-link" href="chapter-08-petroleum-fiscal-regimes.html#85--structure-of-petroleum-fiscal-systems-in-west-africa">8.5 Structure of Petroleum Fiscal Systems in West Africa</a></li>
+      <li><a class="reference-index-link" href="chapter-08-petroleum-fiscal-regimes.html#86--west-african-perspective-applying-petroleum-fiscal-regime-principles-in-west-africa">8.6 West African Perspective: Applying Petroleum Fiscal Regime Principles in West Africa</a></li>
     </ol>
   </section>
 
   <section class="reference-index-group">
-    <h2>Chapter 9: Socio-Political Determinants</h2>
+    <h2>Chapter 9: West African Fiscal Regimes</h2>
     <ol class="reference-index-list">
-      <li><a class="reference-index-link" href="chapter-09-socio-political-determinants.html#91--political-stability-and-petroleum-development">9.1 Political Stability and Petroleum Development</a></li>
-      <li><a class="reference-index-link" href="chapter-09-socio-political-determinants.html#92--governance-structures-in-the-petroleum-sector">9.2 Governance Structures in the Petroleum Sector</a></li>
-      <li><a class="reference-index-link" href="chapter-09-socio-political-determinants.html#93--stability-governance-and-corruption">9.3 Stability, Governance and Corruption</a></li>
-      <li><a class="reference-index-link" href="chapter-09-socio-political-determinants.html#94--corruption-in-the-petroleum-sector">9.4 Corruption in the Petroleum Sector</a></li>
-      <li><a class="reference-index-link" href="chapter-09-socio-political-determinants.html#95--risk-mitigation-strategies-by-stakeholders">9.5 Risk Mitigation Strategies by Stakeholders</a></li>
-      <li><a class="reference-index-link" href="chapter-09-socio-political-determinants.html#96--emerging-trends-and-future-risks">9.6 Emerging Trends and Future Risks</a></li>
-      <li><a class="reference-index-link" href="chapter-09-socio-political-determinants.html#97--west-african-perspective-socio-political-determinants-and-petroleum-sector-performance">9.7 West African Perspective: Socio-Political Determinants and Petroleum Sector Performance</a></li>
-      <li><a class="reference-index-link" href="chapter-09-socio-political-determinants.html#98--conclusion">9.8 Conclusion</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#91--petroleum-financial-flow-modelling">9.1 Petroleum Financial Flow Modelling</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#92--key-fiscal-elements-in-selected-west-african-countries">9.2 Key Fiscal Elements in Selected West African Countries</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#93--comparative-analysis-of-fiscal-regimes">9.3 Comparative Analysis of Fiscal Regimes</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#94--state-contractor-cash-flow-analysis">9.4 State-Contractor Cash Flow Analysis</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#95--country-fiscal-regime-summaries-in-west-africa">9.5 Country Fiscal Regime Summaries in West Africa</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#96--comparative-overview-of-fiscal-systems">9.6 Comparative Overview of Fiscal Systems</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#97--interpretation-and-analysis">9.7 Interpretation and Analysis</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#98--suggestions-for-maximising-state-petroleum-rent">9.8 Suggestions for Maximising State Petroleum Rent</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#99--west-african-perspective-fiscal-regimes-across-west-africa">9.9 West African Perspective: Fiscal Regimes Across West Africa</a></li>
+      <li><a class="reference-index-link" href="chapter-09-west-african-fiscal-regimes.html#910--conclusion">9.10 Conclusion</a></li>
     </ol>
   </section>
 
   <section class="reference-index-group">
-    <h2>Chapter 10: Petroleum Data Management in West Africa</h2>
+    <h2>Chapter 10: Socio-Political Determinants</h2>
     <ol class="reference-index-list">
-      <li><a class="reference-index-link" href="chapter-10-petroleum-data-management-in-west-africa.html#101--introduction">10.1 Introduction</a></li>
-      <li><a class="reference-index-link" href="chapter-10-petroleum-data-management-in-west-africa.html#102--petroleum-data-as-a-strategic-national-asset">10.2 Petroleum Data as a Strategic National Asset</a></li>
-      <li><a class="reference-index-link" href="chapter-10-petroleum-data-management-in-west-africa.html#103--types-of-petroleum-data">10.3 Types of Petroleum Data</a></li>
-      <li><a class="reference-index-link" href="chapter-10-petroleum-data-management-in-west-africa.html#104--confidentiality-and-data-release">10.4 Confidentiality and Data Release</a></li>
-      <li><a class="reference-index-link" href="chapter-10-petroleum-data-management-in-west-africa.html#105--country-level-petroleum-data-access">10.5 Country-Level Petroleum Data Access</a></li>
-      <li><a class="reference-index-link" href="chapter-10-petroleum-data-management-in-west-africa.html#106--comparative-petroleum-data-access-table">10.6 Comparative Petroleum Data Access Table</a></li>
-      <li><a class="reference-index-link" href="chapter-10-petroleum-data-management-in-west-africa.html#107--physical-core-and-sample-repositories">10.7 Physical Core and Sample Repositories</a></li>
-      <li><a class="reference-index-link" href="chapter-10-petroleum-data-management-in-west-africa.html#108--digital-petroleum-data-centres">10.8 Digital Petroleum Data Centres</a></li>
-      <li><a class="reference-index-link" href="chapter-10-petroleum-data-management-in-west-africa.html#109--recommended-best-practice-model-for-west-africa">10.9 Recommended Best Practice Model for West Africa</a></li>
-      <li><a class="reference-index-link" href="chapter-10-petroleum-data-management-in-west-africa.html#1010--regional-cooperation-in-petroleum-data">10.10 Regional Cooperation in Petroleum Data</a></li>
-      <li><a class="reference-index-link" href="chapter-10-petroleum-data-management-in-west-africa.html#1011--key-challenges">10.11 Key Challenges</a></li>
-      <li><a class="reference-index-link" href="chapter-10-petroleum-data-management-in-west-africa.html#1012--strategic-recommendations">10.12 Strategic Recommendations</a></li>
-      <li><a class="reference-index-link" href="chapter-10-petroleum-data-management-in-west-africa.html#1013--conclusion">10.13 Conclusion</a></li>
+      <li><a class="reference-index-link" href="chapter-10-socio-political-determinants.html#101--political-stability-and-petroleum-development">10.1 Political Stability and Petroleum Development</a></li>
+      <li><a class="reference-index-link" href="chapter-10-socio-political-determinants.html#102--governance-structures-in-the-petroleum-sector">10.2 Governance Structures in the Petroleum Sector</a></li>
+      <li><a class="reference-index-link" href="chapter-10-socio-political-determinants.html#103--stability-governance-and-corruption">10.3 Stability, Governance and Corruption</a></li>
+      <li><a class="reference-index-link" href="chapter-10-socio-political-determinants.html#104--corruption-in-the-petroleum-sector">10.4 Corruption in the Petroleum Sector</a></li>
+      <li><a class="reference-index-link" href="chapter-10-socio-political-determinants.html#105--risk-mitigation-strategies-by-stakeholders">10.5 Risk Mitigation Strategies by Stakeholders</a></li>
+      <li><a class="reference-index-link" href="chapter-10-socio-political-determinants.html#106--emerging-trends-and-future-risks">10.6 Emerging Trends and Future Risks</a></li>
+      <li><a class="reference-index-link" href="chapter-10-socio-political-determinants.html#107--west-african-perspective-socio-political-determinants-and-petroleum-sector-performance">10.7 West African Perspective: Socio-Political Determinants and Petroleum Sector Performance</a></li>
+      <li><a class="reference-index-link" href="chapter-10-socio-political-determinants.html#108--conclusion">10.8 Conclusion</a></li>
     </ol>
   </section>
 
